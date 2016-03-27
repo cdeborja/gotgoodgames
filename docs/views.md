@@ -14,7 +14,6 @@
 
 ## User Page
 ![user-page]
-(this will contain their gameshelves of recently reviewed games)
 
 ## Review Form
 ![review-form]
