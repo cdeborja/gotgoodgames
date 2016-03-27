@@ -37,5 +37,5 @@ Longterm goals:
 * [View Wireframes][views]
 * [DB Schema][schema]
 
-[views]: .docs/views.md
-[schema]: .docs/schema.md
+[views]: ./docs/views.md
+[schema]: ./docs/schema.md
