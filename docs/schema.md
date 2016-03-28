@@ -12,8 +12,17 @@ session_token   | string    | not null, indexed, unique
 column name | data type | details
 ------------|-----------|-----------------------
 id          | integer   | not null, primary key
-user_id     | integer   | not null, foreign key
+owner_id    | integer   | not null, foreign key
 title       | string    | not null
+
+
+## comments
+column name  | data type | details
+-------------|-----------|-----------------------
+id           | integer   | not null, primary key
+comments     | text      | not null
+gameshelf_id | integer   | not null, foreign key
+commenter_id | integer   | not null, foreign key
 
 ## games
 column name  | data type | details
@@ -21,6 +30,7 @@ column name  | data type | details
 id           | integer   | not null, primary key
 title        | string    | not null
 description  | text      | not null
+release_date | date      | not null
 author_id    | integer   | not null, foreign key
 gameshelf_id | integer   | not null, foreign key
 wishlist_id  | integer   | not null, foreign key

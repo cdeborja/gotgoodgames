@@ -2,11 +2,14 @@
 
 * `App`
   * `Navigation`
+    * `SearchBar`
+      * `SearchResults`
     * `UserSettings`
     * `UserPage`
       * `Gameshelves`
+        * `GameshelfComments`
         * `Games`
-      * `CommentsForm`
+      * `UserCommentsForm`
     * `GamePage`
       * `GameReviewForm`
   * `MainPage`
@@ -14,3 +17,4 @@
     * `PopularGames`
     * `TopRatedGames`
     * `NewReleaseGames`
+    **Each list will contain games that after you click will be redirected to that games page**

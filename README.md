@@ -1,6 +1,6 @@
 # GotGoodGame
 
-Are you a gamer? Do you consider yourself a <i>connoisseur</i> of video games?
+Are you a gamer? Do you consider yourself a **connoisseur** of video games?
 
 Do you... got good game?
 
@@ -27,6 +27,7 @@ Short term goals:
 - [ ] Comment on another user's shelves
 
 Longterm goals:
+- [ ] Have a newsfeed that display friend's recent activity
 - [ ] Connectivity with facebook
 - [ ] Users can either link their twitch accounts or upload gameplay videos
 - [ ] Community Trivia
@@ -36,10 +37,14 @@ Longterm goals:
 ## Design Docs
 * [View Wireframes][views]
 * [React Components][components]
-* [DB Schema][schema]
+* [Flux Stores][stores]
+* [API endpoints][api-endpoints]
+* [DB schema][schema]
 
 [views]: ./docs/views.md
 [components]: ./docs/components.md
+[stores]: ./docs/stores.md
+[api-endpoints]: ./docs/api-endpoints.md
 [schema]: ./docs/schema.md
 
 ## Implementation Timeline
@@ -54,32 +59,54 @@ Longterm goals:
 - [ ] user signup/signin pages
 - [ ] redirect to blank homepage after signin
 
-### Phase 2: Game Model, API, and basic APIUtil (1.5 days)
+### Phase 2: Game Model, API, and basic APIUtil (1 day)
 
-**Objective:** Reviews can be created, read, edited and destroyed through
-the API on a Game.
+**Objective:** Game model that can be created, read, edited and destroyed through
+the API (by an Admin User)
 
 - [ ] create `Game` model
-- [ ] create `Review` model
 - [ ] seed the database with a small amount of test data
-- [ ] CRUD API for reviews (`ReviewsController`)
-- [ ] jBuilder views for reviews
+- [ ] CRUD API for reviews (`GamesController`)
+- [ ] jBuilder views for `Game`s?
 - [ ] setup Webpack
 - [ ] setup `APIUtil` to interact with the API
 - [ ] test out API interaction in the console.
 
-### Phase 3: Flux Architecture and Router (1.5 days)
+### Phase 3: Review Model and interaction with Game Model (1 day)
 
-**Objective:** Reviews can be created, read, edited and destroyed with the
-user interface.
+**Objective:** Review model that can be created, read, edited, and destroyed through API for a game
+
+- [ ] create `Review` model
+  - Do `Rating` need their own model or are they a part of `Review` model?
+- [ ] seed the database with a small amount of review test data
+- [ ] CRUD API for reviews (`ReviewsController`)
+- [ ] jBuilder views for `Review`s
+- [ ] test out API interaction in the console.
+
+### Phase 4: Gameshelf Model and interaction with Game Model (0.5 days)
+
+**Objective:** Gameshelf model that can be created, read, edited, and destroyed through API for a user's page with games
+
+- [ ] create `Gameshelf` model
+- [ ] seed database with games from the `Game` model
+- [ ] CRUD API for gameshelf (`GameshelvesController`)
+
+### Phase 5: User Model and interaction with Game, Gameshelf, and Review Models (0.5 days)
+
+**Objective:** Create a User Page that will display a user's profile information, recently reviewed games, gameshelves, and comments by other users
+
+- [ ] revisit `User` model and update to have information for webpage display
+- [ ] figure out how to display a user's most recent review to their webpage
+
+### Phase 6: Flux Architecture and Router (2 days)
+
+**Objective:** Solidify flux connections, such that users can CRUD easily for Gameshelves, Wishlists, and Reviews (admins can access Game model)
 
 - [ ] setup the flux loop
 - [ ] setup React Router
-- implement each review component, building out the flux loop as needed.
-  - [ ] `Rating`
-  - [ ] `Review`
+- [ ] setup search bar
 
-### Phase 4: Start Styling (0.5 days)
+### Phase 7: Start Styling (0.5 days)
 
 **Objective:** Existing pages (including singup/signin) will look okay.
 
@@ -87,42 +114,13 @@ user interface.
 - [ ] position elements on the page
 - [ ] add basic colors & styles
 
-### Phase 5: Notebooks (1 day)
+### Phase 8: Newsfeed to be displayed on homepage (1 day)
 
-**Objective:** Reviews belong to Games, and can be viewed by in a Gameshelf.
+**objective:** Enable other users' activity to be displayed on user's homepage.
 
-- [ ] create `Gameshelf` model
-- build out API, Flux loop, and components for:
-  - [ ] Gameshelf CRUD
-  - [ ] adding notes requires a notebook
-  - [ ] moving notes to a different notebook
-  - [ ] viewing notes by notebook
-- Use CSS to style new views
+- [ ] Integrate AJAX approach of twitter, but only displaying other user's activity.
 
-Phase 3 adds organization to the Notes. Notes belong to a Gameshelf,
-which has its own `Index` view.
-
-### Phase 6: Tags (1.5 days)
-
-**Objective:** Notes can be tagged with multiple tags, and tags are searchable.
-
-- [ ] create `Tag` model and join table
-- build out API, Flux loop, and components for:
-  - [ ] fetching tags for notebook
-  - [ ] adding tags to notebook
-  - [ ] creating tags while adding to notebooks
-  - [ ] searching notebooks by tag
-- [ ] Style new elements
-
-### Phase 7: Allow Complex Styling in Notes (0.5 days)
-
-**objective:** Enable complex styling of notes.
-
-- [ ] Integrate `react-quill` (based on Quill.js).
-- [ ] Use Rails helpers to sanitize HTML before rendering.
-- [ ] Style the new Quill elements.
-
-### Phase 8: Styling Cleanup and Seeding (1 day)
+### Phase 9: Styling Cleanup and Seeding (1 day)
 
 **objective:** Make the site feel more cohesive and awesome.
 
