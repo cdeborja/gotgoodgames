@@ -39,7 +39,7 @@ button, article, footer, small {
 
 body {
   font-family: sans-serif;
-  background: #eee;
+  background: #fffaf0;
 }
 
 ul {
@@ -66,6 +66,7 @@ img {
   background: #5f9ea0;
   color: #fff;
   border-bottom: 1px solid #ccc;
+  margin: 0 0 16px 0;
 }
 
 .header a {
@@ -102,6 +103,25 @@ img {
   padding: 1px 6px;
   font-size: 14px;
 }
+
+/* --- SIGN-IN PAGE --- */
+
+.sign-in-box {
+  display: block;
+  margin: 0 auto;
+  background: #fff;
+  width: 600px;
+  height: 231px;
+  border: solid 1px #ccc;
+
+}
+
+.input {
+  display: block;
+
+}
+
+.submit {}
 
 /* --- CONTENT --- */
 
