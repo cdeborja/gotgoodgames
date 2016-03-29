@@ -16,8 +16,6 @@ id           | integer    | not null, primary key
 title        | string     | not null
 description  | text       | not null
 release_date | date       | not null
-gameshelf_id | integer    | not null, foreign key, indexed
-wishlist_id  | integer    | not null, foreign key, indexed
 timestamps   | timestamps | not null
 
 ## gameshelves
@@ -39,6 +37,14 @@ date        | datetime   | not null
 type        | string     | not null
 timestamps  | timestamps | not null
 
+## shelves
+column name  | data type  | details
+-------------|------------|-----------------------
+id           | integer    | not null, primary key
+gameshelf_id | integer    | not null, foreign key
+game_id      | integer    | not null, foreign key
+timestamps   | timestamps | not null
+
 ## users
 column name     | data type  | details
 ----------------|------------|-----------------------
@@ -56,6 +62,13 @@ id           | integer    | not null, primary key
 title        | string     | not null
 user_id      | integer    | not null, foreign key
 timestamps   | timestamps | not null
+
+## wishlist_items
+column name  | data type  | details
+-------------|------------|-----------------------
+id           | integer    | not null, primary key
+wishlist_id  | integer    | not null, foreign key
+game_id      | integer    | not null, foreign key
 
 
 Database To-Dos:
