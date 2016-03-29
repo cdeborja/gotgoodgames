@@ -1,22 +1,5 @@
 # Schema Information
 
-## users
-column name     | data type  | details
-----------------|------------|-----------------------
-id              | integer    | not null, primary key
-username        | string     | not null, indexed, unique
-password_digest | string     | not null
-session_token   | string     | not null, indexed, unique
-timestamps      | timestamps | not null
-
-## gameshelves
-column name | data type  | details
-------------|------------|-----------------------
-id          | integer    | not null, primary key
-owner_id    | integer    | not null, foreign key
-title       | string     | not null
-timestamps  | timestamps | not null
-
 ## comments
 column name  | data type  | details
 -------------|------------|-----------------------
@@ -38,13 +21,22 @@ gameshelf_id | integer    | not null, foreign key, indexed
 wishlist_id  | integer    | not null, foreign key, indexed
 timestamps   | timestamps | not null
 
-## wishlist
-column name  | data type  | details
--------------|------------|-----------------------
-id           | integer    | not null, primary key
-title        | string     | not null
-user_id      | integer    | not null, foreign key
-timestamps   | timestamps | not null
+## gameshelves
+column name | data type  | details
+------------|------------|-----------------------
+id          | integer    | not null, primary key
+owner_id    | integer    | not null, foreign key
+title       | string     | not null
+timestamps  | timestamps | not null
+
+## ratings
+column name | data type  | details
+------------|------------|-----------------------
+id          | integer    | not null, primary key
+game_id     | integer    | not null, foreign key
+user_id     | integer    | not null, foreign key
+rating      | integer    | not null
+timestamps  | timestamps | not null
 
 ## reviews
 column name | data type  | details
@@ -56,14 +48,23 @@ date        | datetime   | not null
 type        | string     | not null
 timestamps  | timestamps | not null
 
-## ratings
-column name | data type  | details
-------------|------------|-----------------------
-id          | integer    | not null, primary key
-game_id     | integer    | not null, foreign key
-user_id     | integer    | not null, foreign key
-rating      | integer    | not null
-timestamps  | timestamps | not null
+## users
+column name     | data type  | details
+----------------|------------|-----------------------
+id              | integer    | not null, primary key
+username        | string     | not null, indexed, unique
+password_digest | string     | not null
+session_token   | string     | not null, indexed, unique
+timestamps      | timestamps | not null
+
+
+## wishlist
+column name  | data type  | details
+-------------|------------|-----------------------
+id           | integer    | not null, primary key
+title        | string     | not null
+user_id      | integer    | not null, foreign key
+timestamps   | timestamps | not null
 
 
 Database To-Dos:
