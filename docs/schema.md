@@ -16,7 +16,6 @@ id           | integer    | not null, primary key
 title        | string     | not null
 description  | text       | not null
 release_date | date       | not null
-author_id    | integer    | not null, foreign key
 gameshelf_id | integer    | not null, foreign key, indexed
 wishlist_id  | integer    | not null, foreign key, indexed
 timestamps   | timestamps | not null
@@ -29,21 +28,13 @@ owner_id    | integer    | not null, foreign key
 title       | string     | not null
 timestamps  | timestamps | not null
 
-## ratings
-column name | data type  | details
-------------|------------|-----------------------
-id          | integer    | not null, primary key
-game_id     | integer    | not null, foreign key
-user_id     | integer    | not null, foreign key
-rating      | integer    | not null
-timestamps  | timestamps | not null
-
 ## reviews
 column name | data type  | details
 ------------|------------|-----------------------
 id          | integer    | not null, primary key
 user_id     | integer    | not null, foreign key
 game_id     | integer    | not null, foreign key
+score       | integer    | not null
 date        | datetime   | not null
 type        | string     | not null
 timestamps  | timestamps | not null
