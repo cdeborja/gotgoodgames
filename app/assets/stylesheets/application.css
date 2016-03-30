@@ -70,7 +70,7 @@ img {
 
 .header a {
   display: block;
-  padding: 10px 20px;
+  padding: 10px 15px;
 }
 
 .header-nav {
@@ -101,7 +101,10 @@ img {
 
 .header-list > li {
   float: left;
-  border-left: 1px solid #ccc;
+  border: 1px solid #ac9c8d;
+  margin: 5px;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
 .badge {
