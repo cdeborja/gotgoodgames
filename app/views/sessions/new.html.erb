@@ -1,18 +1,22 @@
-<h2>Sign In</h2>
-
 <form action="<%= session_url %>" method="post">
   <%= auth_token %>
-  <div class="sign-in-box group">
-  <label class="input">
-    Username
-    <input type="text" name="user[username]" value="">
-  </label>
+  <div class="content-main">
 
-  <label class="input">
-    Password
-    <input type="password" name="user[password]" value="">
-  </label>
+    <div class="sign-in-box group">
+      <h1>Sign In!</h1>
+        <div class="input-box">
+          <label class="input-text">
+            Username
+            <input class="input-field" placeholder="yourawesomeusername!" type="text" name="user[username]" value="">
+          </label>
 
-  <input class="submit-button" type="submit" value="Sign In">
-</div>
+          <label class="input-text">
+            Password
+            <input class="input-field" type="password" name="user[password]" value="">
+          </label>
+
+          <input class="submit-button" type="submit" value="Sign In">
+        </div>
+    </div>
+  </div>
 </form>

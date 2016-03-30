@@ -39,7 +39,7 @@ button, article, footer, small {
 
 body {
   font-family: sans-serif;
-  background: #fffaf0;
+  background: #ffe;
 }
 
 ul {
@@ -62,12 +62,11 @@ img {
 
 /* --- HEADER --- */
 
-.header {
+/*.header {
   background: #5f9ea0;
   color: #fff;
-  border-bottom: 1px solid #ccc;
   margin: 0 0 16px 0;
-}
+}*/
 
 .header a {
   display: block;
@@ -75,20 +74,29 @@ img {
 }
 
 .header-nav {
-  margin: 0 auto;
-  width: 900px;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
+  margin: 0px auto 16px auto;;
 }
 
-.header-logo {
+.header-logo-first {
   float: left;
-  border-right: 1px solid #ccc;
+  font-weight: 100;
+  font-size: 32px;
+  margin-left: 20px;
+  color: #3e2c1a;
+  letter-spacing: -2px;
+}
+
+.header-logo-second {
+  float: left;
+  font-size: 32px;
+  color: #3e2c1a;
+  letter-spacing: -2px;
   font-weight: bold;
 }
 
 .header-list {
   float: right;
+  margin-right: 20px;
 }
 
 .header-list > li {
@@ -113,19 +121,53 @@ img {
   width: 600px;
   height: 231px;
   border: solid 1px #ccc;
-
+  padding: 40px 40px 20px 40px;
+  border-radius: 5px;
 }
 
-.input {
+.sign-in-box > h1{
+  font-weight: bold;
+  font-size: 36px;
+  padding-left: 250px;
+}
+.input-box {
+  margin: auto;
+  padding: 0 150px;
+}
+
+.input-text {
   display: block;
-
+  font-weight: bold;
+  margin: 0 auto;
+  font-size: 12px;
+  margin: 10px 0 5px 0;
 }
 
-.submit {}
+.input-field {
+  display: block;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 10px 4px;
+  font-weight: normal;
+  font-size: 14px;
+  border-radius: 5px;
+  width: 300px;
+}
+
+.submit-button {
+  border-radius: 5px;
+  border: 1px solid #ac9c8d;
+  background: #f6f6ee;
+  padding: 12px 20px;
+  font-weight: 600;
+  font-family: sans-serif;
+  margin-top: 20px;
+  color: #333;
+}
 
 /* --- CONTENT --- */
 
-/*.content {
+.content {
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
   background: #fff;
@@ -140,16 +182,15 @@ img {
 }
 
 .content-main {
-  float: right;
   width: 620px;
-  border-left: 1px solid #ccc;
-  padding: 20px 20px 20px 19px;
+
+  margin: 0 auto;
 }
 
 .content-header {
   font-size: 36px;
   text-align: right;
-}*/
+}
 
 /* --- SIDEBAR --- */
 
