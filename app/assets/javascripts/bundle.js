@@ -54,16 +54,18 @@
 	var ApiUtil = __webpack_require__(208);
 	var GameStore = __webpack_require__(215);
 
+	var routes = React.createElement(Route, { path: '/', component: Index });
+
 	document.addEventListener("DOMContentLoaded", function () {
 	  ReactDOM.render(React.createElement(
-	    'div',
+	    Router,
 	    null,
-	    React.createElement(Index, null)
+	    routes
 	  ), document.getElementById('homepage'));
 	});
 
-	window.ApiUtil = ApiUtil;
-	window.GameStore = GameStore;
+	// window.ApiUtil = ApiUtil;
+	// window.GameStore = GameStore;
 
 /***/ },
 /* 1 */
@@ -31164,7 +31166,7 @@
 	var React = __webpack_require__(1);
 	var GameStore = __webpack_require__(215);
 	var ApiUtil = __webpack_require__(208);
-	// var PokemonIndexItem = require('./indexItem.jsx');
+	var GameIndexItem = __webpack_require__(234);
 
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -31187,18 +31189,45 @@
 	  },
 
 	  render: function () {
-
 	    return React.createElement(
 	      'ul',
 	      null,
-	      this.state.games.length
+	      this.state.games.map(function (game) {
+	        return React.createElement(GameIndexItem, { key: game.id, game: game });
+	      })
 	    );
 	  }
 	});
 
-	// {this.state.games.map(function (game) {
-	//   return <GameIndexItem key={game.id} game={game} />;
-	// })}
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var History = __webpack_require__(159).History;
+
+	module.exports = React.createClass({
+	  displayName: 'exports',
+
+	  // mixins: [History],
+
+	  // showDetail: function () {
+	  //   this.history.pushState(null, '/game/' + this.props.pokemon.id, {});
+	  // },
+	  // onClick={this.showDetail} className="poke-list-item"
+	  render: function () {
+	    return React.createElement(
+	      'li',
+	      null,
+	      React.createElement(
+	        'p',
+	        null,
+	        'Name: ',
+	        this.props.game.title
+	      )
+	    );
+	  }
+	});
 
 /***/ }
 /******/ ]);

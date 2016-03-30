@@ -8,12 +8,20 @@ var IndexRoute = require('react-router').IndexRoute;
 var ApiUtil = require('./util/apiUtil');
 var GameStore = require('./stores/game');
 
+
+var routes = (
+  <Route path="/" component={Index} />
+
+
+
+);
+
 document.addEventListener("DOMContentLoaded", function () {
   ReactDOM.render(
-    <div><Index /></div>,
+    <Router>{routes}</Router>,
     document.getElementById('homepage')
   );
 });
 
-window.ApiUtil = ApiUtil;
-window.GameStore = GameStore;
+// window.ApiUtil = ApiUtil;
+// window.GameStore = GameStore;

@@ -1,7 +1,7 @@
 var React = require('react');
 var GameStore = require('../../stores/game');
 var ApiUtil = require('../../util/apiUtil');
-// var PokemonIndexItem = require('./indexItem.jsx');
+var GameIndexItem = require('./indexItem.jsx');
 
 module.exports = React.createClass({
   getInitialState: function () {
@@ -22,16 +22,12 @@ module.exports = React.createClass({
   },
 
   render: function () {
-
     return(
       <ul>
-        {this.state.games.length}
+        {this.state.games.map(function (game) {
+          return <GameIndexItem key={game.id} game={game} />;
+        })}
       </ul>
     );
   }
 });
-
-
-// {this.state.games.map(function (game) {
-//   return <GameIndexItem key={game.id} game={game} />;
-// })}
