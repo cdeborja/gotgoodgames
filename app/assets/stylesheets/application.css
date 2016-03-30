@@ -67,9 +67,7 @@ img {
   color: #fff;
   margin: 0 0 16px 0;
 }*/
-/*.gamedata {
-  font-size: 100px;
-}*/
+
 .header a {
   display: block;
   padding: 10px 15px;
@@ -180,26 +178,14 @@ img {
   background: #f7f2ed;
 }
 
-/* --- CONTENT --- */
+/* --- APP CONTENT --- */
 
-.content {
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  background: #fff;
+.game-index-pane {
   margin: 0 auto;
-  width: 900px;
-}
-
-.content-sidebar {
-  float: left;
-  padding: 20px;
-  width: 200px;
-}
-
-.content-main {
   width: 620px;
-
-  margin: 0 auto;
+  border: solid 2px #ac9c8d;
+  border-radius: 5px;
+  padding: 20px;
 }
 
 .content-header {

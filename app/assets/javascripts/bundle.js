@@ -47,14 +47,14 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
 
-	var Index = __webpack_require__(233);
+	var App = __webpack_require__(235);
 	var Router = __webpack_require__(159).Router;
 	var Route = __webpack_require__(159).Route;
 	var IndexRoute = __webpack_require__(159).IndexRoute;
 	var ApiUtil = __webpack_require__(208);
 	var GameStore = __webpack_require__(215);
 
-	var routes = React.createElement(Route, { path: '/', component: Index });
+	var routes = React.createElement(Route, { path: '/', component: App });
 
 	document.addEventListener("DOMContentLoaded", function () {
 	  ReactDOM.render(React.createElement(
@@ -31225,6 +31225,31 @@
 	        'Name: ',
 	        this.props.game.title
 	      )
+	    );
+	  }
+	});
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var GamesIndex = __webpack_require__(233);
+
+	module.exports = React.createClass({
+	  displayName: 'exports',
+
+
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { id: 'game-container' },
+	      React.createElement(
+	        'div',
+	        { className: 'game-index-pane' },
+	        React.createElement(GamesIndex, null)
+	      ),
+	      this.props.children
 	    );
 	  }
 	});
