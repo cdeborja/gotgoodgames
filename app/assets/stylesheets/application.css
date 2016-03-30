@@ -168,6 +168,11 @@ img {
   color: #333;
 }
 
+.submit-button:hover {
+  cursor: pointer;
+  background: #f7f2ed;
+}
+
 /* --- CONTENT --- */
 
 .content {
