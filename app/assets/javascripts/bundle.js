@@ -52,13 +52,14 @@
 	var Route = __webpack_require__(159).Route;
 	var IndexRoute = __webpack_require__(159).IndexRoute;
 	var ApiUtil = __webpack_require__(208);
+	var GamesIndex = __webpack_require__(233);
 	var GameStore = __webpack_require__(215);
 	var GameDetail = __webpack_require__(236);
 
 	var routes = React.createElement(
 	  Route,
 	  { path: '/', component: App },
-	  React.createElement(Route, { path: 'games/:gameId', component: GameDetail })
+	  React.createElement(Route, { path: '/games/:gameId', component: GameDetail })
 	);
 
 	document.addEventListener("DOMContentLoaded", function () {
@@ -31343,7 +31344,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'detail' },
-	          'WIOASDFJASDFJ AS'
+	          'THIS IS THE GAME DETAIL AREA'
 	        )
 	      )
 	    );

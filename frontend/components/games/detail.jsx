@@ -36,7 +36,7 @@ module.exports = React.createClass({
       <div>
         <div className="game-detail-pane">
           <div className="detail">
-          WIOASDFJASDFJ AS
+          THIS IS THE GAME DETAIL AREA
           </div>
         </div>
       </div>
