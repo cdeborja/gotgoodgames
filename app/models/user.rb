@@ -34,7 +34,23 @@ class User < ActiveRecord::Base
     user
   end
 
-  #sets password that cannot be easily deciphered
+  ##### Might be useful later to create a count of ongoing reviews #####
+  #
+  # def self.num_posts
+  #   num_posts = {}
+  #
+  #   Author
+  #     .joins("LEFT OUTER JOIN posts ON posts.author_id = authors.id")
+  #     .group(:id)
+  #     .select("authors.*, COUNT(posts.id) AS num_posts")
+  #     .each do |author|
+  #       num_posts[author] = author.num_posts
+  #     end
+  #
+  #   num_posts
+  # end
+  #
+  
   def password=(password)
     @password = password
     self.password_digest = BCrypt::Password.create(password)

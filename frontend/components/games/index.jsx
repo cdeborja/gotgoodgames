@@ -2,6 +2,7 @@ var React = require('react');
 var GameStore = require('../../stores/game');
 var ApiUtil = require('../../util/apiUtil');
 var GameIndexItem = require('./indexItem.jsx');
+var AppDispatcher = require('../../dispatcher/dispatcher');
 
 module.exports = React.createClass({
   getInitialState: function () {
@@ -26,7 +27,7 @@ module.exports = React.createClass({
       <div className="game-index-pane">
       <ul>
         <h2>Current games in the database!</h2>
-        
+
         {this.state.games.map(function (game) {
           return (
           <GameIndexItem key={game.id} game={game} />

@@ -10,14 +10,15 @@ var ApiUtil = require('./util/apiUtil');
 var GamesIndex = require('./components/games/index');
 var GameStore = require('./stores/game');
 var GameDetail = require('./components/games/detail');
-
-
+var LoginForm = require('./components/loginForm');
 
 var routes = (
   <Route path="/" component={App}>
     <Route path="index" component={GamesIndex} />
     <Route path="games/:gameId" component={GameDetail}>
     </Route>
+
+    <Route path="/login" component={LoginForm} />
   </Route>
 
 
@@ -29,3 +30,19 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('root')
   );
 });
+
+function _requireLoggedIn(nextState, replace, asyncCompletionCallback) {
+  if (!SessionStore.currentUserHasBeenFetched()) {
+    ApiUtil.fetchCurrentUser(_redirectIfNotLoggedIn);
+  } else {
+    _redirectIfNotLoggedIn();
+  }
+
+  function _redirectIfNotLoggedIn() {
+    if (!SessionStore.isLoggedIn()) {
+      replace("/login");
+    }
+
+    asyncCompletionCallback();
+  }
+}
