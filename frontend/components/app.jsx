@@ -7,7 +7,7 @@ module.exports = React.createClass({
   render: function () {
     return(
       <div id="game-container">
-      <div className="input-text">Hey there! Welcome back!</div>
+      <div className="header-welcome-text">Hey there! Welcome back!</div>
         {this.props.children}
       </div>
     );

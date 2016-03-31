@@ -19695,7 +19695,7 @@
 	      { id: 'game-container' },
 	      React.createElement(
 	        'div',
-	        { className: 'input-text' },
+	        { className: 'header-welcome-text' },
 	        'Hey there! Welcome back!'
 	      ),
 	      this.props.children

@@ -52,6 +52,15 @@ img {
   height: auto;
 }
 
+/* --- LOADING --- */
+
+.loading {
+  padding: 0 auto;
+  font-size: 50px;
+  font-weight: bold;
+
+}
+
 /* --- CLEARFIX --- */
 
 .group:after {
@@ -120,6 +129,12 @@ img {
   font-size: 14px;
 }
 
+.header-welcome-text {
+  float: right;
+  margin-right: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
 /* --- SIGN-IN PAGE --- */
 
 .sign-in-box {
