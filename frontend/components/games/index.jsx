@@ -23,11 +23,16 @@ module.exports = React.createClass({
 
   render: function () {
     return(
+      <div className="game-index-pane">
       <ul>
+        Current games in the database!
         {this.state.games.map(function (game) {
-          return <GameIndexItem key={game.id} game={game} />;
+          return (
+              <GameIndexItem key={game.id} game={game} />
+          );
         })}
-      </ul>
+        </ul>
+      </div>
     );
   }
 });

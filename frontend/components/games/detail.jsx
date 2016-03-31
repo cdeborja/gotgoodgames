@@ -33,12 +33,14 @@ module.exports = React.createClass({
     if(this.state.game === undefined) { return (<div>EMPTY</div>); }
 
     return(
-      <div>
-        <div className="game-detail-pane">
-          <div className="detail">
-          THIS IS THE GAME DETAIL AREA
-          </div>
-        </div>
+      <div className="game-index-pane">
+          <h2>Title: {this.state.game.title}</h2>
+          <ul>
+            <li></li>
+            <li>Release Date: {this.state.game.release_date}</li>
+            <li>Description: {this.state.game.description}</li>
+
+          </ul>
       </div>
     );
   }

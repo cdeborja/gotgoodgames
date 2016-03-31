@@ -6,9 +6,7 @@ module.exports = React.createClass({
   render: function () {
     return(
       <div id="game-container">
-        <div className="game-index-pane">
-          <GamesIndex />
-        </div>
+      <div className="input-text">Hey there! Welcome back!</div>
         {this.props.children}
       </div>
     );

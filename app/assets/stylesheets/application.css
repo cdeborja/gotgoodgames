@@ -186,7 +186,13 @@ img {
   border: solid 2px #ac9c8d;
   border-radius: 5px;
   padding: 20px;
-  font-family: monospace;
+  font-family: sans-serif;
+}
+
+.game-index-pane > h2 {
+  margin-bottom: 20px;
+  border-bottom: 1px solid black;
+  font-size: 24px;
 }
 
 .content-header {

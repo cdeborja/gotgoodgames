@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
 
-  root to: "static_pages#homepage"
 
   resources :users, only: [:create, :new, :index]
   resource :session, only: [:new, :create, :destroy]
 
   namespace :api, defaults: {format: :json} do
-    resources :games, only: [:create, :destroy, :index, :show, :update]
+    resources :games, only: [:index, :show]
   end
+
+  root to: "static_pages#root"
+  get "*unmatched_routes", to: "static_pages#root"
 end
