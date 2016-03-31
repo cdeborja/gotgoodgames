@@ -57,8 +57,6 @@
 	var GameStore = __webpack_require__(161);
 	var GameDetail = __webpack_require__(236);
 
-	//                    <Route path="*" component={ERROR}>
-
 	var routes = React.createElement(
 	  Route,
 	  { path: '/', component: App },
@@ -31377,7 +31375,13 @@
 	          this.state.game.description
 	        )
 	      ),
-	      React.createElement(ReviewsIndex, { reviews: this.state.game.reviews })
+	      React.createElement(
+	        'ul',
+	        null,
+	        this.state.game.reviews.map(function (review, id) {
+	          return React.createElement(ReviewsIndex, { review: review });
+	        })
+	      )
 	    );
 	  }
 	});
@@ -31387,27 +31391,41 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	// var ReviewIndexItem = require('./indexItem');
-	// var _reviews = this.props.reviews.forEach ( function (review) {
-	//   return <li> review.body </li> ;
-	// });
 
 	module.exports = React.createClass({
-	  displayName: 'exports',
+	  displayName: "exports",
 
 	  render: function () {
+	    if (this.props.reviews === []) return React.createElement("div", null);
+
 	    return React.createElement(
-	      'div',
+	      "div",
 	      null,
 	      React.createElement(
-	        'div',
-	        null,
-	        'YOU MADE IT TO THE REVIEWS OF A SINGLE GAME'
-	      ),
-	      React.createElement(
-	        'ul',
-	        null,
-	        'hello!'
+	        "div",
+	        { className: "review-box" },
+	        React.createElement(
+	          "ul",
+	          null,
+	          React.createElement(
+	            "li",
+	            null,
+	            "Review Score: ",
+	            this.props.review.score
+	          ),
+	          React.createElement(
+	            "li",
+	            null,
+	            "Reviewer ID: ",
+	            this.props.review.user_id
+	          ),
+	          React.createElement(
+	            "li",
+	            null,
+	            "Review: ",
+	            this.props.review.body
+	          )
+	        )
 	      )
 	    );
 	  }

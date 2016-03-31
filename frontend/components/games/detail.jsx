@@ -33,7 +33,7 @@ module.exports = React.createClass({
     if (this.state.game === undefined) { return (<div>EMPTY</div>); }
 
     return(
-      
+
       <div className="game-index-pane">
           <h2>Title: {this.state.game.title}</h2>
           <ul>
@@ -42,7 +42,11 @@ module.exports = React.createClass({
             <li>Release Date: {this.state.game.release_date}</li>
             <li>Description: {this.state.game.description}</li>
           </ul>
-          <ReviewsIndex reviews={this.state.game.reviews}/>
+          <ul>
+            {this.state.game.reviews.map(function (review, id) {
+              return <ReviewsIndex review={review} />;
+            })}
+          </ul>
       </div>
     );
   }

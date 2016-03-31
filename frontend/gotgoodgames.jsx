@@ -11,7 +11,7 @@ var GamesIndex = require('./components/games/index');
 var GameStore = require('./stores/game');
 var GameDetail = require('./components/games/detail');
 
-//                    <Route path="*" component={ERROR}>
+
 
 var routes = (
   <Route path="/" component={App}>

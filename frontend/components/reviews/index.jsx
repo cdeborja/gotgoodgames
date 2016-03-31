@@ -1,15 +1,19 @@
 var React = require('react');
-// var ReviewIndexItem = require('./indexItem');
-// var _reviews = this.props.reviews.forEach ( function (review) {
-//   return <li> review.body </li> ;
-// });
 
 module.exports = React.createClass({
   render: function () {
+    if (this.props.reviews === []) return (<div></div>);
+
     return(
       <div>
-      <div>YOU MADE IT TO THE REVIEWS OF A SINGLE GAME</div>
-      <ul>hello!</ul>
+        <div className="review-box">
+          <ul>
+          <li>Review Score: {this.props.review.score}</li>
+          <li>Reviewer ID: {this.props.review.user_id}</li>
+          <li>Review: {this.props.review.body}</li>
+          </ul>
+        </div>
+
       </div>
     );
   }
