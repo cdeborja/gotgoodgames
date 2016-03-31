@@ -1,7 +1,7 @@
 var React = require('react');
 var GameStore = require('../../stores/game');
 var ApiUtil = require('../../util/apiUtil');
-var ReviewsIndex = require('../reviews/index');
+var ReviewsIndexItem = require('../reviews/index');
 
 module.exports = React.createClass({
   getStateFromStore: function () {
@@ -30,21 +30,24 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    if (this.state.game === undefined) { return (<div>EMPTY</div>); }
+
+    var game = this.state.game;
+
+    if ( !game || !game.reviews) {return (<div className="loading"> LOADING!!! </div>);}
 
     return(
 
       <div className="game-index-pane">
-          <h2>Title: {this.state.game.title}</h2>
+          <h2>Title: {game.title}</h2>
           <ul>
             <li></li>
-            <li>Console: {this.state.game.console}</li>
-            <li>Release Date: {this.state.game.release_date}</li>
-            <li>Description: {this.state.game.description}</li>
+            <li>Console: {game.console}</li>
+            <li>Release Date: {game.release_date}</li>
+            <li>Description: {game.description}</li>
           </ul>
           <ul>
-            {this.state.game.reviews.map(function (review, id) {
-              return <ReviewsIndex review={review} />;
+            {game.reviews.map(function (review, id) {
+              return <ReviewsIndexItem key={id} review={review} />;
             })}
           </ul>
       </div>

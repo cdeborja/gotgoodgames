@@ -31304,7 +31304,7 @@
 	var React = __webpack_require__(1);
 	var GameStore = __webpack_require__(161);
 	var ApiUtil = __webpack_require__(184);
-	var ReviewsIndex = __webpack_require__(237);
+	var ReviewsIndexItem = __webpack_require__(237);
 
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -31335,11 +31335,14 @@
 	  },
 
 	  render: function () {
-	    if (this.state.game === undefined) {
+
+	    var game = this.state.game;
+
+	    if (!game || !game.reviews) {
 	      return React.createElement(
 	        'div',
-	        null,
-	        'EMPTY'
+	        { className: 'loading' },
+	        ' LOADING!!! '
 	      );
 	    }
 
@@ -31350,7 +31353,7 @@
 	        'h2',
 	        null,
 	        'Title: ',
-	        this.state.game.title
+	        game.title
 	      ),
 	      React.createElement(
 	        'ul',
@@ -31360,26 +31363,26 @@
 	          'li',
 	          null,
 	          'Console: ',
-	          this.state.game.console
+	          game.console
 	        ),
 	        React.createElement(
 	          'li',
 	          null,
 	          'Release Date: ',
-	          this.state.game.release_date
+	          game.release_date
 	        ),
 	        React.createElement(
 	          'li',
 	          null,
 	          'Description: ',
-	          this.state.game.description
+	          game.description
 	        )
 	      ),
 	      React.createElement(
 	        'ul',
 	        null,
-	        this.state.game.reviews.map(function (review, id) {
-	          return React.createElement(ReviewsIndex, { review: review });
+	        game.reviews.map(function (review, id) {
+	          return React.createElement(ReviewsIndexItem, { key: id, review: review });
 	        })
 	      )
 	    );
@@ -31396,36 +31399,30 @@
 	  displayName: "exports",
 
 	  render: function () {
-	    if (this.props.reviews === []) return React.createElement("div", null);
+	    if (this.props.review === []) {
+	      return React.createElement("div", null);
+	    }
 
 	    return React.createElement(
-	      "div",
-	      null,
+	      "ul",
+	      { className: "review-box" },
 	      React.createElement(
-	        "div",
-	        { className: "review-box" },
-	        React.createElement(
-	          "ul",
-	          null,
-	          React.createElement(
-	            "li",
-	            null,
-	            "Review Score: ",
-	            this.props.review.score
-	          ),
-	          React.createElement(
-	            "li",
-	            null,
-	            "Reviewer ID: ",
-	            this.props.review.user_id
-	          ),
-	          React.createElement(
-	            "li",
-	            null,
-	            "Review: ",
-	            this.props.review.body
-	          )
-	        )
+	        "li",
+	        null,
+	        "Review Score: ",
+	        this.props.review.score
+	      ),
+	      React.createElement(
+	        "li",
+	        null,
+	        "Reviewer ID: ",
+	        this.props.review.user_id
+	      ),
+	      React.createElement(
+	        "li",
+	        null,
+	        "Review: ",
+	        this.props.review.body
 	      )
 	    );
 	  }
