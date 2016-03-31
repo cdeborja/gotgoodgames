@@ -33,8 +33,7 @@ id          | integer    | not null, primary key
 user_id     | integer    | not null, foreign key
 game_id     | integer    | not null, foreign key
 score       | integer    | not null
-date        | datetime   | not null
-type        | string     | not null
+body        | text       |
 timestamps  | timestamps | not null
 
 ## shelves

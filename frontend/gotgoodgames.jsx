@@ -16,7 +16,8 @@ var GameDetail = require('./components/games/detail');
 var routes = (
   <Route path="/" component={App}>
     <Route path="index" component={GamesIndex} />
-    <Route path="games/:gameId" component={GameDetail} />
+    <Route path="games/:gameId" component={GameDetail}>
+    </Route>
   </Route>
 
 

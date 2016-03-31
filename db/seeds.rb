@@ -31,3 +31,29 @@ game4 = Game.create!(title: "Tetris",
         description: "Match blocks, get points",
         release_date: "06-06-1984",
         console: "Game Boy")
+
+Review.destroy_all
+review1 = Review.create!(user_id: user1.id,
+        game_id: game1.id, score: 2,
+        body: "I couldn't find Mario! Help!")
+review2 = Review.create!(user_id: user1.id,
+        game_id: game2.id, score: 3,
+        body: "I couldn't find Zelda! Help!")
+review3 = Review.create!(user_id: user1.id,
+        game_id: game3.id, score: 1,
+        body: "I couldn't find Senpai! Help!")
+review4 = Review.create!(user_id: user1.id,
+        game_id: game4.id, score: 2,
+        body: "I couldn't find Mario! Help!")
+review5 = Review.create!(user_id: user2.id,
+        game_id: game1.id, score: 5,
+        body: "Found him, so easy!")
+review6 = Review.create!(user_id: user2.id,
+        game_id: game2.id, score: 5,
+        body: "I love Zelda, great game!")
+review7 = Review.create!(user_id: user3.id,
+        game_id: game2.id, score: 1,
+        body: "I prefer Sega..")
+review8 = Review.create!(user_id: user3.id,
+        game_id: game3.id, score: 5,
+        body: "He finally noticed me! YAY!")

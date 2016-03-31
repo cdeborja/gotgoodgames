@@ -2,8 +2,7 @@ class User < ActiveRecord::Base
   validates :username, :password_digest, :session_token, presence: true, uniqueness: true
   validates :password, length:{minimum: 6, allow_nil: true}
 
-=begin
-  future associations of Users with other models
+
   has_many(
     :gameshelves,
     class_name: "Gameshelf",
@@ -22,16 +21,8 @@ class User < ActiveRecord::Base
     :reviews,
     class_name: "Review",
     primary_key: :id,
-    foreign_key: :review_id
+    foreign_key: :user_id
   )
-
-  has_many(
-    :ratings,
-    class_name: "Rating",
-    primary_key: :id,
-    foreign_key: :rating_id
-  )
-=end
 
   attr_reader :password
 

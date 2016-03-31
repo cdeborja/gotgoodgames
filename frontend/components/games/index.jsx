@@ -28,7 +28,7 @@ module.exports = React.createClass({
         Current games in the database!
         {this.state.games.map(function (game) {
           return (
-              <GameIndexItem key={game.id} game={game} />
+          <GameIndexItem key={game.id} game={game} />
           );
         })}
         </ul>

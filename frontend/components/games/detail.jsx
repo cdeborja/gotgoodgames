@@ -1,7 +1,7 @@
 var React = require('react');
 var GameStore = require('../../stores/game');
-var ApiUtil = require('../../util/apiUtil.js');
-// var ToysIndex = require('../toys/index.jsx');
+var ApiUtil = require('../../util/apiUtil');
+var ReviewsIndex = require('../reviews/index');
 
 module.exports = React.createClass({
   getStateFromStore: function () {
@@ -30,17 +30,19 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    if(this.state.game === undefined) { return (<div>EMPTY</div>); }
+    if (this.state.game === undefined) { return (<div>EMPTY</div>); }
 
     return(
+      
       <div className="game-index-pane">
           <h2>Title: {this.state.game.title}</h2>
           <ul>
             <li></li>
+            <li>Console: {this.state.game.console}</li>
             <li>Release Date: {this.state.game.release_date}</li>
             <li>Description: {this.state.game.description}</li>
-
           </ul>
+          <ReviewsIndex reviews={this.state.game.reviews}/>
       </div>
     );
   }

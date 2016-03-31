@@ -19685,6 +19685,7 @@
 
 	var React = __webpack_require__(1);
 	var GamesIndex = __webpack_require__(160);
+	// var ReviewsIndex = require('./reviews/index');
 
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -31305,7 +31306,7 @@
 	var React = __webpack_require__(1);
 	var GameStore = __webpack_require__(161);
 	var ApiUtil = __webpack_require__(184);
-	// var ToysIndex = require('../toys/index.jsx');
+	var ReviewsIndex = __webpack_require__(237);
 
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -31360,6 +31361,12 @@
 	        React.createElement(
 	          'li',
 	          null,
+	          'Console: ',
+	          this.state.game.console
+	        ),
+	        React.createElement(
+	          'li',
+	          null,
 	          'Release Date: ',
 	          this.state.game.release_date
 	        ),
@@ -31369,9 +31376,42 @@
 	          'Description: ',
 	          this.state.game.description
 	        )
+	      ),
+	      React.createElement(ReviewsIndex, { reviews: this.state.game.reviews })
+	    );
+	  }
+	});
+
+/***/ },
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	// var ReviewIndexItem = require('./indexItem');
+	// var _reviews = this.props.reviews.forEach ( function (review) {
+	//   return <li> review.body </li> ;
+	// });
+
+	module.exports = React.createClass({
+	  displayName: 'exports',
+
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'div',
+	        null,
+	        'YOU MADE IT TO THE REVIEWS OF A SINGLE GAME'
+	      ),
+	      React.createElement(
+	        'ul',
+	        null,
+	        'hello!'
 	      )
 	    );
 	  }
+
 	});
 
 /***/ }

@@ -1,5 +1,6 @@
 var React = require('react');
 var GamesIndex = require('./games/index');
+// var ReviewsIndex = require('./reviews/index');
 
 module.exports = React.createClass({
 
