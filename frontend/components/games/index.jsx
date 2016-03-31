@@ -25,7 +25,8 @@ module.exports = React.createClass({
     return(
       <div className="game-index-pane">
       <ul>
-        Current games in the database!
+        <h2>Current games in the database!</h2>
+        
         {this.state.games.map(function (game) {
           return (
           <GameIndexItem key={game.id} game={game} />

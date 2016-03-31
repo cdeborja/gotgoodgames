@@ -19739,7 +19739,11 @@
 	      React.createElement(
 	        'ul',
 	        null,
-	        'Current games in the database!',
+	        React.createElement(
+	          'h2',
+	          null,
+	          'Current games in the database!'
+	        ),
 	        this.state.games.map(function (game) {
 	          return React.createElement(GameIndexItem, { key: game.id, game: game });
 	        })

@@ -200,7 +200,7 @@ img {
   width: 620px;
   border: solid 2px #ac9c8d;
   border-radius: 5px;
-  padding: 20px;
+  padding: 20px 20px 10px 20px;
   font-family: sans-serif;
 }
 
@@ -213,6 +213,17 @@ img {
 .content-header {
   font-size: 36px;
   text-align: right;
+}
+
+.game-detail-item {
+  padding: 10px 20px;
+  border: 2px solid #aaa;
+  border-radius: 5px;
+  margin: 10px 20px;
+}
+
+.game-detail-item > p {
+  cursor: pointer;
 }
 
 /* --- REVIEW BOX --- */
