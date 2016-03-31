@@ -12,6 +12,14 @@ var resetGames = function (games) {
   });
 };
 
+var resetGame = function (game) {
+  _games[game.id] = game;
+};
+
+GameStore.find = function (id) {
+  return _games[id];
+};
+
 GameStore.all = function () {
   var games = [];
   for (var id in _games) {
@@ -24,6 +32,10 @@ GameStore.__onDispatch = function (payload) {
   switch (payload.actionType) {
     case GameConstants.GAMES_RECEIVED:
       resetGames(payload.games);
+      GameStore.__emitChange();
+      break;
+    case GameConstants.GAME_RECEIVED:
+      resetGame(payload.game);
       GameStore.__emitChange();
       break;
   }

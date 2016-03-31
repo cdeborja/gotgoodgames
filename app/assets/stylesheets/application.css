@@ -186,6 +186,7 @@ img {
   border: solid 2px #ac9c8d;
   border-radius: 5px;
   padding: 20px;
+  font-family: monospace;
 }
 
 .content-header {

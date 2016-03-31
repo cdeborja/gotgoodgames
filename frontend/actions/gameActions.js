@@ -7,6 +7,13 @@ module.exports = {
       actionType: GameConstants.GAMES_RECEIVED,
       games: games
     });
+  },
+
+  receiveSingleGame: function (game) {
+    Dispatcher.dispatch({
+      actionType: GameConstants.GAME_RECEIVED,
+      game: game
+    });
   }
 
 };

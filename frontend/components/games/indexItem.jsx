@@ -2,16 +2,16 @@ var React = require('react');
 var History = require('react-router').History;
 
 module.exports = React.createClass({
-  // mixins: [History],
+  mixins: [History],
 
-  // showDetail: function () {
-  //   this.history.pushState(null, '/game/' + this.props.pokemon.id, {});
-  // },
-// onClick={this.showDetail} className="poke-list-item"
+  showDetail: function () {
+    this.history.pushState(null, '/games/' + this.props.game.id, {});
+  },
+
   render: function () {
     return(
-      <li>
-        <p>Name: {this.props.game.title}</p>
+      <li onClick={this.showDetail} className="game-detail-item">
+        <p>Game Title: {this.props.game.title}</p>
       </li>
     );
   }

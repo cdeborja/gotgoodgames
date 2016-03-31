@@ -7,11 +7,13 @@ var Route = require('react-router').Route;
 var IndexRoute = require('react-router').IndexRoute;
 var ApiUtil = require('./util/apiUtil');
 var GameStore = require('./stores/game');
+var GameDetail = require('./components/games/detail');
 
 
 var routes = (
-  <Route path="/" component={App} />
-
+  <Route path="/" component={App}>
+    <Route path="games/:gameId" component={GameDetail} />
+  </Route>
 
 
 );
@@ -22,6 +24,3 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('homepage')
   );
 });
-
-// window.ApiUtil = ApiUtil;
-// window.GameStore = GameStore;

@@ -53,8 +53,13 @@
 	var IndexRoute = __webpack_require__(159).IndexRoute;
 	var ApiUtil = __webpack_require__(208);
 	var GameStore = __webpack_require__(215);
+	var GameDetail = __webpack_require__(236);
 
-	var routes = React.createElement(Route, { path: '/', component: App });
+	var routes = React.createElement(
+	  Route,
+	  { path: '/', component: App },
+	  React.createElement(Route, { path: 'games/:gameId', component: GameDetail })
+	);
 
 	document.addEventListener("DOMContentLoaded", function () {
 	  ReactDOM.render(React.createElement(
@@ -63,9 +68,6 @@
 	    routes
 	  ), document.getElementById('homepage'));
 	});
-
-	// window.ApiUtil = ApiUtil;
-	// window.GameStore = GameStore;
 
 /***/ },
 /* 1 */
@@ -24325,11 +24327,23 @@
 	      url: "api/games",
 	      success: function (games) {
 	        ApiActions.receiveAllGames(games);
-	        console.log(games);
 	      },
 
 	      error: function () {
 	        console.log("Could not retrieve games");
+	      }
+	    });
+	  },
+
+	  fetchSingleGame: function (id) {
+	    $.ajax({
+	      url: "api/games/" + id,
+	      success: function (game) {
+	        ApiActions.receiveSingleGame(game);
+	      },
+
+	      error: function () {
+	        console.log("Could not retrieve game");
 	      }
 	    });
 	  }
@@ -24348,6 +24362,13 @@
 	    Dispatcher.dispatch({
 	      actionType: GameConstants.GAMES_RECEIVED,
 	      games: games
+	    });
+	  },
+
+	  receiveSingleGame: function (game) {
+	    Dispatcher.dispatch({
+	      actionType: GameConstants.GAME_RECEIVED,
+	      game: game
 	    });
 	  }
 
@@ -24673,7 +24694,8 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-	  GAMES_RECEIVED: "GAMES_RECEIVED"
+	  GAMES_RECEIVED: "GAMES_RECEIVED",
+	  GAME_RECEIVED: "GAME_RECEIVED"
 	};
 
 /***/ },
@@ -24694,6 +24716,14 @@
 	  });
 	};
 
+	var resetGame = function (game) {
+	  _games[game.id] = game;
+	};
+
+	GameStore.find = function (id) {
+	  return _games[id];
+	};
+
 	GameStore.all = function () {
 	  var games = [];
 	  for (var id in _games) {
@@ -24706,6 +24736,10 @@
 	  switch (payload.actionType) {
 	    case GameConstants.GAMES_RECEIVED:
 	      resetGames(payload.games);
+	      GameStore.__emitChange();
+	      break;
+	    case GameConstants.GAME_RECEIVED:
+	      resetGame(payload.game);
 	      GameStore.__emitChange();
 	      break;
 	  }
@@ -31209,20 +31243,20 @@
 	module.exports = React.createClass({
 	  displayName: 'exports',
 
-	  // mixins: [History],
+	  mixins: [History],
 
-	  // showDetail: function () {
-	  //   this.history.pushState(null, '/game/' + this.props.pokemon.id, {});
-	  // },
-	  // onClick={this.showDetail} className="poke-list-item"
+	  showDetail: function () {
+	    this.history.pushState(null, '/games/' + this.props.game.id, {});
+	  },
+
 	  render: function () {
 	    return React.createElement(
 	      'li',
-	      null,
+	      { onClick: this.showDetail, className: 'game-detail-item' },
 	      React.createElement(
 	        'p',
 	        null,
-	        'Name: ',
+	        'Game Title: ',
 	        this.props.game.title
 	      )
 	    );
@@ -31250,6 +31284,68 @@
 	        React.createElement(GamesIndex, null)
 	      ),
 	      this.props.children
+	    );
+	  }
+	});
+
+/***/ },
+/* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var GameStore = __webpack_require__(215);
+	var ApiUtil = __webpack_require__(208);
+	// var ToysIndex = require('../toys/index.jsx');
+
+	module.exports = React.createClass({
+	  displayName: 'exports',
+
+	  getStateFromStore: function () {
+	    return { game: GameStore.find(parseInt(this.props.params.gameId)) };
+	  },
+
+	  _onChange: function () {
+	    this.setState(this.getStateFromStore());
+	  },
+
+	  getInitialState: function () {
+	    return this.getStateFromStore();
+	  },
+
+	  componentWillReceiveProps: function (newProps) {
+	    ApiUtil.fetchSingleGame(parseInt(newProps.params.gameId));
+	  },
+
+	  componentDidMount: function () {
+	    this.gameListener = GameStore.addListener(this._onChange);
+	    ApiUtil.fetchSingleGame(parseInt(this.props.params.gameId));
+	  },
+
+	  componentWillUnmount: function () {
+	    this.gameListener.remove();
+	  },
+
+	  render: function () {
+	    if (this.state.game === undefined) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        'EMPTY'
+	      );
+	    }
+
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'div',
+	        { className: 'game-detail-pane' },
+	        React.createElement(
+	          'div',
+	          { className: 'detail' },
+	          'WIOASDFJASDFJ AS'
+	        )
+	      )
 	    );
 	  }
 	});

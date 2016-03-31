@@ -9,7 +9,6 @@ module.exports = React.createClass({
         <div className="game-index-pane">
           <GamesIndex />
         </div>
-
         {this.props.children}
       </div>
     );
