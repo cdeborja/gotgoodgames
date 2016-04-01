@@ -55,10 +55,10 @@ img {
 /* --- LOADING --- */
 
 .loading {
-  padding: 0 auto;
+  margin: auto;
   font-size: 50px;
   font-weight: bold;
-
+  color: red;
 }
 
 /* --- CLEARFIX --- */
@@ -72,25 +72,32 @@ img {
 /* --- HEADER --- */
 
 /*.header {
-  background: #5f9ea0;
+  background: red;
   color: #fff;
   margin: 0 0 16px 0;
 }*/
 
 .header a {
-  display: block;
-  padding: 10px 15px;
+  padding: 10px 20px;
 }
 
 .header-nav {
   margin: 0px auto 16px auto;;
 }
 
+.header-nav > h2 {
+  float: right;
+  margin-right: 20px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
 .header-logo-first {
   float: left;
   font-weight: 100;
   font-size: 32px;
-  margin-left: 20px;
+  margin-left: 14px;
+  margin-top: 4px;
   color: #3e2c1a;
   letter-spacing: -2px;
 }
@@ -101,6 +108,7 @@ img {
   color: #3e2c1a;
   letter-spacing: -2px;
   font-weight: bold;
+  margin-top: 4px;
 }
 
 .header-list {
@@ -121,28 +129,31 @@ img {
   font-size: 24px;
 }
 
-.badge {
+.logout-button {
+  float: right;
+  display: block;
+  border-radius: 5px;
+  padding: 5px 10px;
+  border: 1px solid black;
+  margin-right: 20px;
+}
+
+/*.badge {
   display: inline;
   background: #000;
   border-radius: 50%;
   padding: 1px 6px;
   font-size: 14px;
-}
+}*/
 
-.header-welcome-text {
-  float: right;
-  margin-right: 20px;
-  font-size: 20px;
-  font-weight: bold;
-}
 /* --- SIGN-IN PAGE --- */
 
 .sign-in-box {
   display: block;
-  margin: 0 auto;
+  margin: 40px auto;
   background: #fff;
   width: 600px;
-  height: 231px;
+  height: auto;
   border: solid 1px #ccc;
   padding: 40px 40px 20px 40px;
   border-radius: 5px;
@@ -151,11 +162,12 @@ img {
 .sign-in-box > h1{
   font-weight: bold;
   font-size: 36px;
-  padding-left: 250px;
+  margin-left: 145px;
+  margin-bottom: 20px;
 }
 .input-box {
   margin: auto;
-  padding: 0 150px;
+  padding: 0 145px;
 }
 
 .input-text {
@@ -202,6 +214,8 @@ img {
   border-radius: 5px;
   padding: 20px 20px 10px 20px;
   font-family: sans-serif;
+  margin-top: 40px;
+  background: #fff;
 }
 
 .game-index-pane > h2 {
@@ -209,6 +223,43 @@ img {
   border-bottom: 1px solid black;
   font-size: 24px;
 }
+
+.game-index-pane > ul > li {
+  background: #ffe;
+  margin-bottom: 10px;
+  border-bottom: 1px solid black;
+  font-size: 16px;
+}
+
+.game-index-pane > ul > li:hover {
+  background: #f7f2ed;
+  cursor: pointer;
+}
+
+/* game detail */
+.game-detail-pane {
+  margin: 0 auto;
+  width: 620px;
+  border: solid 2px #ac9c8d;
+  border-radius: 5px;
+  padding: 20px 20px 10px 20px;
+  font-family: sans-serif;
+  margin-top: 40px;
+  background: #fff;
+}
+
+.game-detail-pane > h2 {
+  margin-bottom: 20px;
+  border-bottom: 1px solid black;
+  font-size: 24px;
+}
+
+.game-detail-pane > ul > li {
+  margin-bottom: 10px;
+  border-bottom: 1px solid black;
+  font-size: 20px;
+}
+
 
 .content-header {
   font-size: 36px;

@@ -19741,7 +19741,7 @@
 	    if (this.state.currentUser) {
 	      button = React.createElement(
 	        'button',
-	        { onClick: ApiUtil.logout },
+	        { className: 'logout-button', onClick: ApiUtil.logout },
 	        'Logout'
 	      );
 	      welcomeMessage = React.createElement(
@@ -19752,47 +19752,43 @@
 	      );
 	    }
 	    return React.createElement(
-	      'div',
-	      null,
-	      button,
-	      welcomeMessage,
+	      'header',
+	      { className: 'header group' },
 	      React.createElement(
-	        'h1',
-	        null,
-	        'Stumblr'
+	        'a',
+	        { href: '/#/index' },
+	        React.createElement(
+	          'div',
+	          { className: 'header-logo-first' },
+	          'gotgood'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'header-logo-second' },
+	          'games'
+	        )
 	      ),
-	      this.props.children
+	      React.createElement(
+	        'nav',
+	        { className: 'header-nav group' },
+	        React.createElement(
+	          'ul',
+	          { className: 'header-nav' },
+	          button,
+	          welcomeMessage
+	        ),
+	        React.createElement(
+	          'div',
+	          null,
+	          this.props.children
+	        )
+	      )
 	    );
 	  }
 	
 	});
 	
 	window.SessionStore = SessionStore;
-	// render: function () {
-	//   var button, welcomeMessage;
-	//
-	//   if (this.state.currentUser) {
-	//     button = <button onClick={ApiUtil.logout}>Logout</button>
-	//     welcomeMessage = <h2>Welcome, {this.state.currentUser.name}</h2>;
-	//   }
-	//
-	//   return (
-	//     <div>
-	//     {button}
-	//     {welcomeMessage}
-	//     <h1>Stumblr</h1>
-	//     {this.props.children}
-	//     </div>
-	//   );
-	// },
-
-	// Previous return
-	// return(
-	//   <div id="game-container">
-	//   <div className="header-welcome-text">Hey there! Welcome back!</div>
-	//   {this.props.children}
-	//   </div>
-	// );
 
 /***/ },
 /* 160 */
@@ -19838,13 +19834,13 @@
 	      'div',
 	      { className: 'game-index-pane' },
 	      React.createElement(
+	        'h2',
+	        null,
+	        'Current games in the database!'
+	      ),
+	      React.createElement(
 	        'ul',
 	        null,
-	        React.createElement(
-	          'h2',
-	          null,
-	          'Current games in the database!'
-	        ),
 	        this.state.games.map(function (game) {
 	          return React.createElement(GameIndexItem, { key: game.id, game: game });
 	        })
@@ -26677,11 +26673,12 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var AppDispatcher = __webpack_require__(180);
-	var ApiActions = __webpack_require__(185);
+	var GameActions = __webpack_require__(185);
 	var SessionStore = __webpack_require__(186);
 	var SessionActions = __webpack_require__(188);
 	
 	module.exports = {
+	  //USER RELATED
 	  login: function (credentials, callback) {
 	    $.ajax({
 	      type: "POST",
@@ -26720,12 +26717,29 @@
 	      }
 	    });
 	  },
+	  //REVIEW RELATED
+	  addReview: function (reviewParams) {
+	    $.ajax({
+	      type: "GET",
+	      url: "/api/reviews/new",
+	      dataType: "json",
+	      data: reviewParams,
+	      success: function (currentUserId, reviewId) {
+	        console.log("got to success");
+	        ReviewActions.createCurrentReview(currentUserId, reviewId);
+	      },
+	      error: function () {
+	        console.log("Could not create reveiw");
+	      }
+	    });
+	  },
 	
+	  //GAME RELATED
 	  fetchAllGames: function () {
 	    $.ajax({
 	      url: "/api/games",
 	      success: function (games) {
-	        ApiActions.receiveAllGames(games);
+	        GameActions.receiveAllGames(games);
 	      },
 	
 	      error: function () {
@@ -26738,7 +26752,7 @@
 	    $.ajax({
 	      url: "/api/games/" + id,
 	      success: function (game) {
-	        ApiActions.receiveSingleGame(game);
+	        GameActions.receiveSingleGame(game);
 	      },
 	
 	      error: function () {
@@ -26866,12 +26880,8 @@
 	    return React.createElement(
 	      'li',
 	      { onClick: this.showDetail, className: 'game-detail-item' },
-	      React.createElement(
-	        'p',
-	        null,
-	        'Game Title: ',
-	        this.props.game.title
-	      )
+	      'Game Title: ',
+	      this.props.game.title
 	    );
 	  }
 	});
@@ -31976,10 +31986,17 @@
 	    this.gameListener.remove();
 	  },
 	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	
+	    reviewParams = { reviewId: this.state.game.id, userId: 1 };
+	    ApiUtil.addReview(reviewParams);
+	  },
+	
+	  // In the scoring part of the form, can either user input type range for 0-100 or number
 	  render: function () {
 	
 	    var game = this.state.game;
-	
 	    if (!game || !game.reviews) {
 	      return React.createElement(
 	        'div',
@@ -31987,10 +32004,13 @@
 	        ' LOADING!!! '
 	      );
 	    }
+	    var gameReviews = game.reviews.map(function (review, id) {
+	      return React.createElement(ReviewsIndexItem, { key: id, review: review });
+	    });
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'game-index-pane' },
+	      { className: 'game-detail-pane' },
 	      React.createElement(
 	        'h2',
 	        null,
@@ -32000,7 +32020,11 @@
 	      React.createElement(
 	        'ul',
 	        null,
-	        React.createElement('li', null),
+	        React.createElement(
+	          'li',
+	          null,
+	          'Score: PUT SCORE HERE LATER'
+	        ),
 	        React.createElement(
 	          'li',
 	          null,
@@ -32021,11 +32045,35 @@
 	        )
 	      ),
 	      React.createElement(
+	        'h1',
+	        null,
+	        'Add your own review!'
+	      ),
+	      React.createElement(
+	        'form',
+	        { className: 'input-box', onSubmit: this.handleSubmit },
+	        React.createElement(
+	          'label',
+	          { className: 'input-text', htmlFor: 'score' },
+	          'Score'
+	        ),
+	        React.createElement('input', { className: '', type: 'number' }),
+	        React.createElement(
+	          'label',
+	          { className: 'input-text', htmlFor: 'review' },
+	          'Review Box'
+	        ),
+	        React.createElement('input', { className: 'input-field', type: 'text' }),
+	        React.createElement(
+	          'button',
+	          { className: 'submit-button' },
+	          'Add your review'
+	        )
+	      ),
+	      React.createElement(
 	        'ul',
 	        null,
-	        game.reviews.map(function (review, id) {
-	          return React.createElement(ReviewsIndexItem, { key: id, review: review });
-	        })
+	        gameReviews
 	      )
 	    );
 	  }
@@ -32095,7 +32143,7 @@
 	  render: function () {
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'sign-in-box group' },
 	      React.createElement(
 	        'h1',
 	        null,
@@ -32103,23 +32151,25 @@
 	      ),
 	      React.createElement(
 	        'form',
-	        { onSubmit: this.handleSubmit },
+	        { className: 'input-box', onSubmit: this.handleSubmit },
 	        React.createElement(
 	          'label',
-	          { htmlFor: 'username' },
+	          { className: 'input-text', htmlFor: 'username' },
 	          'Username'
 	        ),
-	        React.createElement('input', { onChange: this.updateUsername, type: 'text', value: this.state.username }),
+	        React.createElement('input', { className: 'input-field', onChange: this.updateUsername,
+	          type: 'text', value: this.state.username }),
 	        React.createElement(
 	          'label',
-	          { htmlFor: 'password' },
+	          { className: 'input-text', htmlFor: 'password' },
 	          'Password'
 	        ),
-	        React.createElement('input', { onChange: this.updatePassword, type: 'password', value: this.state.password }),
+	        React.createElement('input', { className: 'input-field', onChange: this.updatePassword,
+	          type: 'password', value: this.state.password }),
 	        React.createElement(
 	          'button',
-	          null,
-	          'Submit'
+	          { className: 'submit-button' },
+	          'Sign In'
 	        )
 	      )
 	    );
@@ -32127,7 +32177,6 @@
 	
 	  handleSubmit: function (e) {
 	    e.preventDefault();
-	
 	    var router = this.context.router;
 	
 	    ApiUtil.login(this.state, function () {

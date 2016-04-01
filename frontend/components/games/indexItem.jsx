@@ -11,7 +11,7 @@ module.exports = React.createClass({
   render: function () {
     return(
       <li onClick={this.showDetail} className="game-detail-item">
-        <p>Game Title: {this.props.game.title}</p>
+        Game Title: {this.props.game.title}
       </li>
     );
   }

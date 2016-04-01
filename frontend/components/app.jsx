@@ -38,16 +38,30 @@ module.exports = React.createClass({
   render: function () {
     var button, welcomeMessage;
     if (this.state.currentUser) {
-      button = <button onClick={ApiUtil.logout}>Logout</button>
+      button = <button className="logout-button" onClick={ApiUtil.logout}>Logout</button>
       welcomeMessage = <h2>Welcome, {this.state.currentUser.username}</h2>;
     }
     return (
-      <div>
-      {button}
-      {welcomeMessage}
-      <h1>Stumblr</h1>
-      {this.props.children}
-      </div>
+      <header className="header group">
+        <a href="/#/index">
+        <div className="header-logo-first">
+          gotgood
+        </div>
+        <div className="header-logo-second">
+          games
+        </div>
+      </a>
+        <nav className="header-nav group">
+        <ul className="header-nav">
+        {button}
+        {welcomeMessage}
+        </ul>
+        <div>
+        {this.props.children}
+        </div>
+
+        </nav>
+      </header>
     );
   }
 
@@ -55,29 +69,3 @@ module.exports = React.createClass({
 });
 
 window.SessionStore =SessionStore;
-// render: function () {
-//   var button, welcomeMessage;
-//
-//   if (this.state.currentUser) {
-//     button = <button onClick={ApiUtil.logout}>Logout</button>
-//     welcomeMessage = <h2>Welcome, {this.state.currentUser.name}</h2>;
-//   }
-//
-//   return (
-//     <div>
-//     {button}
-//     {welcomeMessage}
-//     <h1>Stumblr</h1>
-//     {this.props.children}
-//     </div>
-//   );
-// },
-
-
-// Previous return
-// return(
-//   <div id="game-container">
-//   <div className="header-welcome-text">Hey there! Welcome back!</div>
-//   {this.props.children}
-//   </div>
-// );

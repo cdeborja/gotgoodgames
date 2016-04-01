@@ -15,17 +15,23 @@ var LoginForm = React.createClass({
 
   render: function() {
     return (
-      <div>
+      <div className="sign-in-box group">
         <h1>Please Log in</h1>
 
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="username">Username</label>
-          <input onChange={this.updateUsername} type="text" value={this.state.username}/>
+        <form className="input-box" onSubmit={this.handleSubmit}>
 
-          <label htmlFor="password">Password</label>
-          <input onChange={this.updatePassword} type="password" value={this.state.password}/>
+          <label className="input-text" htmlFor="username">
+            Username
+          </label>
+          <input className="input-field" onChange={this.updateUsername}
+          type="text" value={this.state.username}/>
 
-          <button>Submit</button>
+          <label className="input-text" htmlFor="password">Password</label>
+          <input className="input-field" onChange={this.updatePassword}
+          type="password" value={this.state.password}/>
+
+          <button className="submit-button">Sign In</button>
+
         </form>
       </div>
     );
@@ -33,7 +39,6 @@ var LoginForm = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-
     var router = this.context.router;
 
     ApiUtil.login(this.state, function() {

@@ -1,9 +1,10 @@
 var AppDispatcher = require('../dispatcher/dispatcher');
-var ApiActions = require('../actions/gameActions.js');
+var GameActions = require('../actions/gameActions.js');
 var SessionStore = require('../stores/session');
 var SessionActions = require('../actions/sessionActions');
 
 module.exports = {
+  //USER RELATED
   login: function(credentials, callback) {
     $.ajax({
       type: "POST",
@@ -42,12 +43,30 @@ module.exports = {
       }
     });
   },
+  //REVIEW RELATED
+  addReview: function(reviewParams) {
+    $.ajax({
+      type: "GET",
+      url: "/api/reviews/new",
+      dataType: "json",
+      data: reviewParams,
+      success: function(currentUserId, reviewId) {
+        console.log("got to success");
+        ReviewActions.createCurrentReview(currentUserId, reviewId);
+      },
+      error: function () {
+          console.log("Could not create reveiw");
+      }
+    });
+  },
 
+
+  //GAME RELATED
   fetchAllGames: function() {
     $.ajax({
       url: "/api/games",
       success: function (games) {
-        ApiActions.receiveAllGames(games);
+        GameActions.receiveAllGames(games);
       },
 
       error: function () {
@@ -60,7 +79,7 @@ module.exports = {
     $.ajax({
       url: "/api/games/" + id,
       success: function (game) {
-        ApiActions.receiveSingleGame(game);
+        GameActions.receiveSingleGame(game);
       },
 
       error: function () {
