@@ -30,7 +30,6 @@ module.exports = React.createClass({
     if (SessionStore.isLoggedIn()) {
       this.setState({ currentUser: SessionStore.currentUser() });
     } else {
-      debugger
       this.context.router.push("/login");
     }
   },

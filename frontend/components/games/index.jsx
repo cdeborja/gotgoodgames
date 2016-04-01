@@ -23,6 +23,9 @@ module.exports = React.createClass({
   },
 
   render: function () {
+
+    if ( !this.state.games ) {return (<div className="loading"> LOADING!!! </div>);}
+
     return(
       <div className="game-index-pane">
       <ul>

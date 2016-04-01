@@ -8,7 +8,7 @@ var LoginForm = React.createClass({
 
   getInitialState: function() {
     return {
-      name: "",
+      username: "",
       password: ""
     };
   },
@@ -19,8 +19,8 @@ var LoginForm = React.createClass({
         <h1>Please Log in</h1>
 
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor="name">Name</label>
-          <input onChange={this.updateName} type="text" value={this.state.name}/>
+          <label htmlFor="username">Username</label>
+          <input onChange={this.updateUsername} type="text" value={this.state.username}/>
 
           <label htmlFor="password">Password</label>
           <input onChange={this.updatePassword} type="password" value={this.state.password}/>
@@ -41,8 +41,8 @@ var LoginForm = React.createClass({
     });
   },
 
-  updateName: function(e) {
-    this.setState({ name: e.currentTarget.value });
+  updateUsername: function(e) {
+    this.setState({ username: e.currentTarget.value });
   },
 
   updatePassword: function(e) {

@@ -45,7 +45,7 @@ module.exports = {
 
   fetchAllGames: function() {
     $.ajax({
-      url: "api/games",
+      url: "/api/games",
       success: function (games) {
         ApiActions.receiveAllGames(games);
       },
@@ -58,7 +58,7 @@ module.exports = {
 
   fetchSingleGame: function (id) {
     $.ajax({
-      url: "api/games/" + id,
+      url: "/api/games/" + id,
       success: function (game) {
         ApiActions.receiveSingleGame(game);
       },

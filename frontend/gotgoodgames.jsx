@@ -5,7 +5,7 @@ var App = require('./components/app');
 var Router = require('react-router').Router;
 var Route = require('react-router').Route;
 var IndexRoute = require('react-router').IndexRoute;
-var browserHistory = require('react-router').browserHistory;
+var hashHistory = require('react-router').hashHistory;
 var ApiUtil = require('./util/apiUtil');
 var GamesIndex = require('./components/games/index');
 var GameStore = require('./stores/game');
@@ -14,11 +14,11 @@ var LoginForm = require('./components/loginForm');
 
 var routes = (
   <Route path="/" component={App}>
-    <Route path="index" component={GamesIndex} />
+    <Route path="index" component={GamesIndex} onEnter={_requireLoggedIn}/>
     <Route path="games/:gameId" component={GameDetail}>
     </Route>
+    <Route path="login" component={LoginForm} />
 
-    <Route path="/login" component={LoginForm} />
   </Route>
 
 
@@ -26,7 +26,7 @@ var routes = (
 
 document.addEventListener("DOMContentLoaded", function () {
   ReactDOM.render(
-    <Router history={browserHistory}>{routes}</Router>,
+    <Router history={hashHistory}>{routes}</Router>,
     document.getElementById('root')
   );
 });
