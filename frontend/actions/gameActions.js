@@ -1,5 +1,5 @@
-var Dispatcher = require('../dispatcher/dispatcher.js');
-var GameConstants = require('../constants/gameConstants.js');
+var Dispatcher = require('../dispatcher/dispatcher');
+var GameConstants = require('../constants/gameConstants');
 
 module.exports = {
   receiveAllGames: function (games) {

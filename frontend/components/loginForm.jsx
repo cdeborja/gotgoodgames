@@ -40,7 +40,6 @@ var LoginForm = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
     var router = this.context.router;
-
     ApiUtil.login(this.state, function() {
       router.push("/index");
     });

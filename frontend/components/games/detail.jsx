@@ -2,10 +2,13 @@ var React = require('react');
 var GameStore = require('../../stores/game');
 var ApiUtil = require('../../util/apiUtil');
 var ReviewsIndexItem = require('../reviews/index');
+var ReviewStore = require('../../stores/review');
 
 module.exports = React.createClass({
   getStateFromStore: function () {
-    return { game: GameStore.find(parseInt(this.props.params.gameId)) };
+    return { game: GameStore.find(parseInt(this.props.params.gameId)),
+             body: "",
+             score: null };
   },
 
   _onChange: function () {
@@ -13,7 +16,7 @@ module.exports = React.createClass({
   },
 
   getInitialState: function () {
-    return this.getStateFromStore();
+    return (this.getStateFromStore() );
   },
 
   componentWillReceiveProps: function (newProps) {
@@ -27,13 +30,6 @@ module.exports = React.createClass({
 
   componentWillUnmount: function () {
     this.gameListener.remove();
-  },
-
-  handleSubmit: function(e) {
-    e.preventDefault();
-
-    reviewParams = {reviewId: this.state.game.id, userId: 1 }
-    ApiUtil.addReview(reviewParams);
   },
 
 
@@ -62,10 +58,12 @@ module.exports = React.createClass({
             <label className="input-text" htmlFor="score">
               Score
             </label>
-            <input className="" type="number" />
+            <input className="input-field" onChange={this.updateScore}
+            type="number" value={this.state.score}/>
 
             <label className="input-text" htmlFor="review">Review Box</label>
-            <input className="input-field" type="text"/>
+            <input className="input-field" onChange={this.updateReview}
+            type="text" value={this.state.review}/>
 
             <button className="submit-button">Add your review</button>
 
@@ -77,5 +75,30 @@ module.exports = React.createClass({
           </ul>
       </div>
     );
+  },
+
+  handleSubmit: function(e) {
+    e.preventDefault();
+
+    var user_id = SessionStore.currentUser().id;
+
+    var reviewParams = {
+      review: {
+      user_id: user_id,
+      game_id: this.state.game.id,
+      score: this.state.score,
+      body: this.state.body
+      }
+    };
+    ApiUtil.createReview(reviewParams);
+  },
+
+  updateScore: function (e) {
+    this.setState({ score: e.currentTarget.value});
+  },
+
+  updateReview: function (e) {
+    this.setState({ body: e.currentTarget.value});
   }
+
 });

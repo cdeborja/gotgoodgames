@@ -5,12 +5,11 @@ class Api::ReviewsController < ApplicationController
   end
 
   def create
-    @review = Review.new(review_params)
-
-    if @review.save
-      render "/api/games" + review_params.game_id
+    review = Review.new(review_params)
+    if review.save
+      render json: review
     else
-      render json: @review.errors.full_messages, status: 422
+      render json: review.errors.full_messages, status: 422
     end
   end
 
@@ -37,6 +36,6 @@ class Api::ReviewsController < ApplicationController
   private
 
   def review_params
-    params.require(:review).permit(:user_id, :game_id, :body)
+    params.require(:review).permit(:user_id, :game_id, :score, :body)
   end
 end

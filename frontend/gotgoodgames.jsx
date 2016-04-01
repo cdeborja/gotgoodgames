@@ -15,7 +15,7 @@ var LoginForm = require('./components/loginForm');
 var routes = (
   <Route path="/" component={App}>
     <Route path="index" component={GamesIndex} onEnter={_requireLoggedIn}/>
-    <Route path="games/:gameId" component={GameDetail}>
+    <Route path="games/:gameId" component={GameDetail} onEnter={_requireLoggedIn} >
     </Route>
     <Route path="login" component={LoginForm} />
 

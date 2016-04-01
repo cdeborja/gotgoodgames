@@ -2,6 +2,7 @@ var AppDispatcher = require('../dispatcher/dispatcher');
 var GameActions = require('../actions/gameActions.js');
 var SessionStore = require('../stores/session');
 var SessionActions = require('../actions/sessionActions');
+var ReviewActions = require('../actions/reviewActions');
 
 module.exports = {
   //USER RELATED
@@ -30,7 +31,6 @@ module.exports = {
   },
 
   fetchCurrentUser: function(completion) {
-
     $.ajax({
       type: "GET",
       url: "/api/session",
@@ -44,18 +44,18 @@ module.exports = {
     });
   },
   //REVIEW RELATED
-  addReview: function(reviewParams) {
+  createReview: function(reviewParams) {
     $.ajax({
-      type: "GET",
-      url: "/api/reviews/new",
+      type: "POST",
+      url: "/api/reviews",
       dataType: "json",
       data: reviewParams,
-      success: function(currentUserId, reviewId) {
+      success: function (review) {
         console.log("got to success");
-        ReviewActions.createCurrentReview(currentUserId, reviewId);
+        ReviewActions.createSingleReview(review);
       },
       error: function () {
-          console.log("Could not create reveiw");
+          console.log("Could not create review");
       }
     });
   },

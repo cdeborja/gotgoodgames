@@ -62,7 +62,7 @@
 	  Route,
 	  { path: '/', component: App },
 	  React.createElement(Route, { path: 'index', component: GamesIndex, onEnter: _requireLoggedIn }),
-	  React.createElement(Route, { path: 'games/:gameId', component: GameDetail }),
+	  React.createElement(Route, { path: 'games/:gameId', component: GameDetail, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'login', component: LoginForm })
 	);
 	
@@ -26676,6 +26676,7 @@
 	var GameActions = __webpack_require__(185);
 	var SessionStore = __webpack_require__(186);
 	var SessionActions = __webpack_require__(188);
+	var ReviewActions = __webpack_require__(250);
 	
 	module.exports = {
 	  //USER RELATED
@@ -26704,7 +26705,6 @@
 	  },
 	
 	  fetchCurrentUser: function (completion) {
-	
 	    $.ajax({
 	      type: "GET",
 	      url: "/api/session",
@@ -26718,18 +26718,18 @@
 	    });
 	  },
 	  //REVIEW RELATED
-	  addReview: function (reviewParams) {
+	  createReview: function (reviewParams) {
 	    $.ajax({
-	      type: "GET",
-	      url: "/api/reviews/new",
+	      type: "POST",
+	      url: "/api/reviews",
 	      dataType: "json",
 	      data: reviewParams,
-	      success: function (currentUserId, reviewId) {
+	      success: function (review) {
 	        console.log("got to success");
-	        ReviewActions.createCurrentReview(currentUserId, reviewId);
+	        ReviewActions.createSingleReview(review);
 	      },
 	      error: function () {
-	        console.log("Could not create reveiw");
+	        console.log("Could not create review");
 	      }
 	    });
 	  },
@@ -31957,12 +31957,15 @@
 	var GameStore = __webpack_require__(161);
 	var ApiUtil = __webpack_require__(184);
 	var ReviewsIndexItem = __webpack_require__(248);
+	var ReviewStore = __webpack_require__(253);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
 	
 	  getStateFromStore: function () {
-	    return { game: GameStore.find(parseInt(this.props.params.gameId)) };
+	    return { game: GameStore.find(parseInt(this.props.params.gameId)),
+	      body: "",
+	      score: null };
 	  },
 	
 	  _onChange: function () {
@@ -31984,13 +31987,6 @@
 	
 	  componentWillUnmount: function () {
 	    this.gameListener.remove();
-	  },
-	
-	  handleSubmit: function (e) {
-	    e.preventDefault();
-	
-	    reviewParams = { reviewId: this.state.game.id, userId: 1 };
-	    ApiUtil.addReview(reviewParams);
 	  },
 	
 	  // In the scoring part of the form, can either user input type range for 0-100 or number
@@ -32057,13 +32053,15 @@
 	          { className: 'input-text', htmlFor: 'score' },
 	          'Score'
 	        ),
-	        React.createElement('input', { className: '', type: 'number' }),
+	        React.createElement('input', { className: 'input-field', onChange: this.updateScore,
+	          type: 'number', value: this.state.score }),
 	        React.createElement(
 	          'label',
 	          { className: 'input-text', htmlFor: 'review' },
 	          'Review Box'
 	        ),
-	        React.createElement('input', { className: 'input-field', type: 'text' }),
+	        React.createElement('input', { className: 'input-field', onChange: this.updateReview,
+	          type: 'text', value: this.state.review }),
 	        React.createElement(
 	          'button',
 	          { className: 'submit-button' },
@@ -32076,7 +32074,32 @@
 	        gameReviews
 	      )
 	    );
+	  },
+	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	
+	    var user_id = SessionStore.currentUser().id;
+	
+	    var reviewParams = {
+	      review: {
+	        user_id: user_id,
+	        game_id: this.state.game.id,
+	        score: this.state.score,
+	        body: this.state.body
+	      }
+	    };
+	    ApiUtil.createReview(reviewParams);
+	  },
+	
+	  updateScore: function (e) {
+	    this.setState({ score: e.currentTarget.value });
+	  },
+	
+	  updateReview: function (e) {
+	    this.setState({ body: e.currentTarget.value });
 	  }
+	
 	});
 
 /***/ },
@@ -32178,7 +32201,6 @@
 	  handleSubmit: function (e) {
 	    e.preventDefault();
 	    var router = this.context.router;
-	
 	    ApiUtil.login(this.state, function () {
 	      router.push("/index");
 	    });
@@ -32195,6 +32217,78 @@
 	});
 	
 	module.exports = LoginForm;
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Dispatcher = __webpack_require__(180);
+	var ReviewConstants = __webpack_require__(252);
+	
+	module.exports = {
+	  createSingleReview: function (review) {
+	    Dispatcher.dispatch({
+	      actionType: ReviewConstants.REVIEW_CREATED,
+	      review: review
+	    });
+	  }
+	
+	};
+
+/***/ },
+/* 251 */,
+/* 252 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  REVIEWS_RECEIVED: "REVIEWS_RECEIVED",
+	  REVIEW_CREATED: "REVIEW_CREATED"
+	};
+
+/***/ },
+/* 253 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(162).Store;
+	var AppDispatcher = __webpack_require__(180);
+	var ReviewConstants = __webpack_require__(252);
+	var ReviewStore = new Store(AppDispatcher);
+	
+	var _reviews = {};
+	
+	// var resetGames = function (games) {
+	//   _games = {};
+	//   games.forEach(function (game) {
+	//     _games[game.id] = game;
+	//   });
+	// };
+	//
+	// var resetGame = function (game) {
+	//   _games[game.id] = game;
+	// };
+	//
+	// ReviewStore.find = function (id) {
+	//   return _games[id];
+	// };
+	//
+	// ReviewStore.all = function () {
+	//   var games = [];
+	//   for (var id in _games) {
+	//     games.push(_games[id]);
+	//   }
+	//   return games;
+	// };
+	
+	ReviewStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case ReviewConstants.REVIEW_CREATED:
+	      // resetReview(payload.games);
+	      ReviewStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = ReviewStore;
 
 /***/ }
 /******/ ]);
