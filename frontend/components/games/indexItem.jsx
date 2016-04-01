@@ -1,11 +1,13 @@
 var React = require('react');
-var History = require('react-router').History;
+var GameStore = require('../../stores/game');
 
 module.exports = React.createClass({
-  mixins: [History],
+  contextTypes: {
+     router: React.PropTypes.object.isRequired
+   },
 
   showDetail: function () {
-    this.history.pushState(null, '/games/' + this.props.game.id, {});
+    this.context.router.push('/games/' + this.props.game.id);
   },
 
   render: function () {

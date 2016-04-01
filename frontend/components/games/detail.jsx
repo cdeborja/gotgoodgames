@@ -3,6 +3,7 @@ var GameStore = require('../../stores/game');
 var ApiUtil = require('../../util/apiUtil');
 var ReviewsIndexItem = require('../reviews/index');
 var ReviewStore = require('../../stores/review');
+var SessionStore = require('../../stores/session');
 
 module.exports = React.createClass({
   getStateFromStore: function () {
@@ -32,7 +33,29 @@ module.exports = React.createClass({
     this.gameListener.remove();
   },
 
+  handleSubmit: function(e) {
+    e.preventDefault();
 
+    var user_id = SessionStore.currentUser().id;
+
+    var reviewParams = {
+      review: {
+        user_id: user_id,
+        game_id: this.state.game.id,
+        score: this.state.score,
+        body: this.state.body
+      }
+    };
+    ApiUtil.createReview(reviewParams);
+  },
+
+  updateScore: function (e) {
+    this.setState({ score: e.currentTarget.value});
+  },
+
+  updateReview: function (e) {
+    this.setState({ body: e.currentTarget.value});
+  },
   // In the scoring part of the form, can either user input type range for 0-100 or number
   render: function () {
 
@@ -75,30 +98,6 @@ module.exports = React.createClass({
           </ul>
       </div>
     );
-  },
-
-  handleSubmit: function(e) {
-    e.preventDefault();
-
-    var user_id = SessionStore.currentUser().id;
-
-    var reviewParams = {
-      review: {
-      user_id: user_id,
-      game_id: this.state.game.id,
-      score: this.state.score,
-      body: this.state.body
-      }
-    };
-    ApiUtil.createReview(reviewParams);
-  },
-
-  updateScore: function (e) {
-    this.setState({ score: e.currentTarget.value});
-  },
-
-  updateReview: function (e) {
-    this.setState({ body: e.currentTarget.value});
   }
 
 });

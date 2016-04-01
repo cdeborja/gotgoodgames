@@ -11,6 +11,7 @@ var GamesIndex = require('./components/games/index');
 var GameStore = require('./stores/game');
 var GameDetail = require('./components/games/detail');
 var LoginForm = require('./components/loginForm');
+var SessionStore = require('./stores/session');
 
 var routes = (
   <Route path="/" component={App}>

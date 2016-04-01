@@ -34,36 +34,40 @@ module.exports = React.createClass({
     }
   },
 
+  goToIndex: function () {
+    this.context.router.push("/index");
+
+  },
+
 
   render: function () {
     var button, welcomeMessage;
     if (this.state.currentUser) {
-      button = <button className="logout-button" onClick={ApiUtil.logout}>Logout</button>
+      button = <button className="logout-button" onClick={ApiUtil.logout}>Logout</button>;
       welcomeMessage = <h2>Welcome, {this.state.currentUser.username}</h2>;
     }
     return (
-      <header>
-        <a href="/#/index">
-          <ul>
-            <li className="header-logo-first">gotgood</li>
-            <li className="header-logo-second">games</li>
-          </ul>
-        </a>
+      <header className="header group">
+        <div onClick={this.goToIndex}>
+        <div className="header-logo-first">
+          gotgood
+        </div>
+        <div className="header-logo-second">
+          games
+        </div>
+        </div>
         <nav className="header-nav group">
         <ul className="header-nav">
-        {button}
-        {welcomeMessage}
+          {button}
+          {welcomeMessage}
         </ul>
+        </nav>
         <div>
         {this.props.children}
         </div>
-
-        </nav>
       </header>
     );
   }
 
 
 });
-
-window.SessionStore =SessionStore;

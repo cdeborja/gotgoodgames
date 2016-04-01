@@ -87,7 +87,8 @@ img {
 
 .header-nav > h2 {
   float: right;
-  margin-right: 20px;
+  margin-right: 10px;
+  margin-top: 7px;
   font-size: 20px;
   font-weight: bold;
 }
@@ -123,11 +124,11 @@ img {
   border-radius: 5px;
   font-size: 14px;
 }
-
+/*
 .header-profile-name {
   display: block;
   font-size: 24px;
-}
+}*/
 
 .logout-button {
   float: right;
@@ -136,6 +137,7 @@ img {
   padding: 5px 10px;
   border: 1px solid black;
   margin-right: 20px;
+  margin-top: 4px;
 }
 
 /*.badge {
@@ -154,7 +156,7 @@ img {
   background: #fff;
   width: 600px;
   height: auto;
-  border: solid 1px #ccc;
+  border: solid 2px #ac9c8d;
   padding: 40px 40px 20px 40px;
   border-radius: 5px;
 }

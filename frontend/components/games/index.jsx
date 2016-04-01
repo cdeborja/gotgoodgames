@@ -10,6 +10,7 @@ module.exports = React.createClass({
   },
 
   _onChange: function () {
+    console.log("IM HERE!");
     this.setState({ games: GameStore.all() });
   },
 
@@ -18,7 +19,7 @@ module.exports = React.createClass({
     ApiUtil.fetchAllGames();
   },
 
-  compomentWillUnmount: function () {
+  componentWillUnmount: function () {
     this.gameListener.remove();
   },
 
