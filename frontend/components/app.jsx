@@ -42,15 +42,13 @@ module.exports = React.createClass({
       welcomeMessage = <h2>Welcome, {this.state.currentUser.username}</h2>;
     }
     return (
-      <header className="header group">
+      <header>
         <a href="/#/index">
-        <div className="header-logo-first">
-          gotgood
-        </div>
-        <div className="header-logo-second">
-          games
-        </div>
-      </a>
+          <ul>
+            <li className="header-logo-first">gotgood</li>
+            <li className="header-logo-second">games</li>
+          </ul>
+        </a>
         <nav className="header-nav group">
         <ul className="header-nav">
         {button}

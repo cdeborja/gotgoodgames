@@ -19753,19 +19753,23 @@
 	    }
 	    return React.createElement(
 	      'header',
-	      { className: 'header group' },
+	      null,
 	      React.createElement(
 	        'a',
 	        { href: '/#/index' },
 	        React.createElement(
-	          'div',
-	          { className: 'header-logo-first' },
-	          'gotgood'
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'header-logo-second' },
-	          'games'
+	          'ul',
+	          null,
+	          React.createElement(
+	            'li',
+	            { className: 'header-logo-first' },
+	            'gotgood'
+	          ),
+	          React.createElement(
+	            'li',
+	            { className: 'header-logo-second' },
+	            'games'
+	          )
 	        )
 	      ),
 	      React.createElement(
