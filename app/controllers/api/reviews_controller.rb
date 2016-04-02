@@ -8,7 +8,7 @@ class Api::ReviewsController < ApplicationController
     review = Review.new(review_params)
     game = Game.find(review.game_id)
     if review.save
-      render json: game
+      redirect_to "/api/games/#{game.id}" 
     else
       render json: review.errors.full_messages, status: 422
     end

@@ -7,19 +7,22 @@ var Route = require('react-router').Route;
 var IndexRoute = require('react-router').IndexRoute;
 var hashHistory = require('react-router').hashHistory;
 var ApiUtil = require('./util/apiUtil');
+
+//Current Routes that need pages
 var GamesIndex = require('./components/games/index');
-var GameStore = require('./stores/game');
 var GameDetail = require('./components/games/detail');
+// var PlayerHomePage = require('./components/users/homepage');
 var LoginForm = require('./components/loginForm');
+
+var GameStore = require('./stores/game');
 var SessionStore = require('./stores/session');
 
+// <Route path="homepage" component={PlayerHomePage} onEnter={_requireLoggedIn} />
 var routes = (
   <Route path="/" component={App}>
-    <Route path="index" component={GamesIndex} onEnter={_requireLoggedIn}/>
-    <Route path="games/:gameId" component={GameDetail} onEnter={_requireLoggedIn} >
-    </Route>
+    <Route path="index" component={GamesIndex} onEnter={_requireLoggedIn} />
+    <Route path="games/:gameId" component={GameDetail} onEnter={_requireLoggedIn} />
     <Route path="login" component={LoginForm} />
-
   </Route>
 
 

@@ -93,6 +93,15 @@ img {
   font-weight: bold;
 }
 
+.header-nav-bar {
+  display: block;
+  margin-left: 10px;
+  margin-top: 16px;
+  font-size: 16px;
+  float: left;
+  font-weight: bold;
+}
+
 .header-logo-first {
   float: left;
   font-weight: 100;
@@ -101,6 +110,11 @@ img {
   margin-top: 4px;
   color: #3e2c1a;
   letter-spacing: -2px;
+}
+
+.header-logo-first:hover,
+.header-logo-second:hover {
+  cursor: pointer;
 }
 
 .header-logo-second {
@@ -138,6 +152,11 @@ img {
   border: 1px solid black;
   margin-right: 20px;
   margin-top: 4px;
+}
+
+.logout-button:hover {
+  cursor: pointer;
+  background: #f7f2ed;
 }
 
 /*.badge {

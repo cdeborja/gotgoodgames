@@ -36,25 +36,35 @@ module.exports = React.createClass({
 
   goToIndex: function () {
     this.context.router.push("/index");
+  },
 
+  goToCurrentUserHomePage: function () {
+    this.context.router.push("/homepage");
   },
 
 
   render: function () {
-    var button, welcomeMessage;
+    var button, welcomeMessage, homepage;
     if (this.state.currentUser) {
       button = <button className="logout-button" onClick={ApiUtil.logout}>Logout</button>;
       welcomeMessage = <h2>Welcome, {this.state.currentUser.username}</h2>;
+    } else {
+      button = undefined;
+      welcomeMessage = undefined;
     }
+
     return (
       <header className="header group">
         <div onClick={this.goToIndex}>
-        <div className="header-logo-first">
-          gotgood
+          <div className="header-logo-first">
+            gotgood
+          </div>
+          <div className="header-logo-second">
+            games
+          </div>
         </div>
-        <div className="header-logo-second">
-          games
-        </div>
+        <div onClick={this.goToCurrentUserHomePage} className="header-nav-bar">
+          Profile
         </div>
         <nav className="header-nav group">
         <ul className="header-nav">

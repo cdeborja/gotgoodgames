@@ -1,15 +1,15 @@
 var React = require('react');
-var GameStore = require('../../stores/game');
 var ApiUtil = require('../../util/apiUtil');
+
 var ReviewsIndexItem = require('../reviews/index');
 var ReviewStore = require('../../stores/review');
 var SessionStore = require('../../stores/session');
 
 module.exports = React.createClass({
   getStateFromStore: function () {
-    return { game: GameStore.find(parseInt(this.props.params.gameId)),
-             body: "",
-             score: null };
+    return { user: SessionStore.currentUser,
+             reviews: SessionStore.currentUser.reviews
+           };
   },
 
   _onChange: function () {
@@ -38,6 +38,7 @@ module.exports = React.createClass({
 
 
     var user_id = SessionStore.currentUser().id;
+
     var reviewParams = {
       review: {
         user_id: user_id,
@@ -58,6 +59,7 @@ module.exports = React.createClass({
   },
   //Need to fix the date ordering
   render: function () {
+
     var game = this.state.game;
     if ( !game || !game.reviews) {return (<div className="loading"> AHHH DON'T LOOK AT ME! I AM NOT READY!!!</div>);}
     var gameReviews = game.reviews.map(function (review, id) {

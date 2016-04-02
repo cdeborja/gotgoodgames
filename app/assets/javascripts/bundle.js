@@ -53,12 +53,17 @@
 	var IndexRoute = __webpack_require__(192).IndexRoute;
 	var hashHistory = __webpack_require__(192).hashHistory;
 	var ApiUtil = __webpack_require__(184);
+	
+	//Current Routes that need pages
 	var GamesIndex = __webpack_require__(160);
-	var GameStore = __webpack_require__(161);
 	var GameDetail = __webpack_require__(249);
+	// var PlayerHomePage = require('./components/users/homepage');
 	var LoginForm = __webpack_require__(252);
+	
+	var GameStore = __webpack_require__(161);
 	var SessionStore = __webpack_require__(186);
 	
+	// <Route path="homepage" component={PlayerHomePage} onEnter={_requireLoggedIn} />
 	var routes = React.createElement(
 	  Route,
 	  { path: '/', component: App },
@@ -19741,8 +19746,12 @@
 	    this.context.router.push("/index");
 	  },
 	
+	  goToCurrentUserHomePage: function () {
+	    this.context.router.push("/homepage");
+	  },
+	
 	  render: function () {
-	    var button, welcomeMessage;
+	    var button, welcomeMessage, homepage;
 	    if (this.state.currentUser) {
 	      button = React.createElement(
 	        'button',
@@ -19755,7 +19764,11 @@
 	        'Welcome, ',
 	        this.state.currentUser.username
 	      );
+	    } else {
+	      button = undefined;
+	      welcomeMessage = undefined;
 	    }
+	
 	    return React.createElement(
 	      'header',
 	      { className: 'header group' },
@@ -19772,6 +19785,11 @@
 	          { className: 'header-logo-second' },
 	          'games'
 	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { onClick: this.goToCurrentUserHomePage, className: 'header-nav-bar' },
+	        'Profile'
 	      ),
 	      React.createElement(
 	        'nav',
@@ -32024,7 +32042,6 @@
 	    e.preventDefault();
 	
 	    var user_id = SessionStore.currentUser().id;
-	
 	    var reviewParams = {
 	      review: {
 	        user_id: user_id,
@@ -32045,7 +32062,6 @@
 	  },
 	  //Need to fix the date ordering
 	  render: function () {
-	
 	    var game = this.state.game;
 	    if (!game || !game.reviews) {
 	      return React.createElement(
@@ -32061,7 +32077,7 @@
 	    game.reviews.forEach(function (review) {
 	      totalScore += review.score;
 	    });
-	    var averageScore = totalScore / game.reviews.length;
+	    var averageScore = (totalScore / game.reviews.length).toFixed(2);
 	
 	    return React.createElement(
 	      'div',

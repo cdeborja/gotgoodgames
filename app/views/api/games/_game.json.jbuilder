@@ -2,7 +2,6 @@ json.extract!(
   game,
   :id, :title, :description, :console, :release_date
 )
-
 if show_reviews
   json.reviews do
     json.array!(game.reviews) do |review|
