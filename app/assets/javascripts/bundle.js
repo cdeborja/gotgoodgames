@@ -32022,6 +32022,7 @@
 	
 	  handleSubmit: function (e) {
 	    e.preventDefault();
+	
 	    var user_id = SessionStore.currentUser().id;
 	
 	    var reviewParams = {
@@ -32042,7 +32043,7 @@
 	  updateReview: function (e) {
 	    this.setState({ body: e.currentTarget.value });
 	  },
-	  // In the scoring part of the form, can either user input type range for 0-100 or number
+	  //Need to fix the date ordering
 	  render: function () {
 	
 	    var game = this.state.game;
@@ -32050,7 +32051,7 @@
 	      return React.createElement(
 	        'div',
 	        { className: 'loading' },
-	        ' LOADING!!! '
+	        ' AHHH DON\'T LOOK AT ME! I AM NOT READY!!!'
 	      );
 	    }
 	    var gameReviews = game.reviews.map(function (review, id) {
@@ -32061,6 +32062,7 @@
 	      totalScore += review.score;
 	    });
 	    var averageScore = totalScore / game.reviews.length;
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'game-detail-pane' },
@@ -32112,15 +32114,72 @@
 	          { className: 'input-text', htmlFor: 'score' },
 	          'Score'
 	        ),
-	        React.createElement('input', { className: 'input-field', onChange: this.updateScore,
-	          type: 'number', value: this.state.score }),
+	        React.createElement(
+	          'ul',
+	          null,
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'label',
+	              null,
+	              '1'
+	            ),
+	            React.createElement('input', { className: 'input-field', type: 'radio', value: '1', name: 'gameScore',
+	              onChange: this.updateScore })
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'label',
+	              null,
+	              '2'
+	            ),
+	            React.createElement('input', { className: 'input-field', type: 'radio', value: '2', name: 'gameScore',
+	              onChange: this.updateScore })
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'label',
+	              null,
+	              '3'
+	            ),
+	            React.createElement('input', { className: 'input-field', type: 'radio', value: '3', name: 'gameScore',
+	              onChange: this.updateScore })
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'label',
+	              null,
+	              '4'
+	            ),
+	            React.createElement('input', { className: 'input-field', type: 'radio', value: '4', name: 'gameScore',
+	              onChange: this.updateScore })
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'label',
+	              null,
+	              '5'
+	            ),
+	            React.createElement('input', { className: 'input-field', type: 'radio', value: '5', name: 'gameScore',
+	              onChange: this.updateScore })
+	          )
+	        ),
 	        React.createElement(
 	          'label',
 	          { className: 'input-text', htmlFor: 'review' },
 	          'Review Box'
 	        ),
-	        React.createElement('input', { className: 'input-field', onChange: this.updateReview,
-	          type: 'text', value: this.state.review }),
+	        React.createElement('input', { className: 'input-field-box', placeholder: 'Enter your awwwwwsome review here!',
+	          onChange: this.updateReview, type: 'form-textarea', value: this.state.review }),
 	        React.createElement(
 	          'button',
 	          { className: 'submit-button' },
@@ -32260,14 +32319,14 @@
 	          { className: 'input-text', htmlFor: 'username' },
 	          'Username'
 	        ),
-	        React.createElement('input', { className: 'input-field', onChange: this.updateUsername,
+	        React.createElement('input', { className: 'input-field-login', onChange: this.updateUsername,
 	          type: 'text', value: this.state.username }),
 	        React.createElement(
 	          'label',
 	          { className: 'input-text', htmlFor: 'password' },
 	          'Password'
 	        ),
-	        React.createElement('input', { className: 'input-field', onChange: this.updatePassword,
+	        React.createElement('input', { className: 'input-field-login', onChange: this.updatePassword,
 	          type: 'password', value: this.state.password }),
 	        React.createElement(
 	          'button',

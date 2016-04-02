@@ -23,11 +23,11 @@ var LoginForm = React.createClass({
           <label className="input-text" htmlFor="username">
             Username
           </label>
-          <input className="input-field" onChange={this.updateUsername}
+          <input className="input-field-login" onChange={this.updateUsername}
           type="text" value={this.state.username}/>
 
           <label className="input-text" htmlFor="password">Password</label>
-          <input className="input-field" onChange={this.updatePassword}
+          <input className="input-field-login" onChange={this.updatePassword}
           type="password" value={this.state.password}/>
 
           <button className="submit-button">Sign In</button>
