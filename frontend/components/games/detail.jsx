@@ -68,6 +68,7 @@ module.exports = React.createClass({
       <div className="game-detail-pane">
           <h2>Title: {game.title}</h2>
           <ul>
+            <img></img>
             <li>Score: PUT SCORE HERE LATER</li>
             <li>Console: {game.console}</li>
             <li>Release Date: {game.release_date}</li>

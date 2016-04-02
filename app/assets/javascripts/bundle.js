@@ -32069,6 +32069,7 @@
 	      React.createElement(
 	        'ul',
 	        null,
+	        React.createElement('img', null),
 	        React.createElement(
 	          'li',
 	          null,

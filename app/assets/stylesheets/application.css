@@ -256,6 +256,17 @@ img {
   font-size: 24px;
 }
 
+.game-detail-pane > ul > img {
+  float: left;
+  display: block;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: blue;
+  border: dashed 1px black;
+  margin-right: 20px;
+}
+
 .game-detail-pane > ul > li {
   margin-bottom: 10px;
   border-bottom: 1px solid black;
