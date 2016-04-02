@@ -6,8 +6,9 @@ class Api::ReviewsController < ApplicationController
 
   def create
     review = Review.new(review_params)
+    game = Game.find(review.game_id)
     if review.save
-      render json: review
+      render json: game
     else
       render json: review.errors.full_messages, status: 422
     end

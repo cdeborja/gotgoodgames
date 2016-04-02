@@ -35,7 +35,6 @@ module.exports = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-
     var user_id = SessionStore.currentUser().id;
 
     var reviewParams = {
@@ -43,7 +42,7 @@ module.exports = React.createClass({
         user_id: user_id,
         game_id: this.state.game.id,
         score: this.state.score,
-        body: this.state.body
+        body: this.state.body,
       }
     };
     ApiUtil.createReview(reviewParams);
@@ -66,7 +65,6 @@ module.exports = React.createClass({
     });
 
     return(
-
       <div className="game-detail-pane">
           <h2>Title: {game.title}</h2>
           <ul>

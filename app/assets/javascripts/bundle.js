@@ -19811,7 +19811,6 @@
 	  },
 	
 	  _onChange: function () {
-	    console.log("IM HERE!");
 	    this.setState({ games: GameStore.all() });
 	  },
 	
@@ -26728,9 +26727,8 @@
 	      url: "/api/reviews",
 	      dataType: "json",
 	      data: reviewParams,
-	      success: function (review) {
-	        console.log("got to success");
-	        ReviewActions.createSingleReview(review);
+	      success: function (game) {
+	        GameActions.receiveSingleGame(game);
 	      },
 	      error: function () {
 	        console.log("Could not create review");
@@ -32024,7 +32022,6 @@
 	
 	  handleSubmit: function (e) {
 	    e.preventDefault();
-	
 	    var user_id = SessionStore.currentUser().id;
 	
 	    var reviewParams = {

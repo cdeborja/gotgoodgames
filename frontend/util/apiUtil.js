@@ -50,9 +50,8 @@ module.exports = {
       url: "/api/reviews",
       dataType: "json",
       data: reviewParams,
-      success: function (review) {
-        console.log("got to success");
-        ReviewActions.createSingleReview(review);
+      success: function (game) {
+        GameActions.receiveSingleGame(game);
       },
       error: function () {
           console.log("Could not create review");
