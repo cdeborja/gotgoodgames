@@ -32056,7 +32056,11 @@
 	    var gameReviews = game.reviews.map(function (review, id) {
 	      return React.createElement(ReviewsIndexItem, { key: id, review: review });
 	    });
-	
+	    var totalScore = 0;
+	    game.reviews.forEach(function (review) {
+	      totalScore += review.score;
+	    });
+	    var averageScore = totalScore / game.reviews.length;
 	    return React.createElement(
 	      'div',
 	      { className: 'game-detail-pane' },
@@ -32073,7 +32077,8 @@
 	        React.createElement(
 	          'li',
 	          null,
-	          'Score: PUT SCORE HERE LATER'
+	          'Average Score: ',
+	          averageScore
 	        ),
 	        React.createElement(
 	          'li',

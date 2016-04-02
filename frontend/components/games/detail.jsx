@@ -63,13 +63,17 @@ module.exports = React.createClass({
     var gameReviews = game.reviews.map(function (review, id) {
       return <ReviewsIndexItem key={id} review={review} />;
     });
-
+    var totalScore = 0;
+    game.reviews.forEach( function(review) {
+      totalScore += review.score;
+    });
+    var averageScore = (totalScore / game.reviews.length);
     return(
       <div className="game-detail-pane">
           <h2>Title: {game.title}</h2>
           <ul>
             <img></img>
-            <li>Score: PUT SCORE HERE LATER</li>
+            <li>Average Score: {averageScore}</li>
             <li>Console: {game.console}</li>
             <li>Release Date: {game.release_date}</li>
             <li>Description: {game.description}</li>
