@@ -3,42 +3,42 @@ var AppDispatcher = require('../dispatcher/dispatcher');
 var UserConstants = require('../constants/UserConstants');
 var UserStore = new Store(AppDispatcher);
 
-var _games = {};
+var _users = {};
 
-var resetGames = function (games) {
-  _games = {};
-  games.forEach(function (game) {
-    _games[game.id] = game;
+var resetUsers = function (users) {
+  _users = {};
+  users.forEach(function (user) {
+    _users[user.id] = user;
   });
 };
 
-var resetGame = function (game) {
-  _games[game.id] = game;
+var resetUser = function (user) {
+  _users[user.id] = user;
 };
 
-GameStore.find = function (id) {
-  return _games[id];
+UserStore.find = function (id) {
+  return _users[id];
 };
 
-GameStore.all = function () {
-  var games = [];
-  for (var id in _games) {
-    games.push(_games[id]);
+UserStore.all = function () {
+  var users = [];
+  for (var id in _users) {
+    users.push(_users[id]);
   }
-  return games;
+  return users;
 };
 
-GameStore.__onDispatch = function (payload) {
+UserStore.__onDispatch = function (payload) {
   switch (payload.actionType) {
-    case GameConstants.GAMES_RECEIVED:
-      resetGames(payload.games);
-      GameStore.__emitChange();
+    case UserConstants.USERS_RECEIVED:
+      resetUsers(payload.users);
+      UserStore.__emitChange();
       break;
-    case GameConstants.GAME_RECEIVED:
-      resetGame(payload.game);
-      GameStore.__emitChange();
+    case UserConstants.USER_RECEIVED:
+      resetUser(payload.user);
+      UserStore.__emitChange();
       break;
   }
 };
 
-module.exports = GameStore;
+module.exports = UserStore;

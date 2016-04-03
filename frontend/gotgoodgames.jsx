@@ -17,6 +17,7 @@ var SignUpForm = require('./components/signUpForm');
 
 var GameStore = require('./stores/game');
 var SessionStore = require('./stores/session');
+var UserStore = require('./stores/user');
 
 // <Route path="homepage" component={UserHomePage} onEnter={_requireLoggedIn} />
 var routes = (

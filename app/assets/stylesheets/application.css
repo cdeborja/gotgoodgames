@@ -243,7 +243,19 @@ img {
   color: #333;
 }
 
-.submit-button:hover {
+.guest-button {
+  border-radius: 5px;
+  border: 1px solid #ac9c8d;
+  background: #f6f6ee;
+  padding: 12px 20px;
+  font-weight: 600;
+  font-family: sans-serif;
+  margin: 20px 0 0 15px;
+  color: #333;
+}
+
+.submit-button:hover,
+.guest-button:hover {
   cursor: pointer;
   background: #f7f2ed;
 }

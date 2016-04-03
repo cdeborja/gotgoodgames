@@ -29,7 +29,22 @@ var LoginForm = React.createClass({
     this.setState({ password: e.currentTarget.value });
   },
 
+  guestLogin: function() {
+    var guestParams = {
+        username: "guest",
+        password: "password"
+    };
+    var router = this.context.router;
+    ApiUtil.login(guestParams, function() {
+      router.push("/index");
+    });
+  },
+
   render: function() {
+
+    var guestButton = <button className="guest-button" onClick={this.guestLogin}>
+        Guest Login</button>;
+
     return (
       <div className="sign-in-box group">
         <h1>Please Log in</h1>
@@ -47,7 +62,7 @@ var LoginForm = React.createClass({
           type="password" value={this.state.password}/>
 
           <button className="submit-button">Sign In</button>
-
+          {guestButton}
         </form>
       </div>
     );

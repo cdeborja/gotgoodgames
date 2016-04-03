@@ -52,17 +52,18 @@
 	var Route = __webpack_require__(192).Route;
 	var IndexRoute = __webpack_require__(192).IndexRoute;
 	var hashHistory = __webpack_require__(192).hashHistory;
-	var ApiUtil = __webpack_require__(184);
+	var ApiUtil = __webpack_require__(161);
 	
 	//Current Routes that need pages
 	var GamesIndex = __webpack_require__(160);
 	var GameDetail = __webpack_require__(249);
 	// var UserHomePage = require('./components/users/homepage.jsx');
-	var LoginForm = __webpack_require__(252);
-	var SignUpForm = __webpack_require__(258);
+	var LoginForm = __webpack_require__(254);
+	var SignUpForm = __webpack_require__(255);
 	
-	var GameStore = __webpack_require__(161);
-	var SessionStore = __webpack_require__(186);
+	var GameStore = __webpack_require__(190);
+	var SessionStore = __webpack_require__(168);
+	var UserStore = __webpack_require__(251);
 	
 	// <Route path="homepage" component={UserHomePage} onEnter={_requireLoggedIn} />
 	var routes = React.createElement(
@@ -19709,8 +19710,8 @@
 
 	var React = __webpack_require__(1);
 	var GamesIndex = __webpack_require__(160);
-	var SessionStore = __webpack_require__(186);
-	var ApiUtil = __webpack_require__(184);
+	var SessionStore = __webpack_require__(168);
+	var ApiUtil = __webpack_require__(161);
 	// var ReviewsIndex = require('./reviews/index');
 	
 	module.exports = React.createClass({
@@ -19833,10 +19834,10 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var ApiUtil = __webpack_require__(184);
-	var AppDispatcher = __webpack_require__(180);
+	var ApiUtil = __webpack_require__(161);
+	var AppDispatcher = __webpack_require__(162);
 	
-	var GameStore = __webpack_require__(161);
+	var GameStore = __webpack_require__(190);
 	var GameIndexItem = __webpack_require__(191);
 	
 	module.exports = React.createClass({
@@ -19892,53 +19893,117 @@
 /* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Store = __webpack_require__(162).Store;
-	var AppDispatcher = __webpack_require__(180);
-	var GameConstants = __webpack_require__(183);
-	var GameStore = new Store(AppDispatcher);
+	var AppDispatcher = __webpack_require__(162);
+	var GameActions = __webpack_require__(166);
+	var SessionStore = __webpack_require__(168);
+	var SessionActions = __webpack_require__(187);
+	var ReviewActions = __webpack_require__(188);
 	
-	var _games = {};
+	module.exports = {
+	  // USER RELATED
+	  signUp: function (credentials) {
+	    $.ajax({
+	      type: "POST",
+	      url: "/users",
+	      dataType: "json",
+	      data: credentials,
+	      success: function () {
+	        console.log("created user!");
+	      }
+	    });
+	  },
 	
-	var resetGames = function (games) {
-	  _games = {};
-	  games.forEach(function (game) {
-	    _games[game.id] = game;
-	  });
-	};
+	  login: function (credentials, callback) {
+	    $.ajax({
+	      type: "POST",
+	      url: "/api/session",
+	      dataType: "json",
+	      data: credentials,
+	      success: function (currentUser) {
+	        SessionActions.currentUserReceived(currentUser);
+	        callback && callback();
+	      }
+	    });
+	  },
 	
-	var resetGame = function (game) {
-	  _games[game.id] = game;
-	};
+	  logout: function () {
+	    $.ajax({
+	      type: "DELETE",
+	      url: "/api/session",
+	      dataType: "json",
+	      success: function () {
+	        SessionActions.logout();
+	      }
+	    });
+	  },
 	
-	GameStore.find = function (id) {
-	  return _games[id];
-	};
+	  fetchCurrentUser: function (completion) {
+	    $.ajax({
+	      type: "GET",
+	      url: "/api/session",
+	      dataType: "json",
+	      success: function (currentUser) {
+	        SessionActions.currentUserReceived(currentUser);
+	      },
+	      complete: function () {
+	        completion && completion();
+	      }
+	    });
+	  },
+	  //REVIEW RELATED
+	  createReview: function (reviewParams) {
+	    $.ajax({
+	      type: "POST",
+	      url: "/api/reviews",
+	      dataType: "json",
+	      data: reviewParams,
+	      success: function (game) {
+	        GameActions.receiveSingleGame(game);
+	      },
+	      error: function () {
+	        console.log("Could not create review");
+	      }
+	    });
+	  },
 	
-	GameStore.all = function () {
-	  var games = [];
-	  for (var id in _games) {
-	    games.push(_games[id]);
+	  //GAME RELATED
+	  fetchAllGames: function () {
+	    $.ajax({
+	      url: "/api/games",
+	      success: function (games) {
+	        GameActions.receiveAllGames(games);
+	      },
+	
+	      error: function () {
+	        console.log("Could not retrieve games");
+	      }
+	    });
+	  },
+	
+	  fetchSingleGame: function (id) {
+	    $.ajax({
+	      url: "/api/games/" + id,
+	      success: function (game) {
+	        GameActions.receiveSingleGame(game);
+	      },
+	
+	      error: function () {
+	        console.log("Could not retrieve game");
+	      }
+	    });
 	  }
-	  return games;
-	};
 	
-	GameStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case GameConstants.GAMES_RECEIVED:
-	      resetGames(payload.games);
-	      GameStore.__emitChange();
-	      break;
-	    case GameConstants.GAME_RECEIVED:
-	      resetGame(payload.game);
-	      GameStore.__emitChange();
-	      break;
-	  }
 	};
-	
-	module.exports = GameStore;
 
 /***/ },
 /* 162 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Dispatcher = __webpack_require__(163).Dispatcher;
+	module.exports = new Dispatcher();
+
+/***/ },
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -19950,15 +20015,396 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Container = __webpack_require__(163);
-	module.exports.MapStore = __webpack_require__(167);
-	module.exports.Mixin = __webpack_require__(179);
-	module.exports.ReduceStore = __webpack_require__(168);
-	module.exports.Store = __webpack_require__(169);
+	module.exports.Dispatcher = __webpack_require__(164);
 
 
 /***/ },
-/* 163 */
+/* 164 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright (c) 2014-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule Dispatcher
+	 * 
+	 * @preventMunge
+	 */
+	
+	'use strict';
+	
+	exports.__esModule = true;
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	var invariant = __webpack_require__(165);
+	
+	var _prefix = 'ID_';
+	
+	/**
+	 * Dispatcher is used to broadcast payloads to registered callbacks. This is
+	 * different from generic pub-sub systems in two ways:
+	 *
+	 *   1) Callbacks are not subscribed to particular events. Every payload is
+	 *      dispatched to every registered callback.
+	 *   2) Callbacks can be deferred in whole or part until other callbacks have
+	 *      been executed.
+	 *
+	 * For example, consider this hypothetical flight destination form, which
+	 * selects a default city when a country is selected:
+	 *
+	 *   var flightDispatcher = new Dispatcher();
+	 *
+	 *   // Keeps track of which country is selected
+	 *   var CountryStore = {country: null};
+	 *
+	 *   // Keeps track of which city is selected
+	 *   var CityStore = {city: null};
+	 *
+	 *   // Keeps track of the base flight price of the selected city
+	 *   var FlightPriceStore = {price: null}
+	 *
+	 * When a user changes the selected city, we dispatch the payload:
+	 *
+	 *   flightDispatcher.dispatch({
+	 *     actionType: 'city-update',
+	 *     selectedCity: 'paris'
+	 *   });
+	 *
+	 * This payload is digested by `CityStore`:
+	 *
+	 *   flightDispatcher.register(function(payload) {
+	 *     if (payload.actionType === 'city-update') {
+	 *       CityStore.city = payload.selectedCity;
+	 *     }
+	 *   });
+	 *
+	 * When the user selects a country, we dispatch the payload:
+	 *
+	 *   flightDispatcher.dispatch({
+	 *     actionType: 'country-update',
+	 *     selectedCountry: 'australia'
+	 *   });
+	 *
+	 * This payload is digested by both stores:
+	 *
+	 *   CountryStore.dispatchToken = flightDispatcher.register(function(payload) {
+	 *     if (payload.actionType === 'country-update') {
+	 *       CountryStore.country = payload.selectedCountry;
+	 *     }
+	 *   });
+	 *
+	 * When the callback to update `CountryStore` is registered, we save a reference
+	 * to the returned token. Using this token with `waitFor()`, we can guarantee
+	 * that `CountryStore` is updated before the callback that updates `CityStore`
+	 * needs to query its data.
+	 *
+	 *   CityStore.dispatchToken = flightDispatcher.register(function(payload) {
+	 *     if (payload.actionType === 'country-update') {
+	 *       // `CountryStore.country` may not be updated.
+	 *       flightDispatcher.waitFor([CountryStore.dispatchToken]);
+	 *       // `CountryStore.country` is now guaranteed to be updated.
+	 *
+	 *       // Select the default city for the new country
+	 *       CityStore.city = getDefaultCityForCountry(CountryStore.country);
+	 *     }
+	 *   });
+	 *
+	 * The usage of `waitFor()` can be chained, for example:
+	 *
+	 *   FlightPriceStore.dispatchToken =
+	 *     flightDispatcher.register(function(payload) {
+	 *       switch (payload.actionType) {
+	 *         case 'country-update':
+	 *         case 'city-update':
+	 *           flightDispatcher.waitFor([CityStore.dispatchToken]);
+	 *           FlightPriceStore.price =
+	 *             getFlightPriceStore(CountryStore.country, CityStore.city);
+	 *           break;
+	 *     }
+	 *   });
+	 *
+	 * The `country-update` payload will be guaranteed to invoke the stores'
+	 * registered callbacks in order: `CountryStore`, `CityStore`, then
+	 * `FlightPriceStore`.
+	 */
+	
+	var Dispatcher = (function () {
+	  function Dispatcher() {
+	    _classCallCheck(this, Dispatcher);
+	
+	    this._callbacks = {};
+	    this._isDispatching = false;
+	    this._isHandled = {};
+	    this._isPending = {};
+	    this._lastID = 1;
+	  }
+	
+	  /**
+	   * Registers a callback to be invoked with every dispatched payload. Returns
+	   * a token that can be used with `waitFor()`.
+	   */
+	
+	  Dispatcher.prototype.register = function register(callback) {
+	    var id = _prefix + this._lastID++;
+	    this._callbacks[id] = callback;
+	    return id;
+	  };
+	
+	  /**
+	   * Removes a callback based on its token.
+	   */
+	
+	  Dispatcher.prototype.unregister = function unregister(id) {
+	    !this._callbacks[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.unregister(...): `%s` does not map to a registered callback.', id) : invariant(false) : undefined;
+	    delete this._callbacks[id];
+	  };
+	
+	  /**
+	   * Waits for the callbacks specified to be invoked before continuing execution
+	   * of the current callback. This method should only be used by a callback in
+	   * response to a dispatched payload.
+	   */
+	
+	  Dispatcher.prototype.waitFor = function waitFor(ids) {
+	    !this._isDispatching ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): Must be invoked while dispatching.') : invariant(false) : undefined;
+	    for (var ii = 0; ii < ids.length; ii++) {
+	      var id = ids[ii];
+	      if (this._isPending[id]) {
+	        !this._isHandled[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): Circular dependency detected while ' + 'waiting for `%s`.', id) : invariant(false) : undefined;
+	        continue;
+	      }
+	      !this._callbacks[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): `%s` does not map to a registered callback.', id) : invariant(false) : undefined;
+	      this._invokeCallback(id);
+	    }
+	  };
+	
+	  /**
+	   * Dispatches a payload to all registered callbacks.
+	   */
+	
+	  Dispatcher.prototype.dispatch = function dispatch(payload) {
+	    !!this._isDispatching ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.') : invariant(false) : undefined;
+	    this._startDispatching(payload);
+	    try {
+	      for (var id in this._callbacks) {
+	        if (this._isPending[id]) {
+	          continue;
+	        }
+	        this._invokeCallback(id);
+	      }
+	    } finally {
+	      this._stopDispatching();
+	    }
+	  };
+	
+	  /**
+	   * Is this Dispatcher currently dispatching.
+	   */
+	
+	  Dispatcher.prototype.isDispatching = function isDispatching() {
+	    return this._isDispatching;
+	  };
+	
+	  /**
+	   * Call the callback stored with the given id. Also do some internal
+	   * bookkeeping.
+	   *
+	   * @internal
+	   */
+	
+	  Dispatcher.prototype._invokeCallback = function _invokeCallback(id) {
+	    this._isPending[id] = true;
+	    this._callbacks[id](this._pendingPayload);
+	    this._isHandled[id] = true;
+	  };
+	
+	  /**
+	   * Set up bookkeeping needed when dispatching.
+	   *
+	   * @internal
+	   */
+	
+	  Dispatcher.prototype._startDispatching = function _startDispatching(payload) {
+	    for (var id in this._callbacks) {
+	      this._isPending[id] = false;
+	      this._isHandled[id] = false;
+	    }
+	    this._pendingPayload = payload;
+	    this._isDispatching = true;
+	  };
+	
+	  /**
+	   * Clear bookkeeping used for dispatching.
+	   *
+	   * @internal
+	   */
+	
+	  Dispatcher.prototype._stopDispatching = function _stopDispatching() {
+	    delete this._pendingPayload;
+	    this._isDispatching = false;
+	  };
+	
+	  return Dispatcher;
+	})();
+	
+	module.exports = Dispatcher;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 165 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule invariant
+	 */
+	
+	"use strict";
+	
+	/**
+	 * Use invariant() to assert state which your program assumes to be true.
+	 *
+	 * Provide sprintf-style format (only %s is supported) and arguments
+	 * to provide information about what broke and what you were
+	 * expecting.
+	 *
+	 * The invariant message will be stripped in production, but the invariant
+	 * will remain to ensure logic does not differ in production.
+	 */
+	
+	var invariant = function (condition, format, a, b, c, d, e, f) {
+	  if (process.env.NODE_ENV !== 'production') {
+	    if (format === undefined) {
+	      throw new Error('invariant requires an error message argument');
+	    }
+	  }
+	
+	  if (!condition) {
+	    var error;
+	    if (format === undefined) {
+	      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
+	    } else {
+	      var args = [a, b, c, d, e, f];
+	      var argIndex = 0;
+	      error = new Error('Invariant Violation: ' + format.replace(/%s/g, function () {
+	        return args[argIndex++];
+	      }));
+	    }
+	
+	    error.framesToPop = 1; // we don't care about invariant's own frame
+	    throw error;
+	  }
+	};
+	
+	module.exports = invariant;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 166 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Dispatcher = __webpack_require__(162);
+	var GameConstants = __webpack_require__(167);
+	
+	module.exports = {
+	  receiveAllGames: function (games) {
+	    Dispatcher.dispatch({
+	      actionType: GameConstants.GAMES_RECEIVED,
+	      games: games
+	    });
+	  },
+	
+	  receiveSingleGame: function (game) {
+	    Dispatcher.dispatch({
+	      actionType: GameConstants.GAME_RECEIVED,
+	      game: game
+	    });
+	  }
+	
+	};
+
+/***/ },
+/* 167 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  GAMES_RECEIVED: "GAMES_RECEIVED",
+	  GAME_RECEIVED: "GAME_RECEIVED"
+	};
+
+/***/ },
+/* 168 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(169).Store;
+	var SessionConstants = __webpack_require__(186);
+	var AppDispatcher = __webpack_require__(162);
+	var SessionStore = new Store(AppDispatcher);
+	
+	var _currentUser;
+	var _currentUserHasBeenFetched = false;
+	
+	SessionStore.currentUser = function () {
+	  return _currentUser;
+	};
+	
+	SessionStore.isLoggedIn = function () {
+	  return !!_currentUser;
+	};
+	
+	SessionStore.currentUserHasBeenFetched = function () {
+	  return _currentUserHasBeenFetched;
+	};
+	
+	SessionStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case SessionConstants.CURRENT_USER_RECEIVED:
+	      _currentUser = payload.currentUser;
+	      _currentUserHasBeenFetched = true;
+	      SessionStore.__emitChange();
+	      break;
+	    case SessionConstants.LOGOUT:
+	      _currentUser = null;
+	      SessionStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = SessionStore;
+
+/***/ },
+/* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright (c) 2014-2015, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 */
+	
+	module.exports.Container = __webpack_require__(170);
+	module.exports.MapStore = __webpack_require__(173);
+	module.exports.Mixin = __webpack_require__(185);
+	module.exports.ReduceStore = __webpack_require__(174);
+	module.exports.Store = __webpack_require__(175);
+
+
+/***/ },
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -19980,10 +20426,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStoreGroup = __webpack_require__(164);
+	var FluxStoreGroup = __webpack_require__(171);
 	
 	var invariant = __webpack_require__(165);
-	var shallowEqual = __webpack_require__(166);
+	var shallowEqual = __webpack_require__(172);
 	
 	var DEFAULT_OPTIONS = {
 	  pure: true,
@@ -20141,7 +20587,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 164 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -20222,62 +20668,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 165 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule invariant
-	 */
-	
-	"use strict";
-	
-	/**
-	 * Use invariant() to assert state which your program assumes to be true.
-	 *
-	 * Provide sprintf-style format (only %s is supported) and arguments
-	 * to provide information about what broke and what you were
-	 * expecting.
-	 *
-	 * The invariant message will be stripped in production, but the invariant
-	 * will remain to ensure logic does not differ in production.
-	 */
-	
-	var invariant = function (condition, format, a, b, c, d, e, f) {
-	  if (process.env.NODE_ENV !== 'production') {
-	    if (format === undefined) {
-	      throw new Error('invariant requires an error message argument');
-	    }
-	  }
-	
-	  if (!condition) {
-	    var error;
-	    if (format === undefined) {
-	      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-	    } else {
-	      var args = [a, b, c, d, e, f];
-	      var argIndex = 0;
-	      error = new Error('Invariant Violation: ' + format.replace(/%s/g, function () {
-	        return args[argIndex++];
-	      }));
-	    }
-	
-	    error.framesToPop = 1; // we don't care about invariant's own frame
-	    throw error;
-	  }
-	};
-	
-	module.exports = invariant;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
-
-/***/ },
-/* 166 */
+/* 172 */
 /***/ function(module, exports) {
 
 	/**
@@ -20332,7 +20723,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 167 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -20353,8 +20744,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxReduceStore = __webpack_require__(168);
-	var Immutable = __webpack_require__(178);
+	var FluxReduceStore = __webpack_require__(174);
+	var Immutable = __webpack_require__(184);
 	
 	var invariant = __webpack_require__(165);
 	
@@ -20482,7 +20873,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 168 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -20503,9 +20894,9 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStore = __webpack_require__(169);
+	var FluxStore = __webpack_require__(175);
 	
-	var abstractMethod = __webpack_require__(177);
+	var abstractMethod = __webpack_require__(183);
 	var invariant = __webpack_require__(165);
 	
 	var FluxReduceStore = (function (_FluxStore) {
@@ -20589,7 +20980,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 169 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -20608,7 +20999,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _require = __webpack_require__(170);
+	var _require = __webpack_require__(176);
 	
 	var EventEmitter = _require.EventEmitter;
 	
@@ -20772,7 +21163,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 170 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -20785,14 +21176,14 @@
 	 */
 	
 	var fbemitter = {
-	  EventEmitter: __webpack_require__(171)
+	  EventEmitter: __webpack_require__(177)
 	};
 	
 	module.exports = fbemitter;
 
 
 /***/ },
-/* 171 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -20811,11 +21202,11 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var EmitterSubscription = __webpack_require__(172);
-	var EventSubscriptionVendor = __webpack_require__(174);
+	var EmitterSubscription = __webpack_require__(178);
+	var EventSubscriptionVendor = __webpack_require__(180);
 	
-	var emptyFunction = __webpack_require__(176);
-	var invariant = __webpack_require__(175);
+	var emptyFunction = __webpack_require__(182);
+	var invariant = __webpack_require__(181);
 	
 	/**
 	 * @class BaseEventEmitter
@@ -20989,7 +21380,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 172 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -21010,7 +21401,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var EventSubscription = __webpack_require__(173);
+	var EventSubscription = __webpack_require__(179);
 	
 	/**
 	 * EmitterSubscription represents a subscription with listener and context data.
@@ -21042,7 +21433,7 @@
 	module.exports = EmitterSubscription;
 
 /***/ },
-/* 173 */
+/* 179 */
 /***/ function(module, exports) {
 
 	/**
@@ -21096,7 +21487,7 @@
 	module.exports = EventSubscription;
 
 /***/ },
-/* 174 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -21115,7 +21506,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(175);
+	var invariant = __webpack_require__(181);
 	
 	/**
 	 * EventSubscriptionVendor stores a set of EventSubscriptions that are
@@ -21205,7 +21596,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 175 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -21260,7 +21651,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 176 */
+/* 182 */
 /***/ function(module, exports) {
 
 	/**
@@ -21302,7 +21693,7 @@
 	module.exports = emptyFunction;
 
 /***/ },
-/* 177 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -21329,7 +21720,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 178 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26316,7 +26707,7 @@
 	}));
 
 /***/ },
-/* 179 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26333,7 +26724,7 @@
 	
 	'use strict';
 	
-	var FluxStoreGroup = __webpack_require__(164);
+	var FluxStoreGroup = __webpack_require__(171);
 	
 	var invariant = __webpack_require__(165);
 	
@@ -26439,446 +26830,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 180 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Dispatcher = __webpack_require__(181).Dispatcher;
-	module.exports = new Dispatcher();
-
-/***/ },
-/* 181 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright (c) 2014-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 */
-	
-	module.exports.Dispatcher = __webpack_require__(182);
-
-
-/***/ },
-/* 182 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright (c) 2014-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule Dispatcher
-	 * 
-	 * @preventMunge
-	 */
-	
-	'use strict';
-	
-	exports.__esModule = true;
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-	
-	var invariant = __webpack_require__(165);
-	
-	var _prefix = 'ID_';
-	
-	/**
-	 * Dispatcher is used to broadcast payloads to registered callbacks. This is
-	 * different from generic pub-sub systems in two ways:
-	 *
-	 *   1) Callbacks are not subscribed to particular events. Every payload is
-	 *      dispatched to every registered callback.
-	 *   2) Callbacks can be deferred in whole or part until other callbacks have
-	 *      been executed.
-	 *
-	 * For example, consider this hypothetical flight destination form, which
-	 * selects a default city when a country is selected:
-	 *
-	 *   var flightDispatcher = new Dispatcher();
-	 *
-	 *   // Keeps track of which country is selected
-	 *   var CountryStore = {country: null};
-	 *
-	 *   // Keeps track of which city is selected
-	 *   var CityStore = {city: null};
-	 *
-	 *   // Keeps track of the base flight price of the selected city
-	 *   var FlightPriceStore = {price: null}
-	 *
-	 * When a user changes the selected city, we dispatch the payload:
-	 *
-	 *   flightDispatcher.dispatch({
-	 *     actionType: 'city-update',
-	 *     selectedCity: 'paris'
-	 *   });
-	 *
-	 * This payload is digested by `CityStore`:
-	 *
-	 *   flightDispatcher.register(function(payload) {
-	 *     if (payload.actionType === 'city-update') {
-	 *       CityStore.city = payload.selectedCity;
-	 *     }
-	 *   });
-	 *
-	 * When the user selects a country, we dispatch the payload:
-	 *
-	 *   flightDispatcher.dispatch({
-	 *     actionType: 'country-update',
-	 *     selectedCountry: 'australia'
-	 *   });
-	 *
-	 * This payload is digested by both stores:
-	 *
-	 *   CountryStore.dispatchToken = flightDispatcher.register(function(payload) {
-	 *     if (payload.actionType === 'country-update') {
-	 *       CountryStore.country = payload.selectedCountry;
-	 *     }
-	 *   });
-	 *
-	 * When the callback to update `CountryStore` is registered, we save a reference
-	 * to the returned token. Using this token with `waitFor()`, we can guarantee
-	 * that `CountryStore` is updated before the callback that updates `CityStore`
-	 * needs to query its data.
-	 *
-	 *   CityStore.dispatchToken = flightDispatcher.register(function(payload) {
-	 *     if (payload.actionType === 'country-update') {
-	 *       // `CountryStore.country` may not be updated.
-	 *       flightDispatcher.waitFor([CountryStore.dispatchToken]);
-	 *       // `CountryStore.country` is now guaranteed to be updated.
-	 *
-	 *       // Select the default city for the new country
-	 *       CityStore.city = getDefaultCityForCountry(CountryStore.country);
-	 *     }
-	 *   });
-	 *
-	 * The usage of `waitFor()` can be chained, for example:
-	 *
-	 *   FlightPriceStore.dispatchToken =
-	 *     flightDispatcher.register(function(payload) {
-	 *       switch (payload.actionType) {
-	 *         case 'country-update':
-	 *         case 'city-update':
-	 *           flightDispatcher.waitFor([CityStore.dispatchToken]);
-	 *           FlightPriceStore.price =
-	 *             getFlightPriceStore(CountryStore.country, CityStore.city);
-	 *           break;
-	 *     }
-	 *   });
-	 *
-	 * The `country-update` payload will be guaranteed to invoke the stores'
-	 * registered callbacks in order: `CountryStore`, `CityStore`, then
-	 * `FlightPriceStore`.
-	 */
-	
-	var Dispatcher = (function () {
-	  function Dispatcher() {
-	    _classCallCheck(this, Dispatcher);
-	
-	    this._callbacks = {};
-	    this._isDispatching = false;
-	    this._isHandled = {};
-	    this._isPending = {};
-	    this._lastID = 1;
-	  }
-	
-	  /**
-	   * Registers a callback to be invoked with every dispatched payload. Returns
-	   * a token that can be used with `waitFor()`.
-	   */
-	
-	  Dispatcher.prototype.register = function register(callback) {
-	    var id = _prefix + this._lastID++;
-	    this._callbacks[id] = callback;
-	    return id;
-	  };
-	
-	  /**
-	   * Removes a callback based on its token.
-	   */
-	
-	  Dispatcher.prototype.unregister = function unregister(id) {
-	    !this._callbacks[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.unregister(...): `%s` does not map to a registered callback.', id) : invariant(false) : undefined;
-	    delete this._callbacks[id];
-	  };
-	
-	  /**
-	   * Waits for the callbacks specified to be invoked before continuing execution
-	   * of the current callback. This method should only be used by a callback in
-	   * response to a dispatched payload.
-	   */
-	
-	  Dispatcher.prototype.waitFor = function waitFor(ids) {
-	    !this._isDispatching ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): Must be invoked while dispatching.') : invariant(false) : undefined;
-	    for (var ii = 0; ii < ids.length; ii++) {
-	      var id = ids[ii];
-	      if (this._isPending[id]) {
-	        !this._isHandled[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): Circular dependency detected while ' + 'waiting for `%s`.', id) : invariant(false) : undefined;
-	        continue;
-	      }
-	      !this._callbacks[id] ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatcher.waitFor(...): `%s` does not map to a registered callback.', id) : invariant(false) : undefined;
-	      this._invokeCallback(id);
-	    }
-	  };
-	
-	  /**
-	   * Dispatches a payload to all registered callbacks.
-	   */
-	
-	  Dispatcher.prototype.dispatch = function dispatch(payload) {
-	    !!this._isDispatching ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.') : invariant(false) : undefined;
-	    this._startDispatching(payload);
-	    try {
-	      for (var id in this._callbacks) {
-	        if (this._isPending[id]) {
-	          continue;
-	        }
-	        this._invokeCallback(id);
-	      }
-	    } finally {
-	      this._stopDispatching();
-	    }
-	  };
-	
-	  /**
-	   * Is this Dispatcher currently dispatching.
-	   */
-	
-	  Dispatcher.prototype.isDispatching = function isDispatching() {
-	    return this._isDispatching;
-	  };
-	
-	  /**
-	   * Call the callback stored with the given id. Also do some internal
-	   * bookkeeping.
-	   *
-	   * @internal
-	   */
-	
-	  Dispatcher.prototype._invokeCallback = function _invokeCallback(id) {
-	    this._isPending[id] = true;
-	    this._callbacks[id](this._pendingPayload);
-	    this._isHandled[id] = true;
-	  };
-	
-	  /**
-	   * Set up bookkeeping needed when dispatching.
-	   *
-	   * @internal
-	   */
-	
-	  Dispatcher.prototype._startDispatching = function _startDispatching(payload) {
-	    for (var id in this._callbacks) {
-	      this._isPending[id] = false;
-	      this._isHandled[id] = false;
-	    }
-	    this._pendingPayload = payload;
-	    this._isDispatching = true;
-	  };
-	
-	  /**
-	   * Clear bookkeeping used for dispatching.
-	   *
-	   * @internal
-	   */
-	
-	  Dispatcher.prototype._stopDispatching = function _stopDispatching() {
-	    delete this._pendingPayload;
-	    this._isDispatching = false;
-	  };
-	
-	  return Dispatcher;
-	})();
-	
-	module.exports = Dispatcher;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
-
-/***/ },
-/* 183 */
-/***/ function(module, exports) {
-
-	module.exports = {
-	  GAMES_RECEIVED: "GAMES_RECEIVED",
-	  GAME_RECEIVED: "GAME_RECEIVED"
-	};
-
-/***/ },
-/* 184 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var AppDispatcher = __webpack_require__(180);
-	var GameActions = __webpack_require__(185);
-	var SessionStore = __webpack_require__(186);
-	var SessionActions = __webpack_require__(188);
-	var ReviewActions = __webpack_require__(189);
-	
-	module.exports = {
-	  // USER RELATED
-	  signUp: function (credentials) {
-	    $.ajax({
-	      type: "POST",
-	      url: "/users",
-	      dataType: "json",
-	      data: credentials,
-	      success: function () {
-	        console.log("created user!");
-	      }
-	    });
-	  },
-	
-	  login: function (credentials, callback) {
-	    $.ajax({
-	      type: "POST",
-	      url: "/api/session",
-	      dataType: "json",
-	      data: credentials,
-	      success: function (currentUser) {
-	        SessionActions.currentUserReceived(currentUser);
-	        callback && callback();
-	      }
-	    });
-	  },
-	
-	  logout: function () {
-	    $.ajax({
-	      type: "DELETE",
-	      url: "/api/session",
-	      dataType: "json",
-	      success: function () {
-	        SessionActions.logout();
-	      }
-	    });
-	  },
-	
-	  fetchCurrentUser: function (completion) {
-	    $.ajax({
-	      type: "GET",
-	      url: "/api/session",
-	      dataType: "json",
-	      success: function (currentUser) {
-	        SessionActions.currentUserReceived(currentUser);
-	      },
-	      complete: function () {
-	        completion && completion();
-	      }
-	    });
-	  },
-	  //REVIEW RELATED
-	  createReview: function (reviewParams) {
-	    $.ajax({
-	      type: "POST",
-	      url: "/api/reviews",
-	      dataType: "json",
-	      data: reviewParams,
-	      success: function (game) {
-	        GameActions.receiveSingleGame(game);
-	      },
-	      error: function () {
-	        console.log("Could not create review");
-	      }
-	    });
-	  },
-	
-	  //GAME RELATED
-	  fetchAllGames: function () {
-	    $.ajax({
-	      url: "/api/games",
-	      success: function (games) {
-	        GameActions.receiveAllGames(games);
-	      },
-	
-	      error: function () {
-	        console.log("Could not retrieve games");
-	      }
-	    });
-	  },
-	
-	  fetchSingleGame: function (id) {
-	    $.ajax({
-	      url: "/api/games/" + id,
-	      success: function (game) {
-	        GameActions.receiveSingleGame(game);
-	      },
-	
-	      error: function () {
-	        console.log("Could not retrieve game");
-	      }
-	    });
-	  }
-	
-	};
-
-/***/ },
-/* 185 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Dispatcher = __webpack_require__(180);
-	var GameConstants = __webpack_require__(183);
-	
-	module.exports = {
-	  receiveAllGames: function (games) {
-	    Dispatcher.dispatch({
-	      actionType: GameConstants.GAMES_RECEIVED,
-	      games: games
-	    });
-	  },
-	
-	  receiveSingleGame: function (game) {
-	    Dispatcher.dispatch({
-	      actionType: GameConstants.GAME_RECEIVED,
-	      game: game
-	    });
-	  }
-	
-	};
-
-/***/ },
 /* 186 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Store = __webpack_require__(162).Store;
-	var SessionConstants = __webpack_require__(187);
-	var AppDispatcher = __webpack_require__(180);
-	var SessionStore = new Store(AppDispatcher);
-	
-	var _currentUser;
-	var _currentUserHasBeenFetched = false;
-	
-	SessionStore.currentUser = function () {
-	  return _currentUser;
-	};
-	
-	SessionStore.isLoggedIn = function () {
-	  return !!_currentUser;
-	};
-	
-	SessionStore.currentUserHasBeenFetched = function () {
-	  return _currentUserHasBeenFetched;
-	};
-	
-	SessionStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case SessionConstants.CURRENT_USER_RECEIVED:
-	      _currentUser = payload.currentUser;
-	      _currentUserHasBeenFetched = true;
-	      SessionStore.__emitChange();
-	      break;
-	    case SessionConstants.LOGOUT:
-	      _currentUser = null;
-	      SessionStore.__emitChange();
-	      break;
-	  }
-	};
-	
-	module.exports = SessionStore;
-
-/***/ },
-/* 187 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -26887,11 +26839,11 @@
 	};
 
 /***/ },
-/* 188 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var AppDispatcher = __webpack_require__(180);
-	var SessionConstants = __webpack_require__(187);
+	var AppDispatcher = __webpack_require__(162);
+	var SessionConstants = __webpack_require__(186);
 	
 	var SessionActions = {
 	  currentUserReceived: function (currentUser) {
@@ -26911,11 +26863,11 @@
 	module.exports = SessionActions;
 
 /***/ },
-/* 189 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Dispatcher = __webpack_require__(180);
-	var ReviewConstants = __webpack_require__(190);
+	var Dispatcher = __webpack_require__(162);
+	var ReviewConstants = __webpack_require__(189);
 	
 	module.exports = {
 	  createSingleReview: function (review) {
@@ -26928,7 +26880,7 @@
 	};
 
 /***/ },
-/* 190 */
+/* 189 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -26937,11 +26889,60 @@
 	};
 
 /***/ },
+/* 190 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(169).Store;
+	var AppDispatcher = __webpack_require__(162);
+	var GameConstants = __webpack_require__(167);
+	var GameStore = new Store(AppDispatcher);
+	
+	var _games = {};
+	
+	var resetGames = function (games) {
+	  _games = {};
+	  games.forEach(function (game) {
+	    _games[game.id] = game;
+	  });
+	};
+	
+	var resetGame = function (game) {
+	  _games[game.id] = game;
+	};
+	
+	GameStore.find = function (id) {
+	  return _games[id];
+	};
+	
+	GameStore.all = function () {
+	  var games = [];
+	  for (var id in _games) {
+	    games.push(_games[id]);
+	  }
+	  return games;
+	};
+	
+	GameStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case GameConstants.GAMES_RECEIVED:
+	      resetGames(payload.games);
+	      GameStore.__emitChange();
+	      break;
+	    case GameConstants.GAME_RECEIVED:
+	      resetGame(payload.game);
+	      GameStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = GameStore;
+
+/***/ },
 /* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var GameStore = __webpack_require__(161);
+	var GameStore = __webpack_require__(190);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -32032,11 +32033,11 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var GameStore = __webpack_require__(161);
-	var ApiUtil = __webpack_require__(184);
+	var GameStore = __webpack_require__(190);
+	var ApiUtil = __webpack_require__(161);
 	var ReviewsIndexItem = __webpack_require__(250);
-	var ReviewStore = __webpack_require__(251);
-	var SessionStore = __webpack_require__(186);
+	var ReviewStore = __webpack_require__(253);
+	var SessionStore = __webpack_require__(168);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -32249,34 +32250,34 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var UserStore = __webpack_require__(251);
 	
 	module.exports = React.createClass({
-	  displayName: "exports",
+	  displayName: 'exports',
 	
 	  render: function () {
 	    if (this.props.review === []) {
-	      return React.createElement("div", null);
+	      return React.createElement('div', null);
 	    }
-	
 	    return React.createElement(
-	      "ul",
-	      { className: "review-box" },
+	      'ul',
+	      { className: 'review-box' },
 	      React.createElement(
-	        "li",
+	        'li',
 	        null,
-	        "Review Score: ",
+	        'Review Score: ',
 	        this.props.review.score
 	      ),
 	      React.createElement(
-	        "li",
+	        'li',
 	        null,
-	        "Reviewer ID: ",
+	        'Reviewer ID: ',
 	        this.props.review.user_id
 	      ),
 	      React.createElement(
-	        "li",
+	        'li',
 	        null,
-	        "Review: ",
+	        'Review: ',
 	        this.props.review.body
 	      )
 	    );
@@ -32288,9 +32289,67 @@
 /* 251 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Store = __webpack_require__(162).Store;
-	var AppDispatcher = __webpack_require__(180);
-	var ReviewConstants = __webpack_require__(190);
+	var Store = __webpack_require__(169).Store;
+	var AppDispatcher = __webpack_require__(162);
+	var UserConstants = __webpack_require__(252);
+	var UserStore = new Store(AppDispatcher);
+	
+	var _users = {};
+	
+	var resetUsers = function (users) {
+	  _users = {};
+	  users.forEach(function (user) {
+	    _users[user.id] = user;
+	  });
+	};
+	
+	var resetUser = function (user) {
+	  _users[user.id] = user;
+	};
+	
+	UserStore.find = function (id) {
+	  return _users[id];
+	};
+	
+	UserStore.all = function () {
+	  var users = [];
+	  for (var id in _users) {
+	    users.push(_users[id]);
+	  }
+	  return users;
+	};
+	
+	UserStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case UserConstants.USERS_RECEIVED:
+	      resetUsers(payload.users);
+	      UserStore.__emitChange();
+	      break;
+	    case UserConstants.USER_RECEIVED:
+	      resetUser(payload.user);
+	      UserStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = UserStore;
+
+/***/ },
+/* 252 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  USER_RECEIVED: "USER_RECEIVED",
+	  USERS_RECEIVED: "USERS_RECEIVED"
+	};
+
+/***/ },
+/* 253 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(169).Store;
+	var AppDispatcher = __webpack_require__(162);
+	var ReviewConstants = __webpack_require__(189);
 	var ReviewStore = new Store(AppDispatcher);
 	
 	var _reviews = {};
@@ -32330,11 +32389,11 @@
 	module.exports = ReviewStore;
 
 /***/ },
-/* 252 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var ApiUtil = __webpack_require__(184);
+	var ApiUtil = __webpack_require__(161);
 	
 	var LoginForm = React.createClass({
 	  displayName: 'LoginForm',
@@ -32366,7 +32425,25 @@
 	    this.setState({ password: e.currentTarget.value });
 	  },
 	
+	  guestLogin: function () {
+	    var guestParams = {
+	      username: "guest",
+	      password: "password"
+	    };
+	    var router = this.context.router;
+	    ApiUtil.login(guestParams, function () {
+	      router.push("/index");
+	    });
+	  },
+	
 	  render: function () {
+	
+	    var guestButton = React.createElement(
+	      'button',
+	      { className: 'guest-button', onClick: this.guestLogin },
+	      'Guest Login'
+	    );
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'sign-in-box group' },
@@ -32396,7 +32473,8 @@
 	          'button',
 	          { className: 'submit-button' },
 	          'Sign In'
-	        )
+	        ),
+	        guestButton
 	      )
 	    );
 	  }
@@ -32406,16 +32484,11 @@
 	module.exports = LoginForm;
 
 /***/ },
-/* 253 */,
-/* 254 */,
-/* 255 */,
-/* 256 */,
-/* 257 */,
-/* 258 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var ApiUtil = __webpack_require__(184);
+	var ApiUtil = __webpack_require__(161);
 	
 	var SignUpForm = React.createClass({
 	  displayName: 'SignUpForm',

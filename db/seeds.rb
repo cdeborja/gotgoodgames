@@ -7,11 +7,15 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 User.destroy_all
-user1 = User.create!(username: "test",
+user1 = User.create!(username: "guest",
         password: "password")
 user2 = User.create!(username: "banana",
         password: "password")
 user3 = User.create!(username: "poatate",
+        password: "password")
+user4 = User.create!(username: "test",
+        password: "password")
+user5 = User.create!(username: "user",
         password: "password")
 
 Game.destroy_all
