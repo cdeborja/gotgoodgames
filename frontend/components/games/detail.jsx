@@ -57,18 +57,20 @@ module.exports = React.createClass({
     this.setState({ body: e.currentTarget.value});
   },
   //Need to fix the date ordering
+
   render: function () {
     var game = this.state.game;
     if ( !game || !game.reviews) {return (<div className="loading"> AHHH DON'T LOOK AT ME! I AM NOT READY!!!</div>);}
     var gameReviews = game.reviews.map(function (review, id) {
       return <ReviewsIndexItem key={id} review={review} />;
-    });
+    }).reverse();
+
     var totalScore = 0;
     game.reviews.forEach( function(review) {
       totalScore += review.score;
     });
-    var averageScore = (totalScore / game.reviews.length).toFixed(2);
 
+    var averageScore = (totalScore / game.reviews.length).toFixed(2);
     return(
       <div className="game-detail-pane">
           <h2>Title: {game.title}</h2>

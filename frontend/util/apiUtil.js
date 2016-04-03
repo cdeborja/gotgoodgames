@@ -5,7 +5,19 @@ var SessionActions = require('../actions/sessionActions');
 var ReviewActions = require('../actions/reviewActions');
 
 module.exports = {
-  //USER RELATED
+  // USER RELATED
+  signUp: function(credentials) {
+    $.ajax({
+      type: "POST",
+      url: "/users",
+      dataType: "json",
+      data: credentials,
+      success: function() {
+        console.log("created user!");
+      }
+    });
+  },
+
   login: function(credentials, callback) {
     $.ajax({
       type: "POST",

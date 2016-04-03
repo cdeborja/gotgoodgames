@@ -1,7 +1,7 @@
 var React = require('react');
 var ApiUtil = require('../util/apiUtil');
 
-var LoginForm = React.createClass({
+var SignUpForm = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
@@ -16,6 +16,7 @@ var LoginForm = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
     var router = this.context.router;
+    ApiUtil.signUp(this.state);
     ApiUtil.login(this.state, function() {
       router.push("/index");
     });
@@ -32,27 +33,29 @@ var LoginForm = React.createClass({
   render: function() {
     return (
       <div className="sign-in-box group">
-        <h1>Please Log in</h1>
+        <h1>Sign Up</h1>
 
         <form className="input-box" onSubmit={this.handleSubmit}>
 
           <label className="input-text" htmlFor="username">
             Username
           </label>
-          <input className="input-field-login" onChange={this.updateUsername}
+          <input placeholder="How would you like to be known here?"
+          className="input-field-login" onChange={this.updateUsername}
           type="text" value={this.state.username}/>
 
           <label className="input-text" htmlFor="password">Password</label>
           <input className="input-field-login" onChange={this.updatePassword}
-          type="password" value={this.state.password}/>
+          type="password" value={this.state.password}
+          placeholder="Is that secret enough???"/>
 
           <button className="submit-button">Sign In</button>
 
         </form>
       </div>
     );
-  }
+  },
 
 });
 
-module.exports = LoginForm;
+module.exports = SignUpForm;

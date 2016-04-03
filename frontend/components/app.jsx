@@ -38,19 +38,25 @@ module.exports = React.createClass({
     this.context.router.push("/index");
   },
 
-  goToCurrentUserHomePage: function () {
-    this.context.router.push("/homepage");
+  // goToCurrentUserHomePage: function () {
+  //   this.context.router.push("/homepage");
+  // },
+
+  goToSignUpForm: function () {
+    this.context.router.push("/signup");
   },
 
-
   render: function () {
-    var button, welcomeMessage, homepage;
+    var button, welcomeMessage, homepage, signUpButton;
     if (this.state.currentUser) {
       button = <button className="logout-button" onClick={ApiUtil.logout}>Logout</button>;
       welcomeMessage = <h2>Welcome, {this.state.currentUser.username}</h2>;
-    } else {
-      button = undefined;
-      welcomeMessage = undefined;
+      homepage = <li onClick={this.goToCurrentUserHomePage} className="header-nav-bar">Profile</li>;
+    }
+
+    if (!this.state.currentUser) {
+      signUpButton = <button className="logout-button" onClick={this.goToSignUpForm}>
+      Sign Up</button>;
     }
 
     return (
@@ -63,17 +69,18 @@ module.exports = React.createClass({
             games
           </div>
         </div>
-        <div onClick={this.goToCurrentUserHomePage} className="header-nav-bar">
-          Profile
-        </div>
+        <ul>
+          {homepage}
+        </ul>
         <nav className="header-nav group">
         <ul className="header-nav">
+          {signUpButton}
           {button}
           {welcomeMessage}
         </ul>
         </nav>
         <div>
-        {this.props.children}
+          {this.props.children}
         </div>
       </header>
     );

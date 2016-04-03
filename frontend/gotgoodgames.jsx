@@ -11,18 +11,20 @@ var ApiUtil = require('./util/apiUtil');
 //Current Routes that need pages
 var GamesIndex = require('./components/games/index');
 var GameDetail = require('./components/games/detail');
-// var PlayerHomePage = require('./components/users/homepage');
+// var UserHomePage = require('./components/users/homepage.jsx');
 var LoginForm = require('./components/loginForm');
+var SignUpForm = require('./components/signUpForm');
 
 var GameStore = require('./stores/game');
 var SessionStore = require('./stores/session');
 
-// <Route path="homepage" component={PlayerHomePage} onEnter={_requireLoggedIn} />
+// <Route path="homepage" component={UserHomePage} onEnter={_requireLoggedIn} />
 var routes = (
   <Route path="/" component={App}>
     <Route path="index" component={GamesIndex} onEnter={_requireLoggedIn} />
     <Route path="games/:gameId" component={GameDetail} onEnter={_requireLoggedIn} />
     <Route path="login" component={LoginForm} />
+    <Route path="signup" component={SignUpForm} />
   </Route>
 
 

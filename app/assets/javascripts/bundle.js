@@ -57,19 +57,21 @@
 	//Current Routes that need pages
 	var GamesIndex = __webpack_require__(160);
 	var GameDetail = __webpack_require__(249);
-	// var PlayerHomePage = require('./components/users/homepage');
+	// var UserHomePage = require('./components/users/homepage.jsx');
 	var LoginForm = __webpack_require__(252);
+	var SignUpForm = __webpack_require__(258);
 	
 	var GameStore = __webpack_require__(161);
 	var SessionStore = __webpack_require__(186);
 	
-	// <Route path="homepage" component={PlayerHomePage} onEnter={_requireLoggedIn} />
+	// <Route path="homepage" component={UserHomePage} onEnter={_requireLoggedIn} />
 	var routes = React.createElement(
 	  Route,
 	  { path: '/', component: App },
 	  React.createElement(Route, { path: 'index', component: GamesIndex, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'games/:gameId', component: GameDetail, onEnter: _requireLoggedIn }),
-	  React.createElement(Route, { path: 'login', component: LoginForm })
+	  React.createElement(Route, { path: 'login', component: LoginForm }),
+	  React.createElement(Route, { path: 'signup', component: SignUpForm })
 	);
 	
 	document.addEventListener("DOMContentLoaded", function () {
@@ -19746,12 +19748,16 @@
 	    this.context.router.push("/index");
 	  },
 	
-	  goToCurrentUserHomePage: function () {
-	    this.context.router.push("/homepage");
+	  // goToCurrentUserHomePage: function () {
+	  //   this.context.router.push("/homepage");
+	  // },
+	
+	  goToSignUpForm: function () {
+	    this.context.router.push("/signup");
 	  },
 	
 	  render: function () {
-	    var button, welcomeMessage, homepage;
+	    var button, welcomeMessage, homepage, signUpButton;
 	    if (this.state.currentUser) {
 	      button = React.createElement(
 	        'button',
@@ -19764,9 +19770,19 @@
 	        'Welcome, ',
 	        this.state.currentUser.username
 	      );
-	    } else {
-	      button = undefined;
-	      welcomeMessage = undefined;
+	      homepage = React.createElement(
+	        'li',
+	        { onClick: this.goToCurrentUserHomePage, className: 'header-nav-bar' },
+	        'Profile'
+	      );
+	    }
+	
+	    if (!this.state.currentUser) {
+	      signUpButton = React.createElement(
+	        'button',
+	        { className: 'logout-button', onClick: this.goToSignUpForm },
+	        'Sign Up'
+	      );
 	    }
 	
 	    return React.createElement(
@@ -19787,9 +19803,9 @@
 	        )
 	      ),
 	      React.createElement(
-	        'div',
-	        { onClick: this.goToCurrentUserHomePage, className: 'header-nav-bar' },
-	        'Profile'
+	        'ul',
+	        null,
+	        homepage
 	      ),
 	      React.createElement(
 	        'nav',
@@ -19797,6 +19813,7 @@
 	        React.createElement(
 	          'ul',
 	          { className: 'header-nav' },
+	          signUpButton,
 	          button,
 	          welcomeMessage
 	        )
@@ -19816,10 +19833,11 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var GameStore = __webpack_require__(161);
 	var ApiUtil = __webpack_require__(184);
-	var GameIndexItem = __webpack_require__(191);
 	var AppDispatcher = __webpack_require__(180);
+	
+	var GameStore = __webpack_require__(161);
+	var GameIndexItem = __webpack_require__(191);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -26700,7 +26718,19 @@
 	var ReviewActions = __webpack_require__(189);
 	
 	module.exports = {
-	  //USER RELATED
+	  // USER RELATED
+	  signUp: function (credentials) {
+	    $.ajax({
+	      type: "POST",
+	      url: "/users",
+	      dataType: "json",
+	      data: credentials,
+	      success: function () {
+	        console.log("created user!");
+	      }
+	    });
+	  },
+	
 	  login: function (credentials, callback) {
 	    $.ajax({
 	      type: "POST",
@@ -32061,6 +32091,7 @@
 	    this.setState({ body: e.currentTarget.value });
 	  },
 	  //Need to fix the date ordering
+	
 	  render: function () {
 	    var game = this.state.game;
 	    if (!game || !game.reviews) {
@@ -32072,13 +32103,14 @@
 	    }
 	    var gameReviews = game.reviews.map(function (review, id) {
 	      return React.createElement(ReviewsIndexItem, { key: id, review: review });
-	    });
+	    }).reverse();
+	
 	    var totalScore = 0;
 	    game.reviews.forEach(function (review) {
 	      totalScore += review.score;
 	    });
-	    var averageScore = (totalScore / game.reviews.length).toFixed(2);
 	
+	    var averageScore = (totalScore / game.reviews.length).toFixed(2);
 	    return React.createElement(
 	      'div',
 	      { className: 'game-detail-pane' },
@@ -32318,6 +32350,22 @@
 	    };
 	  },
 	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	    var router = this.context.router;
+	    ApiUtil.login(this.state, function () {
+	      router.push("/index");
+	    });
+	  },
+	
+	  updateUsername: function (e) {
+	    this.setState({ username: e.currentTarget.value });
+	  },
+	
+	  updatePassword: function (e) {
+	    this.setState({ password: e.currentTarget.value });
+	  },
+	
 	  render: function () {
 	    return React.createElement(
 	      'div',
@@ -32351,11 +32399,42 @@
 	        )
 	      )
 	    );
+	  }
+	
+	});
+	
+	module.exports = LoginForm;
+
+/***/ },
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(184);
+	
+	var SignUpForm = React.createClass({
+	  displayName: 'SignUpForm',
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  getInitialState: function () {
+	    return {
+	      username: "",
+	      password: ""
+	    };
 	  },
 	
 	  handleSubmit: function (e) {
 	    e.preventDefault();
 	    var router = this.context.router;
+	    ApiUtil.signUp(this.state);
 	    ApiUtil.login(this.state, function () {
 	      router.push("/index");
 	    });
@@ -32367,11 +32446,48 @@
 	
 	  updatePassword: function (e) {
 	    this.setState({ password: e.currentTarget.value });
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'sign-in-box group' },
+	      React.createElement(
+	        'h1',
+	        null,
+	        'Sign Up'
+	      ),
+	      React.createElement(
+	        'form',
+	        { className: 'input-box', onSubmit: this.handleSubmit },
+	        React.createElement(
+	          'label',
+	          { className: 'input-text', htmlFor: 'username' },
+	          'Username'
+	        ),
+	        React.createElement('input', { placeholder: 'How would you like to be known here?',
+	          className: 'input-field-login', onChange: this.updateUsername,
+	          type: 'text', value: this.state.username }),
+	        React.createElement(
+	          'label',
+	          { className: 'input-text', htmlFor: 'password' },
+	          'Password'
+	        ),
+	        React.createElement('input', { className: 'input-field-login', onChange: this.updatePassword,
+	          type: 'password', value: this.state.password,
+	          placeholder: 'Is that secret enough???' }),
+	        React.createElement(
+	          'button',
+	          { className: 'submit-button' },
+	          'Sign In'
+	        )
+	      )
+	    );
 	  }
 	
 	});
 	
-	module.exports = LoginForm;
+	module.exports = SignUpForm;
 
 /***/ }
 /******/ ]);
