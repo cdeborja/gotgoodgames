@@ -1,13 +1,13 @@
 var React = require('react');
 var ApiUtil = require('../../util/apiUtil');
 var AppDispatcher = require('../../dispatcher/dispatcher');
-
+var SessionStore = require('../../stores/session');
 var UserStore = require('../../stores/user');
 
 module.exports = React.createClass({
   getStateFromStore: function () {
-    return { user: SessionStore.currentUser,
-             reviews: SessionStore.currentUser.reviews
+    return { user: SessionStore.currentUser(),
+             reviews: SessionStore.currentUser().reviews
            };
   },
 
@@ -23,20 +23,20 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function () {
-    this.gameListener = GameStore.addListener(this._onChange);
+    this.userListener = UserStore.addListener(this._onChange);
+    ApiUtil.fetchUserReviews(review={user_id: this.state.user.id});
   },
 
   componentWillUnmount: function () {
-    this.gameListener.remove();
+    this.userListener.remove();
   },
 
   handleSubmit: function(e) {
   },
 
   render: function () {
-
     return(
-      <div></div>
+      <div>Got into User Page!</div>
     );
   }
 

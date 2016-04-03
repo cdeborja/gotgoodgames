@@ -57,19 +57,19 @@
 	//Current Routes that need pages
 	var GamesIndex = __webpack_require__(160);
 	var GameDetail = __webpack_require__(249);
-	// var UserHomePage = require('./components/users/homepage.jsx');
-	var LoginForm = __webpack_require__(254);
-	var SignUpForm = __webpack_require__(255);
+	var UserHomePage = __webpack_require__(254);
+	var LoginForm = __webpack_require__(255);
+	var SignUpForm = __webpack_require__(256);
 	
 	var GameStore = __webpack_require__(190);
 	var SessionStore = __webpack_require__(168);
 	var UserStore = __webpack_require__(251);
 	
-	// <Route path="homepage" component={UserHomePage} onEnter={_requireLoggedIn} />
 	var routes = React.createElement(
 	  Route,
 	  { path: '/', component: App },
 	  React.createElement(Route, { path: 'index', component: GamesIndex, onEnter: _requireLoggedIn }),
+	  React.createElement(Route, { path: 'homepage', component: UserHomePage, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'games/:gameId', component: GameDetail, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'login', component: LoginForm }),
 	  React.createElement(Route, { path: 'signup', component: SignUpForm })
@@ -19712,7 +19712,6 @@
 	var GamesIndex = __webpack_require__(160);
 	var SessionStore = __webpack_require__(168);
 	var ApiUtil = __webpack_require__(161);
-	// var ReviewsIndex = require('./reviews/index');
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -19749,9 +19748,9 @@
 	    this.context.router.push("/index");
 	  },
 	
-	  // goToCurrentUserHomePage: function () {
-	  //   this.context.router.push("/homepage");
-	  // },
+	  goToCurrentUserHomePage: function () {
+	    this.context.router.push("/homepage");
+	  },
 	
 	  goToSignUpForm: function () {
 	    this.context.router.push("/signup");
@@ -19962,6 +19961,22 @@
 	      },
 	      error: function () {
 	        console.log("Could not create review");
+	      }
+	    });
+	  },
+	
+	  fetchUserReviews: function (user_id) {
+	    $.ajax({
+	      type: "GET",
+	      url: "/api/reviews",
+	      dataType: "json",
+	      data: user_id,
+	      success: function (reviews) {
+	        debugger;
+	        ReviewActions.receiveUserReviews(reviews);
+	      },
+	      error: function () {
+	        console.log("Could not retrieve reviews");
 	      }
 	    });
 	  },
@@ -32394,6 +32409,56 @@
 
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(161);
+	var AppDispatcher = __webpack_require__(162);
+	var SessionStore = __webpack_require__(168);
+	var UserStore = __webpack_require__(251);
+	
+	module.exports = React.createClass({
+	  displayName: 'exports',
+	
+	  getStateFromStore: function () {
+	    return { user: SessionStore.currentUser(),
+	      reviews: SessionStore.currentUser().reviews
+	    };
+	  },
+	
+	  _onChange: function () {
+	    this.setState(this.getStateFromStore());
+	  },
+	
+	  getInitialState: function () {
+	    return this.getStateFromStore();
+	  },
+	
+	  componentWillReceiveProps: function (newProps) {},
+	
+	  componentDidMount: function () {
+	    this.userListener = UserStore.addListener(this._onChange);
+	    ApiUtil.fetchUserReviews(review = { user_id: this.state.user.id });
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.userListener.remove();
+	  },
+	
+	  handleSubmit: function (e) {},
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      null,
+	      'Got into User Page!'
+	    );
+	  }
+	
+	});
+
+/***/ },
+/* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(161);
 	
 	var LoginForm = React.createClass({
 	  displayName: 'LoginForm',
@@ -32431,6 +32496,8 @@
 	      password: "password"
 	    };
 	    var router = this.context.router;
+	    this.setState(guestParams);
+	
 	    ApiUtil.login(guestParams, function () {
 	      router.push("/index");
 	    });
@@ -32484,7 +32551,7 @@
 	module.exports = LoginForm;
 
 /***/ },
-/* 255 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);

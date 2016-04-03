@@ -8,7 +8,7 @@ class Api::ReviewsController < ApplicationController
     review = Review.new(review_params)
     game = Game.find(review.game_id)
     if review.save
-      redirect_to "/api/games/#{game.id}" 
+      redirect_to "/api/games/#{game.id}"
     else
       render json: review.errors.full_messages, status: 422
     end
@@ -19,7 +19,12 @@ class Api::ReviewsController < ApplicationController
   end
 
   def index
-    @reviews = Review.all
+    reviews = Review.select("*").where("user_id = ?", params["user_id"])
+    if reviews
+      redirect_to "/user/#{params["user_id"]}"
+    else
+      errors
+    end
   end
 
   def edit

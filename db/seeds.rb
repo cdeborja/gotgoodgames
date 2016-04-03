@@ -48,7 +48,7 @@ review3 = Review.create!(user_id: user1.id,
         body: "I couldn't find Senpai! Help!")
 review4 = Review.create!(user_id: user1.id,
         game_id: game4.id, score: 2,
-        body: "I couldn't find Mario! Help!")
+        body: "I couldn't find the straight block! Help!")
 review5 = Review.create!(user_id: user2.id,
         game_id: game1.id, score: 5,
         body: "Found him, so easy!")

@@ -2,7 +2,6 @@ var React = require('react');
 var GamesIndex = require('./games/index');
 var SessionStore = require('../stores/session');
 var ApiUtil = require('../util/apiUtil');
-// var ReviewsIndex = require('./reviews/index');
 
 module.exports = React.createClass({
 
@@ -38,9 +37,9 @@ module.exports = React.createClass({
     this.context.router.push("/index");
   },
 
-  // goToCurrentUserHomePage: function () {
-  //   this.context.router.push("/homepage");
-  // },
+  goToCurrentUserHomePage: function () {
+    this.context.router.push("/homepage");
+  },
 
   goToSignUpForm: function () {
     this.context.router.push("/signup");

@@ -71,6 +71,22 @@ module.exports = {
     });
   },
 
+  fetchUserReviews: function(user_id) {
+    $.ajax({
+      type: "GET",
+      url: "/api/reviews",
+      dataType: "json",
+      data: user_id,
+      success: function (reviews) {
+        debugger
+        ReviewActions.receiveUserReviews(reviews);
+      },
+      error: function () {
+        console.log("Could not retrieve reviews");
+      }
+    });
+  },
+
 
   //GAME RELATED
   fetchAllGames: function() {
