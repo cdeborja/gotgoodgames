@@ -2,10 +2,10 @@ var Dispatcher = require('../dispatcher/dispatcher');
 var ReviewConstants = require('../constants/reviewConstants');
 
 module.exports = {
-  createSingleReview: function (review) {
+  receiveUserReviews: function (reviews) {
     Dispatcher.dispatch({
-      actionType: ReviewConstants.REVIEW_CREATED,
-      review: review
+      actionType: ReviewConstants.USER_REVIEWS_RECEIVED,
+      reviews: reviews
     });
   }
 

@@ -2,6 +2,7 @@ var Store = require('flux/utils').Store;
 var AppDispatcher = require('../dispatcher/dispatcher');
 var UserConstants = require('../constants/UserConstants');
 var UserStore = new Store(AppDispatcher);
+var ReviewConstants = require('../constants/reviewConstants');
 
 var _users = {};
 
@@ -41,4 +42,7 @@ UserStore.__onDispatch = function (payload) {
   }
 };
 
+// case ReviewConstants.USER_REVIEWS_RECEIVED:
+// UserStore.__emitChange();
+// break;
 module.exports = UserStore;

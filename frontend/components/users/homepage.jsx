@@ -3,11 +3,12 @@ var ApiUtil = require('../../util/apiUtil');
 var AppDispatcher = require('../../dispatcher/dispatcher');
 var SessionStore = require('../../stores/session');
 var UserStore = require('../../stores/user');
+var ReviewStore = require('../../stores/review');
 
 module.exports = React.createClass({
   getStateFromStore: function () {
     return { user: SessionStore.currentUser(),
-             reviews: SessionStore.currentUser().reviews
+             reviews: ReviewStore.all()
            };
   },
 
@@ -19,16 +20,16 @@ module.exports = React.createClass({
     return (this.getStateFromStore() );
   },
 
-  componentWillReceiveProps: function (newProps) {
+  componentWillReceiveProps: function () {
   },
 
   componentDidMount: function () {
-    this.userListener = UserStore.addListener(this._onChange);
+    this.reviewListener = ReviewStore.addListener(this._onChange);
     ApiUtil.fetchUserReviews(review={user_id: this.state.user.id});
   },
 
   componentWillUnmount: function () {
-    this.userListener.remove();
+    this.reviewListener.remove();
   },
 
   handleSubmit: function(e) {
@@ -36,7 +37,10 @@ module.exports = React.createClass({
 
   render: function () {
     return(
-      <div>Got into User Page!</div>
+      <div>
+        <h2>Got into User Page!</h2>
+        <li>{this.state.reviews.length}</li>
+      </div>
     );
   }
 

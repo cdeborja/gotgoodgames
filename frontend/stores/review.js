@@ -5,33 +5,33 @@ var ReviewStore = new Store(AppDispatcher);
 
 var _reviews = {};
 
-// var resetGames = function (games) {
-//   _games = {};
-//   games.forEach(function (game) {
-//     _games[game.id] = game;
-//   });
-// };
-//
+var resetReviews = function (reviews) {
+  _reviews = {};
+  reviews.forEach(function (review) {
+    _reviews[review.id] = review;
+  });
+};
+
 // var resetGame = function (game) {
-//   _games[game.id] = game;
+//   _reviews[game.id] = game;
 // };
-//
+
 // ReviewStore.find = function (id) {
-//   return _games[id];
+//   return _reviews[id];
 // };
-//
-// ReviewStore.all = function () {
-//   var games = [];
-//   for (var id in _games) {
-//     games.push(_games[id]);
-//   }
-//   return games;
-// };
+
+ReviewStore.all = function () {
+  var reviews = [];
+  for (var id in _reviews) {
+    reviews.push(_reviews[id]);
+  }
+  return reviews;
+};
 
 ReviewStore.__onDispatch = function (payload) {
   switch (payload.actionType) {
-    case ReviewConstants.REVIEW_CREATED:
-      // resetReview(payload.games);
+    case ReviewConstants.USER_REVIEWS_RECEIVED:
+      resetReviews(payload.reviews);
       ReviewStore.__emitChange();
       break;
   }

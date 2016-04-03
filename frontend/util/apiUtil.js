@@ -9,7 +9,7 @@ module.exports = {
   signUp: function(credentials) {
     $.ajax({
       type: "POST",
-      url: "/users",
+      url: "api/users",
       dataType: "json",
       data: credentials,
       success: function() {
@@ -78,7 +78,6 @@ module.exports = {
       dataType: "json",
       data: user_id,
       success: function (reviews) {
-        debugger
         ReviewActions.receiveUserReviews(reviews);
       },
       error: function () {

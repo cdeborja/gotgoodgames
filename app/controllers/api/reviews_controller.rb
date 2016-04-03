@@ -21,7 +21,7 @@ class Api::ReviewsController < ApplicationController
   def index
     reviews = Review.select("*").where("user_id = ?", params["user_id"])
     if reviews
-      redirect_to "/user/#{params["user_id"]}"
+      render json: reviews
     else
       errors
     end

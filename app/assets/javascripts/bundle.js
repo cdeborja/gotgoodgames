@@ -19903,7 +19903,7 @@
 	  signUp: function (credentials) {
 	    $.ajax({
 	      type: "POST",
-	      url: "/users",
+	      url: "api/users",
 	      dataType: "json",
 	      data: credentials,
 	      success: function () {
@@ -19972,7 +19972,6 @@
 	      dataType: "json",
 	      data: user_id,
 	      success: function (reviews) {
-	        debugger;
 	        ReviewActions.receiveUserReviews(reviews);
 	      },
 	      error: function () {
@@ -26885,10 +26884,10 @@
 	var ReviewConstants = __webpack_require__(189);
 	
 	module.exports = {
-	  createSingleReview: function (review) {
+	  receiveUserReviews: function (reviews) {
 	    Dispatcher.dispatch({
-	      actionType: ReviewConstants.REVIEW_CREATED,
-	      review: review
+	      actionType: ReviewConstants.USER_REVIEWS_RECEIVED,
+	      reviews: reviews
 	    });
 	  }
 	
@@ -26899,8 +26898,7 @@
 /***/ function(module, exports) {
 
 	module.exports = {
-	  REVIEWS_RECEIVED: "REVIEWS_RECEIVED",
-	  REVIEW_CREATED: "REVIEW_CREATED"
+	  USER_REVIEWS_RECEIVED: "USER_REVIEWS_RECEIVED"
 	};
 
 /***/ },
@@ -32308,6 +32306,7 @@
 	var AppDispatcher = __webpack_require__(162);
 	var UserConstants = __webpack_require__(252);
 	var UserStore = new Store(AppDispatcher);
+	var ReviewConstants = __webpack_require__(189);
 	
 	var _users = {};
 	
@@ -32347,6 +32346,9 @@
 	  }
 	};
 	
+	// case ReviewConstants.USER_REVIEWS_RECEIVED:
+	// UserStore.__emitChange();
+	// break;
 	module.exports = UserStore;
 
 /***/ },
@@ -32369,33 +32371,33 @@
 	
 	var _reviews = {};
 	
-	// var resetGames = function (games) {
-	//   _games = {};
-	//   games.forEach(function (game) {
-	//     _games[game.id] = game;
-	//   });
-	// };
-	//
+	var resetReviews = function (reviews) {
+	  _reviews = {};
+	  reviews.forEach(function (review) {
+	    _reviews[review.id] = review;
+	  });
+	};
+	
 	// var resetGame = function (game) {
-	//   _games[game.id] = game;
+	//   _reviews[game.id] = game;
 	// };
-	//
+	
 	// ReviewStore.find = function (id) {
-	//   return _games[id];
+	//   return _reviews[id];
 	// };
-	//
-	// ReviewStore.all = function () {
-	//   var games = [];
-	//   for (var id in _games) {
-	//     games.push(_games[id]);
-	//   }
-	//   return games;
-	// };
+	
+	ReviewStore.all = function () {
+	  var reviews = [];
+	  for (var id in _reviews) {
+	    reviews.push(_reviews[id]);
+	  }
+	  return reviews;
+	};
 	
 	ReviewStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
-	    case ReviewConstants.REVIEW_CREATED:
-	      // resetReview(payload.games);
+	    case ReviewConstants.USER_REVIEWS_RECEIVED:
+	      resetReviews(payload.reviews);
 	      ReviewStore.__emitChange();
 	      break;
 	  }
@@ -32412,13 +32414,14 @@
 	var AppDispatcher = __webpack_require__(162);
 	var SessionStore = __webpack_require__(168);
 	var UserStore = __webpack_require__(251);
+	var ReviewStore = __webpack_require__(253);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
 	
 	  getStateFromStore: function () {
 	    return { user: SessionStore.currentUser(),
-	      reviews: SessionStore.currentUser().reviews
+	      reviews: ReviewStore.all()
 	    };
 	  },
 	
@@ -32430,15 +32433,15 @@
 	    return this.getStateFromStore();
 	  },
 	
-	  componentWillReceiveProps: function (newProps) {},
+	  componentWillReceiveProps: function () {},
 	
 	  componentDidMount: function () {
-	    this.userListener = UserStore.addListener(this._onChange);
+	    this.reviewListener = ReviewStore.addListener(this._onChange);
 	    ApiUtil.fetchUserReviews(review = { user_id: this.state.user.id });
 	  },
 	
 	  componentWillUnmount: function () {
-	    this.userListener.remove();
+	    this.reviewListener.remove();
 	  },
 	
 	  handleSubmit: function (e) {},
@@ -32447,7 +32450,16 @@
 	    return React.createElement(
 	      'div',
 	      null,
-	      'Got into User Page!'
+	      React.createElement(
+	        'h2',
+	        null,
+	        'Got into User Page!'
+	      ),
+	      React.createElement(
+	        'li',
+	        null,
+	        this.state.reviews.length
+	      )
 	    );
 	  }
 	
