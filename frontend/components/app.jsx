@@ -58,6 +58,7 @@ module.exports = React.createClass({
       Sign Up</button>;
     }
 
+
     return (
       <header className="header group">
         <div onClick={this.goToIndex}>

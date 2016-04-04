@@ -20,13 +20,13 @@ module.exports = React.createClass({
   },
 
   componentWillReceiveProps: function (newProps) {
-    debugger;
     ApiUtil.fetchSingleGame(parseInt(newProps.params.gameId));
   },
 
   componentDidMount: function () {
     this.gameListener = GameStore.addListener(this._onChange);
     ApiUtil.fetchSingleGame(parseInt(this.props.params.gameId));
+    debugger;
   },
 
   componentWillUnmount: function () {
@@ -35,7 +35,7 @@ module.exports = React.createClass({
 
   render: function () {
     var game = this.state.game;
-    if ( !game || !game.reviews) {return (<div className="loading"> AHHH DON'T LOOK AT ME! I AM NOT READY!!!</div>);}
+    if ( !game || !game.reviews) {return (<img className="loading-image" src="http://downgraf.com/wp-content/uploads/2014/09/01-progress.gif"/>);}
     var gameReviews = game.reviews.map(function (review, id) {
       return <ReviewsIndexItem key={id} review={review} />;
     }).reverse();
@@ -50,7 +50,7 @@ module.exports = React.createClass({
       <div className="game-detail-pane">
           <h2>Title: {game.title}</h2>
           <ul>
-            <img></img>
+            <img src={game.cover} />
             <li>Average Score: {averageScore}</li>
             <li>Console: {game.console}</li>
             <li>Release Date: {game.release_date}</li>

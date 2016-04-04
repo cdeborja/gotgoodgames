@@ -41,12 +41,12 @@ button, article, footer, small {
 
 body {
   font-family: sans-serif;
-  background-image: url('http://cdn.pcwallart.com/images/pacman-wallpaper-2.jpg');
-   height: 120px;
-   background-size: cover;
-   background-position: bottom;
+   background-image: url('http://cdn.pcwallart.com/images/pacman-wallpaper-2.jpg');
+   background-size: 300px auto;
+   background-position: left 0px bottom;
    background-attachment: fixed;
-   top: 0;
+   background-repeat: no-repeat;
+   background-color: #040404;
 }
 
 ul {
@@ -67,6 +67,11 @@ img {
   font-weight: bold;
   color: rebeccapurple;
 }
+
+.loading-image {
+  width: 500px;
+  height: auto;
+ }
 
 /* --- CLEARFIX --- */
 
@@ -115,7 +120,7 @@ img {
   font-size: 32px;
   margin-left: 14px;
   margin-top: 4px;
-  color: #3e2c1a;
+  color: #eee;
   letter-spacing: -2px;
 }
 
@@ -127,10 +132,11 @@ img {
 .header-logo-second {
   float: left;
   font-size: 32px;
-  color: #3e2c1a;
+  color: #eee;
   letter-spacing: -2px;
   font-weight: bold;
   margin-top: 4px;
+  text-shadow: 0 0 0.2em black, 0 0 0.2em #ff3, 0 0 0.2em #ff3}
 }
 
 .header-list {
@@ -363,12 +369,11 @@ img {
 .game-detail-pane > ul > img {
   float: left;
   display: block;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: blue;
+  width: auto;
+  height: 150px;
   border: dashed 1px black;
   margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 .game-detail-pane > ul > li {

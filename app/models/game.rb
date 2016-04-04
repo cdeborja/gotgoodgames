@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
   validates :title, :description, :release_date, presence: true
 
-  has_attached_file :cover, default_url: "missing.png"
+  has_attached_file :cover, default_url: "http://i280.photobucket.com/albums/kk197/chanhonglok/naruto/5a1c4ba4.gif"
   validates_attachment_content_type :cover, content_type: /\Aimage\/.*\Z/
 
   has_many(
