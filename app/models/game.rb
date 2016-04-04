@@ -1,4 +1,8 @@
 class Game < ActiveRecord::Base
+
+  include PgSearch
+  multisearchable :against => :title
+
   validates :title, :description, :release_date, presence: true
 
   has_attached_file :cover, default_url: "http://i280.photobucket.com/albums/kk197/chanhonglok/naruto/5a1c4ba4.gif"

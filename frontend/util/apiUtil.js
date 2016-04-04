@@ -3,6 +3,7 @@ var GameActions = require('../actions/gameActions.js');
 var SessionStore = require('../stores/session');
 var SessionActions = require('../actions/sessionActions');
 var ReviewActions = require('../actions/reviewActions');
+var SearchResultActions = require('../actions/searchResultActions');
 
 module.exports = {
   // USER RELATED
@@ -112,6 +113,26 @@ module.exports = {
         console.log("Could not retrieve game");
       }
     });
+  },
+
+  //search
+
+  search: function (query, page) {
+    $.ajax({
+      type: "GET",
+      url: "/api/searches",
+      dataType: "json",
+      data: {query: query, page: page},
+      success: function (response) {
+        SearchResultActions.receiveResults(response);
+      },
+      error: function () {
+        console.log("ApiUtil#search error!");
+      }
+
+    });
   }
+
+
 
 };

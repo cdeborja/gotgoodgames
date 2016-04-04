@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   validates :username, :password_digest, :session_token, presence: true, uniqueness: true
   validates :password, length:{minimum: 6, allow_nil: true}
 
+  include PgSearch
+  multisearchable :against => :username
 
   has_many(
     :gameshelves,
@@ -50,7 +52,7 @@ class User < ActiveRecord::Base
   #   num_posts
   # end
   #
-  
+
   def password=(password)
     @password = password
     self.password_digest = BCrypt::Password.create(password)

@@ -59,6 +59,10 @@ img {
   height: auto;
 }
 
+.white-background {
+  background: white;
+}
+
 /* --- LOADING --- */
 
 .loading {

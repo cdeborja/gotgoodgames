@@ -2,6 +2,7 @@ var React = require('react');
 var GamesIndex = require('./games/index');
 var SessionStore = require('../stores/session');
 var ApiUtil = require('../util/apiUtil');
+// var Search = require("./search");
 
 module.exports = React.createClass({
 
@@ -74,6 +75,7 @@ module.exports = React.createClass({
         </ul>
         <nav className="header-nav group">
         <ul className="header-nav">
+
           {signUpButton}
           {button}
           {welcomeMessage}

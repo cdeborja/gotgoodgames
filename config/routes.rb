@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :games, only: [:index, :show]
     resources :reviews
     resources :users, only: [:create, :new]
+    resources :searches, only: [:index]
   end
 
   root to: "static_pages#root"

@@ -26,7 +26,6 @@ module.exports = React.createClass({
   componentDidMount: function () {
     this.gameListener = GameStore.addListener(this._onChange);
     ApiUtil.fetchSingleGame(parseInt(this.props.params.gameId));
-    debugger;
   },
 
   componentWillUnmount: function () {

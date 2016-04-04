@@ -13,7 +13,7 @@ var ReviewForm = React.createClass({
 
   checkIfCanReview: function () {
     var reviewedUsers = [];
-    
+
     this.props.reviews.forEach( function (review) {
       reviewedUsers.push(review.props.review.user_id);
     });
