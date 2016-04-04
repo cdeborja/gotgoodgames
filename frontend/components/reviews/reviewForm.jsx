@@ -10,6 +10,13 @@ var ReviewForm = React.createClass({
              score: null});
   },
 
+  checkIfCanReview: function () {
+    if (1 === 2 ) {
+
+    }
+    this.openModal();
+  },
+
   closeModal: function(){
     this.setState({ modalOpen: false });
   },
@@ -54,7 +61,7 @@ var ReviewForm = React.createClass({
         left            : 0,
         right           : 0,
         bottom          : 0,
-        backgroundColor : 'rgba(255, 255, 255, 0.75)',
+        backgroundColor : 'rgba(5, 5, 5, 0.75)',
         zIndex         : 10
       },
       content : {
@@ -71,16 +78,17 @@ var ReviewForm = React.createClass({
 
     return(
       <div>
-      <button className="submit-button" onClick={this.openModal}>Add your own review!</button>
+      <button className="add-review-button" onClick={this.checkIfCanReview}>
+        Add your own review!</button>
 
       <Modal
-        style={reviewFormStyle}
         isOpen={this.state.modalOpen}
         shouldCloseOnOverlayClick={false}
-        onRequestClose={this.closeModal}>
+        onRequestClose={this.closeModal}
+        style={reviewFormStyle}>
 
-        <form className="input-box">
-
+        <form className="add-review-box">
+          <h2>Create your review!</h2>
           <label className="input-text" htmlFor="score">
             Score
           </label>
@@ -88,33 +96,33 @@ var ReviewForm = React.createClass({
           <ul>
             <li>
             <label>1</label>
-            <input className="input-field" type="radio" value="1" name="gameScore"
+            <input type="radio" value="1" name="gameScore"
             onChange={this.updateScore}/>
             </li>
             <li>
             <label>2</label>
-            <input className="input-field" type="radio" value="2" name="gameScore"
+            <input type="radio" value="2" name="gameScore"
             onChange={this.updateScore}/>
             </li>
             <li>
             <label>3</label>
-            <input className="input-field" type="radio" value="3" name="gameScore"
+            <input type="radio" value="3" name="gameScore"
             onChange={this.updateScore}/>
             </li>
             <li>
             <label>4</label>
-            <input className="input-field" type="radio" value="4" name="gameScore"
+            <input type="radio" value="4" name="gameScore"
             onChange={this.updateScore}/>
             </li>
             <li>
             <label>5</label>
-            <input className="input-field" type="radio" value="5" name="gameScore"
+            <input type="radio" value="5" name="gameScore"
             onChange={this.updateScore}/>
             </li>
           </ul>
 
           <label className="input-text" htmlFor="review">Review Box</label>
-          <textarea className="input-field-box" placeholder="Enter your awwwwwsome review here!"
+          <textarea className="add-review-textarea" placeholder="Enter your awwwwwsome review here!"
           onChange={this.updateReview} value={this.state.review}/>
 
           <button onClick={this.handleSubmit} className="submit-button">Submit your review</button>

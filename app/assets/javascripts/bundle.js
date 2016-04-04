@@ -32060,9 +32060,7 @@
 	  displayName: 'exports',
 	
 	  getStateFromStore: function () {
-	    return { game: GameStore.find(parseInt(this.props.params.gameId)),
-	      body: "",
-	      score: null };
+	    return { game: GameStore.find(parseInt(this.props.params.gameId)) };
 	  },
 	
 	  _onChange: function () {
@@ -32074,6 +32072,7 @@
 	  },
 	
 	  componentWillReceiveProps: function (newProps) {
+	    debugger;
 	    ApiUtil.fetchSingleGame(parseInt(newProps.params.gameId));
 	  },
 	
@@ -32084,31 +32083,6 @@
 	
 	  componentWillUnmount: function () {
 	    this.gameListener.remove();
-	  },
-	
-	  handleErrors: function () {},
-	
-	  handleSubmit: function (e) {
-	    e.preventDefault();
-	
-	    var user_id = SessionStore.currentUser().id;
-	    var reviewParams = {
-	      review: {
-	        user_id: user_id,
-	        game_id: this.state.game.id,
-	        score: this.state.score,
-	        body: this.state.body
-	      }
-	    };
-	    ApiUtil.createReview(reviewParams);
-	  },
-	
-	  updateScore: function (e) {
-	    this.setState({ score: e.currentTarget.value });
-	  },
-	
-	  updateReview: function (e) {
-	    this.setState({ body: e.currentTarget.value });
 	  },
 	
 	  render: function () {
@@ -32348,6 +32322,11 @@
 	      score: null };
 	  },
 	
+	  checkIfCanReview: function () {
+	    if (false) {}
+	    this.openModal();
+	  },
+	
 	  closeModal: function () {
 	    this.setState({ modalOpen: false });
 	  },
@@ -32390,7 +32369,7 @@
 	        left: 0,
 	        right: 0,
 	        bottom: 0,
-	        backgroundColor: 'rgba(255, 255, 255, 0.75)',
+	        backgroundColor: 'rgba(5, 5, 5, 0.75)',
 	        zIndex: 10
 	      },
 	      content: {
@@ -32410,19 +32389,24 @@
 	      null,
 	      React.createElement(
 	        'button',
-	        { className: 'submit-button', onClick: this.openModal },
+	        { className: 'add-review-button', onClick: this.checkIfCanReview },
 	        'Add your own review!'
 	      ),
 	      React.createElement(
 	        Modal,
 	        {
-	          style: reviewFormStyle,
 	          isOpen: this.state.modalOpen,
 	          shouldCloseOnOverlayClick: false,
-	          onRequestClose: this.closeModal },
+	          onRequestClose: this.closeModal,
+	          style: reviewFormStyle },
 	        React.createElement(
 	          'form',
-	          { className: 'input-box' },
+	          { className: 'add-review-box' },
+	          React.createElement(
+	            'h2',
+	            null,
+	            'Create your review!'
+	          ),
 	          React.createElement(
 	            'label',
 	            { className: 'input-text', htmlFor: 'score' },
@@ -32439,7 +32423,7 @@
 	                null,
 	                '1'
 	              ),
-	              React.createElement('input', { className: 'input-field', type: 'radio', value: '1', name: 'gameScore',
+	              React.createElement('input', { type: 'radio', value: '1', name: 'gameScore',
 	                onChange: this.updateScore })
 	            ),
 	            React.createElement(
@@ -32450,7 +32434,7 @@
 	                null,
 	                '2'
 	              ),
-	              React.createElement('input', { className: 'input-field', type: 'radio', value: '2', name: 'gameScore',
+	              React.createElement('input', { type: 'radio', value: '2', name: 'gameScore',
 	                onChange: this.updateScore })
 	            ),
 	            React.createElement(
@@ -32461,7 +32445,7 @@
 	                null,
 	                '3'
 	              ),
-	              React.createElement('input', { className: 'input-field', type: 'radio', value: '3', name: 'gameScore',
+	              React.createElement('input', { type: 'radio', value: '3', name: 'gameScore',
 	                onChange: this.updateScore })
 	            ),
 	            React.createElement(
@@ -32472,7 +32456,7 @@
 	                null,
 	                '4'
 	              ),
-	              React.createElement('input', { className: 'input-field', type: 'radio', value: '4', name: 'gameScore',
+	              React.createElement('input', { type: 'radio', value: '4', name: 'gameScore',
 	                onChange: this.updateScore })
 	            ),
 	            React.createElement(
@@ -32483,7 +32467,7 @@
 	                null,
 	                '5'
 	              ),
-	              React.createElement('input', { className: 'input-field', type: 'radio', value: '5', name: 'gameScore',
+	              React.createElement('input', { type: 'radio', value: '5', name: 'gameScore',
 	                onChange: this.updateScore })
 	            )
 	          ),
@@ -32492,7 +32476,7 @@
 	            { className: 'input-text', htmlFor: 'review' },
 	            'Review Box'
 	          ),
-	          React.createElement('textarea', { className: 'input-field-box', placeholder: 'Enter your awwwwwsome review here!',
+	          React.createElement('textarea', { className: 'add-review-textarea', placeholder: 'Enter your awwwwwsome review here!',
 	            onChange: this.updateReview, value: this.state.review }),
 	          React.createElement(
 	            'button',

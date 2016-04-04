@@ -8,9 +8,7 @@ var ReviewForm = require('../reviews/reviewForm');
 
 module.exports = React.createClass({
   getStateFromStore: function () {
-    return { game: GameStore.find(parseInt(this.props.params.gameId)),
-             body: "",
-             score: null };
+    return { game: GameStore.find(parseInt(this.props.params.gameId))};
   },
 
   _onChange: function () {
@@ -22,6 +20,7 @@ module.exports = React.createClass({
   },
 
   componentWillReceiveProps: function (newProps) {
+    debugger;
     ApiUtil.fetchSingleGame(parseInt(newProps.params.gameId));
   },
 
@@ -32,34 +31,6 @@ module.exports = React.createClass({
 
   componentWillUnmount: function () {
     this.gameListener.remove();
-  },
-
-  handleErrors: function () {
-
-  },
-
-  handleSubmit: function(e) {
-    e.preventDefault();
-
-
-    var user_id = SessionStore.currentUser().id;
-    var reviewParams = {
-      review: {
-        user_id: user_id,
-        game_id: this.state.game.id,
-        score: this.state.score,
-        body: this.state.body,
-      }
-    };
-    ApiUtil.createReview(reviewParams);
-  },
-
-  updateScore: function (e) {
-    this.setState({ score: e.currentTarget.value});
-  },
-
-  updateReview: function (e) {
-    this.setState({ body: e.currentTarget.value});
   },
 
   render: function () {
