@@ -4,6 +4,7 @@ var ApiUtil = require('../../util/apiUtil');
 var ReviewsIndexItem = require('../reviews/index');
 var ReviewStore = require('../../stores/review');
 var SessionStore = require('../../stores/session');
+var ReviewForm = require('../reviews/reviewForm');
 
 module.exports = React.createClass({
   getStateFromStore: function () {
@@ -31,6 +32,10 @@ module.exports = React.createClass({
 
   componentWillUnmount: function () {
     this.gameListener.remove();
+  },
+
+  handleErrors: function () {
+
   },
 
   handleSubmit: function(e) {
@@ -80,53 +85,15 @@ module.exports = React.createClass({
             <li>Release Date: {game.release_date}</li>
             <li>Description: {game.description}</li>
           </ul>
-          <h1>Add your own review!</h1>
-          <form className="input-box" onSubmit={this.handleSubmit}>
-
-            <label className="input-text" htmlFor="score">
-              Score
-            </label>
-
-            <ul>
-              <li>
-              <label>1</label>
-              <input className="input-field" type="radio" value="1" name="gameScore"
-              onChange={this.updateScore}/>
-              </li>
-              <li>
-              <label>2</label>
-              <input className="input-field" type="radio" value="2" name="gameScore"
-              onChange={this.updateScore}/>
-              </li>
-              <li>
-              <label>3</label>
-              <input className="input-field" type="radio" value="3" name="gameScore"
-              onChange={this.updateScore}/>
-              </li>
-              <li>
-              <label>4</label>
-              <input className="input-field" type="radio" value="4" name="gameScore"
-              onChange={this.updateScore}/>
-              </li>
-              <li>
-              <label>5</label>
-              <input className="input-field" type="radio" value="5" name="gameScore"
-              onChange={this.updateScore}/>
-              </li>
-            </ul>
-
-            <label className="input-text" htmlFor="review">Review Box</label>
-            <textarea className="input-field-box" placeholder="Enter your awwwwwsome review here!"
-            onChange={this.updateReview} value={this.state.review}/>
-
-            <button className="submit-button">Add your review</button>
-
-          </form>
-
+          <div>
+            <ReviewForm game={this.state.game} />
+          </div>
 
           <ul>
             {gameReviews}
           </ul>
+
+
       </div>
     );
   }

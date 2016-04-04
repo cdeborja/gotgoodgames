@@ -37,9 +37,16 @@ button, article, footer, small {
 
 /* --- ELEMENTS --- */
 
+
+
 body {
   font-family: sans-serif;
-  background: #ffe;
+  background-image: url('http://cdn.pcwallart.com/images/pacman-wallpaper-2.jpg');
+   height: 120px;
+   background-size: cover;
+   background-position: bottom;
+   background-attachment: fixed;
+   top: 0;
 }
 
 ul {
