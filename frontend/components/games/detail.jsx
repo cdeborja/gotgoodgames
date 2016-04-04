@@ -35,7 +35,7 @@ module.exports = React.createClass({
 
   render: function () {
     var game = this.state.game;
-    if ( !game || !game.reviews) {return (<img className="loading-image" src="http://downgraf.com/wp-content/uploads/2014/09/01-progress.gif"/>);}
+    if ( !game || !game.reviews) {return (<img className="loading-image" src="https://youthradio.org/innovationlab/for-teachers/images/loading.gif"/>);}
     var gameReviews = game.reviews.map(function (review, id) {
       return <ReviewsIndexItem key={id} review={review} />;
     }).reverse();

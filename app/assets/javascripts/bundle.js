@@ -34012,7 +34012,7 @@
 	  render: function () {
 	    var game = this.state.game;
 	    if (!game || !game.reviews) {
-	      return React.createElement('img', { className: 'loading-image', src: 'http://downgraf.com/wp-content/uploads/2014/09/01-progress.gif' });
+	      return React.createElement('img', { className: 'loading-image', src: 'https://youthradio.org/innovationlab/for-teachers/images/loading.gif' });
 	    }
 	    var gameReviews = game.reviews.map(function (review, id) {
 	      return React.createElement(ReviewsIndexItem, { key: id, review: review });
