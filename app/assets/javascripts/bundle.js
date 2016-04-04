@@ -32368,7 +32368,8 @@
 	  updateReview: function (e) {
 	    this.setState({ body: e.currentTarget.value });
 	  },
-	
+	  /*need to figure out how to create  branching path for creating a new review and
+	  editing a post if the review has already been enter */
 	  render: function () {
 	    var reviewFormStyle = {
 	      overlay: {
