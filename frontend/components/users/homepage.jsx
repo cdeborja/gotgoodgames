@@ -23,7 +23,7 @@ module.exports = React.createClass({
   },
 
   componentWillReceiveProps: function () {
-  
+
   },
 
   componentDidMount: function () {
@@ -40,7 +40,7 @@ module.exports = React.createClass({
 
   render: function () {
     if (this.state.reviews.length === 0) {
-      return <div className="loading"> Loading... </div>;
+       <div className="loading"> Loading... </div>;
     }
 
     var userReviews = this.state.reviews.map(function (review, id) {

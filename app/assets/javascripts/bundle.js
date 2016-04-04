@@ -32104,7 +32104,6 @@
 	  updateReview: function (e) {
 	    this.setState({ body: e.currentTarget.value });
 	  },
-	  //Need to fix the date ordering
 	
 	  render: function () {
 	    var game = this.state.game;
@@ -32450,7 +32449,7 @@
 	
 	  render: function () {
 	    if (this.state.reviews.length === 0) {
-	      return React.createElement(
+	      React.createElement(
 	        'div',
 	        { className: 'loading' },
 	        ' Loading... '

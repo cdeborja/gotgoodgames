@@ -56,7 +56,6 @@ module.exports = React.createClass({
   updateReview: function (e) {
     this.setState({ body: e.currentTarget.value});
   },
-  //Need to fix the date ordering
 
   render: function () {
     var game = this.state.game;

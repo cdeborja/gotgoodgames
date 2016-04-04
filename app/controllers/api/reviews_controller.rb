@@ -7,7 +7,9 @@ class Api::ReviewsController < ApplicationController
   def create
     review = Review.new(review_params)
     game = Game.find(review.game_id)
-    if review.save
+    if game.reviews.find_by_user_id(review.user_id)
+      redirect_to "/api/games/#{game.id}"
+    elsif review.save
       redirect_to "/api/games/#{game.id}"
     else
       render json: review.errors.full_messages, status: 422
