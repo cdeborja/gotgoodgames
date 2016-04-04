@@ -117,8 +117,8 @@ module.exports = React.createClass({
             </ul>
 
             <label className="input-text" htmlFor="review">Review Box</label>
-            <input className="input-field-box" placeholder="Enter your awwwwwsome review here!"
-            onChange={this.updateReview} type="form-textarea" value={this.state.review}/>
+            <textarea className="input-field-box" placeholder="Enter your awwwwwsome review here!"
+            onChange={this.updateReview} value={this.state.review}/>
 
             <button className="submit-button">Add your review</button>
 

@@ -55,10 +55,10 @@ img {
 /* --- LOADING --- */
 
 .loading {
-  margin: auto;
+  margin: 0 auto;
   font-size: 50px;
   font-weight: bold;
-  color: red;
+  color: rebeccapurple;
 }
 
 /* --- CLEARFIX --- */
@@ -292,6 +292,7 @@ img {
 }
 
 /* game detail */
+/* make seperate later for user profile information */
 .game-detail-pane {
   margin: 0 auto;
   width: 620px;

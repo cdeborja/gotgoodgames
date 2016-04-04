@@ -58,8 +58,8 @@
 	var GamesIndex = __webpack_require__(160);
 	var GameDetail = __webpack_require__(249);
 	var UserHomePage = __webpack_require__(254);
-	var LoginForm = __webpack_require__(255);
-	var SignUpForm = __webpack_require__(256);
+	var LoginForm = __webpack_require__(256);
+	var SignUpForm = __webpack_require__(257);
 	
 	var GameStore = __webpack_require__(190);
 	var SessionStore = __webpack_require__(168);
@@ -32240,8 +32240,8 @@
 	          { className: 'input-text', htmlFor: 'review' },
 	          'Review Box'
 	        ),
-	        React.createElement('input', { className: 'input-field-box', placeholder: 'Enter your awwwwwsome review here!',
-	          onChange: this.updateReview, type: 'form-textarea', value: this.state.review }),
+	        React.createElement('textarea', { className: 'input-field-box', placeholder: 'Enter your awwwwwsome review here!',
+	          onChange: this.updateReview, value: this.state.review }),
 	        React.createElement(
 	          'button',
 	          { className: 'submit-button' },
@@ -32415,6 +32415,8 @@
 	var SessionStore = __webpack_require__(168);
 	var UserStore = __webpack_require__(251);
 	var ReviewStore = __webpack_require__(253);
+	var GameStore = __webpack_require__(190);
+	var UserReviewItem = __webpack_require__(255);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -32447,18 +32449,46 @@
 	  handleSubmit: function (e) {},
 	
 	  render: function () {
+	    if (this.state.reviews.length === 0) {
+	      return React.createElement(
+	        'div',
+	        { className: 'loading' },
+	        ' Loading... '
+	      );
+	    }
+	
+	    var userReviews = this.state.reviews.map(function (review, id) {
+	      return React.createElement(UserReviewItem, { key: id, review: review });
+	    }).reverse();
+	    var memberSince = this.state.user.created_at.slice(0, 10).split("-").join('/');
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'game-detail-pane' },
 	      React.createElement(
 	        'h2',
 	        null,
-	        'Got into User Page!'
+	        this.state.user.username
 	      ),
 	      React.createElement(
-	        'li',
+	        'ul',
 	        null,
-	        this.state.reviews.length
+	        React.createElement(
+	          'li',
+	          null,
+	          'Total Reviews: ',
+	          this.state.reviews.length
+	        ),
+	        React.createElement(
+	          'li',
+	          null,
+	          'Member Since: ',
+	          memberSince
+	        )
+	      ),
+	      React.createElement(
+	        'ul',
+	        null,
+	        userReviews
 	      )
 	    );
 	  }
@@ -32467,6 +32497,45 @@
 
 /***/ },
 /* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	module.exports = React.createClass({
+	  displayName: "exports",
+	
+	  render: function () {
+	    if (this.props.review === []) {
+	      return React.createElement("div", null);
+	    }
+	    return React.createElement(
+	      "ul",
+	      { className: "review-box" },
+	      React.createElement(
+	        "li",
+	        null,
+	        "Review Score: ",
+	        this.props.review.score
+	      ),
+	      React.createElement(
+	        "li",
+	        null,
+	        "Game ID: ",
+	        this.props.review.game_id
+	      ),
+	      React.createElement(
+	        "li",
+	        null,
+	        "Review: ",
+	        this.props.review.body
+	      )
+	    );
+	  }
+	
+	});
+
+/***/ },
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -32563,7 +32632,7 @@
 	module.exports = LoginForm;
 
 /***/ },
-/* 256 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
