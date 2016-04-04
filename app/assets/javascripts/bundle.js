@@ -32303,7 +32303,7 @@
 
 	var Store = __webpack_require__(169).Store;
 	var AppDispatcher = __webpack_require__(162);
-	var UserConstants = __webpack_require__(252);
+	var UserConstants = __webpack_require__(258);
 	var UserStore = new Store(AppDispatcher);
 	var ReviewConstants = __webpack_require__(189);
 	
@@ -32351,15 +32351,7 @@
 	module.exports = UserStore;
 
 /***/ },
-/* 252 */
-/***/ function(module, exports) {
-
-	module.exports = {
-	  USER_RECEIVED: "USER_RECEIVED",
-	  USERS_RECEIVED: "USERS_RECEIVED"
-	};
-
-/***/ },
+/* 252 */,
 /* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -32708,6 +32700,15 @@
 	});
 	
 	module.exports = SignUpForm;
+
+/***/ },
+/* 258 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  USER_RECEIVED: "USER_RECEIVED",
+	  USERS_RECEIVED: "USERS_RECEIVED"
+	};
 
 /***/ }
 /******/ ]);
