@@ -32145,7 +32145,7 @@
 	      React.createElement(
 	        'div',
 	        null,
-	        React.createElement(ReviewForm, { game: this.state.game })
+	        React.createElement(ReviewForm, { game: this.state.game, reviews: gameReviews })
 	      ),
 	      React.createElement(
 	        'ul',
@@ -32323,7 +32323,15 @@
 	  },
 	
 	  checkIfCanReview: function () {
-	    if (false) {}
+	    var reviewedUsers = [];
+	
+	    this.props.reviews.forEach(function (review) {
+	      reviewedUsers.push(review.props.review.user_id);
+	    });
+	
+	    if (reviewedUsers.includes(SessionStore.currentUser().id)) {
+	      return console.log("NEED TO CREATE POP UP PREVENTING USER REVIEW");
+	    }
 	    this.openModal();
 	  },
 	

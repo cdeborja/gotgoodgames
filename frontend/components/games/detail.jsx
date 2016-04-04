@@ -57,7 +57,7 @@ module.exports = React.createClass({
             <li>Description: {game.description}</li>
           </ul>
           <div>
-            <ReviewForm game={this.state.game} />
+            <ReviewForm game={this.state.game} reviews={gameReviews}/>
           </div>
 
           <ul>

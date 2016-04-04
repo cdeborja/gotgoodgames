@@ -3,6 +3,7 @@ var Modal = require('react-modal');
 var SessionStore = require('../../stores/session');
 var ApiUtil = require('../../util/apiUtil');
 
+
 var ReviewForm = React.createClass({
   getInitialState: function(){
     return({ modalOpen: false,
@@ -11,8 +12,14 @@ var ReviewForm = React.createClass({
   },
 
   checkIfCanReview: function () {
-    if (1 === 2 ) {
+    var reviewedUsers = [];
+    
+    this.props.reviews.forEach( function (review) {
+      reviewedUsers.push(review.props.review.user_id);
+    });
 
+    if (reviewedUsers.includes(SessionStore.currentUser().id) ) {
+      return console.log("NEED TO CREATE POP UP PREVENTING USER REVIEW");
     }
     this.openModal();
   },
