@@ -1,6 +1,8 @@
 class Game < ActiveRecord::Base
-
   validates :title, :description, :release_date, presence: true
+
+  has_attached_file :image, default_url: "missing.png"
+  validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
 
   has_many(
     :reviews,
