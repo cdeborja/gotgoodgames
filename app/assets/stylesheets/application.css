@@ -226,6 +226,14 @@ img {
 
 }
 
+.edit-review-box {
+  margin: 0 auto;
+  background: #eee;
+  width: 650px;
+  padding: 20px;
+  border-radius: 5px;
+}
+
 .score-choices > li {
   display: block;
   float: left;
@@ -238,7 +246,8 @@ img {
   cursor: pointer;
 }*/
 
-.add-review-box > h2 {
+.add-review-box > h2,
+.edit-review-box > h2 {
     font-size: 36px;
     font-weight: bold;
     border-bottom: 3px solid black;

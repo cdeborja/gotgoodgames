@@ -35322,7 +35322,7 @@
 	      null,
 	      React.createElement(
 	        'form',
-	        { className: 'add-review-box' },
+	        { className: 'edit-review-box' },
 	        React.createElement(
 	          'h2',
 	          null,
@@ -35392,12 +35392,12 @@
 	              onChange: this.updateScore })
 	          )
 	        ),
-	        React.createElement('textarea', { className: 'add-review-textarea', placeholder: 'Enter your awwwwwsome review here!',
-	          onChange: this.updateReview, value: this.state.review.body, defaultValue: 'Hello' }),
+	        React.createElement('textarea', { className: 'add-review-textarea', placeholder: this.state.review.body,
+	          onChange: this.updateReview }),
 	        React.createElement(
 	          'button',
 	          { onClick: this.handleSubmit, className: 'submit-button' },
-	          'Submit your review'
+	          'Update your review'
 	        )
 	      )
 	    );

@@ -31,7 +31,7 @@ var ReviewForm = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-
+    
     console.log("handlesubmit");
   },
 
@@ -52,7 +52,7 @@ var ReviewForm = React.createClass({
     return(
       <div>
 
-        <form className="add-review-box">
+        <form className="edit-review-box">
           <h2>Edit your review!</h2>
           <label className="input-text" htmlFor="score">
             Score
@@ -85,10 +85,10 @@ var ReviewForm = React.createClass({
             onChange={this.updateScore}/>
             </li>
           </ul>
-          <textarea className="add-review-textarea" placeholder="Enter your awwwwwsome review here!"
-          onChange={this.updateReview} value={this.state.review.body} defaultValue="Hello"/>
+          <textarea className="add-review-textarea" placeholder={this.state.review.body}
+          onChange={this.updateReview} />
 
-          <button onClick={this.handleSubmit} className="submit-button">Submit your review</button>
+          <button onClick={this.handleSubmit} className="submit-button">Update your review</button>
 
         </form>
 
