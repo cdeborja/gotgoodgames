@@ -34404,13 +34404,15 @@
 	      },
 	      content: {
 	        position: 'fixed',
-	        top: '100px',
+	        top: '150px',
 	        left: '150px',
 	        right: '150px',
 	        bottom: '100px',
 	        border: '1px solid #ccc',
 	        padding: '20px',
 	        backgroundColor: '#eee',
+	        height: '320px',
+	        width: '650px',
 	        zIndex: 11
 	      }
 	    };
