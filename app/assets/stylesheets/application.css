@@ -148,7 +148,7 @@ img {
   letter-spacing: -2px;
   font-weight: bold;
   margin-top: 4px;
-  text-shadow: 0 0 0.2em black, 0 0 0.2em #ff3, 0 0 0.2em #ff3}
+  text-shadow: 0 0 0.2em black, 0 0 0.2em #ff3, 0 0 0.2em #ff3;
 }
 
 .header-list {
@@ -233,10 +233,10 @@ img {
   margin-bottom: 5px;
 }
 
-.review-score:hover {
+/*.review-score:hover {
   text-shadow: 0 0 0.2em black, 0 0 0.2em #ff3, 0 0 0.2em #ff3 ;
   cursor: pointer;
-}
+}*/
 
 .add-review-box > h2 {
     font-size: 36px;
