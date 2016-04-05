@@ -100,7 +100,6 @@ module.exports = {
   },
 
   updateReview: function(params) {
-    debugger;
     $.ajax({
       type: "PATCH",
       url: "/api/reviews/" + params.review.id ,
@@ -117,7 +116,20 @@ module.exports = {
     });
   },
 
-
+  deleteReview: function(params) {
+    $.ajax({
+      type: "DELETE",
+      url: "/api/reviews/" + params.review.id,
+      dataType: "json",
+      data: params,
+      success: function (review) {
+        ReviewActions.userReviewDeleted();
+      },
+      error: function () {
+        console.log("could not delete review");
+      }
+    });
+  },
 
   //GAME RELATED
   fetchAllGames: function() {

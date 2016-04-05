@@ -58,11 +58,11 @@
 	//Current Routes that need pages
 	var GamesIndex = __webpack_require__(180);
 	var GameDetail = __webpack_require__(271);
-	var UserHomePage = __webpack_require__(277);
-	var EditForm = __webpack_require__(291);
-	var LoginForm = __webpack_require__(279);
-	var SignUpForm = __webpack_require__(280);
-	var Search = __webpack_require__(281);
+	var UserHomePage = __webpack_require__(283);
+	var EditForm = __webpack_require__(286);
+	var LoginForm = __webpack_require__(287);
+	var SignUpForm = __webpack_require__(288);
+	var Search = __webpack_require__(289);
 	
 	var GameStore = __webpack_require__(212);
 	var SessionStore = __webpack_require__(188);
@@ -21926,7 +21926,6 @@
 	  },
 	
 	  updateReview: function (params) {
-	    debugger;
 	    $.ajax({
 	      type: "PATCH",
 	      url: "/api/reviews/" + params.review.id,
@@ -21939,6 +21938,21 @@
 	        console.log("could not update review");
 	      }
 	
+	    });
+	  },
+	
+	  deleteReview: function (params) {
+	    $.ajax({
+	      type: "DELETE",
+	      url: "/api/reviews/" + params.review.id,
+	      dataType: "json",
+	      data: params,
+	      success: function (review) {
+	        ReviewActions.userReviewDeleted();
+	      },
+	      error: function () {
+	        console.log("could not delete review");
+	      }
 	    });
 	  },
 	
@@ -34131,7 +34145,6 @@
 	      });
 	      averageScore = (totalScore / game.reviews.length).toFixed(2);
 	    }
-	
 	    return React.createElement(
 	      'div',
 	      { className: 'game-detail-pane' },
@@ -34141,10 +34154,10 @@
 	        'Title: ',
 	        game.title
 	      ),
+	      React.createElement('img', { src: game.image_url }),
 	      React.createElement(
 	        'ul',
 	        null,
-	        React.createElement('img', { src: game.cover }),
 	        React.createElement(
 	          'li',
 	          null,
@@ -34345,7 +34358,7 @@
 	var SessionStore = __webpack_require__(188);
 	var ApiUtil = __webpack_require__(181);
 	var ReviewStore = __webpack_require__(275);
-	var ReactSimpleAlert = __webpack_require__(283);
+	var ReactSimpleAlert = __webpack_require__(277);
 	
 	var ReviewForm = React.createClass({
 	  displayName: 'ReviewForm',
@@ -34564,6 +34577,220 @@
 /* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = __webpack_require__(278);
+
+/***/ },
+/* 278 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var Header = __webpack_require__(279);
+	var Body = __webpack_require__(281);
+	var Footer = __webpack_require__(282);
+	var style = __webpack_require__(280);
+	
+	var ReactSimpleAlert = React.createClass({displayName: "ReactSimpleAlert",
+	
+	  propTypes: {
+	    options: React.PropTypes.object.isRequired
+	  },
+	  
+		getInitialState: function() {
+			return {
+				alert: false
+			};
+		},
+	
+		componentWillReceiveProps: function(nextProps) {
+			this.setState({alert: nextProps.options.alert});
+		},
+	
+		render: function() {
+			var alert = null;
+			var bgStyle = style.hide;
+			var options = this.props.options;
+			if(this.state.alert) {
+				alert = (
+					React.createElement("div", {className: "rsa-alert", style: style.alert}, 
+						React.createElement(Header, {title: options.title, close: this._close}), 
+						React.createElement(Body, {message: options.message}), 
+						React.createElement(Footer, {confirmButton: options.confirmButton, close: this._close})
+					)
+				);
+				bgStyle = style.bg;
+			}
+			return (
+				React.createElement("div", {className: "rsa rsa-bg", style: bgStyle}, 
+					alert
+				)
+			);
+		},
+	
+		_close: function(){
+			this.setState({alert: false});
+		}
+	
+	});
+	
+	module.exports = ReactSimpleAlert;
+	
+
+
+/***/ },
+/* 279 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var style = __webpack_require__(280);
+	
+	var Header = React.createClass({displayName: "Header",
+	
+		render: function() {
+			return (
+				React.createElement("div", {className: "rsa-header", style: style.header}, 
+					React.createElement("span", {className: "rsa-title", style: style.title}, this.props.title || "Alert"), 
+					React.createElement("div", {className: "rsa-close close", style: style.close, onClick: this.props.close}, React.createElement("span", null, "×"))
+				)
+			);
+		}
+	
+	});
+	
+	module.exports = Header;
+
+/***/ },
+/* 280 */
+/***/ function(module, exports) {
+
+	module.exports = {
+		hide: {
+			width: "0",
+			height: "0",
+			display: "none"
+		},
+		bg: {
+			position: "fixed",
+			width: "100%",
+			height: "100%",
+			top: "0",
+			left: "0",
+			backgroundColor: "rgba(0, 0, 0, 0.5)",
+			zIndex: "99999999"
+		},
+		alert: {
+			position: "relative",
+			width: "450px",
+			margin: "30px auto",
+			borderRadius: "5px",
+			border: "1px solid #666",
+			backgroundColor: "#fff",
+			fontSize: "14px",
+			color: "#333",
+			fontFamily: "Arial"
+		},
+		header: {
+		  minHeight: "16px",
+		  padding: "15px",
+		  borderBottom: "1px solid #eee"		
+		},
+		body: {
+			padding: "15px"
+		},
+		footer: {
+			padding: "15px",
+			overflow: "hidden"
+		},
+		title: {
+			fontSize: "16px"
+		},
+		close: {
+			cursor: "pointer",
+			float: "right",
+			fontSize: "21px",
+		  fontWeight: "700",
+		  lineHeight: "1"
+		},
+		message: {
+	
+		},
+		btnClose: {
+			cursor: "pointer",
+			float: "right"
+		},
+		confirm: {
+			cursor: "pointer",
+			float: "right"
+		},
+		cancel: {
+			cursor: "pointer",
+			float: "right",
+			marginRight: "10px"
+		}
+	};
+
+/***/ },
+/* 281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var style = __webpack_require__(280);
+	
+	var Body = React.createClass({displayName: "Body",
+	
+		render: function() {
+			return (
+				React.createElement("div", {className: "rsa-body", style: style.body}, this.props.message)
+			);
+		}
+	
+	});
+	
+	module.exports = Body;
+
+/***/ },
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var style = __webpack_require__(280);
+	
+	var Footer = React.createClass({displayName: "Footer",
+	
+		render: function() {
+			var buttons = null;
+			var cfm = this.props.confirmButton;
+	
+			if(!cfm) {
+				buttons = (React.createElement("div", {className: "rsa-ok btn btn-default", onClick: this.props.close, style: style.btnClose}, "Close"));
+			} else {
+				buttons = (
+					React.createElement("div", null, 
+						React.createElement("div", {className: "rsa-confirm btn btn-primary", onClick: this._onConfirm, style: style.confirm}, cfm.text || "OK"), 
+						React.createElement("div", {className: "rsa-cancel btn btn-default", onClick: this.props.close, style: style.cancel}, "Cancel")
+					)
+				);
+			}
+	
+			return (
+				React.createElement("div", {className: "rsa-footer", style: style.footer}, 
+					buttons
+				)
+			);
+		},
+	
+		_onConfirm: function() {
+			this.props.confirmButton.action();
+			this.props.close();
+		}
+	
+	});
+	
+	module.exports = Footer;
+
+/***/ },
+/* 283 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(181);
 	var AppDispatcher = __webpack_require__(182);
@@ -34571,7 +34798,7 @@
 	var UserStore = __webpack_require__(273);
 	var ReviewStore = __webpack_require__(275);
 	var GameStore = __webpack_require__(212);
-	var UserReviewItem = __webpack_require__(278);
+	var UserReviewItem = __webpack_require__(284);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -34653,11 +34880,12 @@
 	});
 
 /***/ },
-/* 278 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var EditReviewLink = __webpack_require__(290);
+	var EditReviewLink = __webpack_require__(285);
+	var ApiUtil = __webpack_require__(181);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -34666,6 +34894,10 @@
 	    return {
 	      review: this.props.review
 	    };
+	  },
+	
+	  deleteReview: function () {
+	    ApiUtil.deleteReview({ review: this.state.review });
 	  },
 	
 	  render: function () {
@@ -34699,545 +34931,19 @@
 	        'li',
 	        null,
 	        React.createElement(EditReviewLink, { reviewId: review.id })
+	      ),
+	      React.createElement(
+	        'button',
+	        { className: 'submit-button', onClick: this.deleteReview },
+	        'Delete Review'
 	      )
 	    );
 	  }
 	
 	});
-
-/***/ },
-/* 279 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var ApiUtil = __webpack_require__(181);
-	
-	var LoginForm = React.createClass({
-	  displayName: 'LoginForm',
-	
-	  contextTypes: {
-	    router: React.PropTypes.object.isRequired
-	  },
-	
-	  getInitialState: function () {
-	    return {
-	      username: "",
-	      password: ""
-	    };
-	  },
-	
-	  handleSubmit: function (e) {
-	    e.preventDefault();
-	    var router = this.context.router;
-	    ApiUtil.login(this.state, function () {
-	      router.push("/index");
-	    });
-	  },
-	
-	  updateUsername: function (e) {
-	    this.setState({ username: e.currentTarget.value });
-	  },
-	
-	  updatePassword: function (e) {
-	    this.setState({ password: e.currentTarget.value });
-	  },
-	
-	  guestLogin: function () {
-	    var guestParams = {
-	      username: "guest",
-	      password: "password"
-	    };
-	    var router = this.context.router;
-	    this.setState(guestParams);
-	
-	    ApiUtil.login(guestParams, function () {
-	      router.push("/index");
-	    });
-	  },
-	
-	  render: function () {
-	
-	    var guestButton = React.createElement(
-	      'button',
-	      { className: 'guest-button', onClick: this.guestLogin },
-	      'Guest Login'
-	    );
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'sign-in-box group' },
-	      React.createElement(
-	        'h1',
-	        null,
-	        'Please Log in'
-	      ),
-	      React.createElement(
-	        'form',
-	        { className: 'input-box', onSubmit: this.handleSubmit },
-	        React.createElement(
-	          'label',
-	          { className: 'input-text', htmlFor: 'username' },
-	          'Username'
-	        ),
-	        React.createElement('input', { className: 'input-field-login', onChange: this.updateUsername,
-	          type: 'text', value: this.state.username }),
-	        React.createElement(
-	          'label',
-	          { className: 'input-text', htmlFor: 'password' },
-	          'Password'
-	        ),
-	        React.createElement('input', { className: 'input-field-login', onChange: this.updatePassword,
-	          type: 'password', value: this.state.password }),
-	        React.createElement(
-	          'button',
-	          { className: 'submit-button' },
-	          'Sign In'
-	        ),
-	        guestButton
-	      )
-	    );
-	  }
-	
-	});
-	
-	module.exports = LoginForm;
-
-/***/ },
-/* 280 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var ApiUtil = __webpack_require__(181);
-	
-	var SignUpForm = React.createClass({
-	  displayName: 'SignUpForm',
-	
-	  contextTypes: {
-	    router: React.PropTypes.object.isRequired
-	  },
-	
-	  getInitialState: function () {
-	    return {
-	      username: "",
-	      password: ""
-	    };
-	  },
-	
-	  handleSubmit: function (e) {
-	    e.preventDefault();
-	    var router = this.context.router;
-	    ApiUtil.signUp(this.state);
-	    ApiUtil.login(this.state, function () {
-	      router.push("/index");
-	    });
-	  },
-	
-	  updateUsername: function (e) {
-	    this.setState({ username: e.currentTarget.value });
-	  },
-	
-	  updatePassword: function (e) {
-	    this.setState({ password: e.currentTarget.value });
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      'div',
-	      { className: 'sign-in-box group' },
-	      React.createElement(
-	        'h1',
-	        null,
-	        'Sign Up'
-	      ),
-	      React.createElement(
-	        'form',
-	        { className: 'input-box', onSubmit: this.handleSubmit },
-	        React.createElement(
-	          'label',
-	          { className: 'input-text', htmlFor: 'username' },
-	          'Username'
-	        ),
-	        React.createElement('input', { placeholder: 'How would you like to be known here?',
-	          className: 'input-field-login', onChange: this.updateUsername,
-	          type: 'text', value: this.state.username }),
-	        React.createElement(
-	          'label',
-	          { className: 'input-text', htmlFor: 'password' },
-	          'Password'
-	        ),
-	        React.createElement('input', { className: 'input-field-login', onChange: this.updatePassword,
-	          type: 'password', value: this.state.password,
-	          placeholder: 'Is that secret enough???' }),
-	        React.createElement(
-	          'button',
-	          { className: 'submit-button' },
-	          'Sign In'
-	        )
-	      )
-	    );
-	  }
-	
-	});
-	
-	module.exports = SignUpForm;
-
-/***/ },
-/* 281 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var SearchResultsStore = __webpack_require__(282);
-	var ApiUtil = __webpack_require__(181);
-	
-	var Search = React.createClass({
-	  displayName: "Search",
-	
-	
-	  getInitialState: function () {
-	    return { query: "" };
-	  },
-	
-	  componentDidMount: function () {
-	    this.storeListener = SearchResultsStore.addListener(this._onChange);
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.storeListener.remove();
-	  },
-	
-	  _onChange: function () {
-	    this.setState({ results: SearchResultsStore.all() });
-	  },
-	
-	  handleInputChange: function (e) {
-	    var query = e.currentTarget.value;
-	    this.setState({ query: query }, function () {
-	      if (query.length > 2) {
-	        this.search();
-	      }
-	    }.bind(this));
-	  },
-	
-	  search: function (e) {
-	    ApiUtil.search(this.state.query, 1);
-	  },
-	
-	  nextPage: function () {
-	    var meta = SearchResultsStore.meta();
-	    ApiUtil.search(meta.query, meta.page + 1);
-	  },
-	
-	  resultList: function () {
-	    return SearchResultsStore.all().map(function (result) {
-	      if (result._type === "Game") {
-	        return React.createElement(
-	          "li",
-	          { key: result.id },
-	          "Game #",
-	          result.id,
-	          ": ",
-	          result.title
-	        );
-	      } else {
-	        return React.createElement(
-	          "li",
-	          { key: result.id },
-	          "User #",
-	          result.id,
-	          ": ",
-	          result.username
-	        );
-	      }
-	    });
-	  },
-	
-	  render: function () {
-	    var meta = SearchResultsStore.meta();
-	    return React.createElement(
-	      "form",
-	      { className: "white-background" },
-	      React.createElement("input", { type: "text", onChange: this.handleInputChange }),
-	      React.createElement(
-	        "button",
-	        { onClick: this.search },
-	        "GO"
-	      ),
-	      React.createElement(
-	        "nav",
-	        null,
-	        "Displaying page ",
-	        meta.page,
-	        " of ",
-	        meta.total_pages,
-	        React.createElement(
-	          "button",
-	          { onClick: this.nextPage },
-	          "NEXT PAGE"
-	        )
-	      ),
-	      React.createElement(
-	        "ul",
-	        null,
-	        this.resultList()
-	      )
-	    );
-	  }
-	
-	});
-	
-	module.exports = Search;
-
-/***/ },
-/* 282 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Store = __webpack_require__(189).Store;
-	var AppDispatcher = __webpack_require__(182);
-	var SearchResultConstants = __webpack_require__(211);
-	
-	var SearchResultsStore = new Store(AppDispatcher);
-	
-	var _searchResults = [];
-	var _meta = {};
-	
-	SearchResultsStore.all = function () {
-	  return _searchResults.slice();
-	};
-	
-	SearchResultsStore.meta = function () {
-	  return $.extend(true, {}, _meta);
-	};
-	
-	SearchResultsStore.__onDispatch = function (payload) {
-	
-	  switch (payload.actionType) {
-	    case SearchResultConstants.SEARCH_RESULTS_RECEIVED:
-	      _searchResults = payload.searchResults;
-	      _meta = payload.meta;
-	      SearchResultsStore.__emitChange();
-	      break;
-	  }
-	};
-	
-	module.exports = SearchResultsStore;
-
-/***/ },
-/* 283 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(284);
-
-/***/ },
-/* 284 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var Header = __webpack_require__(285);
-	var Body = __webpack_require__(287);
-	var Footer = __webpack_require__(288);
-	var style = __webpack_require__(286);
-	
-	var ReactSimpleAlert = React.createClass({displayName: "ReactSimpleAlert",
-	
-	  propTypes: {
-	    options: React.PropTypes.object.isRequired
-	  },
-	  
-		getInitialState: function() {
-			return {
-				alert: false
-			};
-		},
-	
-		componentWillReceiveProps: function(nextProps) {
-			this.setState({alert: nextProps.options.alert});
-		},
-	
-		render: function() {
-			var alert = null;
-			var bgStyle = style.hide;
-			var options = this.props.options;
-			if(this.state.alert) {
-				alert = (
-					React.createElement("div", {className: "rsa-alert", style: style.alert}, 
-						React.createElement(Header, {title: options.title, close: this._close}), 
-						React.createElement(Body, {message: options.message}), 
-						React.createElement(Footer, {confirmButton: options.confirmButton, close: this._close})
-					)
-				);
-				bgStyle = style.bg;
-			}
-			return (
-				React.createElement("div", {className: "rsa rsa-bg", style: bgStyle}, 
-					alert
-				)
-			);
-		},
-	
-		_close: function(){
-			this.setState({alert: false});
-		}
-	
-	});
-	
-	module.exports = ReactSimpleAlert;
-	
-
 
 /***/ },
 /* 285 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var style = __webpack_require__(286);
-	
-	var Header = React.createClass({displayName: "Header",
-	
-		render: function() {
-			return (
-				React.createElement("div", {className: "rsa-header", style: style.header}, 
-					React.createElement("span", {className: "rsa-title", style: style.title}, this.props.title || "Alert"), 
-					React.createElement("div", {className: "rsa-close close", style: style.close, onClick: this.props.close}, React.createElement("span", null, "×"))
-				)
-			);
-		}
-	
-	});
-	
-	module.exports = Header;
-
-/***/ },
-/* 286 */
-/***/ function(module, exports) {
-
-	module.exports = {
-		hide: {
-			width: "0",
-			height: "0",
-			display: "none"
-		},
-		bg: {
-			position: "fixed",
-			width: "100%",
-			height: "100%",
-			top: "0",
-			left: "0",
-			backgroundColor: "rgba(0, 0, 0, 0.5)",
-			zIndex: "99999999"
-		},
-		alert: {
-			position: "relative",
-			width: "450px",
-			margin: "30px auto",
-			borderRadius: "5px",
-			border: "1px solid #666",
-			backgroundColor: "#fff",
-			fontSize: "14px",
-			color: "#333",
-			fontFamily: "Arial"
-		},
-		header: {
-		  minHeight: "16px",
-		  padding: "15px",
-		  borderBottom: "1px solid #eee"		
-		},
-		body: {
-			padding: "15px"
-		},
-		footer: {
-			padding: "15px",
-			overflow: "hidden"
-		},
-		title: {
-			fontSize: "16px"
-		},
-		close: {
-			cursor: "pointer",
-			float: "right",
-			fontSize: "21px",
-		  fontWeight: "700",
-		  lineHeight: "1"
-		},
-		message: {
-	
-		},
-		btnClose: {
-			cursor: "pointer",
-			float: "right"
-		},
-		confirm: {
-			cursor: "pointer",
-			float: "right"
-		},
-		cancel: {
-			cursor: "pointer",
-			float: "right",
-			marginRight: "10px"
-		}
-	};
-
-/***/ },
-/* 287 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var style = __webpack_require__(286);
-	
-	var Body = React.createClass({displayName: "Body",
-	
-		render: function() {
-			return (
-				React.createElement("div", {className: "rsa-body", style: style.body}, this.props.message)
-			);
-		}
-	
-	});
-	
-	module.exports = Body;
-
-/***/ },
-/* 288 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var style = __webpack_require__(286);
-	
-	var Footer = React.createClass({displayName: "Footer",
-	
-		render: function() {
-			var buttons = null;
-			var cfm = this.props.confirmButton;
-	
-			if(!cfm) {
-				buttons = (React.createElement("div", {className: "rsa-ok btn btn-default", onClick: this.props.close, style: style.btnClose}, "Close"));
-			} else {
-				buttons = (
-					React.createElement("div", null, 
-						React.createElement("div", {className: "rsa-confirm btn btn-primary", onClick: this._onConfirm, style: style.confirm}, cfm.text || "OK"), 
-						React.createElement("div", {className: "rsa-cancel btn btn-default", onClick: this.props.close, style: style.cancel}, "Cancel")
-					)
-				);
-			}
-	
-			return (
-				React.createElement("div", {className: "rsa-footer", style: style.footer}, 
-					buttons
-				)
-			);
-		},
-	
-		_onConfirm: function() {
-			this.props.confirmButton.action();
-			this.props.close();
-		}
-	
-	});
-	
-	module.exports = Footer;
-
-/***/ },
-/* 289 */,
-/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -35285,7 +34991,7 @@
 	module.exports = EditReview;
 
 /***/ },
-/* 291 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -35456,6 +35162,322 @@
 	});
 	
 	module.exports = ReviewForm;
+
+/***/ },
+/* 287 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(181);
+	
+	var LoginForm = React.createClass({
+	  displayName: 'LoginForm',
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  getInitialState: function () {
+	    return {
+	      username: "",
+	      password: ""
+	    };
+	  },
+	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	    var router = this.context.router;
+	    ApiUtil.login(this.state, function () {
+	      router.push("/index");
+	    });
+	  },
+	
+	  updateUsername: function (e) {
+	    this.setState({ username: e.currentTarget.value });
+	  },
+	
+	  updatePassword: function (e) {
+	    this.setState({ password: e.currentTarget.value });
+	  },
+	
+	  guestLogin: function () {
+	    var guestParams = {
+	      username: "guest",
+	      password: "password"
+	    };
+	    var router = this.context.router;
+	    this.setState(guestParams);
+	
+	    ApiUtil.login(guestParams, function () {
+	      router.push("/index");
+	    });
+	  },
+	
+	  render: function () {
+	
+	    var guestButton = React.createElement(
+	      'button',
+	      { className: 'guest-button', onClick: this.guestLogin },
+	      'Guest Login'
+	    );
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'sign-in-box group' },
+	      React.createElement(
+	        'h1',
+	        null,
+	        'Please Log in'
+	      ),
+	      React.createElement(
+	        'form',
+	        { className: 'input-box', onSubmit: this.handleSubmit },
+	        React.createElement(
+	          'label',
+	          { className: 'input-text', htmlFor: 'username' },
+	          'Username'
+	        ),
+	        React.createElement('input', { className: 'input-field-login', onChange: this.updateUsername,
+	          type: 'text', value: this.state.username }),
+	        React.createElement(
+	          'label',
+	          { className: 'input-text', htmlFor: 'password' },
+	          'Password'
+	        ),
+	        React.createElement('input', { className: 'input-field-login', onChange: this.updatePassword,
+	          type: 'password', value: this.state.password }),
+	        React.createElement(
+	          'button',
+	          { className: 'submit-button' },
+	          'Sign In'
+	        ),
+	        guestButton
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = LoginForm;
+
+/***/ },
+/* 288 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(181);
+	
+	var SignUpForm = React.createClass({
+	  displayName: 'SignUpForm',
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  getInitialState: function () {
+	    return {
+	      username: "",
+	      password: ""
+	    };
+	  },
+	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	    var router = this.context.router;
+	    ApiUtil.signUp(this.state);
+	    ApiUtil.login(this.state, function () {
+	      router.push("/index");
+	    });
+	  },
+	
+	  updateUsername: function (e) {
+	    this.setState({ username: e.currentTarget.value });
+	  },
+	
+	  updatePassword: function (e) {
+	    this.setState({ password: e.currentTarget.value });
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'sign-in-box group' },
+	      React.createElement(
+	        'h1',
+	        null,
+	        'Sign Up'
+	      ),
+	      React.createElement(
+	        'form',
+	        { className: 'input-box', onSubmit: this.handleSubmit },
+	        React.createElement(
+	          'label',
+	          { className: 'input-text', htmlFor: 'username' },
+	          'Username'
+	        ),
+	        React.createElement('input', { placeholder: 'How would you like to be known here?',
+	          className: 'input-field-login', onChange: this.updateUsername,
+	          type: 'text', value: this.state.username }),
+	        React.createElement(
+	          'label',
+	          { className: 'input-text', htmlFor: 'password' },
+	          'Password'
+	        ),
+	        React.createElement('input', { className: 'input-field-login', onChange: this.updatePassword,
+	          type: 'password', value: this.state.password,
+	          placeholder: 'Is that secret enough???' }),
+	        React.createElement(
+	          'button',
+	          { className: 'submit-button' },
+	          'Sign In'
+	        )
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = SignUpForm;
+
+/***/ },
+/* 289 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var SearchResultsStore = __webpack_require__(290);
+	var ApiUtil = __webpack_require__(181);
+	
+	var Search = React.createClass({
+	  displayName: "Search",
+	
+	
+	  getInitialState: function () {
+	    return { query: "" };
+	  },
+	
+	  componentDidMount: function () {
+	    this.storeListener = SearchResultsStore.addListener(this._onChange);
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.storeListener.remove();
+	  },
+	
+	  _onChange: function () {
+	    this.setState({ results: SearchResultsStore.all() });
+	  },
+	
+	  handleInputChange: function (e) {
+	    var query = e.currentTarget.value;
+	    this.setState({ query: query }, function () {
+	      if (query.length > 2) {
+	        this.search();
+	      }
+	    }.bind(this));
+	  },
+	
+	  search: function (e) {
+	    ApiUtil.search(this.state.query, 1);
+	  },
+	
+	  nextPage: function () {
+	    var meta = SearchResultsStore.meta();
+	    ApiUtil.search(meta.query, meta.page + 1);
+	  },
+	
+	  resultList: function () {
+	    return SearchResultsStore.all().map(function (result) {
+	      if (result._type === "Game") {
+	        return React.createElement(
+	          "li",
+	          { key: result.id },
+	          "Game #",
+	          result.id,
+	          ": ",
+	          result.title
+	        );
+	      } else {
+	        return React.createElement(
+	          "li",
+	          { key: result.id },
+	          "User #",
+	          result.id,
+	          ": ",
+	          result.username
+	        );
+	      }
+	    });
+	  },
+	
+	  render: function () {
+	    var meta = SearchResultsStore.meta();
+	    return React.createElement(
+	      "form",
+	      { className: "white-background" },
+	      React.createElement("input", { type: "text", onChange: this.handleInputChange }),
+	      React.createElement(
+	        "button",
+	        { onClick: this.search },
+	        "GO"
+	      ),
+	      React.createElement(
+	        "nav",
+	        null,
+	        "Displaying page ",
+	        meta.page,
+	        " of ",
+	        meta.total_pages,
+	        React.createElement(
+	          "button",
+	          { onClick: this.nextPage },
+	          "NEXT PAGE"
+	        )
+	      ),
+	      React.createElement(
+	        "ul",
+	        null,
+	        this.resultList()
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = Search;
+
+/***/ },
+/* 290 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(189).Store;
+	var AppDispatcher = __webpack_require__(182);
+	var SearchResultConstants = __webpack_require__(211);
+	
+	var SearchResultsStore = new Store(AppDispatcher);
+	
+	var _searchResults = [];
+	var _meta = {};
+	
+	SearchResultsStore.all = function () {
+	  return _searchResults.slice();
+	};
+	
+	SearchResultsStore.meta = function () {
+	  return $.extend(true, {}, _meta);
+	};
+	
+	SearchResultsStore.__onDispatch = function (payload) {
+	
+	  switch (payload.actionType) {
+	    case SearchResultConstants.SEARCH_RESULTS_RECEIVED:
+	      _searchResults = payload.searchResults;
+	      _meta = payload.meta;
+	      SearchResultsStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = SearchResultsStore;
 
 /***/ }
 /******/ ]);

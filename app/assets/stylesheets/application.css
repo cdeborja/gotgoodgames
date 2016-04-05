@@ -402,7 +402,7 @@ img {
   font-size: 24px;
 }
 
-.game-detail-pane > ul > img {
+.game-detail-pane > img {
   float: left;
   display: block;
   width: auto;

@@ -54,12 +54,11 @@ module.exports = React.createClass({
       });
       averageScore = (totalScore / game.reviews.length).toFixed(2);
     }
-
     return(
       <div className="game-detail-pane">
           <h2>Title: {game.title}</h2>
+          <img src={game.image_url}/>
           <ul>
-            <img src={game.cover} />
             <li>Average Score: {averageScore}</li>
             <li>Console: {game.console}</li>
             <li>Release Date: {game.release_date}</li>
