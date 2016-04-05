@@ -34410,6 +34410,7 @@
 	        bottom: '100px',
 	        border: '1px solid #ccc',
 	        padding: '20px',
+	        backgroundColor: '#eee',
 	        zIndex: 11
 	      }
 	    };
@@ -34444,7 +34445,7 @@
 	          ),
 	          React.createElement(
 	            'ul',
-	            null,
+	            { className: 'score-choices' },
 	            React.createElement(
 	              'li',
 	              null,
@@ -34453,7 +34454,7 @@
 	                null,
 	                '1'
 	              ),
-	              React.createElement('input', { type: 'radio', value: '1', name: 'gameScore',
+	              React.createElement('input', { type: 'radio', value: '1', className: 'review-score', name: 'score',
 	                onChange: this.updateScore })
 	            ),
 	            React.createElement(
@@ -34464,7 +34465,7 @@
 	                null,
 	                '2'
 	              ),
-	              React.createElement('input', { type: 'radio', value: '2', name: 'gameScore',
+	              React.createElement('input', { type: 'radio', value: '2', className: 'review-score', name: 'score',
 	                onChange: this.updateScore })
 	            ),
 	            React.createElement(
@@ -34475,7 +34476,7 @@
 	                null,
 	                '3'
 	              ),
-	              React.createElement('input', { type: 'radio', value: '3', name: 'gameScore',
+	              React.createElement('input', { type: 'radio', value: '3', className: 'review-score', name: 'score',
 	                onChange: this.updateScore })
 	            ),
 	            React.createElement(
@@ -34486,7 +34487,7 @@
 	                null,
 	                '4'
 	              ),
-	              React.createElement('input', { type: 'radio', value: '4', name: 'gameScore',
+	              React.createElement('input', { type: 'radio', value: '4', className: 'review-score', name: 'score',
 	                onChange: this.updateScore })
 	            ),
 	            React.createElement(
@@ -34497,14 +34498,9 @@
 	                null,
 	                '5'
 	              ),
-	              React.createElement('input', { type: 'radio', value: '5', name: 'gameScore',
+	              React.createElement('input', { type: 'radio', value: '5', className: 'review-score', name: 'score',
 	                onChange: this.updateScore })
 	            )
-	          ),
-	          React.createElement(
-	            'label',
-	            { className: 'input-text', htmlFor: 'review' },
-	            'Review Box'
 	          ),
 	          React.createElement('textarea', { className: 'add-review-textarea', placeholder: 'Enter your awwwwwsome review here!',
 	            onChange: this.updateReview, value: this.state.review }),

@@ -99,6 +99,7 @@ var ReviewForm = React.createClass({
         bottom          : '100px',
         border          : '1px solid #ccc',
         padding         : '20px',
+        backgroundColor : '#eee',
         zIndex         : 11
       }
     };
@@ -120,35 +121,33 @@ var ReviewForm = React.createClass({
             Score
           </label>
 
-          <ul>
+          <ul className="score-choices">
             <li>
             <label>1</label>
-            <input type="radio" value="1" name="gameScore"
+            <input type="radio" value="1" className="review-score" name="score"
             onChange={this.updateScore}/>
             </li>
             <li>
             <label>2</label>
-            <input type="radio" value="2" name="gameScore"
+            <input type="radio" value="2" className="review-score" name="score"
             onChange={this.updateScore}/>
             </li>
             <li>
             <label>3</label>
-            <input type="radio" value="3" name="gameScore"
+            <input type="radio" value="3" className="review-score" name="score"
             onChange={this.updateScore}/>
             </li>
             <li>
             <label>4</label>
-            <input type="radio" value="4" name="gameScore"
+            <input type="radio" value="4" className="review-score" name="score"
             onChange={this.updateScore}/>
             </li>
             <li>
             <label>5</label>
-            <input type="radio" value="5" name="gameScore"
+            <input type="radio" value="5" className="review-score" name="score"
             onChange={this.updateScore}/>
             </li>
           </ul>
-
-          <label className="input-text" htmlFor="review">Review Box</label>
           <textarea className="add-review-textarea" placeholder="Enter your awwwwwsome review here!"
           onChange={this.updateReview} value={this.state.review}/>
 

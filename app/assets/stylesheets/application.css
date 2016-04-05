@@ -223,6 +223,19 @@ img {
 .add-review-box {
   margin: 0 auto;
   padding: 0;
+
+}
+
+.score-choices > li {
+  display: block;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+
+.review-score:hover {
+  text-shadow: 0 0 0.2em black, 0 0 0.2em #ff3, 0 0 0.2em #ff3 ;
+  cursor: pointer;
 }
 
 .add-review-box > h2 {
