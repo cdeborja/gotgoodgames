@@ -34,17 +34,27 @@ module.exports = React.createClass({
 
   render: function () {
     var game = this.state.game;
+    var userReview = null;
+    var averageScore = 0;
     if ( !game || !game.reviews) {return (<img className="loading-image" src="https://youthradio.org/innovationlab/for-teachers/images/loading.gif"/>);}
     var gameReviews = game.reviews.map(function (review, id) {
-      return <ReviewsIndexItem key={id} review={review} />;
+      return <ReviewsIndexItem key={id} review={review} review_id={review.id}/>;
     }).reverse();
 
-    var totalScore = 0;
-    game.reviews.forEach( function(review) {
-      totalScore += review.score;
+    gameReviews.forEach (function (review) {
+      if (review.props.review.user_id === SessionStore.currentUser().id) {
+        userReview = review.props.review;
+      }
     });
+    var totalScore = 0;
 
-    var averageScore = (totalScore / game.reviews.length).toFixed(2);
+    if (game.reviews.length > 0) {
+      game.reviews.forEach( function(review) {
+        totalScore += review.score;
+      });
+      averageScore = (totalScore / game.reviews.length).toFixed(2);
+    }
+
     return(
       <div className="game-detail-pane">
           <h2>Title: {game.title}</h2>
@@ -56,7 +66,7 @@ module.exports = React.createClass({
             <li>Description: {game.description}</li>
           </ul>
           <div>
-            <ReviewForm game={this.state.game} reviews={gameReviews}/>
+            <ReviewForm game={this.state.game} reviews={gameReviews} userReview={userReview}/>
           </div>
 
           <ul>

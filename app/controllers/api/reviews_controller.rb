@@ -17,11 +17,12 @@ class Api::ReviewsController < ApplicationController
   end
 
   def show
-    @review = Review.find(params[:id])
+    review = Review.find(params[:id])
+    render json: review
   end
 
   def index
-    reviews = Review.select("*").where("user_id = ?", params["user_id"])
+    reviews = Review.select("*").where("user_id = ?", params[:review]["user_id"])
     if reviews
       render json: reviews
     else

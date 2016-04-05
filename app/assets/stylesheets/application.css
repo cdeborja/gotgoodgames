@@ -181,7 +181,8 @@ img {
 
 .logout-button:hover {
   cursor: pointer;
-  background: #f7f2ed;
+  background: #000;
+  border: #fff 1px dashed;
 }
 
 /*.badge {
@@ -382,7 +383,7 @@ img {
   float: left;
   display: block;
   width: auto;
-  height: 150px;
+  height: 122px;
   border: dashed 1px black;
   margin-right: 20px;
   margin-bottom: 20px;

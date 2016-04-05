@@ -12,13 +12,13 @@ var resetReviews = function (reviews) {
   });
 };
 
-// var resetGame = function (game) {
-//   _reviews[game.id] = game;
-// };
+var resetReview = function (review) {
+  _reviews[review.id] = review;
+};
 
-// ReviewStore.find = function (id) {
-//   return _reviews[id];
-// };
+ReviewStore.find = function (id) {
+  return _reviews[id];
+};
 
 ReviewStore.all = function () {
   var reviews = [];
@@ -32,6 +32,10 @@ ReviewStore.__onDispatch = function (payload) {
   switch (payload.actionType) {
     case ReviewConstants.USER_REVIEWS_RECEIVED:
       resetReviews(payload.reviews);
+      ReviewStore.__emitChange();
+      break;
+    case ReviewConstants.REVIEW_RECEIVED:
+      resetReview(payload.review);
       ReviewStore.__emitChange();
       break;
   }

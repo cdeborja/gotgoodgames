@@ -39,18 +39,31 @@ game5 = Game.create!(title: "TicTactoe",
         description: "The good ole game of playing 1 vs 1 in a test of wit...",
         release_date: "30-12-1977",
         console: "NES")
+game6 = Game.create!(title: "Megaman",
+        description: "Pew. Pew. Pew.",
+        release_date: "30-12-1987",
+        console: "NES")
+game7 = Game.create!(title: "Pac-Man",
+        description: "Waka waka waka!",
+        release_date: "20-10-1961",
+        console: "ATARI")
+game8 = Game.create!(title: "Sonic Adventure 2",
+        description: "Just like Sonic Adventure 1, but better!",
+        release_date: "11-02-2000",
+        console: "Dreamcast")
+
 
 Review.destroy_all
-review1 = Review.create!(user_id: user1.id,
+review1 = Review.create!(user_id: user4.id,
         game_id: game1.id, score: 2,
         body: "I couldn't find Mario! Help!")
-review2 = Review.create!(user_id: user1.id,
+review2 = Review.create!(user_id: user4.id,
         game_id: game2.id, score: 3,
         body: "I couldn't find Zelda! Help!")
-review3 = Review.create!(user_id: user1.id,
+review3 = Review.create!(user_id: user4.id,
         game_id: game3.id, score: 1,
         body: "I couldn't find Senpai! Help!")
-review4 = Review.create!(user_id: user1.id,
+review4 = Review.create!(user_id: user4.id,
         game_id: game4.id, score: 2,
         body: "I couldn't find the straight block! Help!")
 review5 = Review.create!(user_id: user2.id,

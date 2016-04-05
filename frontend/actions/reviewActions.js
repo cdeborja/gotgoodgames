@@ -7,6 +7,13 @@ module.exports = {
       actionType: ReviewConstants.USER_REVIEWS_RECEIVED,
       reviews: reviews
     });
+  },
+
+  receiveReview: function (review) {
+    Dispatcher.dispatch({
+      actionType: ReviewConstants.REVIEW_RECEIVED,
+      review: review
+    });
   }
 
 };

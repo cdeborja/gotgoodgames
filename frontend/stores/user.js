@@ -42,7 +42,4 @@ UserStore.__onDispatch = function (payload) {
   }
 };
 
-// case ReviewConstants.USER_REVIEWS_RECEIVED:
-// UserStore.__emitChange();
-// break;
 module.exports = UserStore;

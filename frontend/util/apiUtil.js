@@ -87,6 +87,18 @@ module.exports = {
     });
   },
 
+  fetchReview: function(params) {
+    $.ajax({
+      type: "GET",
+      url: "/api/reviews/" + params.review.id ,
+      dataType: "json",
+      data: params,
+      success: function (review) {
+        ReviewActions.receiveReview(review);
+      }
+    });
+  },
+
 
   //GAME RELATED
   fetchAllGames: function() {

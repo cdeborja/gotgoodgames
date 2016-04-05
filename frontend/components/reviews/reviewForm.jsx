@@ -2,26 +2,45 @@ var React = require('react');
 var Modal = require('react-modal');
 var SessionStore = require('../../stores/session');
 var ApiUtil = require('../../util/apiUtil');
+var ReviewStore = require('../../stores/review');
 
 
 var ReviewForm = React.createClass({
   getInitialState: function(){
     return({ modalOpen: false,
              body: "",
-             score: null});
+             score: null,
+             userReview: this.props.userReview
+           });
   },
 
   checkIfCanReview: function () {
     var reviewedUsers = [];
+    var currentUser = SessionStore.currentUser().id;
 
     this.props.reviews.forEach( function (review) {
       reviewedUsers.push(review.props.review.user_id);
     });
 
-    if (reviewedUsers.includes(SessionStore.currentUser().id) ) {
-      return console.log("NEED TO CREATE POP UP PREVENTING USER REVIEW");
+    var reviewId = null;
+    if (reviewedUsers.includes(currentUser)) {
+      this.props.reviews.forEach( function (el) {
+        if (el.props.review.user_id === currentUser) {
+          // reviewId = el.props.review_id;
+          return console.log("NEED TO FIX UPDATE PART");
+        }
+      });
+
+      this.editReview(this.state.userReview);
     }
     this.openModal();
+  },
+
+  editReview: function (review) {
+    this.setState({ modalOpen: true,
+                    body: review.body,
+                    score: review.score
+    });
   },
 
   closeModal: function(){

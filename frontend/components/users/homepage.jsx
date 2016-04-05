@@ -28,7 +28,7 @@ module.exports = React.createClass({
 
   componentDidMount: function () {
     this.reviewListener = ReviewStore.addListener(this._onChange);
-    ApiUtil.fetchUserReviews(review={user_id: this.state.user.id});
+    ApiUtil.fetchUserReviews({review: {user_id: this.state.user.id}});
   },
 
   componentWillUnmount: function () {
