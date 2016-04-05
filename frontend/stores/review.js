@@ -38,6 +38,9 @@ ReviewStore.__onDispatch = function (payload) {
       resetReview(payload.review);
       ReviewStore.__emitChange();
       break;
+    case ReviewConstants.REVIEW_UPDATED:
+      ReviewStore.__emitChange();
+      break;
   }
 };
 

@@ -35,7 +35,10 @@ class Api::ReviewsController < ApplicationController
   end
 
   def update
-
+    review = Review.find(params[:id])
+    if review.update(review_params)
+      render json: review      
+    end
   end
 
   def destroy

@@ -14,6 +14,13 @@ module.exports = {
       actionType: ReviewConstants.USER_REVIEW_RECEIVED,
       review: review
     });
+  },
+
+  reviewUpdated: function (review) {
+    Dispatcher.dispatch({
+      actionType: ReviewConstants.REVIEW_UPDATED,
+      review: review
+    });
   }
 
 };

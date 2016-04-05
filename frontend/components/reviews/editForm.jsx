@@ -1,8 +1,12 @@
 var React = require('react');
 var ApiUtil = require('../../util/apiUtil');
 var ReviewStore = require('../../stores/review');
-
+var SessionStore = require('../../stores/session');
 var ReviewForm = React.createClass({
+
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
 
   getStateFromStore: function () {
     return { review: ReviewStore.find(parseInt(this.props.params.reviewId)),
@@ -31,8 +35,22 @@ var ReviewForm = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
-    
-    console.log("handlesubmit");
+    var user_id = SessionStore.currentUser().id;
+    var reviewParams = {
+      review: {
+        id: this.state.review.id,
+        user_id: user_id,
+        game_id: this.state.review.game_id,
+        score: this.state.score,
+        body: this.state.body,
+      }
+    };
+
+    ApiUtil.updateReview(reviewParams);
+  },
+
+  goToCurrentUserHomePage: function () {
+    this.context.router.push("/homepage");
   },
 
   updateScore: function (e) {
@@ -89,6 +107,7 @@ var ReviewForm = React.createClass({
           onChange={this.updateReview} />
 
           <button onClick={this.handleSubmit} className="submit-button">Update your review</button>
+          <button onClick={this.goToCurrentUserHomePage} className="submit-button">Cancel Update</button>
 
         </form>
 

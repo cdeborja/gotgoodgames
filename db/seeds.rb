@@ -34,7 +34,8 @@ game3 = Game.create!(title: "Notice me Senpai",
 game4 = Game.create!(title: "Tetris",
         description: "Match blocks, get points",
         release_date: "06-06-1984",
-        console: "Game Boy")
+        console: "Game Boy"
+        )
 game5 = Game.create!(title: "TicTactoe",
         description: "The good ole game of playing 1 vs 1 in a test of wit...",
         release_date: "30-12-1977",

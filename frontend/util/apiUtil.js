@@ -99,6 +99,25 @@ module.exports = {
     });
   },
 
+  updateReview: function(params) {
+    debugger;
+    $.ajax({
+      type: "PATCH",
+      url: "/api/reviews/" + params.review.id ,
+      dataType: "json",
+      data: params,
+      success: function (review) {
+        ReviewActions.reviewUpdated(review);
+
+      },
+      error: function() {
+        console.log("could not update review");
+      }
+
+    });
+  },
+
+
 
   //GAME RELATED
   fetchAllGames: function() {

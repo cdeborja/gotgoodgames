@@ -21925,6 +21925,23 @@
 	    });
 	  },
 	
+	  updateReview: function (params) {
+	    debugger;
+	    $.ajax({
+	      type: "PATCH",
+	      url: "/api/reviews/" + params.review.id,
+	      dataType: "json",
+	      data: params,
+	      success: function (review) {
+	        ReviewActions.reviewUpdated(review);
+	      },
+	      error: function () {
+	        console.log("could not update review");
+	      }
+	
+	    });
+	  },
+	
 	  //GAME RELATED
 	  fetchAllGames: function () {
 	    $.ajax({
@@ -28859,6 +28876,13 @@
 	      actionType: ReviewConstants.USER_REVIEW_RECEIVED,
 	      review: review
 	    });
+	  },
+	
+	  reviewUpdated: function (review) {
+	    Dispatcher.dispatch({
+	      actionType: ReviewConstants.REVIEW_UPDATED,
+	      review: review
+	    });
 	  }
 	
 	};
@@ -28869,7 +28893,8 @@
 
 	module.exports = {
 	  USER_REVIEWS_RECEIVED: "USER_REVIEWS_RECEIVED",
-	  USER_REVIEW_RECEIVED: "USER_REVIEW_RECEIVED"
+	  USER_REVIEW_RECEIVED: "USER_REVIEW_RECEIVED",
+	  REVIEW_UPDATED: "REVIEW_UPDATED"
 	};
 
 /***/ },
@@ -34303,6 +34328,9 @@
 	      resetReview(payload.review);
 	      ReviewStore.__emitChange();
 	      break;
+	    case ReviewConstants.REVIEW_UPDATED:
+	      ReviewStore.__emitChange();
+	      break;
 	  }
 	};
 	
@@ -35263,10 +35291,14 @@
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(181);
 	var ReviewStore = __webpack_require__(275);
-	
+	var SessionStore = __webpack_require__(188);
 	var ReviewForm = React.createClass({
 	  displayName: 'ReviewForm',
 	
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
 	
 	  getStateFromStore: function () {
 	    return { review: ReviewStore.find(parseInt(this.props.params.reviewId)),
@@ -35295,8 +35327,22 @@
 	
 	  handleSubmit: function (e) {
 	    e.preventDefault();
+	    var user_id = SessionStore.currentUser().id;
+	    var reviewParams = {
+	      review: {
+	        id: this.state.review.id,
+	        user_id: user_id,
+	        game_id: this.state.review.game_id,
+	        score: this.state.score,
+	        body: this.state.body
+	      }
+	    };
 	
-	    console.log("handlesubmit");
+	    ApiUtil.updateReview(reviewParams);
+	  },
+	
+	  goToCurrentUserHomePage: function () {
+	    this.context.router.push("/homepage");
 	  },
 	
 	  updateScore: function (e) {
@@ -35398,6 +35444,11 @@
 	          'button',
 	          { onClick: this.handleSubmit, className: 'submit-button' },
 	          'Update your review'
+	        ),
+	        React.createElement(
+	          'button',
+	          { onClick: this.goToCurrentUserHomePage, className: 'submit-button' },
+	          'Cancel Update'
 	        )
 	      )
 	    );
