@@ -87,14 +87,14 @@ module.exports = {
     });
   },
 
-  fetchReview: function(params) {
+  fetchUserReview: function(params) {
     $.ajax({
       type: "GET",
       url: "/api/reviews/" + params.review.id ,
       dataType: "json",
       data: params,
       success: function (review) {
-        ReviewActions.receiveReview(review);
+        ReviewActions.receiveUserReview(review);
       }
     });
   },

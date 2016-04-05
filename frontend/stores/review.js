@@ -34,7 +34,7 @@ ReviewStore.__onDispatch = function (payload) {
       resetReviews(payload.reviews);
       ReviewStore.__emitChange();
       break;
-    case ReviewConstants.REVIEW_RECEIVED:
+    case ReviewConstants.USER_REVIEW_RECEIVED:
       resetReview(payload.review);
       ReviewStore.__emitChange();
       break;

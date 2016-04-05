@@ -3,15 +3,20 @@ var Modal = require('react-modal');
 var SessionStore = require('../../stores/session');
 var ApiUtil = require('../../util/apiUtil');
 var ReviewStore = require('../../stores/review');
-
+var ReactSimpleAlert = require('react-simple-alert');
 
 var ReviewForm = React.createClass({
   getInitialState: function(){
     return({ modalOpen: false,
              body: "",
              score: null,
-             userReview: this.props.userReview
+             userReview: this.props.userReview,
+             alert: false
            });
+  },
+
+  _alert: function(){
+      this.setState({alert: true});
   },
 
   checkIfCanReview: function () {
@@ -22,18 +27,11 @@ var ReviewForm = React.createClass({
       reviewedUsers.push(review.props.review.user_id);
     });
 
-    var reviewId = null;
     if (reviewedUsers.includes(currentUser)) {
-      this.props.reviews.forEach( function (el) {
-        if (el.props.review.user_id === currentUser) {
-          // reviewId = el.props.review_id;
-          return console.log("NEED TO FIX UPDATE PART");
-        }
-      });
-
-      this.editReview(this.state.userReview);
-    }
+      this._alert();
+    } else {
     this.openModal();
+    }
   },
 
   editReview: function (review) {
@@ -49,10 +47,6 @@ var ReviewForm = React.createClass({
 
   openModal: function(){
     this.setState({ modalOpen: true });
-  },
-
-  handleErrors: function () {
-
   },
 
   handleSubmit: function(e) {
@@ -81,6 +75,18 @@ var ReviewForm = React.createClass({
   /*need to figure out how to create  branching path for creating a new review and
   editing a post if the review has already been enter */
   render: function(){
+    var rsaOptions = {
+        title: "Uh-oh!",
+        message: "You're trying to create a new review, but you have already reviewed this game. If you would like to edit your review, please click the edit button",
+        alert: this.state.alert,
+        confirmButton: {
+            text: "Edit Review",
+            action: function(review){
+              console.log("clicked button");
+            }
+        }
+    };
+
     var reviewFormStyle = {
       overlay : {
         position        : 'fixed',
@@ -111,6 +117,7 @@ var ReviewForm = React.createClass({
       <div>
       <button className="add-review-button" onClick={this.checkIfCanReview}>
         Add your own review!</button>
+        <ReactSimpleAlert options={rsaOptions} />
 
       <Modal
         isOpen={this.state.modalOpen}

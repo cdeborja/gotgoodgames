@@ -9,9 +9,9 @@ module.exports = {
     });
   },
 
-  receiveReview: function (review) {
+  receiveUserReview: function (review) {
     Dispatcher.dispatch({
-      actionType: ReviewConstants.REVIEW_RECEIVED,
+      actionType: ReviewConstants.USER_REVIEW_RECEIVED,
       review: review
     });
   }
