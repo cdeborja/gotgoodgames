@@ -13,6 +13,7 @@ var ApiUtil = require('./util/apiUtil');
 var GamesIndex = require('./components/games/index');
 var GameDetail = require('./components/games/detail');
 var UserHomePage = require('./components/users/homepage');
+var EditForm = require('./components/reviews/editForm');
 var LoginForm = require('./components/loginForm');
 var SignUpForm = require('./components/signUpForm');
 var Search = require("./components/search");
@@ -26,7 +27,7 @@ var routes = (
     <Route path="homepage" component={UserHomePage} onEnter={_requireLoggedIn} />
     <Route path="index" component={GamesIndex} onEnter={_requireLoggedIn} />
     <Route path="games/:gameId" component={GameDetail} onEnter={_requireLoggedIn} />
-
+    <Route path="reviews/:reviewId" component={EditForm} onEnter={_requireLoggedIn} />
     <Route path="login" component={LoginForm} />
     <Route path="signup" component={SignUpForm} />
     <Route path="search" component={Search} onEnter={_requireLoggedIn}/>

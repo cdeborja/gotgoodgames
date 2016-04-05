@@ -59,6 +59,7 @@
 	var GamesIndex = __webpack_require__(180);
 	var GameDetail = __webpack_require__(271);
 	var UserHomePage = __webpack_require__(277);
+	var EditForm = __webpack_require__(291);
 	var LoginForm = __webpack_require__(279);
 	var SignUpForm = __webpack_require__(280);
 	var Search = __webpack_require__(281);
@@ -73,6 +74,7 @@
 	  React.createElement(Route, { path: 'homepage', component: UserHomePage, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'index', component: GamesIndex, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'games/:gameId', component: GameDetail, onEnter: _requireLoggedIn }),
+	  React.createElement(Route, { path: 'reviews/:reviewId', component: EditForm, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'login', component: LoginForm }),
 	  React.createElement(Route, { path: 'signup', component: SignUpForm }),
 	  React.createElement(Route, { path: 'search', component: Search, onEnter: _requireLoggedIn })
@@ -34585,7 +34587,9 @@
 	    var userReviews = this.state.reviews.map(function (review, id) {
 	      return React.createElement(UserReviewItem, { key: id, review: review });
 	    }).reverse();
+	
 	    var memberSince = this.state.user.created_at.slice(0, 10).split("-").join('/');
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'game-detail-pane' },
@@ -34625,34 +34629,48 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var EditReviewLink = __webpack_require__(290);
 	
 	module.exports = React.createClass({
-	  displayName: "exports",
+	  displayName: 'exports',
+	
+	  getInitialState: function () {
+	    return {
+	      review: this.props.review
+	    };
+	  },
 	
 	  render: function () {
-	    if (this.props.review === []) {
-	      return React.createElement("div", null);
+	    var review = this.state.review;
+	
+	    if (review === []) {
+	      return React.createElement('div', null);
 	    }
 	    return React.createElement(
-	      "ul",
-	      { className: "review-box" },
+	      'ul',
+	      { className: 'review-box' },
 	      React.createElement(
-	        "li",
+	        'li',
 	        null,
-	        "Review Score: ",
-	        this.props.review.score
+	        'Review Score: ',
+	        review.score
 	      ),
 	      React.createElement(
-	        "li",
+	        'li',
 	        null,
-	        "Game ID: ",
-	        this.props.review.game_id
+	        'Game ID: ',
+	        review.game_id
 	      ),
 	      React.createElement(
-	        "li",
+	        'li',
 	        null,
-	        "Review: ",
-	        this.props.review.body
+	        'Review: ',
+	        review.body
+	      ),
+	      React.createElement(
+	        'li',
+	        null,
+	        React.createElement(EditReviewLink, { reviewId: review.id })
 	      )
 	    );
 	  }
@@ -35188,6 +35206,205 @@
 	});
 	
 	module.exports = Footer;
+
+/***/ },
+/* 289 */,
+/* 290 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ReviewStore = __webpack_require__(275);
+	
+	var EditReview = React.createClass({
+	  displayName: 'EditReview',
+	
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  getStateFromStore: function () {
+	    return { review: ReviewStore.find(this.props.reviewId)
+	    };
+	  },
+	
+	  _onChange: function () {
+	    this.setState(this.getStateFromStore());
+	  },
+	
+	  getInitialState: function () {
+	    return this.getStateFromStore();
+	  },
+	
+	  goToReviewEdit: function () {
+	    this.context.router.push('/reviews/' + this.props.reviewId);
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'button',
+	        { className: 'edit-button', onClick: this.goToReviewEdit },
+	        ' Edit Review '
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = EditReview;
+
+/***/ },
+/* 291 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(181);
+	var ReviewStore = __webpack_require__(275);
+	
+	var ReviewForm = React.createClass({
+	  displayName: 'ReviewForm',
+	
+	
+	  getStateFromStore: function () {
+	    return { review: ReviewStore.find(parseInt(this.props.params.reviewId)),
+	      body: "",
+	      score: null
+	    };
+	  },
+	
+	  _onChange: function () {
+	    this.setState(this.getStateFromStore());
+	  },
+	
+	  getInitialState: function () {
+	    return this.getStateFromStore();
+	  },
+	
+	  componentDidMount: function () {
+	    this.reviewListener = ReviewStore.addListener(this._onChange);
+	    var params = { review: { id: this.props.params.reviewId } };
+	    ApiUtil.fetchUserReview(params);
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.reviewListener.remove();
+	  },
+	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	
+	    console.log("handlesubmit");
+	  },
+	
+	  updateScore: function (e) {
+	    this.setState({ score: e.currentTarget.value });
+	  },
+	
+	  updateReview: function (e) {
+	    this.setState({ body: e.currentTarget.value });
+	  },
+	  /*need to figure out how to create  branching path for creating a new review and
+	  editing a post if the review has already been enter */
+	  render: function () {
+	    if (!this.state.review) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        'LOADING'
+	      );
+	    }
+	
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'form',
+	        { className: 'add-review-box' },
+	        React.createElement(
+	          'h2',
+	          null,
+	          'Edit your review!'
+	        ),
+	        React.createElement(
+	          'label',
+	          { className: 'input-text', htmlFor: 'score' },
+	          'Score'
+	        ),
+	        React.createElement(
+	          'ul',
+	          { className: 'score-choices' },
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'label',
+	              null,
+	              '1'
+	            ),
+	            React.createElement('input', { type: 'radio', value: '1', className: 'review-score', name: 'score',
+	              onChange: this.updateScore })
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'label',
+	              null,
+	              '2'
+	            ),
+	            React.createElement('input', { type: 'radio', value: '2', className: 'review-score', name: 'score',
+	              onChange: this.updateScore })
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'label',
+	              null,
+	              '3'
+	            ),
+	            React.createElement('input', { type: 'radio', value: '3', className: 'review-score', name: 'score',
+	              onChange: this.updateScore })
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'label',
+	              null,
+	              '4'
+	            ),
+	            React.createElement('input', { type: 'radio', value: '4', className: 'review-score', name: 'score',
+	              onChange: this.updateScore })
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'label',
+	              null,
+	              '5'
+	            ),
+	            React.createElement('input', { type: 'radio', value: '5', className: 'review-score', name: 'score',
+	              onChange: this.updateScore })
+	          )
+	        ),
+	        React.createElement('textarea', { className: 'add-review-textarea', placeholder: 'Enter your awwwwwsome review here!',
+	          onChange: this.updateReview, value: this.state.review.body, defaultValue: 'Hello' }),
+	        React.createElement(
+	          'button',
+	          { onClick: this.handleSubmit, className: 'submit-button' },
+	          'Submit your review'
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = ReviewForm;
 
 /***/ }
 /******/ ]);

@@ -300,7 +300,8 @@ img {
 
 /* buttons */
 
-.submit-button {
+.submit-button,
+.edit-button {
   border-radius: 5px;
   border: 1px solid #ac9c8d;
   background: #f6f6ee;

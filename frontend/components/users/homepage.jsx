@@ -46,7 +46,9 @@ module.exports = React.createClass({
     var userReviews = this.state.reviews.map(function (review, id) {
       return <UserReviewItem key={id} review={review} />;
     }).reverse();
+
     var memberSince = this.state.user.created_at.slice(0,10).split("-").join('/');
+    
     return(
       <div className="game-detail-pane">
         <h2>{this.state.user.username}</h2>

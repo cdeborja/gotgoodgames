@@ -1,13 +1,23 @@
 var React = require('react');
+var EditReviewLink = require('./editReviewLink');
 
 module.exports = React.createClass({
+  getInitialState: function () {
+    return {
+      review: this.props.review
+    };
+  },
+
   render: function () {
-    if (this.props.review === []) { return (<div></div>); }
+    var review = this.state.review;
+
+    if (review === []) { return (<div></div>); }
     return(
       <ul className="review-box">
-        <li>Review Score: {this.props.review.score}</li>
-        <li>Game ID: {this.props.review.game_id}</li>
-        <li>Review: {this.props.review.body}</li>
+        <li>Review Score: {review.score}</li>
+        <li>Game ID: {review.game_id}</li>
+        <li>Review: {review.body}</li>
+        <li><EditReviewLink reviewId={review.id}/></li>
       </ul>
     );
   }
