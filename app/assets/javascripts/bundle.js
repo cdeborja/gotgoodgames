@@ -21692,8 +21692,8 @@
 	    var button, welcomeMessage, homepage, signUpButton;
 	    if (this.state.currentUser) {
 	      button = React.createElement(
-	        'button',
-	        { className: 'logout-button', onClick: ApiUtil.logout },
+	        'li',
+	        { onClick: ApiUtil.logout },
 	        'Logout'
 	      );
 	      welcomeMessage = React.createElement(
@@ -21704,8 +21704,8 @@
 	      );
 	      homepage = React.createElement(
 	        'li',
-	        { onClick: this.goToCurrentUserHomePage, className: 'header-nav-bar' },
-	        'Profile'
+	        { onClick: this.goToCurrentUserHomePage },
+	        'My Stats'
 	      );
 	    }
 	
@@ -21718,37 +21718,70 @@
 	    }
 	
 	    return React.createElement(
-	      'header',
-	      { className: 'header group' },
+	      'div',
+	      null,
 	      React.createElement(
-	        'div',
-	        { onClick: this.goToIndex },
+	        'header',
+	        { className: 'header group' },
 	        React.createElement(
-	          'div',
-	          { className: 'header-logo-first' },
-	          'gotgood'
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'header-logo-second' },
-	          'games'
+	          'nav',
+	          { className: 'navigation-bar' },
+	          React.createElement(
+	            'div',
+	            { className: 'logo-box', onClick: this.goToIndex },
+	            React.createElement(
+	              'div',
+	              { className: 'header-logo-first' },
+	              'gotgood'
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'header-logo-second' },
+	              'games'
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'navigation-box' },
+	            React.createElement(
+	              'ul',
+	              { className: 'navigation-links' },
+	              React.createElement(
+	                'li',
+	                { onClick: this.goToIndex },
+	                'Home'
+	              ),
+	              homepage,
+	              React.createElement(
+	                'li',
+	                null,
+	                'Browse'
+	              ),
+	              React.createElement(
+	                'li',
+	                null,
+	                'Community'
+	              ),
+	              React.createElement('input', { className: 'search-box', type: 'text' })
+	            )
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'session-nav' },
+	            React.createElement(
+	              'ul',
+	              { className: 'session-links' },
+	              signUpButton,
+	              welcomeMessage,
+	              button
+	            )
+	          )
 	        )
 	      ),
 	      React.createElement(
-	        'ul',
+	        'body',
 	        null,
-	        homepage
-	      ),
-	      React.createElement(
-	        'nav',
-	        { className: 'header-nav group' },
-	        React.createElement(
-	          'ul',
-	          { className: 'header-nav' },
-	          signUpButton,
-	          button,
-	          welcomeMessage
-	        )
+	        React.createElement('div', { className: 'content' })
 	      ),
 	      React.createElement(
 	        'div',

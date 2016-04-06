@@ -49,9 +49,9 @@ module.exports = React.createClass({
   render: function () {
     var button, welcomeMessage, homepage, signUpButton;
     if (this.state.currentUser) {
-      button = <button className="logout-button" onClick={ApiUtil.logout}>Logout</button>;
+      button = <li onClick={ApiUtil.logout}>Logout</li>;
       welcomeMessage = <h2>Welcome, {this.state.currentUser.username}</h2>;
-      homepage = <li onClick={this.goToCurrentUserHomePage} className="header-nav-bar">Profile</li>;
+      homepage = <li onClick={this.goToCurrentUserHomePage}>My Stats</li>;
     }
 
     if (!this.state.currentUser) {
@@ -61,30 +61,42 @@ module.exports = React.createClass({
 
 
     return (
-      <header className="header group">
-        <div onClick={this.goToIndex}>
-          <div className="header-logo-first">
-            gotgood
-          </div>
-          <div className="header-logo-second">
-            games
-          </div>
-        </div>
-        <ul>
-          {homepage}
-        </ul>
-        <nav className="header-nav group">
-        <ul className="header-nav">
-
-          {signUpButton}
-          {button}
-          {welcomeMessage}
-        </ul>
-        </nav>
+      <div>
+        <header className="header group">
+          <nav className= "navigation-bar">
+            <div className="logo-box" onClick={this.goToIndex}>
+              <div className="header-logo-first">
+                gotgood
+              </div>
+              <div className="header-logo-second">
+                games
+              </div>
+            </div>
+            <div className="navigation-box">
+              <ul className="navigation-links">
+                <li onClick={this.goToIndex}>Home</li>
+                {homepage}
+                <li>Browse</li>
+                <li>Community</li>
+                <input className="search-box" type="text" />
+              </ul>
+            </div>
+            <div className="session-nav">
+              <ul className="session-links">
+                {signUpButton}
+                {welcomeMessage}
+                {button}
+              </ul>
+            </div>
+          </nav>
+        </header>
+        <body>
+          <div className="content"></div>
+        </body>
         <div>
           {this.props.children}
         </div>
-      </header>
+      </div>
     );
   }
 

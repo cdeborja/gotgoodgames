@@ -43,7 +43,7 @@ body {
   font-family: sans-serif;
    background-image: url('http://cdn.pcwallart.com/images/pacman-wallpaper-2.jpg');
    background-size: 450px auto;
-   background-position: left 0px bottom;
+   background-position: left -10px bottom -50px;
    background-attachment: fixed;
    background-repeat: no-repeat;
    background-color: #040404;
@@ -58,10 +58,96 @@ img {
   width: 100%;
   height: auto;
 }
+/*WORK*/
 
-.white-background {
-  background: white;
+.header {
+  background: #222;
+  border-bottom: 1px solid #eee;
 }
+
+.navigation-bar {
+  margin: 0 auto;
+  background: yellow;
+  width: 1180px;
+}
+
+.logo-box {
+  float: left;
+  padding: 10px 10px;
+}
+
+.logo-box:hover {
+  cursor: pointer;
+}
+
+.header-logo-first {
+  float: left;
+  font-weight: 100;
+  font-size: 32px;
+  margin-left: 14px;
+  color: #eee;
+  letter-spacing: -2px;
+}
+
+.header-logo-second {
+  float: left;
+  font-size: 32px;
+  color: #eee;
+  letter-spacing: -2px;
+  font-weight: bold;
+  text-shadow: 0 0 0.2em black, 0 0 0.2em #ff3, 0 0 0.2em #ff3;
+}
+
+.session-nav {
+  float: right;
+  display: block;
+}
+
+.session-links > * {
+  float: left;
+  padding: 20px 10px;
+  color: #fff;
+}
+
+.content {
+  margin: 0 auto;
+  background: #ccc;
+  width: 960px;
+  font-size: 200px;
+}
+
+.navigation-box {
+  float: left;
+  display: block;
+}
+
+.navigation-links {
+
+}
+
+.navigation-links > li {
+  float: left;
+  padding: 20px 10px;
+  color: #fff;
+}
+
+.navigation-links > li:hover {
+  cursor: pointer;
+  background: #fff;
+  color: #000;
+}
+
+.search-box {
+  float: left;
+  margin-top: 10px;
+  width: 260px;
+  height: 20px;
+  background: white;
+  padding: 9px;
+  border-radius: 5px;
+  border: 1px red dashed;
+}
+
 
 /* --- LOADING --- */
 
@@ -124,31 +210,6 @@ img {
 .header-nav-bar:hover {
   text-shadow: 0 0 0.2em black, 0 0 0.2em #ff3, 0 0 0.2em #ff3 ;
   cursor: pointer;
-}
-
-.header-logo-first {
-  float: left;
-  font-weight: 100;
-  font-size: 32px;
-  margin-left: 14px;
-  margin-top: 4px;
-  color: #eee;
-  letter-spacing: -2px;
-}
-
-.header-logo-first:hover,
-.header-logo-second:hover {
-  cursor: pointer;
-}
-
-.header-logo-second {
-  float: left;
-  font-size: 32px;
-  color: #eee;
-  letter-spacing: -2px;
-  font-weight: bold;
-  margin-top: 4px;
-  text-shadow: 0 0 0.2em black, 0 0 0.2em #ff3, 0 0 0.2em #ff3;
 }
 
 .header-list {
