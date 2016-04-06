@@ -105,8 +105,8 @@ module.exports = {
       url: "/api/reviews/" + params.review.id ,
       dataType: "json",
       data: params,
-      success: function (review) {
-        ReviewActions.reviewUpdated(review);
+      success: function (reviews) {
+        ReviewActions.reviewUpdated(reviews);
 
       },
       error: function() {
@@ -122,8 +122,8 @@ module.exports = {
       url: "/api/reviews/" + params.review.id,
       dataType: "json",
       data: params,
-      success: function (review) {
-        ReviewActions.userReviewDeleted();
+      success: function (reviews) {
+        ReviewActions.userReviewDeleted(reviews);
       },
       error: function () {
         console.log("could not delete review");

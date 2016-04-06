@@ -30,6 +30,7 @@ var ReviewForm = React.createClass({
   },
 
   componentWillUnmount: function () {
+    ApiUtil.fetchUserReviews({review: {user_id: SessionStore.currentUser().id}});
     this.reviewListener.remove();
   },
 
@@ -47,8 +48,9 @@ var ReviewForm = React.createClass({
     };
 
     ApiUtil.updateReview(reviewParams);
+    this.goToCurrentUserHomePage();
   },
-
+  //ASK ABOUT MOUNT UNMOUNT LEEN
   goToCurrentUserHomePage: function () {
     this.context.router.push("/homepage");
   },

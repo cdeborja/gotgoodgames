@@ -35,9 +35,6 @@ module.exports = React.createClass({
     this.reviewListener.remove();
   },
 
-  handleSubmit: function(e) {
-  },
-
   render: function () {
     if (this.state.reviews.length === 0) {
        <div className="loading"> Loading... </div>;
@@ -48,7 +45,7 @@ module.exports = React.createClass({
     }).reverse();
 
     var memberSince = this.state.user.created_at.slice(0,10).split("-").join('/');
-    
+
     return(
       <div className="game-detail-pane">
         <h2>{this.state.user.username}</h2>

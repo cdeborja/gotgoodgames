@@ -74,12 +74,12 @@ game11 = Game.create!(title: "Final Fantasy XV",
         description: "Used to be part of FFXIII storyline, but now it's own game!",
         release_date: "11-02-2000",
         console: "Playstation 4",
-        image_url: "https://upload.wikimedia.org/wikipedia/en/9/99/Sonic_Adventure_2_cover.png")
+        image_url: "https://upload.wikimedia.org/wikipedia/en/2/25/Final_Fantasy_XV_logo.png")
 game12 = Game.create!(title: "Superman",
         description: "Like Superman? Like Video Games? Here is Superman's worst game ever!",
         release_date: "31-05-1999",
         console: "N64",
-        image_url: "https://upload.wikimedia.org/wikipedia/en/2/25/Final_Fantasy_XV_logo.png")
+        image_url: "https://upload.wikimedia.org/wikipedia/en/3/3b/Superman64box.jpg")
 game13 = Game.create!(title: "Mortal Kombat",
         description: "Reboot of the famous franchise known for spilling out blood and creating the ESRB!",
         release_date: "19-04-2011",

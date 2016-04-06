@@ -35,16 +35,20 @@ class Api::ReviewsController < ApplicationController
   end
 
   def update
+    debugger
     review = Review.find(params[:id])
     if review.update(review_params)
-      render json: review
+      reviews = User.find(review.user_id).reviews
+      debugger
+      render json: reviews
     end
   end
 
   def destroy
     review = Review.find(params[:id])
     review.delete
-      render json: {}
+    reviews = User.find(review_params[:user_id]).reviews
+    render json: reviews
   end
 
   private

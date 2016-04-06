@@ -21931,8 +21931,8 @@
 	      url: "/api/reviews/" + params.review.id,
 	      dataType: "json",
 	      data: params,
-	      success: function (review) {
-	        ReviewActions.reviewUpdated(review);
+	      success: function (reviews) {
+	        ReviewActions.reviewUpdated(reviews);
 	      },
 	      error: function () {
 	        console.log("could not update review");
@@ -21947,8 +21947,8 @@
 	      url: "/api/reviews/" + params.review.id,
 	      dataType: "json",
 	      data: params,
-	      success: function (review) {
-	        ReviewActions.userReviewDeleted();
+	      success: function (reviews) {
+	        ReviewActions.userReviewDeleted(reviews);
 	      },
 	      error: function () {
 	        console.log("could not delete review");
@@ -28892,10 +28892,17 @@
 	    });
 	  },
 	
-	  reviewUpdated: function (review) {
+	  reviewUpdated: function (reviews) {
 	    Dispatcher.dispatch({
 	      actionType: ReviewConstants.REVIEW_UPDATED,
-	      review: review
+	      reviews: reviews
+	    });
+	  },
+	
+	  userReviewDeleted: function (reviews) {
+	    Dispatcher.dispatch({
+	      actionType: ReviewConstants.USER_REVIEW_DELETED,
+	      reviews: reviews
 	    });
 	  }
 	
@@ -28908,7 +28915,8 @@
 	module.exports = {
 	  USER_REVIEWS_RECEIVED: "USER_REVIEWS_RECEIVED",
 	  USER_REVIEW_RECEIVED: "USER_REVIEW_RECEIVED",
-	  REVIEW_UPDATED: "REVIEW_UPDATED"
+	  REVIEW_UPDATED: "REVIEW_UPDATED",
+	  USER_REVIEW_DELETED: "USER_REVIEW_DELETED"
 	};
 
 /***/ },
@@ -34332,6 +34340,7 @@
 	};
 	
 	ReviewStore.__onDispatch = function (payload) {
+	  debugger;
 	  switch (payload.actionType) {
 	    case ReviewConstants.USER_REVIEWS_RECEIVED:
 	      resetReviews(payload.reviews);
@@ -34342,6 +34351,11 @@
 	      ReviewStore.__emitChange();
 	      break;
 	    case ReviewConstants.REVIEW_UPDATED:
+	      resetReviews(payload.reviews);
+	      ReviewStore.__emitChange();
+	      break;
+	    case ReviewConstants.USER_REVIEW_DELETED:
+	      resetReviews(payload.reviews);
 	      ReviewStore.__emitChange();
 	      break;
 	  }
@@ -34828,8 +34842,6 @@
 	    this.reviewListener.remove();
 	  },
 	
-	  handleSubmit: function (e) {},
-	
 	  render: function () {
 	    if (this.state.reviews.length === 0) {
 	      React.createElement(
@@ -35028,6 +35040,7 @@
 	  },
 	
 	  componentWillUnmount: function () {
+	    ApiUtil.fetchUserReviews({ review: { user_id: SessionStore.currentUser().id } });
 	    this.reviewListener.remove();
 	  },
 	
@@ -35045,8 +35058,9 @@
 	    };
 	
 	    ApiUtil.updateReview(reviewParams);
+	    this.goToCurrentUserHomePage();
 	  },
-	
+	  //ASK ABOUT MOUNT UNMOUNT LEEN
 	  goToCurrentUserHomePage: function () {
 	    this.context.router.push("/homepage");
 	  },

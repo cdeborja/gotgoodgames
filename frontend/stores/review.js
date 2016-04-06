@@ -29,6 +29,7 @@ ReviewStore.all = function () {
 };
 
 ReviewStore.__onDispatch = function (payload) {
+  debugger;
   switch (payload.actionType) {
     case ReviewConstants.USER_REVIEWS_RECEIVED:
       resetReviews(payload.reviews);
@@ -39,6 +40,11 @@ ReviewStore.__onDispatch = function (payload) {
       ReviewStore.__emitChange();
       break;
     case ReviewConstants.REVIEW_UPDATED:
+      resetReviews(payload.reviews);
+      ReviewStore.__emitChange();
+      break;
+    case ReviewConstants.USER_REVIEW_DELETED:
+      resetReviews(payload.reviews);
       ReviewStore.__emitChange();
       break;
   }

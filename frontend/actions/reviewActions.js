@@ -16,10 +16,17 @@ module.exports = {
     });
   },
 
-  reviewUpdated: function (review) {
+  reviewUpdated: function (reviews) {
     Dispatcher.dispatch({
       actionType: ReviewConstants.REVIEW_UPDATED,
-      review: review
+      reviews: reviews
+    });
+  },
+
+  userReviewDeleted: function (reviews) {
+    Dispatcher.dispatch({
+      actionType: ReviewConstants.USER_REVIEW_DELETED,
+      reviews: reviews
     });
   }
 
