@@ -34340,7 +34340,6 @@
 	};
 	
 	ReviewStore.__onDispatch = function (payload) {
-	  debugger;
 	  switch (payload.actionType) {
 	    case ReviewConstants.USER_REVIEWS_RECEIVED:
 	      resetReviews(payload.reviews);

@@ -33,13 +33,11 @@ class Api::ReviewsController < ApplicationController
   def edit
 
   end
-
+  #ASK ABOUT THIS, HOW TO RERENDER REVIEWS???
   def update
-    debugger
     review = Review.find(params[:id])
     if review.update(review_params)
       reviews = User.find(review.user_id).reviews
-      debugger
       render json: reviews
     end
   end
