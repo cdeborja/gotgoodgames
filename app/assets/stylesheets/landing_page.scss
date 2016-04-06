@@ -1,0 +1,93 @@
+.content-container {
+  margin: 0px auto;
+  width: 1000px;
+}
+
+.content-feed {
+  float: left;
+  width: 400px;
+}
+
+.content-game-lists {
+  float: right;
+  width: 550px;
+  background: rebeccapurple;
+}
+
+.content-feed {
+  padding: 10px 20px;
+}
+
+.feed-buttons {
+  color: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.feed-buttons > ul > li {
+  float: left;
+  padding: 20px;
+}
+
+.feed-buttons > ul > li:hover {
+  cursor: pointer;
+  border-bottom: 1px solid #ff3;
+}
+
+.feed-display {
+  margin: 10px 0 10px 0;
+  color: #fff;
+}
+
+.recent-activity-item {
+  margin: 5px 0;
+  padding: 5px;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  background: #222;
+}
+
+.recent-activity-item > img {
+  float: left;
+  width: 45px;
+  height: 45px;
+  border: 1px #fff solid;
+  border-radius: 5px;
+}
+
+
+.feed-information {
+  float: left;
+  margin-left: 5px;
+}
+
+.feed-information > h2 {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 20px;
+}
+
+.recent-activity > img {
+  display: block;
+  float: left;
+  width: 50px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.comment-activity {
+}
+
+.comment-activity > ul > li {
+  width: 330px;
+  height: auto;
+}
+
+.comment-activity > ul > li:first-child {
+  border-bottom: 1px solid #ccc;
+}
+.comment-activity > ul > li:last-child {
+  float: left;
+  display: block;
+  margin-top: 5px;
+}

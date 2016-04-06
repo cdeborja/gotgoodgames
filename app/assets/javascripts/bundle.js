@@ -21836,18 +21836,129 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'game-index-pane' },
+	      { className: 'content-container group' },
 	      React.createElement(
-	        'h2',
-	        null,
-	        'Current games in the database!'
+	        'div',
+	        { className: 'content-feed' },
+	        React.createElement(
+	          'div',
+	          { className: 'feed-buttons group' },
+	          React.createElement(
+	            'ul',
+	            null,
+	            React.createElement(
+	              'li',
+	              null,
+	              'Updates'
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              'Discussions'
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'ul',
+	          { className: 'feed-display group' },
+	          React.createElement(
+	            'li',
+	            { className: 'recent-activity-item group' },
+	            React.createElement('img', { src: 'http://i280.photobucket.com/albums/kk197/chanhonglok/naruto/5a1c4ba4.gif' }),
+	            React.createElement(
+	              'div',
+	              { className: 'feed-information' },
+	              React.createElement(
+	                'h2',
+	                null,
+	                'Sasuke reviewed... '
+	              ),
+	              React.createElement(
+	                'div',
+	                { className: 'recent-activity' },
+	                React.createElement('img', { src: 'https://upload.wikimedia.org/wikipedia/en/4/4b/Fftbox.jpg' }),
+	                React.createElement(
+	                  'div',
+	                  { className: 'comment-activity' },
+	                  React.createElement(
+	                    'ul',
+	                    null,
+	                    React.createElement(
+	                      'li',
+	                      null,
+	                      'Final Fantasy Tactics --- 1/5'
+	                    ),
+	                    React.createElement(
+	                      'li',
+	                      null,
+	                      'Naruto and Sakura made me play this...'
+	                    )
+	                  )
+	                )
+	              )
+	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            { className: 'recent-activity-item group' },
+	            React.createElement('img', { src: 'http://vignette4.wikia.nocookie.net/nintendo/images/4/44/Luigi-Icon.png/revision/latest?cb=20120820000627&path-prefix=en' }),
+	            React.createElement(
+	              'div',
+	              { className: 'feed-information' },
+	              React.createElement(
+	                'h2',
+	                null,
+	                'Luigi reviewed... '
+	              ),
+	              React.createElement(
+	                'div',
+	                { className: 'recent-activity' },
+	                React.createElement('img', { src: 'http://img.gamefaqs.net/box/0/7/5/22075_front.jpg' }),
+	                React.createElement(
+	                  'div',
+	                  { className: 'comment-activity' },
+	                  React.createElement(
+	                    'ul',
+	                    null,
+	                    React.createElement(
+	                      'li',
+	                      null,
+	                      'Mario is missing!--- 2/5'
+	                    ),
+	                    React.createElement(
+	                      'li',
+	                      null,
+	                      'Mama Mia! I had to travel around the WORLD to find him!'
+	                    )
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        )
 	      ),
 	      React.createElement(
-	        'ul',
-	        null,
-	        this.state.games.map(function (game) {
-	          return React.createElement(GameIndexItem, { key: game.id, game: game });
-	        })
+	        'div',
+	        { className: 'content-game-lists' },
+	        React.createElement(
+	          'div',
+	          { className: 'your-class' },
+	          React.createElement(
+	            'div',
+	            null,
+	            'your content'
+	          ),
+	          React.createElement(
+	            'div',
+	            null,
+	            'your content'
+	          ),
+	          React.createElement(
+	            'div',
+	            null,
+	            'your content'
+	          )
+	        )
 	      )
 	    );
 	  }

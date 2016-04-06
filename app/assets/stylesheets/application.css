@@ -58,7 +58,16 @@ img {
   width: 100%;
   height: auto;
 }
-/*WORK*/
+
+/* --- CLEARFIX --- */
+
+.group:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+/* NAVIGATION BAR*/
 
 .header {
   background: #222;
@@ -129,6 +138,7 @@ img {
   float: left;
   padding: 20px 10px;
   color: #fff;
+  transition: background-color 1s, transform 1s,font 1s;
 }
 
 .navigation-links > li:hover {
@@ -145,7 +155,7 @@ img {
   background: white;
   padding: 9px;
   border-radius: 5px;
-  border: 1px red dashed;
+  border: 1px solid #000;
 }
 
 
@@ -164,21 +174,9 @@ img {
   margin: auto;
  }
 
-/* --- CLEARFIX --- */
-
-.group:after {
-  content: "";
-  display: block;
-  clear: both;
-}
-
 /* --- HEADER --- */
 
-/*.header {
-  background: red;
-  color: #fff;
-  margin: 0 0 16px 0;
-}*/
+
 
 .header a {
   padding: 10px 20px;
