@@ -34404,12 +34404,12 @@
 	    }
 	  },
 	
-	  editReview: function (review) {
-	    this.setState({ modalOpen: true,
-	      body: review.body,
-	      score: review.score
-	    });
-	  },
+	  // editReview: function (review) {
+	  //   this.setState({ modalOpen: true,
+	  //                   body: review.body,
+	  //                   score: review.score
+	  //   });
+	  // },
 	
 	  closeModal: function () {
 	    this.setState({ modalOpen: false });
@@ -34895,7 +34895,9 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var SessionStore = __webpack_require__(188);
 	var EditReviewLink = __webpack_require__(285);
+	var Modal = __webpack_require__(159);
 	var ApiUtil = __webpack_require__(181);
 	
 	module.exports = React.createClass({
@@ -34903,50 +34905,207 @@
 	
 	  getInitialState: function () {
 	    return {
-	      review: this.props.review
+	      modalOpen: false,
+	      score: null,
+	      body: ""
 	    };
 	  },
 	
 	  deleteReview: function () {
-	    ApiUtil.deleteReview({ review: this.state.review });
+	    ApiUtil.deleteReview({ review: this.props.review });
+	  },
+	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	    var user_id = SessionStore.currentUser().id;
+	    var reviewParams = {
+	      review: {
+	        id: this.props.review.id,
+	        user_id: user_id,
+	        game_id: this.props.review.game_id,
+	        score: this.state.score,
+	        body: this.state.body
+	      }
+	    };
+	    ApiUtil.updateReview(reviewParams);
+	    this.closeModal();
+	  },
+	
+	  closeModal: function () {
+	    this.setState({ modalOpen: false });
+	  },
+	
+	  openModal: function () {
+	    this.setState({ modalOpen: true });
+	  },
+	
+	  updateScore: function (e) {
+	    this.setState({ score: e.currentTarget.value });
+	  },
+	
+	  updateReview: function (e) {
+	    this.setState({ body: e.currentTarget.value });
 	  },
 	
 	  render: function () {
-	    var review = this.state.review;
+	    var review = this.props.review;
+	
+	    var reviewFormStyle = {
+	      overlay: {
+	        position: 'fixed',
+	        top: 0,
+	        left: 0,
+	        right: 0,
+	        bottom: 0,
+	        backgroundColor: 'rgba(5, 5, 5, 0.75)',
+	        zIndex: 10
+	      },
+	      content: {
+	        position: 'absolute',
+	        margin: '0 auto',
+	        top: '150px',
+	        left: '0px',
+	        right: '0px',
+	        bottom: '0px',
+	        border: '1px solid #ccc',
+	        padding: '20px',
+	        backgroundColor: '#eee',
+	        height: '320px',
+	        width: '650px',
+	        zIndex: 11
+	      }
+	    };
 	
 	    if (review === []) {
 	      return React.createElement('div', null);
 	    }
 	    return React.createElement(
-	      'ul',
-	      { className: 'review-box' },
-	      React.createElement(
-	        'li',
-	        null,
-	        'Review Score: ',
-	        review.score
-	      ),
-	      React.createElement(
-	        'li',
-	        null,
-	        'Game ID: ',
-	        review.game_id
-	      ),
-	      React.createElement(
-	        'li',
-	        null,
-	        'Review: ',
-	        review.body
-	      ),
-	      React.createElement(
-	        'li',
-	        null,
-	        React.createElement(EditReviewLink, { reviewId: review.id })
-	      ),
+	      'div',
+	      null,
 	      React.createElement(
 	        'button',
-	        { className: 'submit-button', onClick: this.deleteReview },
-	        'Delete Review'
+	        { className: 'submit-button', onClick: this.openModal },
+	        'openme'
+	      ),
+	      React.createElement(
+	        Modal,
+	        {
+	          isOpen: this.state.modalOpen,
+	          shouldCloseOnOverlayClick: false,
+	          onRequestClose: this.closeModal,
+	          style: reviewFormStyle },
+	        React.createElement(
+	          'form',
+	          { className: 'add-review-box' },
+	          React.createElement(
+	            'h2',
+	            null,
+	            'Edit your review!'
+	          ),
+	          React.createElement(
+	            'label',
+	            { className: 'input-text', htmlFor: 'score' },
+	            'Score'
+	          ),
+	          React.createElement(
+	            'ul',
+	            { className: 'score-choices' },
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement(
+	                'label',
+	                null,
+	                '1'
+	              ),
+	              React.createElement('input', { type: 'radio', value: '1', className: 'review-score', name: 'score',
+	                onChange: this.updateScore })
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement(
+	                'label',
+	                null,
+	                '2'
+	              ),
+	              React.createElement('input', { type: 'radio', value: '2', className: 'review-score', name: 'score',
+	                onChange: this.updateScore })
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement(
+	                'label',
+	                null,
+	                '3'
+	              ),
+	              React.createElement('input', { type: 'radio', value: '3', className: 'review-score', name: 'score',
+	                onChange: this.updateScore })
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement(
+	                'label',
+	                null,
+	                '4'
+	              ),
+	              React.createElement('input', { type: 'radio', value: '4', className: 'review-score', name: 'score',
+	                onChange: this.updateScore })
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement(
+	                'label',
+	                null,
+	                '5'
+	              ),
+	              React.createElement('input', { type: 'radio', value: '5', className: 'review-score', name: 'score',
+	                onChange: this.updateScore })
+	            )
+	          ),
+	          React.createElement('textarea', { className: 'add-review-textarea', placeholder: 'Enter your awwwwwsome review here!',
+	            onChange: this.updateReview, defaultValue: this.props.review.body }),
+	          React.createElement(
+	            'button',
+	            { onClick: this.handleSubmit, className: 'submit-button' },
+	            'Submit your updated review'
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'ul',
+	        { className: 'review-box' },
+	        React.createElement(
+	          'li',
+	          null,
+	          'Review Score: ',
+	          review.score
+	        ),
+	        React.createElement(
+	          'li',
+	          null,
+	          'Game ID: ',
+	          review.game_id
+	        ),
+	        React.createElement(
+	          'li',
+	          null,
+	          'Review: ',
+	          review.body
+	        ),
+	        React.createElement(
+	          'button',
+	          { className: 'submit-button', onClick: this.editReview },
+	          'Edit Review'
+	        ),
+	        React.createElement(
+	          'button',
+	          { className: 'submit-button', onClick: this.deleteReview },
+	          'Delete Review'
+	        )
 	      )
 	    );
 	  }
@@ -35039,7 +35198,6 @@
 	  },
 	
 	  componentWillUnmount: function () {
-	    ApiUtil.fetchUserReviews({ review: { user_id: SessionStore.currentUser().id } });
 	    this.reviewListener.remove();
 	  },
 	
@@ -35057,6 +35215,7 @@
 	    };
 	
 	    ApiUtil.updateReview(reviewParams);
+	    ApiUtil.fetchUserReviews({ review: { user_id: SessionStore.currentUser().id } });
 	    this.goToCurrentUserHomePage();
 	  },
 	  //ASK ABOUT MOUNT UNMOUNT LEEN

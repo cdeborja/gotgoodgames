@@ -34,12 +34,12 @@ var ReviewForm = React.createClass({
     }
   },
 
-  editReview: function (review) {
-    this.setState({ modalOpen: true,
-                    body: review.body,
-                    score: review.score
-    });
-  },
+  // editReview: function (review) {
+  //   this.setState({ modalOpen: true,
+  //                   body: review.body,
+  //                   score: review.score
+  //   });
+  // },
 
   closeModal: function(){
     this.setState({ modalOpen: false });

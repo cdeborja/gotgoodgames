@@ -10,6 +10,7 @@ var resetReviews = function (reviews) {
   reviews.forEach(function (review) {
     _reviews[review.id] = review;
   });
+
 };
 
 var resetReview = function (review) {

@@ -107,7 +107,6 @@ module.exports = {
       data: params,
       success: function (reviews) {
         ReviewActions.reviewUpdated(reviews);
-
       },
       error: function() {
         console.log("could not update review");
