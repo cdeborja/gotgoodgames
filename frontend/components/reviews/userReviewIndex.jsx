@@ -5,31 +5,37 @@ var EditReviewLink = require('./editReviewLink');
 var Modal = require('react-modal');
 var ApiUtil = require('../../util/apiUtil');
 
-
-
 module.exports = React.createClass({
+  contextTypes: {
+     router: React.PropTypes.object.isRequired
+   },
+
   getInitialState: function () {
     return {
       modalOpen: false,
       score: null,
       body: "",
+      title: ""
     };
   },
 
-
   deleteReview: function () {
-    ApiUtil.deleteReview({review: this.props.review});
+    ApiUtil.deleteReview({
+      review: this.props.review,
+
+      });
   },
 
   handleSubmit: function(e) {
-    e.preventDefault();
     var user_id = SessionStore.currentUser().id;
+    e.preventDefault();
     var reviewParams = {
       review: {
         id: this.props.review.id,
         user_id: user_id,
         score: this.state.score,
         body: this.state.body,
+        title: this.state.title
       }
     };
     ApiUtil.updateReview(reviewParams);
@@ -50,6 +56,14 @@ module.exports = React.createClass({
 
   updateReview: function (e) {
     this.setState({ body: e.currentTarget.value});
+  },
+
+  updateTitle: function (e) {
+    this.setState({ title: e.currentTarget.value});
+  },
+
+  goToGame: function () {
+    this.context.router.push('/games/' + this.props.review.game.id);
   },
 
   render: function () {
@@ -75,7 +89,7 @@ module.exports = React.createClass({
         border          : '1px solid #ccc',
         padding         : '20px',
         backgroundColor : '#eee',
-        height          : '320px',
+        height          : '350px',
         width           : '650px',
         zIndex         : 11
       }
@@ -85,7 +99,6 @@ module.exports = React.createClass({
     if (review === []) { return (<div></div>); }
     return(
       <div>
-      <button className="submit-button" onClick={this.openModal}>openme</button>
 
       <Modal
         isOpen={this.state.modalOpen}
@@ -95,6 +108,12 @@ module.exports = React.createClass({
 
         <form className="add-review-box">
           <h2>Edit your review!</h2>
+          <label className="input-text">
+            Title
+          </label>
+
+          <input defaultValue={this.props.review.title} onChange={this.updateTitle} type="text">
+          </input>
           <label className="input-text" htmlFor="score">
             Score
           </label>
@@ -136,18 +155,18 @@ module.exports = React.createClass({
       </Modal>
 
         <ul className="user-review group">
-          <div className="game-review-image group">
-            <img src="http://rs306.pbsrc.com/albums/nn262/cuteshiek101/Icons/978287y6kuaab63k.gif~c200" />
+          <div onClick={this.goToGame} className="game-review-image group">
+            <img src={review.game.image_url} />
             <p>{review.game.title}</p>
           </div>
           <div className="game-review-comment group">
-            <h3>Title</h3>
+            <h3>{review.title}</h3>
             <p>{review.score}/5</p>
             <span>{review.body}</span>
           </div>
           <div className="edit-menu group">
-            <button>EDIT</button>
-            <button>DELETE</button>
+            <button onClick={this.openModal}>EDIT</button>
+            <button onClick={this.deleteReview}>DELETE</button>
           </div>
         </ul>
 

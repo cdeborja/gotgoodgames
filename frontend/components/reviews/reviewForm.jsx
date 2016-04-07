@@ -8,6 +8,7 @@ var ReactSimpleAlert = require('react-simple-alert');
 var ReviewForm = React.createClass({
   getInitialState: function(){
     return({ modalOpen: false,
+             title: "",
              body: "",
              score: null,
              userReview: this.props.userReview,
@@ -34,13 +35,6 @@ var ReviewForm = React.createClass({
     }
   },
 
-  // editReview: function (review) {
-  //   this.setState({ modalOpen: true,
-  //                   body: review.body,
-  //                   score: review.score
-  //   });
-  // },
-
   closeModal: function(){
     this.setState({ modalOpen: false });
   },
@@ -59,6 +53,7 @@ var ReviewForm = React.createClass({
         game_id: this.props.game.id,
         score: this.state.score,
         body: this.state.body,
+        title: this.state.title
       }
     };
     ApiUtil.createReview(reviewParams);
@@ -71,6 +66,10 @@ var ReviewForm = React.createClass({
 
   updateReview: function (e) {
     this.setState({ body: e.currentTarget.value});
+  },
+
+  updateTitle: function (e) {
+    this.setState({ title: e.currentTarget.value});
   },
   /*need to figure out how to create  branching path for creating a new review and
   editing a post if the review has already been enter */
@@ -127,6 +126,12 @@ var ReviewForm = React.createClass({
 
         <form className="add-review-box">
           <h2>Create your review!</h2>
+          <label className="input-text">
+            Title
+          </label>
+
+          <input value={this.state.title} onChange={this.updateTitle} type="text">
+          </input>
           <label className="input-text" htmlFor="score">
             Score
           </label>

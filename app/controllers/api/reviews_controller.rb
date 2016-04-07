@@ -45,13 +45,13 @@ class Api::ReviewsController < ApplicationController
   def destroy
     review = Review.find(params[:id])
     review.destroy
-    reviews = User.find(review_params[:user_id]).reviews
-    render json: reviews
+    @reviews = User.find(review.user_id).reviews
+    render :index
   end
 
   private
 
   def review_params
-    params.require(:review).permit(:user_id, :game_id, :score, :body)
+    params.require(:review).permit(:user_id, :game_id, :score, :body, :title)
   end
 end

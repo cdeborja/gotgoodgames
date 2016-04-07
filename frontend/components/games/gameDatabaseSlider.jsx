@@ -7,7 +7,6 @@ var GameDatabaseSlider = React.createClass({
    },
 
   showDetail: function (e) {
-
     this.context.router.push('/games/' + e.target.id);
   },
 

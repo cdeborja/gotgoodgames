@@ -31148,7 +31148,6 @@
 	  },
 	
 	  showDetail: function (e) {
-	
 	    this.context.router.push('/games/' + e.target.id);
 	  },
 	
@@ -36562,6 +36561,7 @@
 	
 	  getInitialState: function () {
 	    return { modalOpen: false,
+	      title: "",
 	      body: "",
 	      score: null,
 	      userReview: this.props.userReview,
@@ -36588,13 +36588,6 @@
 	    }
 	  },
 	
-	  // editReview: function (review) {
-	  //   this.setState({ modalOpen: true,
-	  //                   body: review.body,
-	  //                   score: review.score
-	  //   });
-	  // },
-	
 	  closeModal: function () {
 	    this.setState({ modalOpen: false });
 	  },
@@ -36612,7 +36605,8 @@
 	        user_id: user_id,
 	        game_id: this.props.game.id,
 	        score: this.state.score,
-	        body: this.state.body
+	        body: this.state.body,
+	        title: this.state.title
 	      }
 	    };
 	    ApiUtil.createReview(reviewParams);
@@ -36625,6 +36619,10 @@
 	
 	  updateReview: function (e) {
 	    this.setState({ body: e.currentTarget.value });
+	  },
+	
+	  updateTitle: function (e) {
+	    this.setState({ title: e.currentTarget.value });
 	  },
 	  /*need to figure out how to create  branching path for creating a new review and
 	  editing a post if the review has already been enter */
@@ -36691,6 +36689,12 @@
 	            null,
 	            'Create your review!'
 	          ),
+	          React.createElement(
+	            'label',
+	            { className: 'input-text' },
+	            'Title'
+	          ),
+	          React.createElement('input', { value: this.state.title, onChange: this.updateTitle, type: 'text' }),
 	          React.createElement(
 	            'label',
 	            { className: 'input-text', htmlFor: 'score' },
@@ -37119,27 +37123,36 @@
 	module.exports = React.createClass({
 	  displayName: 'exports',
 	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
 	  getInitialState: function () {
 	    return {
 	      modalOpen: false,
 	      score: null,
-	      body: ""
+	      body: "",
+	      title: ""
 	    };
 	  },
 	
 	  deleteReview: function () {
-	    ApiUtil.deleteReview({ review: this.props.review });
+	    ApiUtil.deleteReview({
+	      review: this.props.review
+	
+	    });
 	  },
 	
 	  handleSubmit: function (e) {
-	    e.preventDefault();
 	    var user_id = SessionStore.currentUser().id;
+	    e.preventDefault();
 	    var reviewParams = {
 	      review: {
 	        id: this.props.review.id,
 	        user_id: user_id,
 	        score: this.state.score,
-	        body: this.state.body
+	        body: this.state.body,
+	        title: this.state.title
 	      }
 	    };
 	    ApiUtil.updateReview(reviewParams);
@@ -37160,6 +37173,14 @@
 	
 	  updateReview: function (e) {
 	    this.setState({ body: e.currentTarget.value });
+	  },
+	
+	  updateTitle: function (e) {
+	    this.setState({ title: e.currentTarget.value });
+	  },
+	
+	  goToGame: function () {
+	    this.context.router.push('/games/' + this.props.review.game.id);
 	  },
 	
 	  render: function () {
@@ -37185,7 +37206,7 @@
 	        border: '1px solid #ccc',
 	        padding: '20px',
 	        backgroundColor: '#eee',
-	        height: '320px',
+	        height: '350px',
 	        width: '650px',
 	        zIndex: 11
 	      }
@@ -37197,11 +37218,6 @@
 	    return React.createElement(
 	      'div',
 	      null,
-	      React.createElement(
-	        'button',
-	        { className: 'submit-button', onClick: this.openModal },
-	        'openme'
-	      ),
 	      React.createElement(
 	        Modal,
 	        {
@@ -37217,6 +37233,12 @@
 	            null,
 	            'Edit your review!'
 	          ),
+	          React.createElement(
+	            'label',
+	            { className: 'input-text' },
+	            'Title'
+	          ),
+	          React.createElement('input', { defaultValue: this.props.review.title, onChange: this.updateTitle, type: 'text' }),
 	          React.createElement(
 	            'label',
 	            { className: 'input-text', htmlFor: 'score' },
@@ -37295,8 +37317,8 @@
 	        { className: 'user-review group' },
 	        React.createElement(
 	          'div',
-	          { className: 'game-review-image group' },
-	          React.createElement('img', { src: 'http://rs306.pbsrc.com/albums/nn262/cuteshiek101/Icons/978287y6kuaab63k.gif~c200' }),
+	          { onClick: this.goToGame, className: 'game-review-image group' },
+	          React.createElement('img', { src: review.game.image_url }),
 	          React.createElement(
 	            'p',
 	            null,
@@ -37309,7 +37331,7 @@
 	          React.createElement(
 	            'h3',
 	            null,
-	            'Title'
+	            review.title
 	          ),
 	          React.createElement(
 	            'p',
@@ -37328,12 +37350,12 @@
 	          { className: 'edit-menu group' },
 	          React.createElement(
 	            'button',
-	            null,
+	            { onClick: this.openModal },
 	            'EDIT'
 	          ),
 	          React.createElement(
 	            'button',
-	            null,
+	            { onClick: this.deleteReview },
 	            'DELETE'
 	          )
 	        )
