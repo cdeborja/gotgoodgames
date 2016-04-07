@@ -22,9 +22,9 @@ class Api::ReviewsController < ApplicationController
   end
 
   def index
-    reviews = Review.select("*").where("user_id = ?", params[:review]["user_id"])
-    if reviews
-      render json: reviews
+    @reviews = Review.where("user_id = ?", params[:user_id])
+    if @reviews
+      render :index
     else
       errors
     end
@@ -33,12 +33,12 @@ class Api::ReviewsController < ApplicationController
   def edit
 
   end
-  #ASK ABOUT THIS, HOW TO RERENDER REVIEWS???
+
   def update
     review = Review.find(params[:id])
     if review.update(review_params)
-      reviews = User.find(review.user_id).reviews
-      render json: reviews
+      @reviews = User.find(review.user_id).reviews
+      render :index
     end
   end
 

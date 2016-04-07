@@ -8,7 +8,8 @@
 
 User.destroy_all
 user1 = User.create!(username: "guest",
-        password: "password")
+        password: "password",
+        description: "Hello, it's me I was wondering if after all these years you'd like to meet To go over everything They say that time's supposed to heal ya But I ain't done much healing... ")
 user2 = User.create!(username: "banana",
         password: "password")
 user3 = User.create!(username: "poatate",

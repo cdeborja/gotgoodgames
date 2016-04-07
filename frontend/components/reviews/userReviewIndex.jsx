@@ -1,5 +1,6 @@
 var React = require('react');
 var SessionStore = require('../../stores/session');
+var GameStore = require('../../stores/game');
 var EditReviewLink = require('./editReviewLink');
 var Modal = require('react-modal');
 var ApiUtil = require('../../util/apiUtil');
@@ -11,9 +12,10 @@ module.exports = React.createClass({
     return {
       modalOpen: false,
       score: null,
-      body: ""
+      body: "",
     };
   },
+
 
   deleteReview: function () {
     ApiUtil.deleteReview({review: this.props.review});
@@ -26,7 +28,6 @@ module.exports = React.createClass({
       review: {
         id: this.props.review.id,
         user_id: user_id,
-        game_id: this.props.review.game_id,
         score: this.state.score,
         body: this.state.body,
       }
@@ -134,13 +135,22 @@ module.exports = React.createClass({
 
       </Modal>
 
-      <ul className="review-box">
-        <li>Review Score: {review.score}</li>
-        <li>Game ID: {review.game_id}</li>
-        <li>Review: {review.body}</li>
-        <button className="submit-button" onClick={this.editReview}>Edit Review</button>
-        <button className="submit-button" onClick={this.deleteReview}>Delete Review</button>
-      </ul>
+        <ul className="user-review group">
+          <div className="game-review-image group">
+            <img src="http://rs306.pbsrc.com/albums/nn262/cuteshiek101/Icons/978287y6kuaab63k.gif~c200" />
+            <p>{review.game.title}</p>
+          </div>
+          <div className="game-review-comment group">
+            <h3>Title</h3>
+            <p>{review.score}/5</p>
+            <span>{review.body}</span>
+          </div>
+          <div className="edit-menu group">
+            <button>EDIT</button>
+            <button>DELETE</button>
+          </div>
+        </ul>
+
       </div>
     );
   }

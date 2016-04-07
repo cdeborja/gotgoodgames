@@ -75,7 +75,7 @@ module.exports = {
   fetchUserReviews: function(user_id) {
     $.ajax({
       type: "GET",
-      url: "/api/reviews",
+      url: "/api/users/"+ user_id + "/reviews",
       dataType: "json",
       data: user_id,
       success: function (reviews) {

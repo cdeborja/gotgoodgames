@@ -22029,7 +22029,7 @@
 	  fetchUserReviews: function (user_id) {
 	    $.ajax({
 	      type: "GET",
-	      url: "/api/reviews",
+	      url: "/api/users/" + user_id + "/reviews",
 	      dataType: "json",
 	      data: user_id,
 	      success: function (reviews) {
@@ -37018,7 +37018,7 @@
 	
 	  componentDidMount: function () {
 	    this.reviewListener = ReviewStore.addListener(this._onChange);
-	    ApiUtil.fetchUserReviews({ review: { user_id: this.state.user.id } });
+	    ApiUtil.fetchUserReviews(this.state.user.id);
 	  },
 	
 	  componentWillUnmount: function () {
@@ -37039,6 +37039,7 @@
 	    }).reverse();
 	
 	    var memberSince = this.state.user.created_at.slice(0, 10).split("-").join('/');
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'content-container group' },
@@ -37059,12 +37060,13 @@
 	            React.createElement(
 	              'h3',
 	              null,
-	              'The Superstar'
+	              'The "Some"'
 	            ),
 	            React.createElement(
 	              'li',
 	              null,
-	              'Reviews: 200'
+	              'Reviews: ',
+	              this.state.reviews.length
 	            )
 	          )
 	        ),
@@ -37074,12 +37076,12 @@
 	          React.createElement(
 	            'h1',
 	            null,
-	            'Pikachu'
+	            this.state.user.username
 	          ),
 	          React.createElement(
 	            'p',
 	            null,
-	            'Hello, it\'s me I was wondering if after all these years you\'d like to meet To go over everything They say that time\'s supposed to heal ya But I ain\'t done much healing'
+	            this.state.user.description
 	          ),
 	          React.createElement(
 	            'button',
@@ -37096,147 +37098,7 @@
 	          null,
 	          'Pikachu\'s Recent Activity!'
 	        ),
-	        React.createElement(
-	          'ul',
-	          { className: 'user-review group' },
-	          React.createElement(
-	            'div',
-	            { className: 'game-review-image group' },
-	            React.createElement('img', { src: 'http://rs306.pbsrc.com/albums/nn262/cuteshiek101/Icons/978287y6kuaab63k.gif~c200' }),
-	            React.createElement(
-	              'p',
-	              null,
-	              'GAMETITLE'
-	            )
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'game-review-comment group' },
-	            React.createElement(
-	              'h3',
-	              null,
-	              'TITLE'
-	            ),
-	            React.createElement(
-	              'p',
-	              null,
-	              'Score'
-	            ),
-	            React.createElement(
-	              'span',
-	              null,
-	              'COMMENTBOX'
-	            )
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'edit-menu group' },
-	            React.createElement(
-	              'button',
-	              null,
-	              'EDIT'
-	            ),
-	            React.createElement(
-	              'button',
-	              null,
-	              'DELETE'
-	            )
-	          )
-	        ),
-	        React.createElement(
-	          'ul',
-	          { className: 'user-review group' },
-	          React.createElement(
-	            'div',
-	            { className: 'game-review-image group' },
-	            React.createElement('img', { src: 'http://rs306.pbsrc.com/albums/nn262/cuteshiek101/Icons/978287y6kuaab63k.gif~c200' }),
-	            React.createElement(
-	              'p',
-	              null,
-	              'GAMETITLE'
-	            )
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'game-review-comment group' },
-	            React.createElement(
-	              'h3',
-	              null,
-	              'TITLE'
-	            ),
-	            React.createElement(
-	              'p',
-	              null,
-	              'Score'
-	            ),
-	            React.createElement(
-	              'span',
-	              null,
-	              'COMMENTBOX'
-	            )
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'edit-menu group' },
-	            React.createElement(
-	              'button',
-	              null,
-	              'EDIT'
-	            ),
-	            React.createElement(
-	              'button',
-	              null,
-	              'DELETE'
-	            )
-	          )
-	        ),
-	        React.createElement(
-	          'ul',
-	          { className: 'user-review group' },
-	          React.createElement(
-	            'div',
-	            { className: 'game-review-image group' },
-	            React.createElement('img', { src: 'http://rs306.pbsrc.com/albums/nn262/cuteshiek101/Icons/978287y6kuaab63k.gif~c200' }),
-	            React.createElement(
-	              'p',
-	              null,
-	              'GAMETITLE'
-	            )
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'game-review-comment group' },
-	            React.createElement(
-	              'h3',
-	              null,
-	              'TITLE'
-	            ),
-	            React.createElement(
-	              'p',
-	              null,
-	              'Score'
-	            ),
-	            React.createElement(
-	              'span',
-	              null,
-	              'COMMENTBOX'
-	            )
-	          ),
-	          React.createElement(
-	            'div',
-	            { className: 'edit-menu group' },
-	            React.createElement(
-	              'button',
-	              null,
-	              'EDIT'
-	            ),
-	            React.createElement(
-	              'button',
-	              null,
-	              'DELETE'
-	            )
-	          )
-	        )
+	        userReviews
 	      )
 	    );
 	  }
@@ -37249,6 +37111,7 @@
 
 	var React = __webpack_require__(1);
 	var SessionStore = __webpack_require__(188);
+	var GameStore = __webpack_require__(232);
 	var EditReviewLink = __webpack_require__(305);
 	var Modal = __webpack_require__(159);
 	var ApiUtil = __webpack_require__(181);
@@ -37275,7 +37138,6 @@
 	      review: {
 	        id: this.props.review.id,
 	        user_id: user_id,
-	        game_id: this.props.review.game_id,
 	        score: this.state.score,
 	        body: this.state.body
 	      }
@@ -37430,34 +37292,50 @@
 	      ),
 	      React.createElement(
 	        'ul',
-	        { className: 'review-box' },
+	        { className: 'user-review group' },
 	        React.createElement(
-	          'li',
-	          null,
-	          'Review Score: ',
-	          review.score
+	          'div',
+	          { className: 'game-review-image group' },
+	          React.createElement('img', { src: 'http://rs306.pbsrc.com/albums/nn262/cuteshiek101/Icons/978287y6kuaab63k.gif~c200' }),
+	          React.createElement(
+	            'p',
+	            null,
+	            review.game.title
+	          )
 	        ),
 	        React.createElement(
-	          'li',
-	          null,
-	          'Game ID: ',
-	          review.game_id
+	          'div',
+	          { className: 'game-review-comment group' },
+	          React.createElement(
+	            'h3',
+	            null,
+	            'Title'
+	          ),
+	          React.createElement(
+	            'p',
+	            null,
+	            review.score,
+	            '/5'
+	          ),
+	          React.createElement(
+	            'span',
+	            null,
+	            review.body
+	          )
 	        ),
 	        React.createElement(
-	          'li',
-	          null,
-	          'Review: ',
-	          review.body
-	        ),
-	        React.createElement(
-	          'button',
-	          { className: 'submit-button', onClick: this.editReview },
-	          'Edit Review'
-	        ),
-	        React.createElement(
-	          'button',
-	          { className: 'submit-button', onClick: this.deleteReview },
-	          'Delete Review'
+	          'div',
+	          { className: 'edit-menu group' },
+	          React.createElement(
+	            'button',
+	            null,
+	            'EDIT'
+	          ),
+	          React.createElement(
+	            'button',
+	            null,
+	            'DELETE'
+	          )
 	        )
 	      )
 	    );
