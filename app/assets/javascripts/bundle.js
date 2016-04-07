@@ -36659,7 +36659,7 @@
 	        border: '1px solid #ccc',
 	        padding: '20px',
 	        backgroundColor: '#eee',
-	        height: '320px',
+	        height: '350px',
 	        width: '650px',
 	        zIndex: 11
 	      }
