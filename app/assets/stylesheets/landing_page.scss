@@ -6,16 +6,7 @@
 .content-feed {
   float: left;
   width: 400px;
-}
-
-.content-game-lists {
-  float: right;
-  width: 550px;
-  background: rebeccapurple;
-}
-
-.content-feed {
-  padding: 10px 20px;
+  padding: 10px 10px;
 }
 
 .feed-buttons {
@@ -90,4 +81,38 @@
   float: left;
   display: block;
   margin-top: 5px;
+}
+
+.content-game-lists {
+  float: right;
+  margin-top: 18px;
+  width: 560px;
+  padding: 10px 10px;
+}
+
+.database-slider > h2 {
+  text-align: center;
+  font-weight: bold;
+  font-size: 36px;
+  color: white;
+  border-bottom: 1px solid #fff;
+}
+
+.game-preview {
+  color: #fff;
+}
+
+.game-preview > img {
+  margin: 10px 0;
+  margin-left: 25px;
+  width: 140px;
+  text-shadow: 0 0 0.2em black, 0 0 0.2em #ff3, 0 0 0.2em #ff3;
+}
+
+.game-preview > li {
+  text-align: center;
+}
+
+.test-background {
+  cursor: pointer;
 }

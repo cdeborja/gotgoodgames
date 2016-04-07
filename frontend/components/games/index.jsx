@@ -1,9 +1,11 @@
 var React = require('react');
 var ApiUtil = require('../../util/apiUtil');
 var AppDispatcher = require('../../dispatcher/dispatcher');
+var Slider = require('react-slick');
 
 var GameStore = require('../../stores/game');
-var GameIndexItem = require('./indexItem.jsx');
+
+var GameDatabaseSlider = require('./gameDatabaseSlider');
 
 module.exports = React.createClass({
   getInitialState: function () {
@@ -73,12 +75,7 @@ module.exports = React.createClass({
           </ul>
         </div>
         <div className="content-game-lists">
-
-          <div className="your-class">
-            <div>your content</div>
-            <div>your content</div>
-            <div>your content</div>
-          </div>
+          <GameDatabaseSlider games={this.state.games}/>
         </div>
       </div>
     );
