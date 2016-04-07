@@ -1,6 +1,5 @@
 var React = require('react');
 var Slider = require('react-slick');
-var GameIndexItem = require('./indexItem.jsx');
 
 var GameDatabaseSlider = React.createClass({
   contextTypes: {
@@ -25,11 +24,12 @@ var GameDatabaseSlider = React.createClass({
     };
 
     games = this.props.games.map(function (game, idx) {
+      var color = idx % 2 === 0 ? " blue" : " red";
       return (
         <div key={idx}>
           <ul className="game-preview">
-            <img onClick={this.showDetail} id={game.id} src={game.image_url}/>
-            <li className="test-background">{game.title}</li>
+            <img className={color} onClick={this.showDetail} id={game.id} src={game.image_url}/>
+            <li>{game.title}</li>
             <li>Average Rating</li>
           </ul>
         </div>

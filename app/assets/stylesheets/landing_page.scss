@@ -17,11 +17,13 @@
 .feed-buttons > ul > li {
   float: left;
   padding: 20px;
+  border-bottom: 3px solid transparent;
+  transition: border 500ms;
 }
 
 .feed-buttons > ul > li:hover {
   cursor: pointer;
-  border-bottom: 1px solid #ff3;
+  border-bottom: 3px solid #ff3;
 }
 
 .feed-display {
@@ -56,6 +58,7 @@
   font-weight: bold;
   margin-bottom: 5px;
   font-size: 20px;
+  
 }
 
 .recent-activity > img {
@@ -104,15 +107,29 @@
 
 .game-preview > img {
   margin: 10px 0;
-  margin-left: 25px;
+  margin-left: 20px;
   width: 140px;
-  text-shadow: 0 0 0.2em black, 0 0 0.2em #ff3, 0 0 0.2em #ff3;
+  cursor: pointer;
+  border: 7px transparent solid;
+  transition: border 500ms;
+  border-radius: 5px;
 }
+
+.blue:hover {
+  border: 7px #53b9ea solid;
+}
+
+.red:hover {
+  border: 7px #d23f0f solid;
+}
+// .game-preview > img:hover {
+//   border: 7px #53b9ea solid;
+// }
+//
+// .game-preview > img:nth-child(2n+1):hover {
+//   border: 7px white solid;
+// }
 
 .game-preview > li {
   text-align: center;
-}
-
-.test-background {
-  cursor: pointer;
 }

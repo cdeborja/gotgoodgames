@@ -99,26 +99,34 @@ game15 = Game.create!(title: "Super Dodge Ball Advance",
 
 Review.destroy_all
 review1 = Review.create!(user_id: user4.id,
-        game_id: game1.id, score: 2,
-        body: "I couldn't find Mario! Help!")
+        game_id: game1.id, score: 1,
+        title: "I couldn't find Mario! Help!",
+        body: "Afte playing this game for so many days, I couldn't find him. The visuals were poor and I wouldn't play this again! UGH!")
 review2 = Review.create!(user_id: user4.id,
-        game_id: game2.id, score: 3,
-        body: "I couldn't find Zelda! Help!")
+        game_id: game2.id, score: 1,
+        title: "I couldn't find Zelda! Help!",
+        body: "This game sucked! I never want to play it again!")
 review3 = Review.create!(user_id: user4.id,
         game_id: game3.id, score: 1,
-        body: "I couldn't find Senpai! Help!")
+        title: "I couldn't find Senpai! Help!",
+        body: "HE NEVER NOTICED ME! PASSSS")
 review4 = Review.create!(user_id: user4.id,
-        game_id: game4.id, score: 2,
-        body: "I couldn't find the straight block! Help!")
+        game_id: game4.id, score: 1,
+        title: "I couldn't find the straight block! Help!",
+        body: "I made my board so high up, but a stright block never appeared! There's a bug in the system, I'm sure!")
 review5 = Review.create!(user_id: user2.id,
         game_id: game1.id, score: 5,
-        body: "Found him, so easy!")
+        title: "Found him, so easy!",
+        body: "This was a great game and so easy!")
 review6 = Review.create!(user_id: user2.id,
         game_id: game2.id, score: 5,
-        body: "I love Zelda, great game!")
+        title: "I love Zelda, great game!",
+        body: "Definitely would play it again!")
 review7 = Review.create!(user_id: user3.id,
         game_id: game2.id, score: 1,
-        body: "I prefer Sega..")
+        title: "I prefer Sega..",
+        body: "Don't play this game, go play games like Sonic Adventure 2!")
 review8 = Review.create!(user_id: user3.id,
         game_id: game3.id, score: 5,
-        body: "He finally noticed me! YAY!")
+        title: "He finally noticed me! YAY!",
+        body: "Played this for days on days and months and months, but after 4 years, he FINALLY noticed me! <3 GREATTT GAME!")

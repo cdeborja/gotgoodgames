@@ -18,7 +18,7 @@
 
 /* --- RESET --- */
 
-html, body, header, nav, h1, a, ul, li,
+html, body, header, nav, h1, a, ul, li, h3,
 strong, main, section, img, div, h2, p,
 form, fieldset, label, input, textarea,
 button, article, footer, small {
@@ -82,7 +82,7 @@ img {
 
 .logo-box {
   float: left;
-  padding: 10px 10px;
+  padding: 10px 10px 10px 0;
 }
 
 .logo-box:hover {
@@ -93,7 +93,7 @@ img {
   float: left;
   font-weight: 100;
   font-size: 32px;
-  margin-left: 14px;
+
   color: #eee;
   letter-spacing: -2px;
 }
@@ -138,7 +138,7 @@ img {
   float: left;
   padding: 20px 10px;
   color: #fff;
-  transition: background-color 1s, transform 1s,font 1s;
+  transition: background-color 500ms, transform 500ms, color 500ms;
 }
 
 .navigation-links > li:hover {
@@ -150,6 +150,7 @@ img {
 .search-box {
   float: left;
   margin-top: 10px;
+  margin-left: 5px;
   width: 260px;
   height: 20px;
   background: white;
