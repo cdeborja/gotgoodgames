@@ -19,6 +19,7 @@
     "react-modal": "^0.6.1",
     "react-router": "2.0.1",
     "react-simple-alert": "0.0.2",
+    "react-slick": "^0.11.1",
     "webpack": "^1.12.4"
   },
   "devDependencies": {},
