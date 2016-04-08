@@ -51,7 +51,7 @@ module.exports = React.createClass({
       <div className="user-information-box group">
         <div className="user-information">
           <div className="user-picture">
-            <img src="http://vignette3.wikia.nocookie.net/pokemon/images/1/16/025Pikachu_OS_anime_10.png/revision/20150102074354" />
+            <img url={this.state.user.picture}/>
           </div>
           <ul className="stat-box">
             <h3>"Newbie"</h3>

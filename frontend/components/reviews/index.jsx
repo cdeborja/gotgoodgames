@@ -15,7 +15,7 @@ module.exports = React.createClass({
     return(
       <ul className="user-review group">
         <div onClick={this.goToUserPage} className="game-review-image group">
-          <img src="http://img13.deviantart.net/8e36/i/2006/250/1/3/the_last_airbender_avatar_by_jovimia.gif" />
+          <img src={this.props.review.user.picture} />
           <p>{this.props.review.user.username}</p>
         </div>
         <div className="game-review-comment group">

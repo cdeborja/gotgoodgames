@@ -45,6 +45,7 @@ module.exports = React.createClass({
 
   render: function () {
     var button, welcomeMessage, homepage, signUpButton;
+    
     if (this.state.currentUser) {
       button = <li onClick={ApiUtil.logout}>Logout</li>;
       welcomeMessage = <h2>Welcome, {this.state.currentUser.username}</h2>;

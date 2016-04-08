@@ -23,11 +23,14 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function () {
+    this.userListener = UserStore.addListener(this._onChange);
     this.reviewListener = ReviewStore.addListener(this._onChange);
     ApiUtil.fetchUser(this.props.params.userId);
+    ApiUtil.fetchUserReviews(this.props.params.userId);
   },
 
   componentWillUnmount: function () {
+    this.userListener.remove();
     this.reviewListener.remove();
   },
 
@@ -45,12 +48,13 @@ module.exports = React.createClass({
     }).reverse();
 
     var memberSince = this.state.user.created_at.slice(0,10).split("-").join('/');
+
     return(
     <div className="content-container group">
       <div className="user-information-box group">
         <div className="user-information">
           <div className="user-picture">
-            <img src="http://vignette3.wikia.nocookie.net/pokemon/images/1/16/025Pikachu_OS_anime_10.png/revision/20150102074354" />
+            <img src={this.state.user.picture} />
           </div>
           <ul className="stat-box">
             <h3>"Newbie"</h3>

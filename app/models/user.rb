@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   validates :username, :password_digest, :session_token, presence: true, uniqueness: true
   validates :password, length:{minimum: 6, allow_nil: true}
 
-  has_attached_file :picture, default_url: "http://s3.amazonaws.com/gotgoodgames-dev/users/pictures/000/000/001/original/ghost-outline.png?1460036688"
+  has_attached_file :picture, default_url: "https://upload.wikimedia.org/wikipedia/commons/6/64/Banana_Peel.JPG"
   validates_attachment_content_type :picture, content_type: /\Aimage\/.*\Z/
 
   include PgSearch

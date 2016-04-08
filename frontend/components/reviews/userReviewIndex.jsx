@@ -96,8 +96,18 @@ module.exports = React.createClass({
       }
     };
 
-
     if (review === []) { return (<div></div>); }
+
+    var buttons;
+
+    if (SessionStore.currentUser().id === this.props.review.user_id) {
+      buttons = (
+          <div className="edit-menu group">
+            <button onClick={this.openModal}>EDIT</button>
+            <button onClick={this.deleteReview}>DELETE</button>
+          </div>
+      );
+    }
 
     return(
       <div>
@@ -166,10 +176,7 @@ module.exports = React.createClass({
             <p>{review.score}/5</p>
             <span>{review.body}</span>
           </div>
-          <div className="edit-menu group">
-            <button onClick={this.openModal}>EDIT</button>
-            <button onClick={this.deleteReview}>DELETE</button>
-          </div>
+          {buttons}
         </ul>
 
       </div>
