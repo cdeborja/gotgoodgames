@@ -36,23 +36,33 @@ var LoginForm = React.createClass({
     };
     var router = this.context.router;
     this.setState(guestParams);
-    
+
     ApiUtil.login(guestParams, function() {
       router.push("/index");
 
     });
   },
 
+  goToSignUpForm: function (e) {
+    e.preventDefault();
+    this.context.router.push("/signup");
+  },
+
   render: function() {
 
-    var guestButton = <button className="guest-button" onClick={this.guestLogin}>
+    if (!this.state.currentUser) {
+      signUpButton = <button className="sign-in-button" onClick={this.goToSignUpForm}>
+      Sign Up</button>;
+    }
+
+    var guestButton = <button className="sign-in-button" onClick={this.guestLogin}>
         Guest Login</button>;
 
     return (
       <div className="sign-in-box group">
-        <h1>Please Log in</h1>
+        <h1>Please Sign In</h1>
 
-        <form className="input-box" onSubmit={this.handleSubmit}>
+        <form className="input-box">
 
           <label className="input-text" htmlFor="username">
             Username
@@ -64,7 +74,8 @@ var LoginForm = React.createClass({
           <input className="input-field-login" onChange={this.updatePassword}
           type="password" value={this.state.password}/>
 
-          <button className="submit-button">Sign In</button>
+          <button onClick={this.handleSubmit} className="sign-in-button">Sign In</button>
+          {signUpButton}
           {guestButton}
         </form>
       </div>

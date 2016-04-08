@@ -58,15 +58,16 @@
 	//Current Routes that need pages
 	var GamesIndex = __webpack_require__(180);
 	var GameDetail = __webpack_require__(291);
-	var UserHomePage = __webpack_require__(303);
-	var EditForm = __webpack_require__(306);
-	var LoginForm = __webpack_require__(307);
-	var SignUpForm = __webpack_require__(308);
-	var Search = __webpack_require__(309);
+	var UserHomePage = __webpack_require__(301);
+	var UserShowPage = __webpack_require__(306);
+	var EditForm = __webpack_require__(307);
+	var LoginForm = __webpack_require__(308);
+	var SignUpForm = __webpack_require__(309);
+	var Search = __webpack_require__(310);
 	
 	var GameStore = __webpack_require__(232);
 	var SessionStore = __webpack_require__(188);
-	var UserStore = __webpack_require__(293);
+	var UserStore = __webpack_require__(302);
 	
 	var routes = React.createElement(
 	  Route,
@@ -75,6 +76,7 @@
 	  React.createElement(Route, { path: 'index', component: GamesIndex, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'games/:gameId', component: GameDetail, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'reviews/:reviewId', component: EditForm, onEnter: _requireLoggedIn }),
+	  React.createElement(Route, { path: 'users/:userId', component: UserShowPage, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'login', component: LoginForm }),
 	  React.createElement(Route, { path: 'signup', component: SignUpForm }),
 	  React.createElement(Route, { path: 'search', component: Search, onEnter: _requireLoggedIn })
@@ -21684,10 +21686,6 @@
 	    this.context.router.push("/homepage");
 	  },
 	
-	  goToSignUpForm: function () {
-	    this.context.router.push("/signup");
-	  },
-	
 	  render: function () {
 	    var button, welcomeMessage, homepage, signUpButton;
 	    if (this.state.currentUser) {
@@ -21706,14 +21704,6 @@
 	        'li',
 	        { onClick: this.goToCurrentUserHomePage },
 	        'My Stats'
-	      );
-	    }
-	
-	    if (!this.state.currentUser) {
-	      signUpButton = React.createElement(
-	        'button',
-	        { className: 'logout-button', onClick: this.goToSignUpForm },
-	        'Sign Up'
 	      );
 	    }
 	
@@ -21771,7 +21761,6 @@
 	            React.createElement(
 	              'ul',
 	              { className: 'session-links' },
-	              signUpButton,
 	              welcomeMessage,
 	              button
 	            )
@@ -21957,10 +21946,10 @@
 	var SessionStore = __webpack_require__(188);
 	var SessionActions = __webpack_require__(207);
 	var ReviewActions = __webpack_require__(208);
+	var UserActions = __webpack_require__(312);
 	var SearchResultActions = __webpack_require__(210);
 	
 	module.exports = {
-	  // USER RELATED
 	  signUp: function (credentials) {
 	    $.ajax({
 	      type: "POST",
@@ -21997,6 +21986,20 @@
 	    });
 	  },
 	
+	  fetchUser: function (user_id) {
+	    $.ajax({
+	      type: "GET",
+	      url: "/api/users/" + user_id,
+	      dataType: "json",
+	      success: function (user) {
+	        UserActions.userReceived(user);
+	      },
+	      error: function () {
+	        console.log("couldnt get user");
+	      }
+	    });
+	  },
+	
 	  fetchCurrentUser: function (completion) {
 	    $.ajax({
 	      type: "GET",
@@ -22022,6 +22025,21 @@
 	      },
 	      error: function () {
 	        console.log("Could not create review");
+	      }
+	    });
+	  },
+	
+	  fetchAllReviewedUsers: function (game_id) {
+	    $.ajax({
+	      type: "GET",
+	      url: "/api/users",
+	      dataType: "json",
+	      data: game_id,
+	      success: function (users) {
+	        UserActions.receivedAllReviewedUsers(users);
+	      },
+	      error: function () {
+	        console.log('couldnt fetch all reviewd users');
 	      }
 	    });
 	  },
@@ -22100,7 +22118,10 @@
 	
 	  fetchSingleGame: function (id) {
 	    $.ajax({
+	      type: "GET",
 	      url: "/api/games/" + id,
+	      dataType: "json",
+	      data: id,
 	      success: function (game) {
 	        GameActions.receiveSingleGame(game);
 	      },
@@ -22512,6 +22533,7 @@
 	      break;
 	    case SessionConstants.LOGOUT:
 	      _currentUser = null;
+	      _currentUserHasBeenFetched = false;
 	      SessionStore.__emitChange();
 	      break;
 	  }
@@ -36280,15 +36302,18 @@
 	var GameStore = __webpack_require__(232);
 	var ApiUtil = __webpack_require__(181);
 	var ReviewsIndexItem = __webpack_require__(292);
-	var ReviewStore = __webpack_require__(295);
+	var ReviewStore = __webpack_require__(293);
 	var SessionStore = __webpack_require__(188);
-	var ReviewForm = __webpack_require__(296);
+	var UserStore = __webpack_require__(302);
+	var ReviewForm = __webpack_require__(294);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
 	
 	  getStateFromStore: function () {
-	    return { game: GameStore.find(parseInt(this.props.params.gameId)) };
+	    return { game: GameStore.find(parseInt(this.props.params.gameId)),
+	      users: UserStore.all()
+	    };
 	  },
 	
 	  _onChange: function () {
@@ -36305,10 +36330,13 @@
 	
 	  componentDidMount: function () {
 	    this.gameListener = GameStore.addListener(this._onChange);
+	    this.userListener = UserStore.addListener(this._onChange);
 	    ApiUtil.fetchSingleGame(parseInt(this.props.params.gameId));
+	    ApiUtil.fetchAllReviewedUsers({ game_id: this.props.params.gameId });
 	  },
 	
 	  componentWillUnmount: function () {
+	    this.userListener.remove();
 	    this.gameListener.remove();
 	  },
 	
@@ -36316,11 +36344,12 @@
 	    var game = this.state.game;
 	    var userReview = null;
 	    var averageScore = 0;
+	
 	    if (!game || !game.reviews) {
 	      return React.createElement('img', { className: 'loading-image', src: 'https://youthradio.org/innovationlab/for-teachers/images/loading.gif' });
 	    }
 	    var gameReviews = game.reviews.map(function (review, id) {
-	      return React.createElement(ReviewsIndexItem, { key: id, review: review, review_id: review.id });
+	      return React.createElement(ReviewsIndexItem, { key: id, review: review });
 	    }).reverse();
 	
 	    gameReviews.forEach(function (review) {
@@ -36338,50 +36367,54 @@
 	    }
 	    return React.createElement(
 	      'div',
-	      { className: 'game-detail-pane' },
+	      { className: 'content-container group' },
 	      React.createElement(
-	        'h2',
-	        null,
-	        'Title: ',
-	        game.title
-	      ),
-	      React.createElement('img', { src: game.image_url }),
-	      React.createElement(
-	        'ul',
-	        null,
+	        'div',
+	        { className: 'game-information-box' },
+	        React.createElement('img', { src: game.image_url }),
 	        React.createElement(
-	          'li',
-	          null,
-	          'Average Score: ',
-	          averageScore
+	          'ul',
+	          { className: 'game-details' },
+	          React.createElement(
+	            'h2',
+	            null,
+	            game.title
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            'Average Score: ',
+	            averageScore,
+	            ' out of 5'
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            'Release Date: ',
+	            game.release_date
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            'Console: ',
+	            game.console
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            'Game Description: ',
+	            game.description
+	          )
 	        ),
 	        React.createElement(
-	          'li',
+	          'div',
 	          null,
-	          'Console: ',
-	          game.console
-	        ),
-	        React.createElement(
-	          'li',
-	          null,
-	          'Release Date: ',
-	          game.release_date
-	        ),
-	        React.createElement(
-	          'li',
-	          null,
-	          'Description: ',
-	          game.description
+	          React.createElement(ReviewForm, { game: this.state.game, reviews: gameReviews, userReview: userReview })
 	        )
 	      ),
 	      React.createElement(
 	        'div',
-	        null,
-	        React.createElement(ReviewForm, { game: this.state.game, reviews: gameReviews, userReview: userReview })
-	      ),
-	      React.createElement(
-	        'ul',
-	        null,
+	        { className: 'recent-reviews-box' },
 	        gameReviews
 	      )
 	    );
@@ -36394,10 +36427,18 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var UserStore = __webpack_require__(293);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
+	
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  goToUserPage: function (e) {
+	    this.context.router.push('/users/' + this.props.review.user.id);
+	  },
 	
 	  render: function () {
 	    if (this.props.review === []) {
@@ -36405,24 +36446,36 @@
 	    }
 	    return React.createElement(
 	      'ul',
-	      { className: 'review-box' },
+	      { className: 'user-review group' },
 	      React.createElement(
-	        'li',
-	        null,
-	        'Review Score: ',
-	        this.props.review.score
+	        'div',
+	        { onClick: this.goToUserPage, className: 'game-review-image group' },
+	        React.createElement('img', { src: 'http://img13.deviantart.net/8e36/i/2006/250/1/3/the_last_airbender_avatar_by_jovimia.gif' }),
+	        React.createElement(
+	          'p',
+	          null,
+	          this.props.review.user.username
+	        )
 	      ),
 	      React.createElement(
-	        'li',
-	        null,
-	        'Reviewer ID: ',
-	        this.props.review.user_id
-	      ),
-	      React.createElement(
-	        'li',
-	        null,
-	        'Review: ',
-	        this.props.review.body
+	        'div',
+	        { className: 'game-review-comment group' },
+	        React.createElement(
+	          'h3',
+	          null,
+	          this.props.review.title
+	        ),
+	        React.createElement(
+	          'p',
+	          null,
+	          this.props.review.score,
+	          '/5'
+	        ),
+	        React.createElement(
+	          'span',
+	          null,
+	          this.props.review.body
+	        )
 	      )
 	    );
 	  }
@@ -36431,65 +36484,6 @@
 
 /***/ },
 /* 293 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Store = __webpack_require__(189).Store;
-	var AppDispatcher = __webpack_require__(182);
-	var UserConstants = __webpack_require__(294);
-	var UserStore = new Store(AppDispatcher);
-	var ReviewConstants = __webpack_require__(209);
-	
-	var _users = {};
-	
-	var resetUsers = function (users) {
-	  _users = {};
-	  users.forEach(function (user) {
-	    _users[user.id] = user;
-	  });
-	};
-	
-	var resetUser = function (user) {
-	  _users[user.id] = user;
-	};
-	
-	UserStore.find = function (id) {
-	  return _users[id];
-	};
-	
-	UserStore.all = function () {
-	  var users = [];
-	  for (var id in _users) {
-	    users.push(_users[id]);
-	  }
-	  return users;
-	};
-	
-	UserStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case UserConstants.USERS_RECEIVED:
-	      resetUsers(payload.users);
-	      UserStore.__emitChange();
-	      break;
-	    case UserConstants.USER_RECEIVED:
-	      resetUser(payload.user);
-	      UserStore.__emitChange();
-	      break;
-	  }
-	};
-	
-	module.exports = UserStore;
-
-/***/ },
-/* 294 */
-/***/ function(module, exports) {
-
-	module.exports = {
-	  USER_RECEIVED: "USER_RECEIVED",
-	  USERS_RECEIVED: "USERS_RECEIVED"
-	};
-
-/***/ },
-/* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Store = __webpack_require__(189).Store;
@@ -36546,15 +36540,15 @@
 	module.exports = ReviewStore;
 
 /***/ },
-/* 296 */
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var Modal = __webpack_require__(159);
 	var SessionStore = __webpack_require__(188);
 	var ApiUtil = __webpack_require__(181);
-	var ReviewStore = __webpack_require__(295);
-	var ReactSimpleAlert = __webpack_require__(297);
+	var ReviewStore = __webpack_require__(293);
+	var ReactSimpleAlert = __webpack_require__(295);
 	
 	var ReviewForm = React.createClass({
 	  displayName: 'ReviewForm',
@@ -36646,7 +36640,7 @@
 	        left: 0,
 	        right: 0,
 	        bottom: 0,
-	        backgroundColor: 'rgba(5, 5, 5, 0.75)',
+	        backgroundColor: 'rgba(0, 0, 0, 0.70)',
 	        zIndex: 10
 	      },
 	      content: {
@@ -36659,7 +36653,7 @@
 	        border: '1px solid #ccc',
 	        padding: '20px',
 	        backgroundColor: '#eee',
-	        height: '350px',
+	        height: '380px',
 	        width: '650px',
 	        zIndex: 11
 	      }
@@ -36694,7 +36688,7 @@
 	            { className: 'input-text' },
 	            'Title'
 	          ),
-	          React.createElement('input', { value: this.state.title, onChange: this.updateTitle, type: 'text' }),
+	          React.createElement('input', { placeholder: 'Sum it up!', value: this.state.title, className: 'add-review-title', onChange: this.updateTitle, type: 'text' }),
 	          React.createElement(
 	            'label',
 	            { className: 'input-text', htmlFor: 'score' },
@@ -36759,7 +36753,7 @@
 	                onChange: this.updateScore })
 	            )
 	          ),
-	          React.createElement('textarea', { className: 'add-review-textarea', placeholder: 'Enter your awwwwwsome review here!',
+	          React.createElement('textarea', { className: 'add-review-textarea', placeholder: 'Now explain it here!',
 	            onChange: this.updateReview, value: this.state.review }),
 	          React.createElement(
 	            'button',
@@ -36775,20 +36769,20 @@
 	module.exports = ReviewForm;
 
 /***/ },
-/* 297 */
+/* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(298);
+	module.exports = __webpack_require__(296);
 
 /***/ },
-/* 298 */
+/* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var Header = __webpack_require__(299);
-	var Body = __webpack_require__(301);
-	var Footer = __webpack_require__(302);
-	var style = __webpack_require__(300);
+	var Header = __webpack_require__(297);
+	var Body = __webpack_require__(299);
+	var Footer = __webpack_require__(300);
+	var style = __webpack_require__(298);
 	
 	var ReactSimpleAlert = React.createClass({displayName: "ReactSimpleAlert",
 	
@@ -36838,11 +36832,11 @@
 
 
 /***/ },
-/* 299 */
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var style = __webpack_require__(300);
+	var style = __webpack_require__(298);
 	
 	var Header = React.createClass({displayName: "Header",
 	
@@ -36860,7 +36854,7 @@
 	module.exports = Header;
 
 /***/ },
-/* 300 */
+/* 298 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -36930,11 +36924,11 @@
 	};
 
 /***/ },
-/* 301 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var style = __webpack_require__(300);
+	var style = __webpack_require__(298);
 	
 	var Body = React.createClass({displayName: "Body",
 	
@@ -36949,11 +36943,11 @@
 	module.exports = Body;
 
 /***/ },
-/* 302 */
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var style = __webpack_require__(300);
+	var style = __webpack_require__(298);
 	
 	var Footer = React.createClass({displayName: "Footer",
 	
@@ -36989,15 +36983,15 @@
 	module.exports = Footer;
 
 /***/ },
-/* 303 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(181);
 	var AppDispatcher = __webpack_require__(182);
 	var SessionStore = __webpack_require__(188);
-	var UserStore = __webpack_require__(293);
-	var ReviewStore = __webpack_require__(295);
+	var UserStore = __webpack_require__(302);
+	var ReviewStore = __webpack_require__(293);
 	var GameStore = __webpack_require__(232);
 	var UserReviewItem = __webpack_require__(304);
 	
@@ -37043,7 +37037,6 @@
 	    }).reverse();
 	
 	    var memberSince = this.state.user.created_at.slice(0, 10).split("-").join('/');
-	
 	    return React.createElement(
 	      'div',
 	      { className: 'content-container group' },
@@ -37064,7 +37057,7 @@
 	            React.createElement(
 	              'h3',
 	              null,
-	              'The "Some"'
+	              '"Newbie"'
 	            ),
 	            React.createElement(
 	              'li',
@@ -37100,7 +37093,7 @@
 	        React.createElement(
 	          'h2',
 	          null,
-	          'Pikachu\'s Recent Activity!'
+	          'Your Recent Activity!'
 	        ),
 	        userReviews
 	      )
@@ -37108,6 +37101,70 @@
 	  }
 	
 	});
+
+/***/ },
+/* 302 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(189).Store;
+	var AppDispatcher = __webpack_require__(182);
+	var UserConstants = __webpack_require__(303);
+	var UserStore = new Store(AppDispatcher);
+	var ReviewConstants = __webpack_require__(209);
+	
+	var _users = {};
+	
+	var resetUsers = function (users) {
+	  _users = {};
+	  users.forEach(function (user) {
+	    _users[user.id] = user;
+	  });
+	};
+	
+	var resetUser = function (user) {
+	  _users[user.id] = user;
+	};
+	
+	UserStore.find = function (id) {
+	  return _users[id];
+	};
+	
+	UserStore.all = function () {
+	  var users = [];
+	  for (var id in _users) {
+	    users.push(_users[id]);
+	  }
+	  return users;
+	};
+	
+	UserStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case UserConstants.USERS_RECEIVED:
+	      resetUsers(payload.users);
+	      UserStore.__emitChange();
+	      break;
+	    case UserConstants.USER_RECEIVED:
+	      resetUser(payload.user);
+	      UserStore.__emitChange();
+	      break;
+	    case UserConstants.REVIEWED_USERS_RECEIVED:
+	      resetUsers(payload.users);
+	      UserStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = UserStore;
+
+/***/ },
+/* 303 */
+/***/ function(module, exports) {
+
+	module.exports = {
+	  USERS_RECEIVED: "USERS_RECEIVED",
+	  USER_RECEIVED: "USER_RECEIVED",
+	  REVIEWED_USERS_RECEIVED: "REVIEWED_USERS_RECEIVED"
+	};
 
 /***/ },
 /* 304 */
@@ -37203,11 +37260,12 @@
 	        left: '0px',
 	        right: '0px',
 	        bottom: '0px',
-	        border: '1px solid #ccc',
+	        border: '4px solid #555',
 	        padding: '20px',
-	        backgroundColor: '#eee',
-	        height: '350px',
+	        backgroundColor: '#ddd',
+	        height: '380px',
 	        width: '650px',
+	        borderRadius: '5px',
 	        zIndex: 11
 	      }
 	    };
@@ -37215,6 +37273,7 @@
 	    if (review === []) {
 	      return React.createElement('div', null);
 	    }
+	
 	    return React.createElement(
 	      'div',
 	      null,
@@ -37238,7 +37297,7 @@
 	            { className: 'input-text' },
 	            'Title'
 	          ),
-	          React.createElement('input', { defaultValue: this.props.review.title, onChange: this.updateTitle, type: 'text' }),
+	          React.createElement('input', { className: 'add-review-title', defaultValue: this.props.review.title, onChange: this.updateTitle, type: 'text' }),
 	          React.createElement(
 	            'label',
 	            { className: 'input-text', htmlFor: 'score' },
@@ -37370,7 +37429,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var ReviewStore = __webpack_require__(295);
+	var ReviewStore = __webpack_require__(293);
 	
 	var EditReview = React.createClass({
 	  displayName: 'EditReview',
@@ -37419,7 +37478,132 @@
 
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(181);
-	var ReviewStore = __webpack_require__(295);
+	var AppDispatcher = __webpack_require__(182);
+	var SessionStore = __webpack_require__(188);
+	var UserStore = __webpack_require__(302);
+	var ReviewStore = __webpack_require__(293);
+	var GameStore = __webpack_require__(232);
+	var UserReviewItem = __webpack_require__(304);
+	
+	module.exports = React.createClass({
+	  displayName: 'exports',
+	
+	  getStateFromStore: function () {
+	    return { user: UserStore.find(this.props.params.userId),
+	      reviews: ReviewStore.all()
+	    };
+	  },
+	
+	  _onChange: function () {
+	    this.setState(this.getStateFromStore());
+	  },
+	
+	  getInitialState: function () {
+	    return this.getStateFromStore();
+	  },
+	
+	  componentDidMount: function () {
+	    this.reviewListener = ReviewStore.addListener(this._onChange);
+	    ApiUtil.fetchUser(this.props.params.userId);
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.reviewListener.remove();
+	  },
+	
+	  render: function () {
+	    if (this.state.user === undefined) {
+	      return React.createElement(
+	        'div',
+	        { className: 'loading' },
+	        ' Loading... '
+	      );
+	    }
+	    if (this.state.reviews.length === 0) {
+	      React.createElement(
+	        'div',
+	        { className: 'loading' },
+	        ' Loading... '
+	      );
+	    }
+	
+	    var userReviews = this.state.reviews.map(function (review, id) {
+	      return React.createElement(UserReviewItem, { key: id, review: review });
+	    }).reverse();
+	
+	    var memberSince = this.state.user.created_at.slice(0, 10).split("-").join('/');
+	    return React.createElement(
+	      'div',
+	      { className: 'content-container group' },
+	      React.createElement(
+	        'div',
+	        { className: 'user-information-box group' },
+	        React.createElement(
+	          'div',
+	          { className: 'user-information' },
+	          React.createElement(
+	            'div',
+	            { className: 'user-picture' },
+	            React.createElement('img', { src: 'http://vignette3.wikia.nocookie.net/pokemon/images/1/16/025Pikachu_OS_anime_10.png/revision/20150102074354' })
+	          ),
+	          React.createElement(
+	            'ul',
+	            { className: 'stat-box' },
+	            React.createElement(
+	              'h3',
+	              null,
+	              '"Newbie"'
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              'Reviews: ',
+	              this.state.reviews.length
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'user-description-box' },
+	          React.createElement(
+	            'h1',
+	            null,
+	            this.state.user.username
+	          ),
+	          React.createElement(
+	            'p',
+	            null,
+	            this.state.user.description
+	          ),
+	          React.createElement(
+	            'button',
+	            null,
+	            'USER PAGE!!!!'
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'recent-reviews-box' },
+	        React.createElement(
+	          'h2',
+	          null,
+	          'Your Recent Activity!'
+	        ),
+	        userReviews
+	      )
+	    );
+	  }
+	
+	});
+
+/***/ },
+/* 307 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(181);
+	var ReviewStore = __webpack_require__(293);
 	var SessionStore = __webpack_require__(188);
 	var ReviewForm = React.createClass({
 	  displayName: 'ReviewForm',
@@ -37589,7 +37773,7 @@
 	module.exports = ReviewForm;
 
 /***/ },
-/* 307 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -37638,11 +37822,24 @@
 	    });
 	  },
 	
+	  goToSignUpForm: function (e) {
+	    e.preventDefault();
+	    this.context.router.push("/signup");
+	  },
+	
 	  render: function () {
+	
+	    if (!this.state.currentUser) {
+	      signUpButton = React.createElement(
+	        'button',
+	        { className: 'sign-in-button', onClick: this.goToSignUpForm },
+	        'Sign Up'
+	      );
+	    }
 	
 	    var guestButton = React.createElement(
 	      'button',
-	      { className: 'guest-button', onClick: this.guestLogin },
+	      { className: 'sign-in-button', onClick: this.guestLogin },
 	      'Guest Login'
 	    );
 	
@@ -37652,11 +37849,11 @@
 	      React.createElement(
 	        'h1',
 	        null,
-	        'Please Log in'
+	        'Please Sign In'
 	      ),
 	      React.createElement(
 	        'form',
-	        { className: 'input-box', onSubmit: this.handleSubmit },
+	        { className: 'input-box' },
 	        React.createElement(
 	          'label',
 	          { className: 'input-text', htmlFor: 'username' },
@@ -37673,9 +37870,10 @@
 	          type: 'password', value: this.state.password }),
 	        React.createElement(
 	          'button',
-	          { className: 'submit-button' },
+	          { onClick: this.handleSubmit, className: 'sign-in-button' },
 	          'Sign In'
 	        ),
+	        signUpButton,
 	        guestButton
 	      )
 	    );
@@ -37686,7 +37884,7 @@
 	module.exports = LoginForm;
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -37753,8 +37951,8 @@
 	          placeholder: 'Is that secret enough???' }),
 	        React.createElement(
 	          'button',
-	          { className: 'submit-button' },
-	          'Sign In'
+	          { className: 'create-new-user-button' },
+	          'Create New User'
 	        )
 	      )
 	    );
@@ -37765,11 +37963,11 @@
 	module.exports = SignUpForm;
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var SearchResultsStore = __webpack_require__(310);
+	var SearchResultsStore = __webpack_require__(311);
 	var ApiUtil = __webpack_require__(181);
 	
 	var Search = React.createClass({
@@ -37871,7 +38069,7 @@
 	module.exports = Search;
 
 /***/ },
-/* 310 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Store = __webpack_require__(189).Store;
@@ -37903,6 +38101,31 @@
 	};
 	
 	module.exports = SearchResultsStore;
+
+/***/ },
+/* 312 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(182);
+	var UserConstants = __webpack_require__(303);
+	
+	var UserActions = {
+	  userReceived: function (user) {
+	    AppDispatcher.dispatch({
+	      actionType: UserConstants.USER_RECEIVED,
+	      user: user
+	    });
+	  },
+	
+	  receivedAllReviewedUsers: function (users) {
+	    AppDispatcher.dispatch({
+	      actionType: UserConstants.REVIEWED_USERS_RECEIVED,
+	      users: users
+	    });
+	  }
+	};
+	
+	module.exports = UserActions;
 
 /***/ }
 /******/ ]);

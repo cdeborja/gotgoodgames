@@ -4,11 +4,14 @@ var ApiUtil = require('../../util/apiUtil');
 var ReviewsIndexItem = require('../reviews/index');
 var ReviewStore = require('../../stores/review');
 var SessionStore = require('../../stores/session');
+var UserStore = require('../../stores/user');
 var ReviewForm = require('../reviews/reviewForm');
 
 module.exports = React.createClass({
   getStateFromStore: function () {
-    return { game: GameStore.find(parseInt(this.props.params.gameId))};
+    return { game: GameStore.find(parseInt(this.props.params.gameId)),
+             users: UserStore.all()
+            };
   },
 
   _onChange: function () {
@@ -25,10 +28,13 @@ module.exports = React.createClass({
 
   componentDidMount: function () {
     this.gameListener = GameStore.addListener(this._onChange);
+    this.userListener = UserStore.addListener(this._onChange);
     ApiUtil.fetchSingleGame(parseInt(this.props.params.gameId));
+    ApiUtil.fetchAllReviewedUsers({game_id: this.props.params.gameId});
   },
 
   componentWillUnmount: function () {
+    this.userListener.remove();
     this.gameListener.remove();
   },
 
@@ -36,9 +42,10 @@ module.exports = React.createClass({
     var game = this.state.game;
     var userReview = null;
     var averageScore = 0;
+
     if ( !game || !game.reviews) {return (<img className="loading-image" src="https://youthradio.org/innovationlab/for-teachers/images/loading.gif"/>);}
     var gameReviews = game.reviews.map(function (review, id) {
-      return <ReviewsIndexItem key={id} review={review} review_id={review.id}/>;
+      return <ReviewsIndexItem key={id} review={review}/>;
     }).reverse();
 
     gameReviews.forEach (function (review) {
@@ -55,24 +62,24 @@ module.exports = React.createClass({
       averageScore = (totalScore / game.reviews.length).toFixed(2);
     }
     return(
-      <div className="game-detail-pane">
-          <h2>Title: {game.title}</h2>
-          <img src={game.image_url}/>
-          <ul>
-            <li>Average Score: {averageScore}</li>
-            <li>Console: {game.console}</li>
+      <div className="content-container group">
+        <div className="game-information-box">
+          <img src={game.image_url} />
+          <ul className="game-details">
+            <h2>{game.title}</h2>
+            <li>Average Score: {averageScore} out of 5</li>
             <li>Release Date: {game.release_date}</li>
-            <li>Description: {game.description}</li>
+            <li>Console: {game.console}</li>
+            <li>Game Description: {game.description}</li>
           </ul>
           <div>
             <ReviewForm game={this.state.game} reviews={gameReviews} userReview={userReview}/>
           </div>
+        </div>
 
-          <ul>
-            {gameReviews}
-          </ul>
-
-
+        <div className="recent-reviews-box">
+          {gameReviews}
+        </div>
       </div>
     );
   }

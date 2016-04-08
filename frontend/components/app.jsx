@@ -42,9 +42,6 @@ module.exports = React.createClass({
     this.context.router.push("/homepage");
   },
 
-  goToSignUpForm: function () {
-    this.context.router.push("/signup");
-  },
 
   render: function () {
     var button, welcomeMessage, homepage, signUpButton;
@@ -53,12 +50,6 @@ module.exports = React.createClass({
       welcomeMessage = <h2>Welcome, {this.state.currentUser.username}</h2>;
       homepage = <li onClick={this.goToCurrentUserHomePage}>My Stats</li>;
     }
-
-    if (!this.state.currentUser) {
-      signUpButton = <button className="logout-button" onClick={this.goToSignUpForm}>
-      Sign Up</button>;
-    }
-
 
     return (
       <div>
@@ -83,7 +74,7 @@ module.exports = React.createClass({
             </div>
             <div className="session-nav">
               <ul className="session-links">
-                {signUpButton}
+
                 {welcomeMessage}
                 {button}
               </ul>

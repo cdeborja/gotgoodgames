@@ -93,7 +93,7 @@ var ReviewForm = React.createClass({
         left            : 0,
         right           : 0,
         bottom          : 0,
-        backgroundColor : 'rgba(5, 5, 5, 0.75)',
+        backgroundColor : 'rgba(0, 0, 0, 0.70)',
         zIndex         : 10
       },
       content : {
@@ -106,7 +106,7 @@ var ReviewForm = React.createClass({
         border          : '1px solid #ccc',
         padding         : '20px',
         backgroundColor : '#eee',
-        height          : '350px',
+        height          : '380px',
         width           : '650px',
         zIndex         : 11
       }
@@ -130,7 +130,7 @@ var ReviewForm = React.createClass({
             Title
           </label>
 
-          <input value={this.state.title} onChange={this.updateTitle} type="text">
+          <input placeholder="Sum it up!" value={this.state.title} className="add-review-title" onChange={this.updateTitle} type="text">
           </input>
           <label className="input-text" htmlFor="score">
             Score
@@ -163,7 +163,7 @@ var ReviewForm = React.createClass({
             onChange={this.updateScore}/>
             </li>
           </ul>
-          <textarea className="add-review-textarea" placeholder="Enter your awwwwwsome review here!"
+          <textarea className="add-review-textarea" placeholder="Now explain it here!"
           onChange={this.updateReview} value={this.state.review}/>
 
           <button onClick={this.handleSubmit} className="submit-button">Submit your review</button>

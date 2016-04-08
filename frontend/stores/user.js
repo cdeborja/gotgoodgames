@@ -39,6 +39,10 @@ UserStore.__onDispatch = function (payload) {
       resetUser(payload.user);
       UserStore.__emitChange();
       break;
+    case UserConstants.REVIEWED_USERS_RECEIVED:
+      resetUsers(payload.users);
+      UserStore.__emitChange();
+      break;
   }
 };
 

@@ -10,6 +10,11 @@ class Api::GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
+    if @game
+      render :show
+    else
+      flash.now(:errors)
+    end
   end
 
   def index

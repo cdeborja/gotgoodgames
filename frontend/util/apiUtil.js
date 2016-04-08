@@ -3,10 +3,10 @@ var GameActions = require('../actions/gameActions.js');
 var SessionStore = require('../stores/session');
 var SessionActions = require('../actions/sessionActions');
 var ReviewActions = require('../actions/reviewActions');
+var UserActions = require('../actions/userActions');
 var SearchResultActions = require('../actions/searchResultActions');
 
 module.exports = {
-  // USER RELATED
   signUp: function(credentials) {
     $.ajax({
       type: "POST",
@@ -43,6 +43,20 @@ module.exports = {
     });
   },
 
+  fetchUser: function (user_id) {
+    $.ajax({
+      type: "GET",
+      url: "/api/users/" + user_id,
+      dataType: "json",
+      success: function (user) {
+        UserActions.userReceived(user);
+      },
+      error: function () {
+        console.log("couldnt get user");
+      }
+    });
+  },
+
   fetchCurrentUser: function(completion) {
     $.ajax({
       type: "GET",
@@ -68,6 +82,21 @@ module.exports = {
       },
       error: function () {
           console.log("Could not create review");
+      }
+    });
+  },
+
+  fetchAllReviewedUsers: function(game_id) {
+    $.ajax({
+      type: "GET",
+      url: "/api/users",
+      dataType: "json",
+      data: game_id,
+      success: function (users) {
+        UserActions.receivedAllReviewedUsers(users);
+      },
+      error: function() {
+        console.log('couldnt fetch all reviewd users');
       }
     });
   },
@@ -146,7 +175,10 @@ module.exports = {
 
   fetchSingleGame: function (id) {
     $.ajax({
+      type: "GET",
       url: "/api/games/" + id,
+      dataType: "json",
+      data: id,
       success: function (game) {
         GameActions.receiveSingleGame(game);
       },
@@ -174,7 +206,5 @@ module.exports = {
 
     });
   }
-
-
 
 };

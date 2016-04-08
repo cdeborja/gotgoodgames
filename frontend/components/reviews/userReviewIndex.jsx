@@ -86,17 +86,19 @@ module.exports = React.createClass({
         left            : '0px',
         right           : '0px',
         bottom          : '0px',
-        border          : '1px solid #ccc',
+        border          : '4px solid #555',
         padding         : '20px',
-        backgroundColor : '#eee',
-        height          : '350px',
+        backgroundColor : '#ddd',
+        height          : '380px',
         width           : '650px',
+        borderRadius   : '5px',
         zIndex         : 11
       }
     };
 
 
     if (review === []) { return (<div></div>); }
+
     return(
       <div>
 
@@ -112,7 +114,7 @@ module.exports = React.createClass({
             Title
           </label>
 
-          <input defaultValue={this.props.review.title} onChange={this.updateTitle} type="text">
+          <input className="add-review-title" defaultValue={this.props.review.title} onChange={this.updateTitle} type="text">
           </input>
           <label className="input-text" htmlFor="score">
             Score

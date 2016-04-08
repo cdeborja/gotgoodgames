@@ -9,7 +9,7 @@ var UserReviewItem = require('../reviews/userReviewIndex');
 
 module.exports = React.createClass({
   getStateFromStore: function () {
-    return { user: SessionStore.currentUser(),
+    return { user: UserStore.find(this.props.params.userId),
              reviews: ReviewStore.all(),
            };
   },
@@ -22,13 +22,9 @@ module.exports = React.createClass({
     return (this.getStateFromStore() );
   },
 
-  componentWillReceiveProps: function () {
-
-  },
-
   componentDidMount: function () {
     this.reviewListener = ReviewStore.addListener(this._onChange);
-    ApiUtil.fetchUserReviews(this.state.user.id);
+    ApiUtil.fetchUser(this.props.params.userId);
   },
 
   componentWillUnmount: function () {
@@ -37,6 +33,9 @@ module.exports = React.createClass({
 
 
   render: function () {
+    if (this.state.user === undefined) {
+      return (<div className="loading"> Loading... </div>);
+    }
     if (this.state.reviews.length === 0) {
        <div className="loading"> Loading... </div>;
     }
@@ -62,7 +61,7 @@ module.exports = React.createClass({
           <h1>{this.state.user.username}</h1>
           <p>{this.state.user.description}</p>
           <button>
-            EDIT PROFILE
+            USER PAGE!!!!
           </button>
         </div>
       </div>

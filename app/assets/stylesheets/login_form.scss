@@ -1,0 +1,60 @@
+/* --- SIGN-IN PAGE --- */
+
+.sign-in-box {
+  display: block;
+  margin: 40px auto;
+  background: #222;
+  width: 600px;
+  height: auto;
+  border: 4px solid #fff;
+  padding: 40px 40px 20px 40px;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.sign-in-box > h1{
+  font-weight: bold;
+  font-size: 36px;
+  margin-left: 145px;
+  margin-bottom: 20px;
+}
+
+.input-box {
+  margin: auto;
+  padding: 0 145px;
+}
+
+.sign-in-button,
+.create-new-user-button {
+  display: block;
+  float: left;
+  padding: 10px;
+  width: 100px;
+  text-align: center;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  transition: background-color 500ms, color 500ms;
+}
+
+.create-new-user-button {
+  width: 150px;
+}
+
+.sign-in-button:last-child {
+  width: 125px;
+}
+
+.sign-in-button:hover {
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+}
+
+.sign-in-button:hover:last-child,
+.create-new-user-button:hover {
+  background: #47d826;
+  color: #fff;
+  cursor: pointer;
+}

@@ -253,31 +253,6 @@ img {
   font-size: 14px;
 }*/
 
-/* --- SIGN-IN PAGE --- */
-
-.sign-in-box {
-  display: block;
-  margin: 40px auto;
-  background: #fff;
-  width: 600px;
-  height: auto;
-  border: solid 2px #ac9c8d;
-  padding: 40px 40px 20px 40px;
-  border-radius: 5px;
-}
-
-.sign-in-box > h1{
-  font-weight: bold;
-  font-size: 36px;
-  margin-left: 145px;
-  margin-bottom: 20px;
-}
-
-.input-box {
-  margin: auto;
-  padding: 0 145px;
-}
-
 /* ADDREVIEW BOX */
 
 .add-review-box {
@@ -316,7 +291,7 @@ img {
 .add-review-textarea {
   display: block;
   background: #fff;
-  border: 1px solid #ccc;
+  border: 1px solid #555;
   padding: 10px 4px;
   font-weight: normal;
   font-size: 14px;
@@ -324,6 +299,19 @@ img {
   width: 100%;
   height: 120px;
   resize: both;
+  word-wrap: break-word;
+}
+
+.add-review-title {
+  display: block;
+  background: #fff;
+  border: 1px solid #555;
+  padding: 12px 7px;
+  font-weight: normal;
+  font-size: 20px;
+  border-radius: 5px;
+  width: 100%;
+  height: auto;
   word-wrap: break-word;
 }
 
@@ -346,17 +334,18 @@ img {
 .input-field-login {
   display: block;
   background: #fff;
-  border: 1px solid #ccc;
+  border: 1px solid #555;
   padding: 10px 4px;
   font-weight: normal;
   font-size: 14px;
   border-radius: 5px;
   width: 300px;
+  color: #000;
 }
 
 .input-field-box {
   background: #fff;
-  border: 1px solid #ccc;
+  border: 1px solid #555;
   padding: 10px 4px;
   font-weight: normal;
   font-size: 14px;
@@ -365,14 +354,14 @@ img {
   height: 120px;
   resize: both;
   word-wrap: break-word;
+  color: #fff;
 }
 
 /* buttons */
 
-.submit-button,
-.edit-button {
+.submit-button {
   border-radius: 5px;
-  border: 1px solid #ac9c8d;
+  border: 1px solid #555;
   background: #f6f6ee;
   padding: 12px 20px;
   font-weight: 600;
@@ -405,11 +394,9 @@ img {
   color: #333;
 }
 
-.submit-button:hover,
-.guest-button:hover,
-.add-review-button:hover {
+.submit-button:hover {
   cursor: pointer;
-  background: #f7f2ed;
+  background: #aaa;
 }
 
 /* --- APP CONTENT --- */

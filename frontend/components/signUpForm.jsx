@@ -49,7 +49,7 @@ var SignUpForm = React.createClass({
           type="password" value={this.state.password}
           placeholder="Is that secret enough???"/>
 
-          <button className="submit-button">Sign In</button>
+          <button className="create-new-user-button">Create New User</button>
 
         </form>
       </div>
