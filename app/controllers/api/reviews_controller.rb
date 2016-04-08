@@ -7,6 +7,7 @@ class Api::ReviewsController < ApplicationController
   def create
     review = Review.new(review_params)
     game = Game.find(review.game_id)
+
     if game.reviews.find_by_user_id(review.user_id)
       redirect_to "/api/games/#{game.id}"
     elsif review.save
