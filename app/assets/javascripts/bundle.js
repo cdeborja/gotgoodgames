@@ -37114,19 +37114,19 @@
 	  },
 	
 	  render: function () {
-	    if (this.state.reviews.length === 0) {
-	      React.createElement(
+	    if (this.state.reviews.length === 0 && !this.state.user) {
+	      return React.createElement(
 	        'div',
 	        { className: 'loading' },
 	        ' Loading... '
 	      );
 	    }
-	
 	    var userReviews = this.state.reviews.map(function (review, id) {
 	      return React.createElement(UserReviewItem, { key: id, review: review });
 	    }).reverse();
 	
 	    var memberSince = this.state.user.created_at.slice(0, 10).split("-").join('/');
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'content-container group' },
@@ -37139,7 +37139,7 @@
 	          React.createElement(
 	            'div',
 	            { className: 'user-picture' },
-	            React.createElement('img', { url: this.state.user.picture })
+	            React.createElement('img', { src: this.state.user.picture })
 	          ),
 	          React.createElement(
 	            'ul',

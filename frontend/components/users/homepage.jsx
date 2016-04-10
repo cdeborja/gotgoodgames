@@ -37,21 +37,22 @@ module.exports = React.createClass({
 
 
   render: function () {
-    if (this.state.reviews.length === 0) {
-       <div className="loading"> Loading... </div>;
+    if (this.state.reviews.length === 0 && !this.state.user ) {
+      return (<div className="loading"> Loading... </div>);
     }
-
     var userReviews = this.state.reviews.map(function (review, id) {
       return <UserReviewItem key={id} review={review} />;
     }).reverse();
 
     var memberSince = this.state.user.created_at.slice(0,10).split("-").join('/');
+
+
     return(
     <div className="content-container group">
       <div className="user-information-box group">
         <div className="user-information">
           <div className="user-picture">
-            <img url={this.state.user.picture}/>
+            <img src={this.state.user.picture}/>
           </div>
           <ul className="stat-box">
             <h3>"Newbie"</h3>

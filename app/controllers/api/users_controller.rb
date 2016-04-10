@@ -18,7 +18,6 @@ class Api::UsersController < ApplicationController
 
   def index
     @users = User.all
-
     if params[:game_id]
       reviewed_users = []
       @users.each do |user|

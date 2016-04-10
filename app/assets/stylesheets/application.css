@@ -372,15 +372,19 @@ img {
 
 .add-review-button {
   display: block;
-  margin: 0 auto;
+  text-align: center;
+  padding: 10px;
+  width: 140px;
+  border: 1px solid #fff;
+  margin: 5px 0;
   border-radius: 5px;
-  border: 1px solid #ac9c8d;
-  background: #f6f6ee;
-  padding: 12px 20px;
-  font-weight: 600;
-  font-family: sans-serif;
-  margin-top: 20px;
-  color: #333;
+  transition: background-color 500ms, color 500ms;
+}
+
+.add-review-button:hover {
+  background: #eee;
+  color: #000;
+  cursor: pointer;
 }
 
 .guest-button {
