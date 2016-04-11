@@ -13,5 +13,13 @@
 /tmp
 /node_modules
 
+/.byebug_history
+
+
+
+
+
+
+DO NOT DELETE EVER
 # Ignore application configuration
 /config/application.yml
