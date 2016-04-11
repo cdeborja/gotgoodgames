@@ -11,7 +11,7 @@ using Ruby on Rails and React js.
 
 ## Heroku Link
 [gotgoodgames][heroku] **NB** This links to a domain redirected from Heroku
-[heroku]: www.gotgoodgames.xyz
+[heroku]: (http://www.gotgoodgames.xyz/)
 
 ## Design Docs
 * [View Wireframes][views]
@@ -26,8 +26,12 @@ using Ruby on Rails and React js.
 [api-endpoints]: ./docs/api-endpoints.md
 [schema]: ./docs/schema.md
 
-## Welcome View
+### Welcome View
 ![welcome]
+
+### Landing Page
+![landingPage]
 
 
 [welcome]: ./docs/images/welcome.png
+[landingPage]: ./docs/images/landing_page.png
