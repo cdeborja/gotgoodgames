@@ -1,4 +1,5 @@
 var React = require('react');
+var ErrorStore = require('../stores/error');
 var ApiUtil = require('../util/apiUtil');
 
 var LoginForm = React.createClass({
@@ -9,7 +10,8 @@ var LoginForm = React.createClass({
   getInitialState: function() {
     return {
       username: "",
-      password: ""
+      password: "",
+      errors: ErrorStore.all()
     };
   },
 
@@ -19,6 +21,7 @@ var LoginForm = React.createClass({
     ApiUtil.login(this.state, function() {
       router.push("/index");
     });
+    // this.setState({errors: ErrorStore.all()});
   },
 
   updateUsername: function(e) {

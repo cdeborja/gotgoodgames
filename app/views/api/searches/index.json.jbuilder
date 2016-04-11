@@ -8,10 +8,10 @@ json.search_results do
   json.array! @search_results.map(&:searchable) do |search_result|
     case search_result
     when User
-      json.partial! "api/users/user", user: search_result
+      json.partial!("api/users/user", user: search_result)
       # json._type "User"
     when Game
-      json.partial! "api/games/game", game: search_result
+      json.partial!("api/games/game", game: search_result, show_reviews: true)
       # json._type "Game"
     end
     json._type search_result.class.to_s

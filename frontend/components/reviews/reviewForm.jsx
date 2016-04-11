@@ -76,7 +76,7 @@ var ReviewForm = React.createClass({
   render: function(){
     var rsaOptions = {
         title: "Uh-oh!",
-        message: "You're trying to create a new review, but you have already reviewed this game. If you would like to edit your review, please click the edit button",
+        message: "It looks like you're trying to create a new review, but you have already reviewed this game. If you would like to edit your review, please click the edit button",
         alert: this.state.alert,
         confirmButton: {
             text: "Edit Review",

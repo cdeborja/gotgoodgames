@@ -5,6 +5,7 @@ var SessionActions = require('../actions/sessionActions');
 var ReviewActions = require('../actions/reviewActions');
 var UserActions = require('../actions/userActions');
 var SearchResultActions = require('../actions/searchResultActions');
+var ErrorActions = require('../actions/errorActions');
 
 module.exports = {
   signUp: function(credentials) {
@@ -13,8 +14,11 @@ module.exports = {
       url: "api/users",
       dataType: "json",
       data: credentials,
-      success: function() {
-        console.log("created user!");
+      success: function(errors) {
+        ErrorActions.errorsReceived(errors);
+      },
+      error: function () {
+        console.log("Could not create user");
       }
     });
   },

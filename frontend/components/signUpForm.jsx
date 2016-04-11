@@ -1,10 +1,14 @@
 var React = require('react');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
+var ErrorStore = require('../stores/error');
 var ApiUtil = require('../util/apiUtil');
 
 var SignUpForm = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
+
+  mixins: [LinkedStateMixin],
 
   getInitialState: function() {
     return {
@@ -31,6 +35,7 @@ var SignUpForm = React.createClass({
   },
 
   render: function() {
+
     return (
       <div className="sign-in-box group">
         <h1>Sign Up</h1>
@@ -41,8 +46,8 @@ var SignUpForm = React.createClass({
             Username
           </label>
           <input placeholder="How would you like to be known here?"
-          className="input-field-login" onChange={this.updateUsername}
-          type="text" value={this.state.username}/>
+          className="input-field-login" type="text"
+          valueLink={this.linkState('username')}/>
 
           <label className="input-text" htmlFor="password">Password</label>
           <input className="input-field-login" onChange={this.updatePassword}

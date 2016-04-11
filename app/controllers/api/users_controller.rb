@@ -7,7 +7,7 @@ class Api::UsersController < ApplicationController
     if user.save
       render json: {}
     else
-      flash.now[:errors] = user.errors.full_messages
+      render json: {errors: user.errors.full_messages}
     end
   end
 

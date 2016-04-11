@@ -2,6 +2,8 @@ var React = require('react');
 var GamesIndex = require('./games/index');
 var SessionStore = require('../stores/session');
 var ApiUtil = require('../util/apiUtil');
+var ErrorStore = require('../stores/error');
+var Search = require('./search');
 // var Search = require("./search");
 
 module.exports = React.createClass({
@@ -12,16 +14,19 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      currentUser: null
+      currentUser: null,
+      errors: ErrorStore.all()
     };
   },
 
   componentDidMount: function() {
     this.sessionStoreToken = SessionStore.addListener(this.handleChange);
+    this.errorListener = ErrorStore.addListener(this.handleChange);
     this.handleChange();
   },
 
   componentWillUnmount: function() {
+    this.errorListener.remove();
     this.sessionStoreToken.remove();
   },
 
@@ -45,11 +50,15 @@ module.exports = React.createClass({
 
   render: function () {
     var button, welcomeMessage, homepage, signUpButton;
-    
+
     if (this.state.currentUser) {
       button = <li onClick={ApiUtil.logout}>Logout</li>;
       welcomeMessage = <h2>Welcome, {this.state.currentUser.username}</h2>;
       homepage = <li onClick={this.goToCurrentUserHomePage}>My Stats</li>;
+    }
+
+    if (this.state.errors) {
+      errors = this.state.errors;
     }
 
     return (
@@ -70,7 +79,7 @@ module.exports = React.createClass({
                 {homepage}
                 <li>Browse</li>
                 <li>Community</li>
-                <input className="search-box" type="text" />
+                <Search />
               </ul>
             </div>
             <div className="session-nav">
