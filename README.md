@@ -1,4 +1,4 @@
-# GotGoodGame
+# GotGoodGames
 
 Are you a gamer? Do you consider yourself a **connoisseur** of video games?
 
@@ -10,8 +10,7 @@ but instead will be more focused on video games instead of books. It is built
 using Ruby on Rails and React js.
 
 ## Heroku Link
-[gotgoodgames][heroku] **NB** This links to a domain redirected from Heroku
-[heroku]: (http://www.gotgoodgames.xyz/)
+[gotgoodgames](http://www.gotgoodgames.xyz/) **NB** This links to a domain redirected from Heroku
 
 ## Design Docs
 * [View Wireframes][views]
