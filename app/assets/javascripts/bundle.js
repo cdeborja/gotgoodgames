@@ -21647,7 +21647,6 @@
 	var ApiUtil = __webpack_require__(181);
 	var ErrorStore = __webpack_require__(238);
 	var Search = __webpack_require__(239);
-	// var Search = require("./search");
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -21692,10 +21691,15 @@
 	  },
 	
 	  render: function () {
-	    var button, welcomeMessage, homepage, signUpButton;
+	    var home, logoutButton, welcomeMessage, homepage, signUpButton, browse, community, searchBar;
 	
 	    if (this.state.currentUser) {
-	      button = React.createElement(
+	      home = React.createElement(
+	        'li',
+	        { onClick: this.goToIndex },
+	        'Home'
+	      );
+	      logoutButton = React.createElement(
 	        'li',
 	        { onClick: ApiUtil.logout },
 	        'Logout'
@@ -21711,6 +21715,17 @@
 	        { onClick: this.goToCurrentUserHomePage },
 	        'My Stats'
 	      );
+	      browse = React.createElement(
+	        'li',
+	        null,
+	        'Browse'
+	      );
+	      community = React.createElement(
+	        'li',
+	        null,
+	        'Community'
+	      );
+	      searchBar = React.createElement(Search, null);
 	    }
 	
 	    if (this.state.errors) {
@@ -21746,23 +21761,11 @@
 	            React.createElement(
 	              'ul',
 	              { className: 'navigation-links' },
-	              React.createElement(
-	                'li',
-	                { onClick: this.goToIndex },
-	                'Home'
-	              ),
+	              home,
 	              homepage,
-	              React.createElement(
-	                'li',
-	                null,
-	                'Browse'
-	              ),
-	              React.createElement(
-	                'li',
-	                null,
-	                'Community'
-	              ),
-	              React.createElement(Search, null)
+	              browse,
+	              community,
+	              searchBar
 	            )
 	          ),
 	          React.createElement(
@@ -21772,7 +21775,7 @@
 	              'ul',
 	              { className: 'session-links' },
 	              welcomeMessage,
-	              button
+	              logoutButton
 	            )
 	          )
 	        )
@@ -31361,21 +31364,45 @@
 	  displayName: "Search",
 	
 	
+	  //
+	  // initElement: function() {
+	  //   elem = document.getElementById("search");
+	  //   // NOTE: doEvent(); or doEvent(param); will NOT work here.
+	  //   // Must be a reference to a function name, not a function call.
+	  //   elem.onblur = this.doEvent();
+	  // },
+	  //
+	  // doEvent: function ()
+	  // { elem.value = 'Bye-Bye';
+	  //   console.log("onblur Event detected!");
+	  // },
+	
 	  contextTypes: {
 	    router: React.PropTypes.object.isRequired
 	  },
 	
 	  getInitialState: function () {
-	    return { query: "" };
+	    return { query: "",
+	      results: "" };
 	  },
 	
 	  componentDidMount: function () {
 	    this.storeListener = SearchResultsStore.addListener(this._onChange);
+	    // this.initElement();
 	  },
 	
 	  componentWillUnmount: function () {
 	    this.storeListener.remove();
 	  },
+	
+	  //
+	  // focusNameField: function (e) {
+	  //   $(document).on();
+	  // },
+	  //
+	  // blurNameField: function (e) {
+	  //   $(document).off();
+	  // },
 	
 	  _onChange: function () {
 	    this.setState({ results: SearchResultsStore.all() });
@@ -31409,9 +31436,7 @@
 	          React.createElement(
 	            "a",
 	            { href: gamehtml },
-	            "Game #",
-	            result.id,
-	            ": ",
+	            "Game: ",
 	            result.title
 	          )
 	        );
@@ -31440,7 +31465,9 @@
 	    return React.createElement(
 	      "form",
 	      { className: "search-box" },
-	      React.createElement("input", { type: "text", onChange: this.handleInputChange }),
+	      React.createElement("input", { type: "text", id: "search", onChange: this.handleInputChange,
+	        onBlur: this.blurSearchField, onFocus: this.focusSearchField,
+	        placeholder: "Search here!" }),
 	      React.createElement(
 	        "button",
 	        { onClick: this.search },

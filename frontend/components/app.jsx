@@ -4,7 +4,6 @@ var SessionStore = require('../stores/session');
 var ApiUtil = require('../util/apiUtil');
 var ErrorStore = require('../stores/error');
 var Search = require('./search');
-// var Search = require("./search");
 
 module.exports = React.createClass({
 
@@ -49,12 +48,16 @@ module.exports = React.createClass({
 
 
   render: function () {
-    var button, welcomeMessage, homepage, signUpButton;
+    var home, logoutButton, welcomeMessage, homepage, signUpButton, browse, community, searchBar;
 
     if (this.state.currentUser) {
-      button = <li onClick={ApiUtil.logout}>Logout</li>;
+      home = <li onClick={this.goToIndex}>Home</li>;
+      logoutButton = <li onClick={ApiUtil.logout}>Logout</li>;
       welcomeMessage = <h2>Welcome, {this.state.currentUser.username}</h2>;
       homepage = <li onClick={this.goToCurrentUserHomePage}>My Stats</li>;
+      browse = <li>Browse</li>;
+      community = <li>Community</li>;
+      searchBar = <Search />;
     }
 
     if (this.state.errors) {
@@ -75,18 +78,17 @@ module.exports = React.createClass({
             </div>
             <div className="navigation-box">
               <ul className="navigation-links">
-                <li onClick={this.goToIndex}>Home</li>
+                {home}
                 {homepage}
-                <li>Browse</li>
-                <li>Community</li>
-                <Search />
+                {browse}
+                {community}
+                {searchBar}
               </ul>
             </div>
             <div className="session-nav">
               <ul className="session-links">
-
                 {welcomeMessage}
-                {button}
+                {logoutButton}
               </ul>
             </div>
           </nav>
