@@ -10,29 +10,8 @@ but instead will be more focused on video games instead of books. It is built
 using Ruby on Rails and React js.
 
 ## Heroku Link
-[Heroku link][heroku] **NB** This will link to the actual website once available
-[heroku]: www.herokuapp.com
-
-## Minimum Viable Product
-Similar to goodreads, gotgoodgame will allow users to:
-
-Short term goals:
-- [ ] Create an account
-- [ ] Log in / log out
-- [ ] Create a review and give a rating of games they have played
-- [ ] Organize multiple gameshelves by genre, console, etc
-- [ ] Organize a wish list of games they want to play
-- [ ] Search for games from a large database of games
-- [ ] View other user's gameshelves
-- [ ] Comment on another user's shelves
-
-Longterm goals:
-- [ ] Have a newsfeed that display friend's recent activity
-- [ ] Connectivity with facebook
-- [ ] Users can either link their twitch accounts or upload gameplay videos
-- [ ] Community Trivia
-- [ ] A separate section that users can also write easter eggs for their favorite games
-- [ ] More in-depth details of games (maybe links to something akin to IMDB)
+[Heroku link][heroku] **NB** This links to a domain redirected from Heroku
+[heroku]: www.gotgoodgames.xyz
 
 ## Design Docs
 * [View Wireframes][views]

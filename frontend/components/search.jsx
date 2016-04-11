@@ -5,18 +5,19 @@ var ApiUtil = require('../util/apiUtil');
 
 var Search = React.createClass({
 
-  //
-  // initElement: function() {
-  //   elem = document.getElementById("search");
-  //   // NOTE: doEvent(); or doEvent(param); will NOT work here.
-  //   // Must be a reference to a function name, not a function call.
-  //   elem.onblur = this.doEvent();
-  // },
-  //
-  // doEvent: function ()
-  // { elem.value = 'Bye-Bye';
-  //   console.log("onblur Event detected!");
-  // },
+  componentDidMount: function() {
+   this.storeListener = SearchResultsStore.addListener(this.handleResultChange);
+   this.handleResultChange();
+   document.addEventListener("click", this.exitSearch);
+ },
+
+  handleResultChange: function () {
+    this.forceUpdate();
+  },
+
+  exitSearch: function () {
+   this.setState({ query: "" });
+  },
 
   contextTypes: {
      router: React.PropTypes.object.isRequired
@@ -27,25 +28,9 @@ var Search = React.createClass({
              results: ""};
   },
 
-  componentDidMount: function () {
-    this.storeListener = SearchResultsStore.addListener(
-      this._onChange
-    );
-    // this.initElement();
-  },
-
   componentWillUnmount: function () {
     this.storeListener.remove();
   },
-
-  //
-  // focusNameField: function (e) {
-  //   $(document).on();
-  // },
-  //
-  // blurNameField: function (e) {
-  //   $(document).off();
-  // },
 
   _onChange: function () {
     this.setState({results: SearchResultsStore.all()});
@@ -93,12 +78,19 @@ var Search = React.createClass({
       }
     });
   },
-
+  // FOR SHOWING PAGES
   // <nav className="search-box">
   // Displaying page { meta.page } of { meta.total_pages }
   // <button onClick={ this.nextPage }>NEXT PAGE</button>
   // </nav>
   render: function () {
+    var searchList;
+    if (this.state.query) {
+      searchList = (<ul className="search-box-results group">
+                { this.resultList() }
+              </ul>
+            );
+    }
     var meta = SearchResultsStore.meta();
     return (
       <form className="search-box">
@@ -106,11 +98,7 @@ var Search = React.createClass({
           onBlur={this.blurSearchField} onFocus={this.focusSearchField}
           placeholder="Search here!"/>
         <button onClick={ this.search }>GO</button>
-
-
-        <ul className="search-box-results group">
-          { this.resultList() }
-        </ul>
+        {searchList}
       </form>
     );
   }
