@@ -125,6 +125,19 @@ img {
   color: #fff;
 }
 
+.session-links > li {
+  float: left;
+  padding: 20px 10px;
+  color: #fff;
+  transition: background-color 500ms, transform 500ms, color 500ms;
+}
+
+.session-links > li:hover {
+  cursor: pointer;
+  background: #fff;
+  color: #000;
+}
+
 .content {
   margin: 0 auto;
   background: #ccc;
@@ -256,26 +269,16 @@ img {
   border-radius: 5px;
   font-size: 14px;
 }
-/*
-.header-profile-name {
-  display: block;
-  font-size: 24px;
-}*/
+
 
 .logout-button {
   float: right;
-  display: block;
-  border-radius: 5px;
-  padding: 5px 10px;
-  border: 1px solid black;
-  margin-right: 20px;
-  margin-top: 4px;
+  padding: 20px 10px;
 }
 
 .logout-button:hover {
+  text-shadow: 0 0 0.2em black, 0 0 0.2em #ff3, 0 0 0.2em #ff3;
   cursor: pointer;
-  background: #000;
-  border: #fff 1px dashed;
 }
 
 /*.badge {
