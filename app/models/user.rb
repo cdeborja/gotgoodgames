@@ -7,6 +7,12 @@ class User < ActiveRecord::Base
 
   include PgSearch
   multisearchable :against => :username
+  ## below allows for prefix search for users
+  pg_search_scope :whose_username_starts_with,
+                  :against => :username,
+                  :using => {
+                  :tsearch => {:prefix => true}
+                  }
 
   has_many(
     :gameshelves,

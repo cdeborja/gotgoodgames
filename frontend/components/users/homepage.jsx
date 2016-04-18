@@ -6,11 +6,17 @@ var UserStore = require('../../stores/user');
 var ReviewStore = require('../../stores/review');
 var GameStore = require('../../stores/game');
 var UserReviewItem = require('../reviews/userReviewIndex');
+var EditUserForm = require('./editUserForm');
 
 module.exports = React.createClass({
+  contextTypes: {
+     router: React.PropTypes.object.isRequired
+   },
+
   getStateFromStore: function () {
+    var user_id = SessionStore.currentUser().id;
     return { user: SessionStore.currentUser(),
-             reviews: ReviewStore.all(),
+             reviews: ReviewStore.all()
            };
   },
 
@@ -22,17 +28,23 @@ module.exports = React.createClass({
     return (this.getStateFromStore() );
   },
 
-  componentWillReceiveProps: function () {
-
-  },
-
   componentDidMount: function () {
     this.reviewListener = ReviewStore.addListener(this._onChange);
+    this.sessionListener = SessionStore.addListener(this._onChange);
     ApiUtil.fetchUserReviews(this.state.user.id);
   },
 
   componentWillUnmount: function () {
+    this.sessionListener.remove();
     this.reviewListener.remove();
+  },
+
+  goToEditProfile: function () {
+    this.context.router.push({
+      pathname: '/edit_user',
+      query: {},
+      state: { user: this.state.user }
+    });
   },
 
 
@@ -44,8 +56,8 @@ module.exports = React.createClass({
       return <UserReviewItem key={id} review={review} />;
     }).reverse();
 
-    var memberSince = this.state.user.created_at.slice(0,10).split("-").join('/');
 
+    // var memberSince = this.state.user.created_at.slice(0,10).split("-").join('/');
 
     return(
     <div className="content-container group">
@@ -62,9 +74,7 @@ module.exports = React.createClass({
         <div className="user-description-box">
           <h1>{this.state.user.username}</h1>
           <p>{this.state.user.description}</p>
-          <button>
-            EDIT PROFILE
-          </button>
+          <button onClick={this.goToEditProfile}>Edit Profile</button>
         </div>
       </div>
 

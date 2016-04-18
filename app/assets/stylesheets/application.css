@@ -721,3 +721,7 @@ img {
 search {
 border: solid blue 2px;
 }
+
+.go-button {
+  cursor: pointer;
+}

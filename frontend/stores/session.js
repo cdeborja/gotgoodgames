@@ -30,6 +30,9 @@ SessionStore.__onDispatch = function (payload) {
       _currentUserHasBeenFetched = false;
       SessionStore.__emitChange();
       break;
+    case SessionConstants.USER_UPDATED:
+      SessionStore.__emitChange();
+      break;
   }
 };
 

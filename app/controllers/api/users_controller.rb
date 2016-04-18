@@ -11,6 +11,14 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  def update
+    @user = User.find(params[:id])
+    @user.description = (params[:user][:description])
+    @user.picture = (params[:user][:picture])
+    @user.save
+    render :show
+  end
+
   def show
     @user = User.find(params[:id])
     render :show

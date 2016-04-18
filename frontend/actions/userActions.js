@@ -15,6 +15,7 @@ var UserActions = {
       users: users
     });
   }
+
 };
 
 module.exports = UserActions;

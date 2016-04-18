@@ -61,6 +61,21 @@ module.exports = {
     });
   },
 
+  updateUserInformation: function(user_id, formData, callback) {
+    $.ajax({
+      url: '/api/users/' + user_id,
+      type: 'PUT',
+      processData: false,
+      contentType: false,
+      dataType: 'json',
+      data: formData,
+      success: function(user) {
+        SessionActions.updateUser(user);
+        // callback && callback();
+      }
+    });
+  },
+
   fetchCurrentUser: function(completion) {
     $.ajax({
       type: "GET",

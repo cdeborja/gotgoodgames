@@ -59,11 +59,12 @@
 	var GamesIndex = __webpack_require__(180);
 	var GameDetail = __webpack_require__(298);
 	var UserHomePage = __webpack_require__(309);
-	var UserShowPage = __webpack_require__(312);
-	var EditForm = __webpack_require__(313);
-	var LoginForm = __webpack_require__(314);
-	var SignUpForm = __webpack_require__(315);
+	var UserShowPage = __webpack_require__(313);
+	var EditForm = __webpack_require__(314);
+	var LoginForm = __webpack_require__(315);
+	var SignUpForm = __webpack_require__(316);
 	var Search = __webpack_require__(239);
+	var EditUserForm = __webpack_require__(312);
 	
 	var GameStore = __webpack_require__(236);
 	var SessionStore = __webpack_require__(188);
@@ -73,6 +74,7 @@
 	  Route,
 	  { path: '/', component: App },
 	  React.createElement(Route, { path: 'homepage', component: UserHomePage, onEnter: _requireLoggedIn }),
+	  React.createElement(Route, { path: 'edit_user', component: EditUserForm, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'index', component: GamesIndex, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'games/:gameId', component: GameDetail, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'reviews/:reviewId', component: EditForm, onEnter: _requireLoggedIn }),
@@ -22017,6 +22019,21 @@
 	    });
 	  },
 	
+	  updateUserInformation: function (user_id, formData, callback) {
+	    $.ajax({
+	      url: '/api/users/' + user_id,
+	      type: 'PUT',
+	      processData: false,
+	      contentType: false,
+	      dataType: 'json',
+	      data: formData,
+	      success: function (user) {
+	        SessionActions.updateUser(user);
+	        // callback && callback();
+	      }
+	    });
+	  },
+	
 	  fetchCurrentUser: function (completion) {
 	    $.ajax({
 	      type: "GET",
@@ -22551,6 +22568,9 @@
 	    case SessionConstants.LOGOUT:
 	      _currentUser = null;
 	      _currentUserHasBeenFetched = false;
+	      SessionStore.__emitChange();
+	      break;
+	    case SessionConstants.USER_UPDATED:
 	      SessionStore.__emitChange();
 	      break;
 	  }
@@ -29010,7 +29030,8 @@
 
 	module.exports = {
 	  CURRENT_USER_RECEIVED: "CURRENT_USER_RECEIVED",
-	  LOGOUT: "LOGOUT"
+	  LOGOUT: "LOGOUT",
+	  USER_UPDATED: "USER_UPDATED"
 	};
 
 /***/ },
@@ -29031,6 +29052,13 @@
 	  logout: function () {
 	    AppDispatcher.dispatch({
 	      actionType: SessionConstants.LOGOUT
+	    });
+	  },
+	
+	  updateUser: function (user) {
+	    AppDispatcher.dispatch({
+	      actionType: SessionConstants.USER_UPDATED,
+	      user: user
 	    });
 	  }
 	};
@@ -29107,6 +29135,7 @@
 	      users: users
 	    });
 	  }
+	
 	};
 	
 	module.exports = UserActions;
@@ -31363,6 +31392,10 @@
 	var Search = React.createClass({
 	  displayName: "Search",
 	
+	  getInitialState: function () {
+	    return { query: "",
+	      results: "" };
+	  },
 	
 	  componentDidMount: function () {
 	    this.storeListener = SearchResultsStore.addListener(this.handleResultChange);
@@ -31380,11 +31413,6 @@
 	
 	  contextTypes: {
 	    router: React.PropTypes.object.isRequired
-	  },
-	
-	  getInitialState: function () {
-	    return { query: "",
-	      results: "" };
 	  },
 	
 	  componentWillUnmount: function () {
@@ -31447,6 +31475,8 @@
 	  // Displaying page { meta.page } of { meta.total_pages }
 	  // <button onClick={ this.nextPage }>NEXT PAGE</button>
 	  // </nav>
+	  // onBlur={this.blurSearchField} onFocus={this.focusSearchField}
+	
 	  render: function () {
 	    var searchList;
 	    if (this.state.query) {
@@ -31461,11 +31491,10 @@
 	      "form",
 	      { className: "search-box" },
 	      React.createElement("input", { type: "text", id: "search", onChange: this.handleInputChange,
-	        onBlur: this.blurSearchField, onFocus: this.focusSearchField,
 	        placeholder: "Search here!" }),
 	      React.createElement(
 	        "button",
-	        { onClick: this.search },
+	        { className: "go-button", onClick: this.search },
 	        "GO"
 	      ),
 	      searchList
@@ -36867,6 +36896,9 @@
 	      resetUsers(payload.users);
 	      UserStore.__emitChange();
 	      break;
+	    case UserConstants.USER_UPDATED:
+	      UserStore.__emitChange();
+	      break;
 	  }
 	};
 	
@@ -37327,11 +37359,17 @@
 	var ReviewStore = __webpack_require__(300);
 	var GameStore = __webpack_require__(236);
 	var UserReviewItem = __webpack_require__(310);
+	var EditUserForm = __webpack_require__(312);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
 	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
 	  getStateFromStore: function () {
+	    var user_id = SessionStore.currentUser().id;
 	    return { user: SessionStore.currentUser(),
 	      reviews: ReviewStore.all()
 	    };
@@ -37345,15 +37383,23 @@
 	    return this.getStateFromStore();
 	  },
 	
-	  componentWillReceiveProps: function () {},
-	
 	  componentDidMount: function () {
 	    this.reviewListener = ReviewStore.addListener(this._onChange);
+	    this.sessionListener = SessionStore.addListener(this._onChange);
 	    ApiUtil.fetchUserReviews(this.state.user.id);
 	  },
 	
 	  componentWillUnmount: function () {
+	    this.sessionListener.remove();
 	    this.reviewListener.remove();
+	  },
+	
+	  goToEditProfile: function () {
+	    this.context.router.push({
+	      pathname: '/edit_user',
+	      query: {},
+	      state: { user: this.state.user }
+	    });
 	  },
 	
 	  render: function () {
@@ -37368,7 +37414,7 @@
 	      return React.createElement(UserReviewItem, { key: id, review: review });
 	    }).reverse();
 	
-	    var memberSince = this.state.user.created_at.slice(0, 10).split("-").join('/');
+	    // var memberSince = this.state.user.created_at.slice(0,10).split("-").join('/');
 	
 	    return React.createElement(
 	      'div',
@@ -37415,8 +37461,8 @@
 	          ),
 	          React.createElement(
 	            'button',
-	            null,
-	            'EDIT PROFILE'
+	            { onClick: this.goToEditProfile },
+	            'Edit Profile'
 	          )
 	        )
 	      ),
@@ -37753,6 +37799,119 @@
 
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(181);
+	var Modal = __webpack_require__(159);
+	var SessionStore = __webpack_require__(188);
+	
+	//NEED TO REMOVE MODAL CONNECTIVITY
+	
+	var EditUserForm = React.createClass({
+	  displayName: 'EditUserForm',
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  getInitialState: function () {
+	    return {
+	      userId: SessionStore.currentUser().id,
+	      description: SessionStore.currentUser().description,
+	      pictureFile: null,
+	      pictureUrl: null
+	    };
+	  },
+	
+	  componentDidMount: function () {
+	    this.sessionListener = SessionStore.addListener(this._onChange);
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.sessionListener.remove();
+	  },
+	
+	  goToHomePage: function () {
+	    this.context.router.push('/homepage');
+	  },
+	
+	  handleDescriptionChange: function (e) {
+	    this.setState({ description: e.currentTarget.value });
+	  },
+	
+	  handleFileChange: function (e) {
+	    var file = e.currentTarget.files[0];
+	    var reader = new FileReader();
+	
+	    reader.onloadend = function () {
+	      var result = reader.result;
+	      this.setState({ pictureFile: file, pictureUrl: result });
+	    }.bind(this);
+	
+	    reader.readAsDataURL(file);
+	  },
+	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	    var formData = new FormData();
+	    formData.append("user[description]", this.state.description);
+	    formData.append("user[picture]", this.state.pictureFile);
+	    ApiUtil.updateUserInformation(this.state.userId, formData);
+	    this.goToHomePage();
+	  },
+	
+	  // <input
+	  // type="file"
+	  // onChange={this.handleFileChange}
+	  // />
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'edit-box' },
+	      React.createElement(
+	        'form',
+	        { onSubmit: this.handleSubmit },
+	        React.createElement(
+	          'label',
+	          null,
+	          'Description',
+	          React.createElement('textarea', {
+	            className: 'edit-box-description',
+	            defaultValue: this.state.description,
+	            placeholder: 'Enter a description...',
+	            onChange: this.handleDescriptionChange,
+	            value: this.state.description
+	          })
+	        ),
+	        React.createElement('br', null),
+	        React.createElement(
+	          'label',
+	          null,
+	          'Image',
+	          React.createElement('input', {
+	            type: 'file',
+	            onChange: this.handleFileChange
+	          })
+	        ),
+	        React.createElement('br', null),
+	        React.createElement('input', { type: 'submit', value: 'Save Changes' })
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        'Preview:'
+	      ),
+	      React.createElement('img', { className: 'preview-image', src: this.state.pictureUrl })
+	    );
+	  }
+	});
+	
+	module.exports = EditUserForm;
+
+/***/ },
+/* 313 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(181);
 	var AppDispatcher = __webpack_require__(182);
 	var SessionStore = __webpack_require__(188);
 	var UserStore = __webpack_require__(301);
@@ -37877,7 +38036,7 @@
 	});
 
 /***/ },
-/* 313 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -38052,7 +38211,7 @@
 	module.exports = ReviewForm;
 
 /***/ },
-/* 314 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -38166,11 +38325,11 @@
 	module.exports = LoginForm;
 
 /***/ },
-/* 315 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var LinkedStateMixin = __webpack_require__(316);
+	var LinkedStateMixin = __webpack_require__(317);
 	var ErrorStore = __webpack_require__(238);
 	var ApiUtil = __webpack_require__(181);
 	
@@ -38250,13 +38409,13 @@
 	module.exports = SignUpForm;
 
 /***/ },
-/* 316 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(317);
+	module.exports = __webpack_require__(318);
 
 /***/ },
-/* 317 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38273,8 +38432,8 @@
 	
 	'use strict';
 	
-	var ReactLink = __webpack_require__(318);
-	var ReactStateSetters = __webpack_require__(319);
+	var ReactLink = __webpack_require__(319);
+	var ReactStateSetters = __webpack_require__(320);
 	
 	/**
 	 * A simple mixin around ReactLink.forState().
@@ -38297,7 +38456,7 @@
 	module.exports = LinkedStateMixin;
 
 /***/ },
-/* 318 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38371,7 +38530,7 @@
 	module.exports = ReactLink;
 
 /***/ },
-/* 319 */
+/* 320 */
 /***/ function(module, exports) {
 
 	/**

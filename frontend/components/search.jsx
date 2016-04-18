@@ -4,6 +4,10 @@ var ApiUtil = require('../util/apiUtil');
 
 
 var Search = React.createClass({
+  getInitialState: function () {
+    return { query: "",
+    results: ""};
+  },
 
   componentDidMount: function() {
    this.storeListener = SearchResultsStore.addListener(this.handleResultChange);
@@ -22,11 +26,6 @@ var Search = React.createClass({
   contextTypes: {
      router: React.PropTypes.object.isRequired
    },
-
-  getInitialState: function () {
-    return { query: "",
-             results: ""};
-  },
 
   componentWillUnmount: function () {
     this.storeListener.remove();
@@ -83,6 +82,8 @@ var Search = React.createClass({
   // Displaying page { meta.page } of { meta.total_pages }
   // <button onClick={ this.nextPage }>NEXT PAGE</button>
   // </nav>
+  // onBlur={this.blurSearchField} onFocus={this.focusSearchField}
+
   render: function () {
     var searchList;
     if (this.state.query) {
@@ -95,9 +96,8 @@ var Search = React.createClass({
     return (
       <form className="search-box">
         <input type="text" id="search" onChange={ this.handleInputChange }
-          onBlur={this.blurSearchField} onFocus={this.focusSearchField}
           placeholder="Search here!"/>
-        <button onClick={ this.search }>GO</button>
+        <button className="go-button" onClick={ this.search }>GO</button>
         {searchList}
       </form>
     );

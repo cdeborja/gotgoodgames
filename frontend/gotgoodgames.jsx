@@ -18,6 +18,7 @@ var EditForm = require('./components/reviews/editForm');
 var LoginForm = require('./components/loginForm');
 var SignUpForm = require('./components/signUpForm');
 var Search = require("./components/search");
+var EditUserForm = require('./components/users/editUserForm');
 
 var GameStore = require('./stores/game');
 var SessionStore = require('./stores/session');
@@ -26,6 +27,7 @@ var UserStore = require('./stores/user');
 var routes = (
   <Route path="/" component={App}>
     <Route path="homepage" component={UserHomePage} onEnter={_requireLoggedIn} />
+    <Route path="edit_user" component={EditUserForm} onEnter={_requireLoggedIn} />
     <Route path="index" component={GamesIndex} onEnter={_requireLoggedIn} />
     <Route path="games/:gameId" component={GameDetail} onEnter={_requireLoggedIn} />
     <Route path="reviews/:reviewId" component={EditForm} onEnter={_requireLoggedIn} />
