@@ -19,7 +19,7 @@ var LoginForm = React.createClass({
     e.preventDefault();
     var router = this.context.router;
     ApiUtil.login(this.state, function() {
-      router.push("/index");
+      router.push("/landingPage");
     });
     // this.setState({errors: ErrorStore.all()});
   },
@@ -41,7 +41,7 @@ var LoginForm = React.createClass({
     this.setState(guestParams);
 
     ApiUtil.login(guestParams, function() {
-      router.push("/index");
+      router.push("/landingPage");
 
     });
   },

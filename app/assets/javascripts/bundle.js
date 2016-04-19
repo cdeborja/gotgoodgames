@@ -56,8 +56,9 @@
 	var ApiUtil = __webpack_require__(181);
 	
 	//Current Routes that need pages
-	var GamesIndex = __webpack_require__(180);
+	var LandingPage = __webpack_require__(180);
 	var GameDetail = __webpack_require__(298);
+	var GamesIndex = __webpack_require__(322);
 	var UserHomePage = __webpack_require__(309);
 	var UserShowPage = __webpack_require__(313);
 	var EditForm = __webpack_require__(314);
@@ -75,7 +76,8 @@
 	  { path: '/', component: App },
 	  React.createElement(Route, { path: 'homepage', component: UserHomePage, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'edit_user', component: EditUserForm, onEnter: _requireLoggedIn }),
-	  React.createElement(Route, { path: 'index', component: GamesIndex, onEnter: _requireLoggedIn }),
+	  React.createElement(Route, { path: 'landingPage', component: LandingPage, onEnter: _requireLoggedIn }),
+	  React.createElement(Route, { path: 'gamesIndex', component: GamesIndex, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'games/:gameId', component: GameDetail, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'reviews/:reviewId', component: EditForm, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'users/:userId', component: UserShowPage, onEnter: _requireLoggedIn }),
@@ -21644,7 +21646,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var GamesIndex = __webpack_require__(180);
+	var LandingPage = __webpack_require__(180);
 	var SessionStore = __webpack_require__(188);
 	var ApiUtil = __webpack_require__(181);
 	var ErrorStore = __webpack_require__(238);
@@ -21685,11 +21687,15 @@
 	  },
 	
 	  goToIndex: function () {
-	    this.context.router.push("/index");
+	    this.context.router.push("/landingPage");
 	  },
 	
 	  goToCurrentUserHomePage: function () {
 	    this.context.router.push("/homepage");
+	  },
+	
+	  goToLandingPage: function () {
+	    this.context.router.push("/gamesIndex");
 	  },
 	
 	  render: function () {
@@ -21719,7 +21725,7 @@
 	      );
 	      browse = React.createElement(
 	        'li',
-	        null,
+	        { onClick: this.goToLandingPage },
 	        'Browse'
 	      );
 	      community = React.createElement(
@@ -37370,6 +37376,7 @@
 	
 	  getStateFromStore: function () {
 	    var user_id = SessionStore.currentUser().id;
+	
 	    return { user: SessionStore.currentUser(),
 	      reviews: ReviewStore.all()
 	    };
@@ -38237,7 +38244,7 @@
 	    e.preventDefault();
 	    var router = this.context.router;
 	    ApiUtil.login(this.state, function () {
-	      router.push("/index");
+	      router.push("/landingPage");
 	    });
 	    // this.setState({errors: ErrorStore.all()});
 	  },
@@ -38259,7 +38266,7 @@
 	    this.setState(guestParams);
 	
 	    ApiUtil.login(guestParams, function () {
-	      router.push("/index");
+	      router.push("/landingPage");
 	    });
 	  },
 	
@@ -38637,6 +38644,92 @@
 	};
 	
 	module.exports = ReactStateSetters;
+
+/***/ },
+/* 321 */,
+/* 322 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(181);
+	var AppDispatcher = __webpack_require__(182);
+	var SessionStore = __webpack_require__(188);
+	var UserStore = __webpack_require__(301);
+	var GameStore = __webpack_require__(236);
+	var UserReviewItem = __webpack_require__(310);
+	var EditUserForm = __webpack_require__(312);
+	
+	module.exports = React.createClass({
+	  displayName: 'exports',
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  getStateFromStore: function () {
+	    return { games: GameStore.all()
+	    };
+	  },
+	
+	  _onChange: function () {
+	    this.setState(this.getStateFromStore());
+	  },
+	
+	  getInitialState: function () {
+	    return this.getStateFromStore();
+	  },
+	
+	  goToGame: function (e) {
+	    this.context.router.push('/games/' + e.currentTarget.id);
+	  },
+	
+	  componentDidMount: function () {
+	    this.gameListener = GameStore.addListener(this._onChange);
+	    ApiUtil.fetchAllGames();
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.gameListener.remove();
+	  },
+	
+	  render: function () {
+	    if (this.state.games.length === 0) {
+	      return React.createElement(
+	        'div',
+	        { className: 'loading' },
+	        ' Loading... '
+	      );
+	    }
+	    var that = this;
+	    var gamesIndex = this.state.games.map(function (game) {
+	      return React.createElement(
+	        'li',
+	        { key: game.id, id: game.id, onClick: that.goToGame },
+	        React.createElement('img', { src: game.image_url })
+	      );
+	    });
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'content-container group' },
+	      React.createElement(
+	        'div',
+	        { className: 'game-index-box' },
+	        React.createElement(
+	          'h2',
+	          null,
+	          'All current games'
+	        ),
+	        React.createElement(
+	          'ul',
+	          { className: 'games-index' },
+	          gamesIndex
+	        )
+	      )
+	    );
+	  }
+	
+	});
 
 /***/ }
 /******/ ]);

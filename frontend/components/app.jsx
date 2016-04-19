@@ -1,5 +1,5 @@
 var React = require('react');
-var GamesIndex = require('./games/index');
+var LandingPage = require('./games/landingPage');
 var SessionStore = require('../stores/session');
 var ApiUtil = require('../util/apiUtil');
 var ErrorStore = require('../stores/error');
@@ -39,11 +39,15 @@ module.exports = React.createClass({
   },
 
   goToIndex: function () {
-    this.context.router.push("/index");
+    this.context.router.push("/landingPage");
   },
 
   goToCurrentUserHomePage: function () {
     this.context.router.push("/homepage");
+  },
+
+  goToLandingPage: function () {
+    this.context.router.push("/gamesIndex");
   },
 
 
@@ -55,7 +59,7 @@ module.exports = React.createClass({
       logoutButton = <li onClick={ApiUtil.logout}>Logout</li>;
       welcomeMessage = <h2>Welcome, {this.state.currentUser.username}</h2>;
       homepage = <li onClick={this.goToCurrentUserHomePage}>My Stats</li>;
-      browse = <li>Browse</li>;
+      browse = <li onClick={this.goToLandingPage}>Browse</li>;
       community = <li>Community</li>;
       searchBar = <Search />;
     }

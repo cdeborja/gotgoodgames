@@ -15,6 +15,7 @@ module.exports = React.createClass({
 
   getStateFromStore: function () {
     var user_id = SessionStore.currentUser().id;
+    
     return { user: SessionStore.currentUser(),
              reviews: ReviewStore.all()
            };

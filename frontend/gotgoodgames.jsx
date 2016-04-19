@@ -10,8 +10,9 @@ var hashHistory = require('react-router').hashHistory;
 var ApiUtil = require('./util/apiUtil');
 
 //Current Routes that need pages
-var GamesIndex = require('./components/games/index');
+var LandingPage = require('./components/games/landingPage');
 var GameDetail = require('./components/games/detail');
+var GamesIndex = require('./components/games/gamesIndex');
 var UserHomePage = require('./components/users/homepage');
 var UserShowPage = require('./components/users/showpage');
 var EditForm = require('./components/reviews/editForm');
@@ -28,7 +29,8 @@ var routes = (
   <Route path="/" component={App}>
     <Route path="homepage" component={UserHomePage} onEnter={_requireLoggedIn} />
     <Route path="edit_user" component={EditUserForm} onEnter={_requireLoggedIn} />
-    <Route path="index" component={GamesIndex} onEnter={_requireLoggedIn} />
+    <Route path="landingPage" component={LandingPage} onEnter={_requireLoggedIn} />
+    <Route path="gamesIndex" component={GamesIndex} onEnter={_requireLoggedIn} />
     <Route path="games/:gameId" component={GameDetail} onEnter={_requireLoggedIn} />
     <Route path="reviews/:reviewId" component={EditForm} onEnter={_requireLoggedIn} />
     <Route path="users/:userId" component={UserShowPage} onEnter={_requireLoggedIn} />
