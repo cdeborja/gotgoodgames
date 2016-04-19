@@ -61,6 +61,7 @@
 	var GamesIndex = __webpack_require__(322);
 	var UserHomePage = __webpack_require__(309);
 	var UserShowPage = __webpack_require__(313);
+	var UsersIndex = __webpack_require__(323);
 	var EditForm = __webpack_require__(314);
 	var LoginForm = __webpack_require__(315);
 	var SignUpForm = __webpack_require__(316);
@@ -80,6 +81,7 @@
 	  React.createElement(Route, { path: 'gamesIndex', component: GamesIndex, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'games/:gameId', component: GameDetail, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'reviews/:reviewId', component: EditForm, onEnter: _requireLoggedIn }),
+	  React.createElement(Route, { path: 'users', component: UsersIndex, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'users/:userId', component: UserShowPage, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'login', component: LoginForm }),
 	  React.createElement(Route, { path: 'signup', component: SignUpForm }),
@@ -21694,8 +21696,12 @@
 	    this.context.router.push("/homepage");
 	  },
 	
-	  goToLandingPage: function () {
+	  goToGamesIndex: function () {
 	    this.context.router.push("/gamesIndex");
+	  },
+	
+	  goToUsersIndex: function () {
+	    this.context.router.push("/users");
 	  },
 	
 	  render: function () {
@@ -21725,12 +21731,12 @@
 	      );
 	      browse = React.createElement(
 	        'li',
-	        { onClick: this.goToLandingPage },
+	        { onClick: this.goToGamesIndex },
 	        'Browse'
 	      );
 	      community = React.createElement(
 	        'li',
-	        null,
+	        { onClick: this.goToUsersIndex },
 	        'Community'
 	      );
 	      searchBar = React.createElement(Search, null);
@@ -22018,6 +22024,20 @@
 	      dataType: "json",
 	      success: function (user) {
 	        UserActions.userReceived(user);
+	      },
+	      error: function () {
+	        console.log("couldnt get user");
+	      }
+	    });
+	  },
+	
+	  fetchAllUsers: function () {
+	    $.ajax({
+	      type: "GET",
+	      url: "/api/users/",
+	      dataType: "json",
+	      success: function (users) {
+	        UserActions.usersReceived(users);
 	      },
 	      error: function () {
 	        console.log("couldnt get user");
@@ -29138,6 +29158,13 @@
 	  receivedAllReviewedUsers: function (users) {
 	    AppDispatcher.dispatch({
 	      actionType: UserConstants.REVIEWED_USERS_RECEIVED,
+	      users: users
+	    });
+	  },
+	
+	  usersReceived: function (users) {
+	    AppDispatcher.dispatch({
+	      actionType: UserConstants.USERS_RECEIVED,
 	      users: users
 	    });
 	  }
@@ -38705,7 +38732,12 @@
 	      return React.createElement(
 	        'li',
 	        { key: game.id, id: game.id, onClick: that.goToGame },
-	        React.createElement('img', { src: game.image_url })
+	        React.createElement('img', { src: game.image_url }),
+	        React.createElement(
+	          'p',
+	          null,
+	          game.title
+	        )
 	      );
 	    });
 	
@@ -38724,6 +38756,96 @@
 	          'ul',
 	          { className: 'games-index' },
 	          gamesIndex
+	        )
+	      )
+	    );
+	  }
+	
+	});
+
+/***/ },
+/* 323 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(181);
+	var AppDispatcher = __webpack_require__(182);
+	var SessionStore = __webpack_require__(188);
+	var UserStore = __webpack_require__(301);
+	var GameStore = __webpack_require__(236);
+	var UserReviewItem = __webpack_require__(310);
+	var EditUserForm = __webpack_require__(312);
+	
+	module.exports = React.createClass({
+	  displayName: 'exports',
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  getStateFromStore: function () {
+	    return { users: UserStore.all()
+	    };
+	  },
+	
+	  _onChange: function () {
+	    this.setState(this.getStateFromStore());
+	  },
+	
+	  getInitialState: function () {
+	    return this.getStateFromStore();
+	  },
+	
+	  goToUserShowpage: function (e) {
+	    this.context.router.push('/users/' + e.currentTarget.id);
+	  },
+	
+	  componentDidMount: function () {
+	    this.userListener = UserStore.addListener(this._onChange);
+	    ApiUtil.fetchAllUsers();
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.userListener.remove();
+	  },
+	
+	  render: function () {
+	    if (this.state.users.length === 0) {
+	      return React.createElement(
+	        'div',
+	        { className: 'loading' },
+	        ' Loading... '
+	      );
+	    }
+	    var that = this;
+	    var usersIndex = this.state.users.map(function (user) {
+	      return React.createElement(
+	        'li',
+	        { key: user.id, id: user.id, onClick: that.goToUserShowpage },
+	        React.createElement('img', { src: user.picture }),
+	        React.createElement(
+	          'p',
+	          null,
+	          user.username
+	        )
+	      );
+	    });
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'content-container group' },
+	      React.createElement(
+	        'div',
+	        { className: 'game-index-box' },
+	        React.createElement(
+	          'h2',
+	          null,
+	          'All Signed Up Users'
+	        ),
+	        React.createElement(
+	          'ul',
+	          { className: 'games-index' },
+	          usersIndex
 	        )
 	      )
 	    );

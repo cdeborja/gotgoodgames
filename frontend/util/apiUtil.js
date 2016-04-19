@@ -61,6 +61,20 @@ module.exports = {
     });
   },
 
+  fetchAllUsers: function () {
+    $.ajax({
+      type: "GET",
+      url: "/api/users/",
+      dataType: "json",
+      success: function (users) {
+        UserActions.usersReceived(users);
+      },
+      error: function () {
+        console.log("couldnt get user");
+      }
+    });
+  },
+
   updateUserInformation: function(user_id, formData, callback) {
     $.ajax({
       url: '/api/users/' + user_id,

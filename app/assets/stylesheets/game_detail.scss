@@ -242,3 +242,13 @@
   width: 170px;
   height: auto;
 }
+
+.games-index > li:hover {
+  cursor: pointer;
+}
+
+.games-index > li > p {
+  display: block;
+  float: left;
+  position: absolute;
+}

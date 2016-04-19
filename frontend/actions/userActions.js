@@ -14,6 +14,13 @@ var UserActions = {
       actionType: UserConstants.REVIEWED_USERS_RECEIVED,
       users: users
     });
+  },
+
+  usersReceived: function (users) {
+    AppDispatcher.dispatch({
+      actionType: UserConstants.USERS_RECEIVED,
+      users: users
+    });
   }
 
 };

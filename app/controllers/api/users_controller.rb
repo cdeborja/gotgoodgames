@@ -36,6 +36,8 @@ class Api::UsersController < ApplicationController
       render json: reviewed_users
     end
 
+    render :index
+
   end
 
 end

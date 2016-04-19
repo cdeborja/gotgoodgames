@@ -13,7 +13,7 @@ module.exports = React.createClass({
    },
 
   getStateFromStore: function () {
-    return { games: GameStore.all(),
+    return { users: UserStore.all(),
            };
   },
 
@@ -25,34 +25,34 @@ module.exports = React.createClass({
     return (this.getStateFromStore() );
   },
 
-  goToGame: function (e) {
-    this.context.router.push('/games/' + e.currentTarget.id);
+  goToUserShowpage: function (e) {
+    this.context.router.push('/users/' + e.currentTarget.id);
   },
 
   componentDidMount: function () {
-    this.gameListener = GameStore.addListener(this._onChange);
-    ApiUtil.fetchAllGames();
+    this.userListener = UserStore.addListener(this._onChange);
+    ApiUtil.fetchAllUsers();
   },
 
   componentWillUnmount: function () {
-    this.gameListener.remove();
+    this.userListener.remove();
   },
 
   render: function () {
-    if (this.state.games.length === 0) {
+    if (this.state.users.length === 0) {
       return (<div className="loading"> Loading... </div>);
     }
     var that = this;
-    var gamesIndex = this.state.games.map(function (game) {
-      return (<li key={game.id} id={game.id} onClick={that.goToGame}><img src={game.image_url}/><p>{game.title}</p></li>);
+    var usersIndex = this.state.users.map(function (user) {
+      return (<li key={user.id} id={user.id} onClick={that.goToUserShowpage}><img src={user.picture}/><p>{user.username}</p></li>);
     });
 
     return(
     <div className="content-container group">
       <div className="game-index-box">
-        <h2>All current games</h2>
+        <h2>All Signed Up Users</h2>
         <ul className="games-index">
-          {gamesIndex}
+          {usersIndex}
         </ul>
       </div>
     </div>

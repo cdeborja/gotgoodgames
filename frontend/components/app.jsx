@@ -46,8 +46,12 @@ module.exports = React.createClass({
     this.context.router.push("/homepage");
   },
 
-  goToLandingPage: function () {
+  goToGamesIndex: function () {
     this.context.router.push("/gamesIndex");
+  },
+
+  goToUsersIndex: function () {
+    this.context.router.push("/users");
   },
 
 
@@ -59,8 +63,8 @@ module.exports = React.createClass({
       logoutButton = <li onClick={ApiUtil.logout}>Logout</li>;
       welcomeMessage = <h2>Welcome, {this.state.currentUser.username}</h2>;
       homepage = <li onClick={this.goToCurrentUserHomePage}>My Stats</li>;
-      browse = <li onClick={this.goToLandingPage}>Browse</li>;
-      community = <li>Community</li>;
+      browse = <li onClick={this.goToGamesIndex}>Browse</li>;
+      community = <li onClick={this.goToUsersIndex}>Community</li>;
       searchBar = <Search />;
     }
 
