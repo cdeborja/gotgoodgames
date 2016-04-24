@@ -58,13 +58,13 @@
 	//Current Routes that need pages
 	var LandingPage = __webpack_require__(180);
 	var GameDetail = __webpack_require__(298);
-	var GamesIndex = __webpack_require__(322);
-	var UserHomePage = __webpack_require__(309);
-	var UserShowPage = __webpack_require__(313);
-	var UsersIndex = __webpack_require__(323);
-	var EditForm = __webpack_require__(314);
-	var LoginForm = __webpack_require__(315);
-	var SignUpForm = __webpack_require__(316);
+	var GamesIndex = __webpack_require__(309);
+	var UserHomePage = __webpack_require__(313);
+	var UserShowPage = __webpack_require__(314);
+	var UsersIndex = __webpack_require__(315);
+	var EditForm = __webpack_require__(316);
+	var LoginForm = __webpack_require__(317);
+	var SignUpForm = __webpack_require__(318);
 	var Search = __webpack_require__(239);
 	var EditUserForm = __webpack_require__(312);
 	
@@ -37389,7 +37389,6 @@
 	var AppDispatcher = __webpack_require__(182);
 	var SessionStore = __webpack_require__(188);
 	var UserStore = __webpack_require__(301);
-	var ReviewStore = __webpack_require__(300);
 	var GameStore = __webpack_require__(236);
 	var UserReviewItem = __webpack_require__(310);
 	var EditUserForm = __webpack_require__(312);
@@ -37402,10 +37401,7 @@
 	  },
 	
 	  getStateFromStore: function () {
-	    var user_id = SessionStore.currentUser().id;
-	
-	    return { user: SessionStore.currentUser(),
-	      reviews: ReviewStore.all()
+	    return { games: GameStore.all()
 	    };
 	  },
 	
@@ -37417,98 +37413,57 @@
 	    return this.getStateFromStore();
 	  },
 	
+	  goToGame: function (e) {
+	    this.context.router.push('/games/' + e.currentTarget.id);
+	  },
+	
 	  componentDidMount: function () {
-	    this.reviewListener = ReviewStore.addListener(this._onChange);
-	    this.sessionListener = SessionStore.addListener(this._onChange);
-	    ApiUtil.fetchUserReviews(this.state.user.id);
+	    this.gameListener = GameStore.addListener(this._onChange);
+	    ApiUtil.fetchAllGames();
 	  },
 	
 	  componentWillUnmount: function () {
-	    this.sessionListener.remove();
-	    this.reviewListener.remove();
-	  },
-	
-	  goToEditProfile: function () {
-	    this.context.router.push({
-	      pathname: '/edit_user',
-	      query: {},
-	      state: { user: this.state.user }
-	    });
+	    this.gameListener.remove();
 	  },
 	
 	  render: function () {
-	    if (this.state.reviews.length === 0 && !this.state.user) {
+	    if (this.state.games.length === 0) {
 	      return React.createElement(
 	        'div',
 	        { className: 'loading' },
 	        ' Loading... '
 	      );
 	    }
-	    var userReviews = this.state.reviews.map(function (review, id) {
-	      return React.createElement(UserReviewItem, { key: id, review: review });
-	    }).reverse();
-	
-	    // var memberSince = this.state.user.created_at.slice(0,10).split("-").join('/');
+	    var that = this;
+	    var gamesIndex = this.state.games.map(function (game) {
+	      return React.createElement(
+	        'li',
+	        { key: game.id, id: game.id, onClick: that.goToGame },
+	        React.createElement('img', { src: game.image_url }),
+	        React.createElement(
+	          'p',
+	          null,
+	          game.title
+	        )
+	      );
+	    });
 	
 	    return React.createElement(
 	      'div',
 	      { className: 'content-container group' },
 	      React.createElement(
 	        'div',
-	        { className: 'user-information-box group' },
-	        React.createElement(
-	          'div',
-	          { className: 'user-information' },
-	          React.createElement(
-	            'div',
-	            { className: 'user-picture' },
-	            React.createElement('img', { src: this.state.user.picture })
-	          ),
-	          React.createElement(
-	            'ul',
-	            { className: 'stat-box' },
-	            React.createElement(
-	              'h3',
-	              null,
-	              '"Newbie"'
-	            ),
-	            React.createElement(
-	              'li',
-	              null,
-	              'Reviews: ',
-	              this.state.reviews.length
-	            )
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'user-description-box' },
-	          React.createElement(
-	            'h1',
-	            null,
-	            this.state.user.username
-	          ),
-	          React.createElement(
-	            'p',
-	            null,
-	            this.state.user.description
-	          ),
-	          React.createElement(
-	            'button',
-	            { onClick: this.goToEditProfile },
-	            'Edit Profile'
-	          )
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'recent-reviews-box' },
+	        { className: 'game-index-box' },
 	        React.createElement(
 	          'h2',
 	          null,
-	          'Your Recent Activity!'
+	          'All current games'
 	        ),
-	        userReviews
+	        React.createElement(
+	          'ul',
+	          { className: 'games-index' },
+	          gamesIndex
+	        )
 	      )
 	    );
 	  }
@@ -37952,6 +37907,141 @@
 	var ReviewStore = __webpack_require__(300);
 	var GameStore = __webpack_require__(236);
 	var UserReviewItem = __webpack_require__(310);
+	var EditUserForm = __webpack_require__(312);
+	
+	module.exports = React.createClass({
+	  displayName: 'exports',
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  getStateFromStore: function () {
+	    var user_id = SessionStore.currentUser().id;
+	
+	    return { user: SessionStore.currentUser(),
+	      reviews: ReviewStore.all()
+	    };
+	  },
+	
+	  _onChange: function () {
+	    this.setState(this.getStateFromStore());
+	  },
+	
+	  getInitialState: function () {
+	    return this.getStateFromStore();
+	  },
+	
+	  componentDidMount: function () {
+	    this.reviewListener = ReviewStore.addListener(this._onChange);
+	    this.sessionListener = SessionStore.addListener(this._onChange);
+	    ApiUtil.fetchUserReviews(this.state.user.id);
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.sessionListener.remove();
+	    this.reviewListener.remove();
+	  },
+	
+	  goToEditProfile: function () {
+	    this.context.router.push({
+	      pathname: '/edit_user',
+	      query: {},
+	      state: { user: this.state.user }
+	    });
+	  },
+	
+	  render: function () {
+	    if (this.state.reviews.length === 0 && !this.state.user) {
+	      return React.createElement(
+	        'div',
+	        { className: 'loading' },
+	        ' Loading... '
+	      );
+	    }
+	    var userReviews = this.state.reviews.map(function (review, id) {
+	      return React.createElement(UserReviewItem, { key: id, review: review });
+	    }).reverse();
+	
+	    // var memberSince = this.state.user.created_at.slice(0,10).split("-").join('/');
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'content-container group' },
+	      React.createElement(
+	        'div',
+	        { className: 'user-information-box group' },
+	        React.createElement(
+	          'div',
+	          { className: 'user-information' },
+	          React.createElement(
+	            'div',
+	            { className: 'user-picture' },
+	            React.createElement('img', { src: this.state.user.picture })
+	          ),
+	          React.createElement(
+	            'ul',
+	            { className: 'stat-box' },
+	            React.createElement(
+	              'h3',
+	              null,
+	              '"Newbie"'
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              'Reviews: ',
+	              this.state.reviews.length
+	            )
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'user-description-box' },
+	          React.createElement(
+	            'h1',
+	            null,
+	            this.state.user.username
+	          ),
+	          React.createElement(
+	            'p',
+	            null,
+	            this.state.user.description
+	          ),
+	          React.createElement(
+	            'button',
+	            { onClick: this.goToEditProfile },
+	            'Edit Profile'
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'recent-reviews-box' },
+	        React.createElement(
+	          'h2',
+	          null,
+	          'Your Recent Activity!'
+	        ),
+	        userReviews
+	      )
+	    );
+	  }
+	
+	});
+
+/***/ },
+/* 314 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(181);
+	var AppDispatcher = __webpack_require__(182);
+	var SessionStore = __webpack_require__(188);
+	var UserStore = __webpack_require__(301);
+	var ReviewStore = __webpack_require__(300);
+	var GameStore = __webpack_require__(236);
+	var UserReviewItem = __webpack_require__(310);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -38070,7 +38160,97 @@
 	});
 
 /***/ },
-/* 314 */
+/* 315 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(181);
+	var AppDispatcher = __webpack_require__(182);
+	var SessionStore = __webpack_require__(188);
+	var UserStore = __webpack_require__(301);
+	var GameStore = __webpack_require__(236);
+	var UserReviewItem = __webpack_require__(310);
+	var EditUserForm = __webpack_require__(312);
+	
+	module.exports = React.createClass({
+	  displayName: 'exports',
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  getStateFromStore: function () {
+	    return { users: UserStore.all()
+	    };
+	  },
+	
+	  _onChange: function () {
+	    this.setState(this.getStateFromStore());
+	  },
+	
+	  getInitialState: function () {
+	    return this.getStateFromStore();
+	  },
+	
+	  goToUserShowpage: function (e) {
+	    this.context.router.push('/users/' + e.currentTarget.id);
+	  },
+	
+	  componentDidMount: function () {
+	    this.userListener = UserStore.addListener(this._onChange);
+	    ApiUtil.fetchAllUsers();
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.userListener.remove();
+	  },
+	
+	  render: function () {
+	    if (this.state.users.length === 0) {
+	      return React.createElement(
+	        'div',
+	        { className: 'loading' },
+	        ' Loading... '
+	      );
+	    }
+	    var that = this;
+	    var usersIndex = this.state.users.map(function (user) {
+	      return React.createElement(
+	        'li',
+	        { key: user.id, id: user.id, onClick: that.goToUserShowpage },
+	        React.createElement('img', { src: user.picture }),
+	        React.createElement(
+	          'p',
+	          null,
+	          user.username
+	        )
+	      );
+	    });
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'content-container group' },
+	      React.createElement(
+	        'div',
+	        { className: 'game-index-box' },
+	        React.createElement(
+	          'h2',
+	          null,
+	          'All Signed Up Users'
+	        ),
+	        React.createElement(
+	          'ul',
+	          { className: 'games-index' },
+	          usersIndex
+	        )
+	      )
+	    );
+	  }
+	
+	});
+
+/***/ },
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -38245,7 +38425,7 @@
 	module.exports = ReviewForm;
 
 /***/ },
-/* 315 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -38359,11 +38539,11 @@
 	module.exports = LoginForm;
 
 /***/ },
-/* 316 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var LinkedStateMixin = __webpack_require__(317);
+	var LinkedStateMixin = __webpack_require__(319);
 	var ErrorStore = __webpack_require__(238);
 	var ApiUtil = __webpack_require__(181);
 	
@@ -38443,13 +38623,13 @@
 	module.exports = SignUpForm;
 
 /***/ },
-/* 317 */
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(318);
+	module.exports = __webpack_require__(320);
 
 /***/ },
-/* 318 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38466,8 +38646,8 @@
 	
 	'use strict';
 	
-	var ReactLink = __webpack_require__(319);
-	var ReactStateSetters = __webpack_require__(320);
+	var ReactLink = __webpack_require__(321);
+	var ReactStateSetters = __webpack_require__(322);
 	
 	/**
 	 * A simple mixin around ReactLink.forState().
@@ -38490,7 +38670,7 @@
 	module.exports = LinkedStateMixin;
 
 /***/ },
-/* 319 */
+/* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38564,7 +38744,7 @@
 	module.exports = ReactLink;
 
 /***/ },
-/* 320 */
+/* 322 */
 /***/ function(module, exports) {
 
 	/**
@@ -38671,187 +38851,6 @@
 	};
 	
 	module.exports = ReactStateSetters;
-
-/***/ },
-/* 321 */,
-/* 322 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var ApiUtil = __webpack_require__(181);
-	var AppDispatcher = __webpack_require__(182);
-	var SessionStore = __webpack_require__(188);
-	var UserStore = __webpack_require__(301);
-	var GameStore = __webpack_require__(236);
-	var UserReviewItem = __webpack_require__(310);
-	var EditUserForm = __webpack_require__(312);
-	
-	module.exports = React.createClass({
-	  displayName: 'exports',
-	
-	  contextTypes: {
-	    router: React.PropTypes.object.isRequired
-	  },
-	
-	  getStateFromStore: function () {
-	    return { games: GameStore.all()
-	    };
-	  },
-	
-	  _onChange: function () {
-	    this.setState(this.getStateFromStore());
-	  },
-	
-	  getInitialState: function () {
-	    return this.getStateFromStore();
-	  },
-	
-	  goToGame: function (e) {
-	    this.context.router.push('/games/' + e.currentTarget.id);
-	  },
-	
-	  componentDidMount: function () {
-	    this.gameListener = GameStore.addListener(this._onChange);
-	    ApiUtil.fetchAllGames();
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.gameListener.remove();
-	  },
-	
-	  render: function () {
-	    if (this.state.games.length === 0) {
-	      return React.createElement(
-	        'div',
-	        { className: 'loading' },
-	        ' Loading... '
-	      );
-	    }
-	    var that = this;
-	    var gamesIndex = this.state.games.map(function (game) {
-	      return React.createElement(
-	        'li',
-	        { key: game.id, id: game.id, onClick: that.goToGame },
-	        React.createElement('img', { src: game.image_url }),
-	        React.createElement(
-	          'p',
-	          null,
-	          game.title
-	        )
-	      );
-	    });
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'content-container group' },
-	      React.createElement(
-	        'div',
-	        { className: 'game-index-box' },
-	        React.createElement(
-	          'h2',
-	          null,
-	          'All current games'
-	        ),
-	        React.createElement(
-	          'ul',
-	          { className: 'games-index' },
-	          gamesIndex
-	        )
-	      )
-	    );
-	  }
-	
-	});
-
-/***/ },
-/* 323 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var ApiUtil = __webpack_require__(181);
-	var AppDispatcher = __webpack_require__(182);
-	var SessionStore = __webpack_require__(188);
-	var UserStore = __webpack_require__(301);
-	var GameStore = __webpack_require__(236);
-	var UserReviewItem = __webpack_require__(310);
-	var EditUserForm = __webpack_require__(312);
-	
-	module.exports = React.createClass({
-	  displayName: 'exports',
-	
-	  contextTypes: {
-	    router: React.PropTypes.object.isRequired
-	  },
-	
-	  getStateFromStore: function () {
-	    return { users: UserStore.all()
-	    };
-	  },
-	
-	  _onChange: function () {
-	    this.setState(this.getStateFromStore());
-	  },
-	
-	  getInitialState: function () {
-	    return this.getStateFromStore();
-	  },
-	
-	  goToUserShowpage: function (e) {
-	    this.context.router.push('/users/' + e.currentTarget.id);
-	  },
-	
-	  componentDidMount: function () {
-	    this.userListener = UserStore.addListener(this._onChange);
-	    ApiUtil.fetchAllUsers();
-	  },
-	
-	  componentWillUnmount: function () {
-	    this.userListener.remove();
-	  },
-	
-	  render: function () {
-	    if (this.state.users.length === 0) {
-	      return React.createElement(
-	        'div',
-	        { className: 'loading' },
-	        ' Loading... '
-	      );
-	    }
-	    var that = this;
-	    var usersIndex = this.state.users.map(function (user) {
-	      return React.createElement(
-	        'li',
-	        { key: user.id, id: user.id, onClick: that.goToUserShowpage },
-	        React.createElement('img', { src: user.picture }),
-	        React.createElement(
-	          'p',
-	          null,
-	          user.username
-	        )
-	      );
-	    });
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'content-container group' },
-	      React.createElement(
-	        'div',
-	        { className: 'game-index-box' },
-	        React.createElement(
-	          'h2',
-	          null,
-	          'All Signed Up Users'
-	        ),
-	        React.createElement(
-	          'ul',
-	          { className: 'games-index' },
-	          usersIndex
-	        )
-	      )
-	    );
-	  }
-	
-	});
 
 /***/ }
 /******/ ]);

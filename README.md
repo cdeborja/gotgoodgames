@@ -2,16 +2,12 @@
 
 Are you a gamer? Do you consider yourself a **connoisseur** of video games?
 
-Do you... got good games?
+Do you [gotgoodgames](http://www.gotgoodgames.xyz/)?
 
 This is a github repository outlining the creation and implementation of
 'gotgoodgames', a website akin to the currently running www.goodreads.com,
 but instead will be more focused on video games instead of books. It is built
 using Ruby on Rails and React js.
-
-##Heroku Link
-[gotgoodgames](http://www.gotgoodgames.xyz/)
-**NB** This links to a domain redirected from Heroku
 
 ##Design Docs
 * [View Wireframes][views]
