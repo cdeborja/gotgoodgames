@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   validates :username, :password_digest, :session_token, presence: true, uniqueness: true
   validates :password, length:{minimum: 6, allow_nil: true}
 
-  has_attached_file :picture, default_url: "https://upload.wikimedia.org/wikipedia/commons/6/64/Banana_Peel.JPG"
+  has_attached_file :picture, default_url: "https://pixabay.com/static/uploads/photo/2012/04/02/16/40/gameboy-24909_960_720.png"
   validates_attachment_content_type :picture, content_type: /\Aimage\/.*\Z/
 
   include PgSearch

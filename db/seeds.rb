@@ -10,13 +10,23 @@ User.destroy_all
 user1 = User.create!(username: "guest",
         password: "password",
         description: "Hello, it's me I was wondering if after all these years you'd like to meet To go over everything They say that time's supposed to heal ya But I ain't done much healing... ")
-user2 = User.create!(username: "banana",
+user2 = User.create!(username: "Mario",
         password: "password")
-user3 = User.create!(username: "poatate",
+user3 = User.create!(username: "Luigi",
         password: "password")
-user4 = User.create!(username: "test",
+user4 = User.create!(username: "Megaman",
         password: "password")
-user5 = User.create!(username: "user",
+user5 = User.create!(username: "Scorpion",
+        password: "password")
+user6 = User.create!(username: "Naruto",
+        password: "password")
+user7 = User.create!(username: "I-Block",
+        password: "password")
+user8 = User.create!(username: "Sonic",
+        password: "password")
+user9 = User.create!(username: "Ramza",
+        password: "password")
+user10 = User.create!(username: "Superman",
         password: "password")
 
 Game.destroy_all
