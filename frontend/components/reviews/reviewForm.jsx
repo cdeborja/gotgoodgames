@@ -111,6 +111,14 @@ var ReviewForm = React.createClass({
         zIndex         : 11
       }
     };
+    var form = this;
+    var scoreChoices = [1, 2, 3, 4, 5].map ( function (value, idx) {
+      return (<li key={idx}>
+        <label>{value}</label>
+        <input type="radio" value={value} className="review-score" name="score"
+        onChange={form.updateScore}/>
+      </li>);
+      });
 
     return(
       <div>
@@ -137,31 +145,7 @@ var ReviewForm = React.createClass({
           </label>
 
           <ul className="score-choices">
-            <li>
-            <label>1</label>
-            <input type="radio" value="1" className="review-score" name="score"
-            onChange={this.updateScore}/>
-            </li>
-            <li>
-            <label>2</label>
-            <input type="radio" value="2" className="review-score" name="score"
-            onChange={this.updateScore}/>
-            </li>
-            <li>
-            <label>3</label>
-            <input type="radio" value="3" className="review-score" name="score"
-            onChange={this.updateScore}/>
-            </li>
-            <li>
-            <label>4</label>
-            <input type="radio" value="4" className="review-score" name="score"
-            onChange={this.updateScore}/>
-            </li>
-            <li>
-            <label>5</label>
-            <input type="radio" value="5" className="review-score" name="score"
-            onChange={this.updateScore}/>
-            </li>
+            {scoreChoices}
           </ul>
           <textarea className="add-review-textarea" placeholder="Now explain it here!"
           onChange={this.updateReview} value={this.state.review}/>

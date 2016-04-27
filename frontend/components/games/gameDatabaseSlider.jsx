@@ -17,8 +17,9 @@ var GameDatabaseSlider = React.createClass({
       dots: true,
       infinite: true,
       speed: 500,
-      slidesToShow: 3,
-      slidesToScroll: 3,
+      slidesToShow: 5,
+      slidesToScroll: 5,
+      draggable: false
 
     };
 
@@ -28,7 +29,7 @@ var GameDatabaseSlider = React.createClass({
         <div key={idx}>
           <ul className="game-preview">
             <img className={color} onClick={this.showDetail} id={game.id} src={game.image_url}/>
-            <li>{game.title}</li>
+            <li>{game.title }</li>
             <li>Average Rating</li>
           </ul>
         </div>

@@ -1,11 +1,13 @@
-json.meta do
-  json.total_pages @search_results.total_pages
-  json.query params[:query]
-  json.page @search_results.current_page
-end
+# json.meta do
+#   json.total_pages @search_results.total_pages
+#   json.query params[:query]
+#   json.page @search_results.current_page
+# end
+
+# json.array! @search_results.map(&:searchable) do |search_result|
 
 json.search_results do
-  json.array! @search_results.map(&:searchable) do |search_result|
+  json.array! @search_results.each do |search_result|
     case search_result
     when User
       json.partial!("api/users/user", user: search_result)

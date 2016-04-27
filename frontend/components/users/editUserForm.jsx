@@ -63,6 +63,8 @@ var EditUserForm = React.createClass({
   // />
 
   render: function () {
+    debugger;
+
       return(
 
         <div className="edit-box">

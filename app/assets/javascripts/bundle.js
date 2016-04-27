@@ -21857,112 +21857,58 @@
 	      { className: 'content-container group' },
 	      React.createElement(
 	        'div',
-	        { className: 'content-feed' },
-	        React.createElement(
-	          'div',
-	          { className: 'feed-buttons group' },
-	          React.createElement(
-	            'ul',
-	            null,
-	            React.createElement(
-	              'li',
-	              null,
-	              'Updates'
-	            ),
-	            React.createElement(
-	              'li',
-	              null,
-	              'Discussions'
-	            )
-	          )
-	        ),
-	        React.createElement(
-	          'ul',
-	          { className: 'feed-display group' },
-	          React.createElement(
-	            'li',
-	            { className: 'recent-activity-item group' },
-	            React.createElement('img', { src: 'http://i280.photobucket.com/albums/kk197/chanhonglok/naruto/5a1c4ba4.gif' }),
-	            React.createElement(
-	              'div',
-	              { className: 'feed-information' },
-	              React.createElement(
-	                'h2',
-	                null,
-	                'Sasuke reviewed... '
-	              ),
-	              React.createElement(
-	                'div',
-	                { className: 'recent-activity' },
-	                React.createElement('img', { src: 'https://upload.wikimedia.org/wikipedia/en/4/4b/Fftbox.jpg' }),
-	                React.createElement(
-	                  'div',
-	                  { className: 'comment-activity' },
-	                  React.createElement(
-	                    'ul',
-	                    null,
-	                    React.createElement(
-	                      'li',
-	                      null,
-	                      'Final Fantasy Tactics --- 1/5'
-	                    ),
-	                    React.createElement(
-	                      'li',
-	                      null,
-	                      'Naruto and Sakura made me play this...'
-	                    )
-	                  )
-	                )
-	              )
-	            )
-	          ),
-	          React.createElement(
-	            'li',
-	            { className: 'recent-activity-item group' },
-	            React.createElement('img', { src: 'http://vignette4.wikia.nocookie.net/nintendo/images/4/44/Luigi-Icon.png/revision/latest?cb=20120820000627&path-prefix=en' }),
-	            React.createElement(
-	              'div',
-	              { className: 'feed-information' },
-	              React.createElement(
-	                'h2',
-	                null,
-	                'Luigi reviewed... '
-	              ),
-	              React.createElement(
-	                'div',
-	                { className: 'recent-activity' },
-	                React.createElement('img', { src: 'http://img.gamefaqs.net/box/0/7/5/22075_front.jpg' }),
-	                React.createElement(
-	                  'div',
-	                  { className: 'comment-activity' },
-	                  React.createElement(
-	                    'ul',
-	                    null,
-	                    React.createElement(
-	                      'li',
-	                      null,
-	                      'Mario is missing!--- 2/5'
-	                    ),
-	                    React.createElement(
-	                      'li',
-	                      null,
-	                      'Mama Mia! I had to travel around the WORLD to find him!'
-	                    )
-	                  )
-	                )
-	              )
-	            )
-	          )
-	        )
-	      ),
-	      React.createElement(
-	        'div',
 	        { className: 'content-game-lists' },
 	        React.createElement(GameDatabaseSlider, { games: this.state.games })
 	      )
 	    );
 	  }
 	});
+	
+	// Implement Discussions Feed later!!!
+
+	// <div className="content-feed">
+	// <div className="feed-buttons group">
+	// <ul>
+	// <li>Updates</li>
+	// <li>Discussions</li>
+	// </ul>
+	// </div>
+	// <ul className="feed-display group">
+	//
+	// <li className="recent-activity-item group">
+	// <img src="http://i280.photobucket.com/albums/kk197/chanhonglok/naruto/5a1c4ba4.gif"/>
+	// <div className="feed-information">
+	// <h2>Sasuke reviewed... </h2>
+	// <div className="recent-activity">
+	// <img src="https://upload.wikimedia.org/wikipedia/en/4/4b/Fftbox.jpg" />
+	// <div className="comment-activity">
+	// <ul>
+	// <li>Final Fantasy Tactics --- 1/5</li>
+	// <li>Naruto and Sakura made me play this...</li>
+	// </ul>
+	// </div>
+	// </div>
+	// </div>
+	// </li>
+	//
+	// <li className="recent-activity-item group">
+	// <img src="http://vignette4.wikia.nocookie.net/nintendo/images/4/44/Luigi-Icon.png/revision/latest?cb=20120820000627&path-prefix=en"/>
+	// <div className="feed-information">
+	// <h2>Luigi reviewed... </h2>
+	// <div className="recent-activity">
+	// <img src="http://img.gamefaqs.net/box/0/7/5/22075_front.jpg" />
+	// <div className="comment-activity">
+	// <ul>
+	// <li>Mario is missing!--- 2/5</li>
+	// <li>Mama Mia! I had to travel around the WORLD to find him!</li>
+	// </ul>
+	// </div>
+	// </div>
+	// </div>
+	// </li>
+	//
+	// </ul>
+	// </div>
 
 /***/ },
 /* 181 */
@@ -31322,8 +31268,9 @@
 	      dots: true,
 	      infinite: true,
 	      speed: 500,
-	      slidesToShow: 3,
-	      slidesToScroll: 3
+	      slidesToShow: 5,
+	      slidesToScroll: 5,
+	      draggable: false
 	
 	    };
 	
@@ -31475,33 +31422,35 @@
 	  },
 	
 	  resultList: function () {
-	    return SearchResultsStore.all().map(function (result) {
-	      if (result._type === "Game") {
-	        var gamehtml = "#/games/" + result.id;
-	        return React.createElement(
-	          "li",
-	          { key: result.id },
-	          React.createElement(
-	            "a",
-	            { href: gamehtml },
-	            "Game: ",
-	            result.title
-	          )
-	        );
-	      } else {
-	        var userhtml = "#/users/" + result.id;
-	        return React.createElement(
-	          "li",
-	          { key: result.id },
-	          React.createElement(
-	            "a",
-	            { href: userhtml },
-	            "User: ",
-	            result.username
-	          )
-	        );
-	      }
-	    });
+	    if (this.state.query.length > 2) {
+	      return SearchResultsStore.all().map(function (result) {
+	        if (result._type === "Game") {
+	          var gamehtml = "#/games/" + result.id;
+	          return React.createElement(
+	            "li",
+	            { key: result.id },
+	            React.createElement(
+	              "a",
+	              { href: gamehtml },
+	              "Game: ",
+	              result.title
+	            )
+	          );
+	        } else {
+	          var userhtml = "#/users/" + result.id;
+	          return React.createElement(
+	            "li",
+	            { key: result.id },
+	            React.createElement(
+	              "a",
+	              { href: userhtml },
+	              "User: ",
+	              result.username
+	            )
+	          );
+	        }
+	      });
+	    }
 	  },
 	  // FOR SHOWING PAGES
 	  // <nav className="search-box">
@@ -37056,6 +37005,20 @@
 	        zIndex: 11
 	      }
 	    };
+	    var form = this;
+	    var scoreChoices = [1, 2, 3, 4, 5].map(function (value, idx) {
+	      return React.createElement(
+	        'li',
+	        { key: idx },
+	        React.createElement(
+	          'label',
+	          null,
+	          value
+	        ),
+	        React.createElement('input', { type: 'radio', value: value, className: 'review-score', name: 'score',
+	          onChange: form.updateScore })
+	      );
+	    });
 	
 	    return React.createElement(
 	      'div',
@@ -37095,61 +37058,7 @@
 	          React.createElement(
 	            'ul',
 	            { className: 'score-choices' },
-	            React.createElement(
-	              'li',
-	              null,
-	              React.createElement(
-	                'label',
-	                null,
-	                '1'
-	              ),
-	              React.createElement('input', { type: 'radio', value: '1', className: 'review-score', name: 'score',
-	                onChange: this.updateScore })
-	            ),
-	            React.createElement(
-	              'li',
-	              null,
-	              React.createElement(
-	                'label',
-	                null,
-	                '2'
-	              ),
-	              React.createElement('input', { type: 'radio', value: '2', className: 'review-score', name: 'score',
-	                onChange: this.updateScore })
-	            ),
-	            React.createElement(
-	              'li',
-	              null,
-	              React.createElement(
-	                'label',
-	                null,
-	                '3'
-	              ),
-	              React.createElement('input', { type: 'radio', value: '3', className: 'review-score', name: 'score',
-	                onChange: this.updateScore })
-	            ),
-	            React.createElement(
-	              'li',
-	              null,
-	              React.createElement(
-	                'label',
-	                null,
-	                '4'
-	              ),
-	              React.createElement('input', { type: 'radio', value: '4', className: 'review-score', name: 'score',
-	                onChange: this.updateScore })
-	            ),
-	            React.createElement(
-	              'li',
-	              null,
-	              React.createElement(
-	                'label',
-	                null,
-	                '5'
-	              ),
-	              React.createElement('input', { type: 'radio', value: '5', className: 'review-score', name: 'score',
-	                onChange: this.updateScore })
-	            )
+	            scoreChoices
 	          ),
 	          React.createElement('textarea', { className: 'add-review-textarea', placeholder: 'Now explain it here!',
 	            onChange: this.updateReview, value: this.state.review }),
@@ -37852,6 +37761,8 @@
 	  // />
 	
 	  render: function () {
+	    debugger;
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'edit-box' },
@@ -37913,7 +37824,7 @@
 	  displayName: 'exports',
 	
 	  contextTypes: {
-	    router: React.PropTypes.object.isRequired
+	    router: React.PropTypes.object
 	  },
 	
 	  getStateFromStore: function () {
@@ -37943,7 +37854,7 @@
 	    this.reviewListener.remove();
 	  },
 	
-	  goToEditProfile: function () {
+	  goToEditProfile: function (e) {
 	    this.context.router.push({
 	      pathname: '/edit_user',
 	      query: {},

@@ -10,12 +10,12 @@ var EditUserForm = require('./editUserForm');
 
 module.exports = React.createClass({
   contextTypes: {
-     router: React.PropTypes.object.isRequired
+     router: React.PropTypes.object
    },
 
   getStateFromStore: function () {
     var user_id = SessionStore.currentUser().id;
-    
+
     return { user: SessionStore.currentUser(),
              reviews: ReviewStore.all()
            };
@@ -40,7 +40,7 @@ module.exports = React.createClass({
     this.reviewListener.remove();
   },
 
-  goToEditProfile: function () {
+  goToEditProfile: function (e) {
     this.context.router.push({
       pathname: '/edit_user',
       query: {},

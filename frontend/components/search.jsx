@@ -54,28 +54,30 @@ var Search = React.createClass({
   },
 
   resultList: function () {
-    return SearchResultsStore.all().map(function (result) {
-      if (result._type === "Game") {
-        var gamehtml = "#/games/" + result.id;
-        return (
-          <li key={ result.id }>
-            <a href={gamehtml} >
-              Game: { result.title }
-            </a>
-          </li>
-        );
+    if (this.state.query.length > 2) {
+      return SearchResultsStore.all().map(function (result) {
+        if (result._type === "Game") {
+          var gamehtml = "#/games/" + result.id;
+          return (
+            <li key={ result.id }>
+              <a href={ gamehtml } >
+                Game: { result.title }
+              </a>
+            </li>
+          );
 
-      } else {
-        var userhtml = "#/users/" + result.id;
-        return (
-          <li key={ result.id }>
-            <a href={userhtml}>
-              User: { result.username }
-            </a>
-          </li>
-        );
-      }
-    });
+        } else {
+          var userhtml = "#/users/" + result.id;
+          return (
+            <li key={ result.id }>
+              <a href={ userhtml }>
+                User: { result.username }
+              </a>
+            </li>
+          );
+        }
+      });
+    }
   },
   // FOR SHOWING PAGES
   // <nav className="search-box">

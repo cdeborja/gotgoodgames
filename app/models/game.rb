@@ -1,7 +1,10 @@
 class Game < ActiveRecord::Base
 
   include PgSearch
-  multisearchable :against => :title
+  multisearchable :against => :title,
+                  :using => {
+                  :tsearch => {:prefix => true}
+                  }
   ## Below allows prefix search for games
   pg_search_scope :whose_title_starts_with,
                   :against => :title,
