@@ -31,7 +31,7 @@ var ReviewForm = React.createClass({
     if (reviewedUsers.includes(currentUser)) {
       this._alert();
     } else {
-    this.openModal();
+      this.openModal();
     }
   },
 

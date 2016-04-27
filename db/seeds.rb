@@ -1,3 +1,4 @@
+require 'faker'
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
@@ -6,28 +7,56 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+mario = File.open('app/assets/images/Mario.jpg')
+luigi = File.open('app/assets/images/Luigi.png')
+megaman = File.open('app/assets/images/Megaman.jpg')
+sub_zero = File.open('app/assets/images/Sub-Zero.jpg')
+naruto = File.open('app/assets/images/Naruto.jpg')
+l_block = File.open('app/assets/images/L-Block.png')
+sonic = File.open('app/assets/images/Sonic.jpg')
+cloud = File.open('app/assets/images/Cloud.jpg')
+superman = File.open('app/assets/images/Superman.jpg')
+
 User.destroy_all
 user1 = User.create!(username: "guest",
         password: "password",
         description: "Hello, it's me I was wondering if after all these years you'd like to meet To go over everything They say that time's supposed to heal ya But I ain't done much healing... ")
 user2 = User.create!(username: "Mario",
-        password: "password")
+        description: Faker::Hipster.paragraph,
+        password: "password",
+        picture: mario)
 user3 = User.create!(username: "Luigi",
-        password: "password")
+        description: Faker::Hipster.paragraph,
+        password: "password",
+        picture: luigi)
 user4 = User.create!(username: "Megaman",
-        password: "password")
-user5 = User.create!(username: "Scorpion",
-        password: "password")
+        description: Faker::Hipster.paragraph,
+        password: "password",
+        picture: megaman)
+user5 = User.create!(username: "Sub-Zero",
+        description: Faker::Hipster.paragraph,
+        password: "password",
+        picture: sub_zero)
 user6 = User.create!(username: "Naruto",
-        password: "password")
-user7 = User.create!(username: "I-Block",
-        password: "password")
+        description: Faker::Hipster.paragraph,
+        password: "password",
+        picture: naruto)
+user7 = User.create!(username: "L-Block",
+        description: Faker::Hipster.paragraph,
+        password: "password",
+        picture: l_block)
 user8 = User.create!(username: "Sonic",
-        password: "password")
-user9 = User.create!(username: "Ramza",
-        password: "password")
+        description: Faker::Hipster.paragraph,
+        password: "password",
+        picture: sonic)
+user9 = User.create!(username: "Cloud",
+        description: Faker::Hipster.paragraph,
+        password: "password",
+        picture: cloud)
 user10 = User.create!(username: "Superman",
-        password: "password")
+        description: Faker::Hipster.paragraph,
+        password: "password",
+        picture: superman)
 
 Game.destroy_all
 game1 = Game.create!(title: "Mario is missing",
@@ -141,3 +170,21 @@ review8 = Review.create!(user_id: user3.id,
         game_id: game3.id, score: 5,
         title: "He finally noticed me! YAY!",
         body: "Played this for days on days and months and months, but after 4 years, he FINALLY noticed me! <3 GREATTT GAME!")
+review9 = Review.create!(user_id: user6.id,
+        game_id: game3.id, score: 5,
+        title: Faker::Hipster.sentence(rand(3)+1),
+        body: Faker::Hipster.paragraph(6) )
+review10 = Review.create!(user_id: user2.id,
+        game_id: game4.id, score: 5,
+        title: Faker::Hipster.sentence(rand(3)+1),
+        body: Faker::Hipster.paragraph(6) )
+# Creates other reviews
+        User.all.slice(1..-1).each do |user|
+          Game.all.slice(4..-1).each do |game|
+            Review.create!(user_id: user.id,
+            game_id: game.id,
+            score: rand(5)+1,
+            title: Faker::Hipster.sentence(rand(2)+1),
+            body: Faker::Hipster.paragraph(rand(3)+1) )
+          end
+        end
