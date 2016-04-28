@@ -38116,7 +38116,7 @@
 	        React.createElement(
 	          'h2',
 	          null,
-	          'All Signed Up Users'
+	          'All Users'
 	        ),
 	        React.createElement(
 	          'ul',
