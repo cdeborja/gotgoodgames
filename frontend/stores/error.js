@@ -6,10 +6,12 @@ var ErrorStore = new Store(AppDispatcher);
 var _errors = {};
 
 var resetErrors = function (errors) {
-  _errors = {};
-  errors.errors.map (function (error, idx) {
-    _errors[idx] = error;
-  });
+  if (errors.errors !== undefined) {
+    _errors = {};
+    errors.errors.map (function (error, idx) {
+      _errors[idx] = error;
+    });
+  }
 };
 
 // var resetError = function (error) {

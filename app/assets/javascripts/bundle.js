@@ -31328,10 +31328,12 @@
 	var _errors = {};
 	
 	var resetErrors = function (errors) {
-	  _errors = {};
-	  errors.errors.map(function (error, idx) {
-	    _errors[idx] = error;
-	  });
+	  if (errors.errors !== undefined) {
+	    _errors = {};
+	    errors.errors.map(function (error, idx) {
+	      _errors[idx] = error;
+	    });
+	  }
 	};
 	
 	// var resetError = function (error) {
@@ -37703,7 +37705,6 @@
 	  },
 	
 	  handleSubmit: function (e) {
-	    debugger;
 	    e.preventDefault();
 	    var formData = new FormData();
 	    formData.append("user[description]", this.state.description);
@@ -38275,8 +38276,7 @@
 	  getInitialState: function () {
 	    return {
 	      username: "",
-	      password: "",
-	      errors: ErrorStore.all()
+	      password: ""
 	    };
 	  },
 	
@@ -38286,7 +38286,7 @@
 	    ApiUtil.login(this.state, function () {
 	      router.push("/landingPage");
 	    });
-	    // this.setState({errors: ErrorStore.all()});
+	    $(".error").removeClass("hidden");
 	  },
 	
 	  updateUsername: function (e) {
@@ -38343,6 +38343,11 @@
 	        'form',
 	        { className: 'input-box' },
 	        React.createElement(
+	          'div',
+	          { className: 'error hidden' },
+	          'Incorrect username/password combination'
+	        ),
+	        React.createElement(
 	          'label',
 	          { className: 'input-text', htmlFor: 'username' },
 	          'Username'
@@ -38389,17 +38394,24 @@
 	
 	  mixins: [LinkedStateMixin],
 	
-	  getInitialState: function () {
+	  getStateFromStore: function () {
 	    return {
 	      username: "",
-	      password: ""
+	      password: "",
+	      errors: ErrorStore.all()
 	    };
+	  },
+	
+	  getInitialState: function () {
+	    return this.getStateFromStore();
 	  },
 	
 	  handleSubmit: function (e) {
 	    e.preventDefault();
 	    var router = this.context.router;
-	    ApiUtil.signUp(this.state);
+	    ApiUtil.signUp(this.state, function () {
+	      router.push("/signup");
+	    });
 	    ApiUtil.login(this.state, function () {
 	      router.push("/landingPage");
 	    });
@@ -38411,6 +38423,18 @@
 	
 	  updatePassword: function (e) {
 	    this.setState({ password: e.currentTarget.value });
+	  },
+	
+	  componentDidMount: function () {
+	    this.errorListener = ErrorStore.addListener(this._onChange);
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.errorListener.remove();
+	  },
+	
+	  _onChange: function () {
+	    this.setState(this.getStateFromStore());
 	  },
 	
 	  render: function () {

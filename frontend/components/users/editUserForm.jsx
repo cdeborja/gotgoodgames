@@ -46,7 +46,6 @@ var EditUserForm = React.createClass({
   },
 
   handleSubmit: function (e) {
-    debugger;
     e.preventDefault();
     var formData = new FormData();
     formData.append("user[description]", this.state.description);

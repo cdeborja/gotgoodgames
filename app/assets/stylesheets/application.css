@@ -581,3 +581,11 @@ border: solid blue 2px;
 .go-button {
   cursor: pointer;
 }
+
+.hidden {
+  display: none;
+}
+
+.error {
+  color: #d23f0f;
+}

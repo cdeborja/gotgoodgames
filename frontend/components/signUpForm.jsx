@@ -10,17 +10,25 @@ var SignUpForm = React.createClass({
 
   mixins: [LinkedStateMixin],
 
-  getInitialState: function() {
+
+  getStateFromStore: function() {
     return {
       username: "",
-      password: ""
+      password: "",
+      errors: ErrorStore.all()
     };
+  },
+
+  getInitialState: function() {
+    return (this.getStateFromStore() );
   },
 
   handleSubmit: function(e) {
     e.preventDefault();
     var router = this.context.router;
-    ApiUtil.signUp(this.state);
+    ApiUtil.signUp(this.state, function() {
+      router.push("/signup");
+    });
     ApiUtil.login(this.state, function() {
       router.push("/landingPage");
     });
@@ -32,6 +40,18 @@ var SignUpForm = React.createClass({
 
   updatePassword: function(e) {
     this.setState({ password: e.currentTarget.value });
+  },
+
+  componentDidMount: function () {
+    this.errorListener = ErrorStore.addListener(this._onChange);
+  },
+
+  componentWillUnmount: function () {
+    this.errorListener.remove();
+  },
+
+  _onChange: function () {
+    this.setState(this.getStateFromStore());
   },
 
   render: function() {
