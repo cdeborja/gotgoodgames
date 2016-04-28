@@ -21683,6 +21683,8 @@
 	  handleChange: function () {
 	    if (SessionStore.isLoggedIn()) {
 	      this.setState({ currentUser: SessionStore.currentUser() });
+	      $(".navigation-links").removeClass("hidden");
+	      $(".session-links").removeClass("hidden");
 	    } else {
 	      this.context.router.push("/login");
 	    }
@@ -21704,6 +21706,12 @@
 	    this.context.router.push("/users");
 	  },
 	
+	  handleLogout: function () {
+	    $(".navigation-links").addClass("hidden");
+	    $(".session-links").addClass("hidden");
+	    ApiUtil.logout();
+	  },
+	
 	  render: function () {
 	    var home, logoutButton, welcomeMessage, homepage, signUpButton, browse, community, searchBar;
 	
@@ -21715,7 +21723,7 @@
 	      );
 	      logoutButton = React.createElement(
 	        'li',
-	        { onClick: ApiUtil.logout },
+	        { onClick: this.handleLogout },
 	        'Logout'
 	      );
 	      welcomeMessage = React.createElement(
@@ -21745,7 +21753,6 @@
 	    if (this.state.errors) {
 	      errors = this.state.errors;
 	    }
-	
 	    return React.createElement(
 	      'div',
 	      null,

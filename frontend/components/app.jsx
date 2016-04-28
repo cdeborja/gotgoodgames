@@ -33,6 +33,8 @@ module.exports = React.createClass({
   handleChange: function() {
     if (SessionStore.isLoggedIn()) {
       this.setState({ currentUser: SessionStore.currentUser() });
+      $(".navigation-links").removeClass("hidden");
+      $(".session-links").removeClass("hidden");
     } else {
       this.context.router.push("/login");
     }
@@ -54,13 +56,19 @@ module.exports = React.createClass({
     this.context.router.push("/users");
   },
 
+  handleLogout: function () {
+    $(".navigation-links").addClass("hidden");
+    $(".session-links").addClass("hidden");
+    ApiUtil.logout();
+  },
+
 
   render: function () {
     var home, logoutButton, welcomeMessage, homepage, signUpButton, browse, community, searchBar;
 
     if (this.state.currentUser) {
       home = <li onClick={this.goToIndex}>Home</li>;
-      logoutButton = <li onClick={ApiUtil.logout}>Logout</li>;
+      logoutButton = <li onClick={this.handleLogout}>Logout</li>;
       welcomeMessage = <h2>Welcome, {this.state.currentUser.username}</h2>;
       homepage = <li onClick={this.goToCurrentUserHomePage}>My Stats</li>;
       browse = <li onClick={this.goToGamesIndex}>Browse</li>;
@@ -71,7 +79,6 @@ module.exports = React.createClass({
     if (this.state.errors) {
       errors = this.state.errors;
     }
-
     return (
       <div>
         <header className="header group">
