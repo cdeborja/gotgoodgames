@@ -64,9 +64,6 @@ module.exports = React.createClass({
         <div className="user-description-box">
           <h1>{this.state.user.username}</h1>
           <p>{this.state.user.description}</p>
-          <button>
-            USER PAGE!!!!
-          </button>
         </div>
       </div>
 
@@ -80,3 +77,7 @@ module.exports = React.createClass({
   }
 
 });
+
+// <button>
+// USER PAGE!!!!
+// </button>

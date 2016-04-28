@@ -3,8 +3,6 @@ var ApiUtil = require('../../util/apiUtil');
 var Modal = require('react-modal');
 var SessionStore = require('../../stores/session');
 
-//NEED TO REMOVE MODAL CONNECTIVITY
-
 var EditUserForm = React.createClass({
   contextTypes: {
      router: React.PropTypes.object.isRequired
@@ -12,8 +10,7 @@ var EditUserForm = React.createClass({
 
   getInitialState: function () {
     return {
-      userId: SessionStore.currentUser().id,
-      description: SessionStore.currentUser().description,
+      description: this.props.location.state.user.description,
       pictureFile: null,
       pictureUrl: null
     };
@@ -49,11 +46,12 @@ var EditUserForm = React.createClass({
   },
 
   handleSubmit: function (e) {
+    debugger;
     e.preventDefault();
     var formData = new FormData();
     formData.append("user[description]", this.state.description);
     formData.append("user[picture]", this.state.pictureFile);
-    ApiUtil.updateUserInformation(this.state.userId, formData);
+    ApiUtil.updateUserInformation(this.props.location.state.user.id, formData);
     this.goToHomePage();
   },
 
@@ -63,7 +61,6 @@ var EditUserForm = React.createClass({
   // />
 
   render: function () {
-    debugger;
 
       return(
 
@@ -72,10 +69,9 @@ var EditUserForm = React.createClass({
             <label>Description
               <textarea
                 className="edit-box-description"
-                defaultValue={this.state.description}
+                defaultValue={this.props.location.state.user.description}
                 placeholder="Enter a description..."
                 onChange={this.handleDescriptionChange}
-                value={this.state.description}
                 />
             </label>
             <br/>

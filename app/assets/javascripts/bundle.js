@@ -31291,7 +31291,7 @@
 	          React.createElement(
 	            'li',
 	            null,
-	            'Average Rating'
+	            game.console
 	          )
 	        )
 	      );
@@ -36970,14 +36970,13 @@
 	  render: function () {
 	    var rsaOptions = {
 	      title: "Uh-oh!",
-	      message: "It looks like you're trying to create a new review, but you have already reviewed this game. If you would like to edit your review, please click the edit button",
-	      alert: this.state.alert,
-	      confirmButton: {
-	        text: "Edit Review",
-	        action: function (review) {
-	          console.log("clicked button");
-	        }
-	      }
+	      message: "It looks like you're trying to create a new review, but you have already reviewed this game. If you would like to edit your review, please go to My Stats",
+	      alert: this.state.alert
+	      // confirmButton: {
+	      //     text: "Edit Review",
+	      //     action: function(review){
+	      //     }
+	      // }
 	    };
 	
 	    var reviewFormStyle = {
@@ -37347,7 +37346,7 @@
 	    var gamesIndex = this.state.games.map(function (game) {
 	      return React.createElement(
 	        'li',
-	        { key: game.id, id: game.id, onClick: that.goToGame },
+	        { className: 'boxed-item', key: game.id, id: game.id, onClick: that.goToGame },
 	        React.createElement('img', { src: game.image_url }),
 	        React.createElement(
 	          'p',
@@ -37370,7 +37369,7 @@
 	        ),
 	        React.createElement(
 	          'ul',
-	          { className: 'games-index' },
+	          null,
 	          gamesIndex
 	        )
 	      )
@@ -37700,8 +37699,6 @@
 	var Modal = __webpack_require__(159);
 	var SessionStore = __webpack_require__(188);
 	
-	//NEED TO REMOVE MODAL CONNECTIVITY
-	
 	var EditUserForm = React.createClass({
 	  displayName: 'EditUserForm',
 	
@@ -37711,8 +37708,7 @@
 	
 	  getInitialState: function () {
 	    return {
-	      userId: SessionStore.currentUser().id,
-	      description: SessionStore.currentUser().description,
+	      description: this.props.location.state.user.description,
 	      pictureFile: null,
 	      pictureUrl: null
 	    };
@@ -37747,11 +37743,12 @@
 	  },
 	
 	  handleSubmit: function (e) {
+	    debugger;
 	    e.preventDefault();
 	    var formData = new FormData();
 	    formData.append("user[description]", this.state.description);
 	    formData.append("user[picture]", this.state.pictureFile);
-	    ApiUtil.updateUserInformation(this.state.userId, formData);
+	    ApiUtil.updateUserInformation(this.props.location.state.user.id, formData);
 	    this.goToHomePage();
 	  },
 	
@@ -37761,7 +37758,6 @@
 	  // />
 	
 	  render: function () {
-	    debugger;
 	
 	    return React.createElement(
 	      'div',
@@ -37775,10 +37771,9 @@
 	          'Description',
 	          React.createElement('textarea', {
 	            className: 'edit-box-description',
-	            defaultValue: this.state.description,
+	            defaultValue: this.props.location.state.user.description,
 	            placeholder: 'Enter a description...',
-	            onChange: this.handleDescriptionChange,
-	            value: this.state.description
+	            onChange: this.handleDescriptionChange
 	          })
 	        ),
 	        React.createElement('br', null),
@@ -37870,9 +37865,19 @@
 	        ' Loading... '
 	      );
 	    }
-	    var userReviews = this.state.reviews.map(function (review, id) {
-	      return React.createElement(UserReviewItem, { key: id, review: review });
-	    }).reverse();
+	
+	    var userReviews;
+	    if (this.state.reviews.length > 0) {
+	      userReviews = this.state.reviews.map(function (review, id) {
+	        return React.createElement(UserReviewItem, { key: id, review: review });
+	      }).reverse();
+	    } else {
+	      userReviews = React.createElement(
+	        'p',
+	        null,
+	        'Nothing...yet'
+	      );
+	    }
 	
 	    // var memberSince = this.state.user.created_at.slice(0,10).split("-").join('/');
 	
@@ -37918,11 +37923,6 @@
 	            'p',
 	            null,
 	            this.state.user.description
-	          ),
-	          React.createElement(
-	            'button',
-	            { onClick: this.goToEditProfile },
-	            'Edit Profile'
 	          )
 	        )
 	      ),
@@ -37940,6 +37940,8 @@
 	  }
 	
 	});
+	// Once implemented, will go to Edit Profile page.
+	// <button onClick={this.goToEditProfile}>Edit Profile</button>
 
 /***/ },
 /* 314 */
@@ -38047,11 +38049,6 @@
 	            'p',
 	            null,
 	            this.state.user.description
-	          ),
-	          React.createElement(
-	            'button',
-	            null,
-	            'USER PAGE!!!!'
 	          )
 	        )
 	      ),
@@ -38069,6 +38066,10 @@
 	  }
 	
 	});
+	
+	// <button>
+	// USER PAGE!!!!
+	// </button>
 
 /***/ },
 /* 315 */
@@ -38128,7 +38129,7 @@
 	    var usersIndex = this.state.users.map(function (user) {
 	      return React.createElement(
 	        'li',
-	        { key: user.id, id: user.id, onClick: that.goToUserShowpage },
+	        { className: 'boxed-item', key: user.id, id: user.id, onClick: that.goToUserShowpage },
 	        React.createElement('img', { src: user.picture }),
 	        React.createElement(
 	          'p',
@@ -38151,7 +38152,7 @@
 	        ),
 	        React.createElement(
 	          'ul',
-	          { className: 'games-index' },
+	          null,
 	          usersIndex
 	        )
 	      )

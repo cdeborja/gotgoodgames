@@ -30,7 +30,7 @@ var GameDatabaseSlider = React.createClass({
           <ul className="game-preview">
             <img className={color} onClick={this.showDetail} id={game.id} src={game.image_url}/>
             <li>{game.title }</li>
-            <li>Average Rating</li>
+            <li>{game.console}</li>
           </ul>
         </div>
       );

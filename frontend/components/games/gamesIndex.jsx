@@ -44,14 +44,15 @@ module.exports = React.createClass({
     }
     var that = this;
     var gamesIndex = this.state.games.map(function (game) {
-      return (<li key={game.id} id={game.id} onClick={that.goToGame}><img src={game.image_url}/><p>{game.title}</p></li>);
+      return (<li className="boxed-item" key={game.id} id={game.id} onClick={that.goToGame}>
+      <img src={game.image_url}/><p>{game.title}</p></li>);
     });
 
     return(
     <div className="content-container group">
       <div className="game-index-box">
         <h2>All current games</h2>
-        <ul className="games-index">
+        <ul>
           {gamesIndex}
         </ul>
       </div>

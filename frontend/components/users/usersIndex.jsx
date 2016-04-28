@@ -44,14 +44,15 @@ module.exports = React.createClass({
     }
     var that = this;
     var usersIndex = this.state.users.map(function (user) {
-      return (<li key={user.id} id={user.id} onClick={that.goToUserShowpage}><img src={user.picture}/><p>{user.username}</p></li>);
+      return (<li className="boxed-item" key={user.id} id={user.id} onClick={that.goToUserShowpage}>
+        <img src={user.picture}/><p>{user.username}</p></li>);
     });
 
     return(
     <div className="content-container group">
       <div className="game-index-box">
         <h2>All Signed Up Users</h2>
-        <ul className="games-index">
+        <ul>
           {usersIndex}
         </ul>
       </div>

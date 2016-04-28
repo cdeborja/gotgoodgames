@@ -535,188 +535,44 @@ img {
   padding: 10px;
 }
 
-/* --- SIDEBAR --- */
-
-/*.profile-picture {
+.boxed-item {
   display: block;
   position: relative;
-  border: 1px solid #000;
+  float: left;
+  margin: 10px;
+  width: 200px;
+  height: 200px;
+  border: 1px solid white;
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+  border-radius: 5px;
 }
 
-.online {
+.boxed-item:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 30px rgba(81, 203, 238, 1);
+}
+
+.boxed-item > img {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.boxed-item > p {
   display: block;
   position: absolute;
-  background: #0c0;
+  background: #00b3fe;
   color: #fff;
-  text-transform: uppercase;
   padding: 5px 10px;
   letter-spacing: 3px;
   font-size: 12px;
   top: 0;
   left: 0;
   font-weight: bold;
+  border-radius: 5px;
 }
-
-.profile-info {
-
-}
-
-.profile-info > h2 {
-  font-size: 24px;
-  margin: 20px 0;
-  font-weight: bold;
-
-}
-
-.profile-info > p {
-  margin: 0 0 20px 0;
-}
-
-.profile-nav {
-  font-weight: bold;
-}
-
-.profile-nav > li {
-  border-bottom: 1px solid #ccc;
-}
-
-.profile-nav > li:first-child {
- border-top: 1px solid #ccc;
-}
-
-.profile-nav a {
-  display: block;
-  padding: 5px;
-}*/
-
-/* --- THUMB --- */
-
-/*.thumb {
-  display: block;
-  width: 58px;
-  height: 58px;
-  border: 1px solid #000;
-}*/
-
-/* --- FORM --- */
-
-/*.form {
-  margin: 20px 0;
-}
-
-.form-thumb {
-  float: left;
-
-}
-
-.form-fieldset {
-  margin: 0 0 0 20px;
-  padding: 19px;
-  float: left;
-  width: 500px;
-  background: #eee;
-  border: solid 1px #ccc;
-}
-
-.input {
-
-}
-
-.input > label {
-  display: block;
-  font-weight: bold;
-  margin: 0 0 5px 0;
-}
-
-.input > input,
-.input > textarea {
-  padding: 10px;
-  border: 1px solid #ccc;
-  width: 478px;
-  background: #fff;
-  margin: 0 0 20px 0;
-}
-
-.input > input {
-
-}
-
-.input > textarea {
-  height: 120px;
-}
-
-.submit {
-
-}
-
-.submit > button {
-  display: block;
-  font-weight: bold;
-  padding: 10px 20px;
-  color: #fff;
-  background: #0c0;
-}*/
-
-/* --- POSTS --- */
-/*
-.posts {
-
-}
-
-.post {
-  border-top: 1px solid #ccc;
-  padding: 20px 0px;
-}
-
-.post:last-child {
-  padding: 20px 0 0 0;
-}
-
-.post-thumb {
-  display: block;
-  float: left;
-}
-
-.post-body {
-  float: left;
-  width: 540px;
-  margin: 0 0 0 20px;
-}
-
-.post-body > h2 {
-  font-weight: bold;
-  font-size: 24px;
-  margin: 0 0 20px 0;
-}
-
-.post-body > p {
-
-}*/
-
-/* --- FOOTER --- */
-/*
-.footer {
-  border: 1px solid #ccc;
-  background: #fff;
-  color: #ccc;
-  margin: 0 auto;
-  width: 860px;
-  padding: 20px;
-  font-size: 14px;
-}
-
-.footer-copy {
-  float: left;
-}
-
-.footer-links {
-  float: right;
-}
-
-.footer-links > li {
-  float: left;
-  margin: 0 0 0 20px;
-}*/
 
 search {
 border: solid blue 2px;

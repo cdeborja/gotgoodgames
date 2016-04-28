@@ -53,9 +53,15 @@ module.exports = React.createClass({
     if (this.state.reviews.length === 0 && !this.state.user ) {
       return (<div className="loading"> Loading... </div>);
     }
-    var userReviews = this.state.reviews.map(function (review, id) {
-      return <UserReviewItem key={id} review={review} />;
-    }).reverse();
+
+    var userReviews;
+    if (this.state.reviews.length > 0) {
+      userReviews = this.state.reviews.map(function (review, id) {
+        return <UserReviewItem key={id} review={review} />;
+      }).reverse();
+    } else {
+      userReviews = <p>Nothing...yet</p>;
+    }
 
 
     // var memberSince = this.state.user.created_at.slice(0,10).split("-").join('/');
@@ -75,7 +81,6 @@ module.exports = React.createClass({
         <div className="user-description-box">
           <h1>{this.state.user.username}</h1>
           <p>{this.state.user.description}</p>
-          <button onClick={this.goToEditProfile}>Edit Profile</button>
         </div>
       </div>
 
@@ -89,3 +94,5 @@ module.exports = React.createClass({
   }
 
 });
+// Once implemented, will go to Edit Profile page.
+// <button onClick={this.goToEditProfile}>Edit Profile</button>
