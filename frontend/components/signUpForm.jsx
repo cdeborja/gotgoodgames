@@ -22,7 +22,7 @@ var SignUpForm = React.createClass({
     var router = this.context.router;
     ApiUtil.signUp(this.state);
     ApiUtil.login(this.state, function() {
-      router.push("/index");
+      router.push("/landingPage");
     });
   },
 

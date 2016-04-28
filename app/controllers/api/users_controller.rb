@@ -33,7 +33,7 @@ class Api::UsersController < ApplicationController
           reviewed_users << user
         end
       end
-      render json: reviewed_users
+      return render json: reviewed_users
     end
 
     render :index

@@ -129,7 +129,7 @@ module.exports = {
         UserActions.receivedAllReviewedUsers(users);
       },
       error: function() {
-        console.log('couldnt fetch all reviewd users');
+        console.log('couldnt fetch all reviewed users');
       }
     });
   },

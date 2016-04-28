@@ -22045,7 +22045,7 @@
 	        UserActions.receivedAllReviewedUsers(users);
 	      },
 	      error: function () {
-	        console.log('couldnt fetch all reviewd users');
+	        console.log('couldnt fetch all reviewed users');
 	      }
 	    });
 	  },
@@ -37504,6 +37504,20 @@
 	        )
 	      );
 	    }
+	    var form = this;
+	    var scoreChoices = [1, 2, 3, 4, 5].map(function (value, idx) {
+	      return React.createElement(
+	        'li',
+	        { key: idx },
+	        React.createElement(
+	          'label',
+	          null,
+	          value
+	        ),
+	        React.createElement('input', { type: 'radio', value: value, className: 'review-score', name: 'score',
+	          onChange: form.updateScore })
+	      );
+	    });
 	
 	    return React.createElement(
 	      'div',
@@ -37537,63 +37551,9 @@
 	          React.createElement(
 	            'ul',
 	            { className: 'score-choices' },
-	            React.createElement(
-	              'li',
-	              null,
-	              React.createElement(
-	                'label',
-	                null,
-	                '1'
-	              ),
-	              React.createElement('input', { type: 'radio', value: '1', className: 'review-score', name: 'score',
-	                onChange: this.updateScore })
-	            ),
-	            React.createElement(
-	              'li',
-	              null,
-	              React.createElement(
-	                'label',
-	                null,
-	                '2'
-	              ),
-	              React.createElement('input', { type: 'radio', value: '2', className: 'review-score', name: 'score',
-	                onChange: this.updateScore })
-	            ),
-	            React.createElement(
-	              'li',
-	              null,
-	              React.createElement(
-	                'label',
-	                null,
-	                '3'
-	              ),
-	              React.createElement('input', { type: 'radio', value: '3', className: 'review-score', name: 'score',
-	                onChange: this.updateScore })
-	            ),
-	            React.createElement(
-	              'li',
-	              null,
-	              React.createElement(
-	                'label',
-	                null,
-	                '4'
-	              ),
-	              React.createElement('input', { type: 'radio', value: '4', className: 'review-score', name: 'score',
-	                onChange: this.updateScore })
-	            ),
-	            React.createElement(
-	              'li',
-	              null,
-	              React.createElement(
-	                'label',
-	                null,
-	                '5'
-	              ),
-	              React.createElement('input', { type: 'radio', value: '5', className: 'review-score', name: 'score',
-	                onChange: this.updateScore })
-	            )
+	            scoreChoices
 	          ),
-	          React.createElement('textarea', { className: 'add-review-textarea', placeholder: 'Enter your awwwwwsome review here!',
+	          React.createElement('textarea', { className: 'add-review-textarea', placeholder: 'Enter your awesome review here!',
 	            onChange: this.updateReview, defaultValue: this.props.review.body }),
 	          React.createElement(
 	            'button',
@@ -38242,6 +38202,21 @@
 	      );
 	    }
 	
+	    var form = this;
+	    var scoreChoices = [1, 2, 3, 4, 5].map(function (value, idx) {
+	      return React.createElement(
+	        'li',
+	        { key: idx },
+	        React.createElement(
+	          'label',
+	          null,
+	          value
+	        ),
+	        React.createElement('input', { type: 'radio', value: value, className: 'review-score', name: 'score',
+	          onChange: form.updateScore })
+	      );
+	    });
+	
 	    return React.createElement(
 	      'div',
 	      null,
@@ -38261,61 +38236,7 @@
 	        React.createElement(
 	          'ul',
 	          { className: 'score-choices' },
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              'label',
-	              null,
-	              '1'
-	            ),
-	            React.createElement('input', { type: 'radio', value: '1', className: 'review-score', name: 'score',
-	              onChange: this.updateScore })
-	          ),
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              'label',
-	              null,
-	              '2'
-	            ),
-	            React.createElement('input', { type: 'radio', value: '2', className: 'review-score', name: 'score',
-	              onChange: this.updateScore })
-	          ),
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              'label',
-	              null,
-	              '3'
-	            ),
-	            React.createElement('input', { type: 'radio', value: '3', className: 'review-score', name: 'score',
-	              onChange: this.updateScore })
-	          ),
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              'label',
-	              null,
-	              '4'
-	            ),
-	            React.createElement('input', { type: 'radio', value: '4', className: 'review-score', name: 'score',
-	              onChange: this.updateScore })
-	          ),
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              'label',
-	              null,
-	              '5'
-	            ),
-	            React.createElement('input', { type: 'radio', value: '5', className: 'review-score', name: 'score',
-	              onChange: this.updateScore })
-	          )
+	          scoreChoices
 	        ),
 	        React.createElement('textarea', { className: 'add-review-textarea', placeholder: this.state.review.body,
 	          onChange: this.updateReview }),
@@ -38480,7 +38401,7 @@
 	    var router = this.context.router;
 	    ApiUtil.signUp(this.state);
 	    ApiUtil.login(this.state, function () {
-	      router.push("/index");
+	      router.push("/landingPage");
 	    });
 	  },
 	
