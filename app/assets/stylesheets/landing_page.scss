@@ -113,17 +113,21 @@
   margin-left: 20px;
   width: 140px;
   cursor: pointer;
-  border: 7px transparent solid;
-  transition: border 500ms;
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+  // border: 7px transparent solid;
+  // transition: border 500ms;
   border-radius: 5px;
 }
 
 .blue:hover {
-  border: 7px #53b9ea solid;
+  box-shadow: 0px 0px 20px 7px #53b9ea;
 }
 
 .red:hover {
-  border: 7px #d23f0f solid;
+  box-shadow: 0px 0px 20px 7px #d23f0f;
 }
 // .game-preview > img:hover {
 //   border: 7px #53b9ea solid;
