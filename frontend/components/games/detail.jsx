@@ -43,7 +43,7 @@ module.exports = React.createClass({
     var userReview = null;
     var averageScore = 0;
 
-    if ( !game || !game.reviews) {return (<img className="loading-image" src="https://youthradio.org/innovationlab/for-teachers/images/loading.gif"/>);}
+    if ( !game || !game.reviews) {return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);}
     var gameReviews = game.reviews.map(function (review, id) {
       return <ReviewsIndexItem key={id} review={review}/>;
     }).reverse();
@@ -64,16 +64,20 @@ module.exports = React.createClass({
     return(
       <div className="content-container group">
         <div className="game-information-box">
-          <img src={game.image_url} />
-          <h2>{game.title}</h2>
-          <ul className="game-details">
-            <li>Average Score: {averageScore} out of 5</li>
-            <li>Release Date: {game.release_date}</li>
-            <li>Console: {game.console}</li>
-            <li>Game Description: {game.description}</li>
-          </ul>
-          <div>
-            <ReviewForm game={this.state.game} reviews={gameReviews} userReview={userReview}/>
+          <div className="game-details-left">
+            <img src={game.image_url} />
+            <div>
+              <ReviewForm game={this.state.game} reviews={gameReviews} userReview={userReview}/>
+            </div>
+          </div>
+          <div className="game-details-right">
+            <h2>{game.title}</h2>
+            <ul className="game-details">
+              <li><b>Average Score:</b> {averageScore} out of 5</li>
+              <li><b>Release Date:</b> {game.release_date}</li>
+              <li><b>Console:</b> {game.console}</li>
+              <li><b>Game Description:</b> {game.description}</li>
+            </ul>
           </div>
         </div>
 

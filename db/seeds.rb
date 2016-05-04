@@ -60,14 +60,14 @@ user10 = User.create!(username: "Superman",
 
 Game.destroy_all
 game1 = Game.create!(title: "CHECK ME!",
-        description: "Hey there! Welcome to gotgoodgames. On this site, you can rate and review games and see how other users feel about certain games. What you're looking at right now is the description page of a game (well this page is currently the intro page, but you know what I mean) This page will contain the game's details and user reviews and rating, which can be seen in the box below! You can navigate to your reviews and ratings via the navigation bar at the top through 'My Stats'. There, it will contain all the reviews and ratings you have created and you can go ahead and edit or delete them. Stick around and enjoy rating other games with the video game user community!... but first! Let's make your first review! Click the 'Add your own review!' button. After filling it out, you'll see it pop up as the most recent review! Keep doing that and let everyone know how you feel about games!",
+        description: "Hey there! Welcome to gotgoodgames. On this site, you can rate and review games and see how other users feel about certain games. What you're looking at right now is the description page of a game (well this page is currently the intro page, but you know what I mean) This page will contain the game's details and user reviews and ratings, which can be seen in the box below! You can navigate to your reviews and ratings via the navigation bar at the top through 'My Stats'. There, it will contain all the reviews and ratings you have created and you can go ahead and edit or delete them. Stick around and enjoy rating other games with the video game user community!... but first! Let's make your first review! Click the 'Add your own review!' button. After filling it out, you'll see it pop up as the most recent review! Keep doing that and let everyone know how you feel about games!",
         release_date: "25-04-1987",
         console: "WELCOME",
         image_url: "https://pixabay.com/static/uploads/photo/2015/10/08/16/14/click-978023_960_720.png")
 game2 = Game.create!(title: "Mario is missing",
         description: "You have to find mario",
         release_date: "25-04-1987",
-        console: "Console",
+        console: "SNES",
         image_url: "http://img.gamefaqs.net/box/0/7/5/22075_front.jpg")
 game3 = Game.create(title: "Legend of Zelda",
         description: "A young boy journeys off to find Zelda",

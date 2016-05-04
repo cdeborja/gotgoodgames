@@ -24,11 +24,16 @@
   background: #222;
 }
 
-.game-information-box > img {
+.game-details-left {
+  float: left;
+}
+
+.game-details-left > img {
   float: left;
   width: 350px;
   height: auto;
   margin-right: 10px;
+  margin-bottom: 20px;
 }
 
 .game-details {
@@ -40,7 +45,11 @@
   line-height: 22px;
 }
 
-.game-information-box > h2 {
+.game-details > li:last-child {
+  margin-top: 20px;
+}
+
+.game-details-right > h2 {
   display: inline;
   font-weight: bold;
   font-size: 36px;

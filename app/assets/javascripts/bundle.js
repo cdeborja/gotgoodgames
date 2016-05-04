@@ -36645,7 +36645,7 @@
 	    var averageScore = 0;
 	
 	    if (!game || !game.reviews) {
-	      return React.createElement('img', { className: 'loading-image', src: 'https://youthradio.org/innovationlab/for-teachers/images/loading.gif' });
+	      return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	    }
 	    var gameReviews = game.reviews.map(function (review, id) {
 	      return React.createElement(ReviewsIndexItem, { key: id, review: review });
@@ -36670,45 +36670,73 @@
 	      React.createElement(
 	        'div',
 	        { className: 'game-information-box' },
-	        React.createElement('img', { src: game.image_url }),
 	        React.createElement(
-	          'h2',
-	          null,
-	          game.title
-	        ),
-	        React.createElement(
-	          'ul',
-	          { className: 'game-details' },
+	          'div',
+	          { className: 'game-details-left' },
+	          React.createElement('img', { src: game.image_url }),
 	          React.createElement(
-	            'li',
+	            'div',
 	            null,
-	            'Average Score: ',
-	            averageScore,
-	            ' out of 5'
-	          ),
-	          React.createElement(
-	            'li',
-	            null,
-	            'Release Date: ',
-	            game.release_date
-	          ),
-	          React.createElement(
-	            'li',
-	            null,
-	            'Console: ',
-	            game.console
-	          ),
-	          React.createElement(
-	            'li',
-	            null,
-	            'Game Description: ',
-	            game.description
+	            React.createElement(ReviewForm, { game: this.state.game, reviews: gameReviews, userReview: userReview })
 	          )
 	        ),
 	        React.createElement(
 	          'div',
-	          null,
-	          React.createElement(ReviewForm, { game: this.state.game, reviews: gameReviews, userReview: userReview })
+	          { className: 'game-details-right' },
+	          React.createElement(
+	            'h2',
+	            null,
+	            game.title
+	          ),
+	          React.createElement(
+	            'ul',
+	            { className: 'game-details' },
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement(
+	                'b',
+	                null,
+	                'Average Score:'
+	              ),
+	              ' ',
+	              averageScore,
+	              ' out of 5'
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement(
+	                'b',
+	                null,
+	                'Release Date:'
+	              ),
+	              ' ',
+	              game.release_date
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement(
+	                'b',
+	                null,
+	                'Console:'
+	              ),
+	              ' ',
+	              game.console
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement(
+	                'b',
+	                null,
+	                'Game Description:'
+	              ),
+	              ' ',
+	              game.description
+	            )
+	          )
 	        )
 	      ),
 	      React.createElement(
