@@ -169,11 +169,17 @@
 
 
 .user-review {
-  border: 1px solid #fff;
+  border-bottom: 1px solid #fff;
   padding: 5px;
   margin-bottom: 5px;
-  border-radius: 5px;
 }
+
+.user-review:last-child {
+  border-bottom: 0px;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
 
 .game-review-image {
   float: left;
@@ -188,7 +194,6 @@
   float: left;
   width: 120px;
   height: auto;
-  border-bottom: 1px solid #fff;
   margin-bottom: 5px;
 }
 

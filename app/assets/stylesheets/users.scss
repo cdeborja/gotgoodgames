@@ -119,11 +119,16 @@
   margin-bottom: 10px;
 }
 
-.user-review {
-  border: 1px solid #fff;
+.recent-reviews-box > div {
+  border-bottom: 1px solid #fff;
   padding: 5px;
   margin-bottom: 5px;
-  border-radius: 5px;
+}
+
+.recent-reviews-box > div:last-child {
+  border-bottom: 0px;
+  padding: 5px;
+  margin-bottom: 5px;
 }
 
 .game-review-image {
@@ -134,14 +139,14 @@
   cursor: pointer;
 }
 
-.game-review-image > img {
-  display: block;
-  float: left;
-  width: 120px;
-  height: auto;
-  border-bottom: 1px solid #fff;
-  margin-bottom: 5px;
-}
+// .game-review-image > img {
+//   display: block;
+//   float: left;
+//   width: 120px;
+//   height: auto;
+//   border-bottom: 1px solid #fff;
+//   margin-bottom: 5px;
+// }
 
 .game-review-image > p {
   display: block;

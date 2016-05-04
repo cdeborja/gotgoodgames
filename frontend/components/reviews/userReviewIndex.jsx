@@ -150,7 +150,7 @@ module.exports = React.createClass({
 
       </Modal>
 
-        <ul className="user-review group">
+        <ul className="user-reviews group">
           <div onClick={this.goToGame} className="game-review-image group">
             <img src={review.game.image_url} />
             <p>{review.game.title}</p>

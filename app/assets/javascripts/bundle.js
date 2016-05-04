@@ -37601,7 +37601,7 @@
 	      ),
 	      React.createElement(
 	        'ul',
-	        { className: 'user-review group' },
+	        { className: 'user-reviews group' },
 	        React.createElement(
 	          'div',
 	          { onClick: this.goToGame, className: 'game-review-image group' },
@@ -38054,7 +38054,8 @@
 	        React.createElement(
 	          'h2',
 	          null,
-	          'Your Recent Activity!'
+	          this.state.user.username,
+	          '\'s Recent Activity!'
 	        ),
 	        userReviews
 	      )
