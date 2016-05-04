@@ -32,18 +32,20 @@
 }
 
 .game-details {
+  margin-top: 5px;
   padding: 10px;
 }
 
-.game-details > h2 {
+.game-details > li {
+  line-height: 22px;
+}
+
+.game-information-box > h2 {
+  display: inline;
+  font-weight: bold;
   font-size: 36px;
   border-bottom: 1px solid #fff;
 }
-
-
-
-
-
 
 .user-information {
   display: block;

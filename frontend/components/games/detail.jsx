@@ -65,8 +65,8 @@ module.exports = React.createClass({
       <div className="content-container group">
         <div className="game-information-box">
           <img src={game.image_url} />
+          <h2>{game.title}</h2>
           <ul className="game-details">
-            <h2>{game.title}</h2>
             <li>Average Score: {averageScore} out of 5</li>
             <li>Release Date: {game.release_date}</li>
             <li>Console: {game.console}</li>

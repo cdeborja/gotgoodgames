@@ -36672,13 +36672,13 @@
 	        { className: 'game-information-box' },
 	        React.createElement('img', { src: game.image_url }),
 	        React.createElement(
+	          'h2',
+	          null,
+	          game.title
+	        ),
+	        React.createElement(
 	          'ul',
 	          { className: 'game-details' },
-	          React.createElement(
-	            'h2',
-	            null,
-	            game.title
-	          ),
 	          React.createElement(
 	            'li',
 	            null,

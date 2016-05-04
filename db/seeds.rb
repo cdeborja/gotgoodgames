@@ -22,58 +22,58 @@ user1 = User.create!(username: "guest",
         password: "password",
         description: "Hello, it's me I was wondering if after all these years you'd like to meet To go over everything They say that time's supposed to heal ya But I ain't done much healing... ")
 user2 = User.create!(username: "Mario",
-        description: Faker::Hipster.paragraph,
+        description: Faker::Hacker.say_something_smart,
         password: "password",
         picture: mario)
 user3 = User.create!(username: "Luigi",
-        description: Faker::Hipster.paragraph,
+        description: Faker::Hacker.say_something_smart,
         password: "password",
         picture: luigi)
 user4 = User.create!(username: "Megaman",
-        description: Faker::Hipster.paragraph,
+        description: Faker::Hacker.say_something_smart,
         password: "password",
         picture: megaman)
 user5 = User.create!(username: "Sub-Zero",
-        description: Faker::Hipster.paragraph,
+        description: Faker::Hacker.say_something_smart,
         password: "password",
         picture: sub_zero)
 user6 = User.create!(username: "Naruto",
-        description: Faker::Hipster.paragraph,
+        description: Faker::Hacker.say_something_smart,
         password: "password",
         picture: naruto)
 user7 = User.create!(username: "L-Block",
-        description: Faker::Hipster.paragraph,
+        description: Faker::Hacker.say_something_smart,
         password: "password",
         picture: l_block)
 user8 = User.create!(username: "Sonic",
-        description: Faker::Hipster.paragraph,
+        description: Faker::Hacker.say_something_smart,
         password: "password",
         picture: sonic)
 user9 = User.create!(username: "Cloud",
-        description: Faker::Hipster.paragraph,
+        description: Faker::Hacker.say_something_smart,
         password: "password",
         picture: cloud)
 user10 = User.create!(username: "Superman",
-        description: Faker::Hipster.paragraph,
+        description: Faker::Hacker.say_something_smart,
         password: "password",
         picture: superman)
 
 Game.destroy_all
-game1 = Game.create!(title: "Mario is missing",
+game1 = Game.create!(title: "CHECK ME!",
+        description: "Hey there! Welcome to gotgoodgames. On this site, you can rate and review games and see how other users feel about certain games. What you're looking at right now is the description page of a game (well this page is currently the intro page, but you know what I mean) This page will contain the game's details and user reviews and rating, which can be seen in the box below! You can navigate to your reviews and ratings via the navigation bar at the top through 'My Stats'. There, it will contain all the reviews and ratings you have created and you can go ahead and edit or delete them. Stick around and enjoy rating other games with the video game user community!... but first! Let's make your first review! Click the 'Add your own review!' button. After filling it out, you'll see it pop up as the most recent review! Keep doing that and let everyone know how you feel about games!",
+        release_date: "25-04-1987",
+        console: "WELCOME",
+        image_url: "https://pixabay.com/static/uploads/photo/2015/10/08/16/14/click-978023_960_720.png")
+game2 = Game.create!(title: "Mario is missing",
         description: "You have to find mario",
-        release_date: "29-01-1992",
-        console: "SNES",
+        release_date: "25-04-1987",
+        console: "Console",
         image_url: "http://img.gamefaqs.net/box/0/7/5/22075_front.jpg")
-game2 = Game.create(title: "Legend of Zelda",
+game3 = Game.create(title: "Legend of Zelda",
         description: "A young boy journeys off to find Zelda",
         release_date: "21-02-1986",
         console: "NES",
         image_url: "https://upload.wikimedia.org/wikipedia/en/4/41/Legend_of_zelda_cover_%28with_cartridge%29_gold.png" )
-game3 = Game.create!(title: "Notice me Senpai",
-        description: "You have to talk to your Senpai... for forever",
-        release_date: "01-01-2015",
-        console: "Dreamcast",
-        image_url: "https://s-media-cache-ak0.pinimg.com/736x/8c/3d/36/8c3d36765c1e9a80df4dfeb64128034e.jpg" )
 game4 = Game.create!(title: "Tetris",
         description: "Match blocks, get points",
         release_date: "06-06-1984",
@@ -139,52 +139,59 @@ game15 = Game.create!(title: "Super Dodge Ball Advance",
 
 Review.destroy_all
 review1 = Review.create!(user_id: user4.id,
-        game_id: game1.id, score: 1,
+        game_id: game2.id, score: 1,
         title: "I couldn't find Mario! Help!",
         body: "Afte playing this game for so many days, I couldn't find him. The visuals were poor and I wouldn't play this again! UGH!")
 review2 = Review.create!(user_id: user4.id,
-        game_id: game2.id, score: 1,
+        game_id: game3.id, score: 1,
         title: "I couldn't find Zelda! Help!",
         body: "This game sucked! I never want to play it again!")
 review3 = Review.create!(user_id: user4.id,
-        game_id: game3.id, score: 1,
-        title: "I couldn't find Senpai! Help!",
-        body: "HE NEVER NOTICED ME! PASSSS")
-review4 = Review.create!(user_id: user4.id,
         game_id: game4.id, score: 1,
         title: "I couldn't find the straight block! Help!",
         body: "I made my board so high up, but a stright block never appeared! There's a bug in the system, I'm sure!")
-review5 = Review.create!(user_id: user2.id,
-        game_id: game1.id, score: 5,
+review4 = Review.create!(user_id: user2.id,
+        game_id: game2.id, score: 5,
         title: "Found him, so easy!",
         body: "This was a great game and so easy!")
-review6 = Review.create!(user_id: user2.id,
-        game_id: game2.id, score: 5,
+review5 = Review.create!(user_id: user2.id,
+        game_id: game3.id, score: 5,
         title: "I love Zelda, great game!",
         body: "Definitely would play it again!")
-review7 = Review.create!(user_id: user3.id,
-        game_id: game2.id, score: 1,
+review6 = Review.create!(user_id: user3.id,
+        game_id: game3.id, score: 1,
         title: "I prefer Sega..",
         body: "Don't play this game, go play games like Sonic Adventure 2!")
-review8 = Review.create!(user_id: user3.id,
+review7 = Review.create!(user_id: user6.id,
         game_id: game3.id, score: 5,
-        title: "He finally noticed me! YAY!",
-        body: "Played this for days on days and months and months, but after 4 years, he FINALLY noticed me! <3 GREATTT GAME!")
-review9 = Review.create!(user_id: user6.id,
-        game_id: game3.id, score: 5,
-        title: Faker::Hipster.sentence(rand(3)+1),
-        body: Faker::Hipster.paragraph(6) )
+        title: Faker::Hipster.sentence(2, true, 1),
+        body: Faker::Hacker.say_something_smart)
 review10 = Review.create!(user_id: user2.id,
         game_id: game4.id, score: 5,
-        title: Faker::Hipster.sentence(rand(3)+1),
-        body: Faker::Hipster.paragraph(6) )
+        title: Faker::Hipster.sentence(2, true, 1),
+        body: Faker::Hacker.say_something_smart)
+
+# Creates data to help new users to the site
+review10 = Review.create!(user_id: user2.id,
+  game_id: game1.id, score: 1,
+  title: "Check out what I've reviewed!",
+  body: "To the left of this review box, you can see my user image. If you click it, it will bring you to my user page and you can view all of my reviews and ratings")
+review10 = Review.create!(user_id: user3.id,
+  game_id: game1.id, score: 2,
+  title: "Want to see all the users?",
+  body: "You definitely can, if you click the 'Community' button at the top, you can see who is currently a member of ggg")
+review10 = Review.create!(user_id: user4.id,
+  game_id: game1.id, score: 3,
+  title: "Search Bar",
+  body: "In the navigation bar, there is a search bar that will allow you to search our database for users or games that contain your query. Try typing 'sup' and see what pops up!")
+
 # Creates other reviews
         User.all.slice(1..-1).each do |user|
           Game.all.slice(4..-1).each do |game|
             Review.create!(user_id: user.id,
             game_id: game.id,
             score: rand(5)+1,
-            title: Faker::Hipster.sentence(rand(2)+1),
-            body: Faker::Hipster.paragraph(rand(3)+1) )
+            title: Faker::Hipster.sentence(2, true, 1),
+            body: Faker::Hacker.say_something_smart)
           end
         end
