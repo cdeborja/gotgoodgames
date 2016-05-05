@@ -131,10 +131,23 @@ game14 = Game.create!(title: "Super Monkey Ball",
         console: "Gamecube",
         image_url: "https://upload.wikimedia.org/wikipedia/en/9/96/Super_Monkey_Ball_Coverart.png")
 game15 = Game.create!(title: "Super Dodge Ball Advance",
-        description: "Every 小学生's dream... to be international Dodge Ball Players'",
+        description: "Every 小学生's dream... to be international Dodge Ball Player",
         release_date: "11-06-2001",
         console: "Gameboy Advance",
         image_url: "https://upload.wikimedia.org/wikipedia/en/4/48/Superdodge.jpg")
+
+random_covers = ["http://orig13.deviantart.net/fa64/f/2010/186/2/1/portal_2_xbox_360_game_cover_by_lastshadow1.png",
+                "https://upload.wikimedia.org/wikipedia/commons/f/fc/King_Arthur_The_Role-playing_Wargame_cover_art.jpg",
+                "http://vgboxart.com/boxes/PC/12994-portal-old-full.jpg",
+                "https://assets.vg247.com/current//2011/04/20110412portal224.jpg",
+                "http://img11.deviantart.net/22dd/i/2010/047/1/7/gta__ny_xbox_360_by_davidsmith1.jpg"]
+30.times do
+  Game.create!(title: Faker::Book.title,
+        description: Faker::Hipster.paragraph(5),
+        release_date: ((rand(27)+1).to_s + "-" + (rand(12)+1).to_s + "-" + (1940 + rand(75)).to_s),
+        console: Faker::Hipster.words(1).first.upcase,
+        image_url: random_covers.sample)
+end
 
 
 Review.destroy_all
