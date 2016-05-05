@@ -55,11 +55,11 @@ var Search = React.createClass({
 
   resultList: function () {
     if (this.state.query.length > 2) {
-      return SearchResultsStore.all().map(function (result) {
+      return SearchResultsStore.all().map(function (result, index) {
         if (result._type === "Game") {
           var gamehtml = "#/games/" + result.id;
           return (
-            <li key={ result.id }>
+            <li key={ index }>
               <a href={ gamehtml } >
                 Game: { result.title }
               </a>
@@ -69,7 +69,7 @@ var Search = React.createClass({
         } else {
           var userhtml = "#/users/" + result.id;
           return (
-            <li key={ result.id }>
+            <li key={ index }>
               <a href={ userhtml }>
                 User: { result.username }
               </a>
@@ -95,6 +95,7 @@ var Search = React.createClass({
             );
     }
     var meta = SearchResultsStore.meta();
+
     return (
       <form className="search-box">
         <input type="text" id="search" onChange={ this.handleInputChange }

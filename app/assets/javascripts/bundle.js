@@ -31432,12 +31432,12 @@
 	
 	  resultList: function () {
 	    if (this.state.query.length > 2) {
-	      return SearchResultsStore.all().map(function (result) {
+	      return SearchResultsStore.all().map(function (result, index) {
 	        if (result._type === "Game") {
 	          var gamehtml = "#/games/" + result.id;
 	          return React.createElement(
 	            "li",
-	            { key: result.id },
+	            { key: index },
 	            React.createElement(
 	              "a",
 	              { href: gamehtml },
@@ -31449,7 +31449,7 @@
 	          var userhtml = "#/users/" + result.id;
 	          return React.createElement(
 	            "li",
-	            { key: result.id },
+	            { key: index },
 	            React.createElement(
 	              "a",
 	              { href: userhtml },
@@ -31478,6 +31478,7 @@
 	      );
 	    }
 	    var meta = SearchResultsStore.meta();
+	
 	    return React.createElement(
 	      "form",
 	      { className: "search-box" },
@@ -31518,7 +31519,6 @@
 	};
 	
 	SearchResultsStore.__onDispatch = function (payload) {
-	
 	  switch (payload.actionType) {
 	    case SearchResultConstants.SEARCH_RESULTS_RECEIVED:
 	      _searchResults = payload.searchResults;
