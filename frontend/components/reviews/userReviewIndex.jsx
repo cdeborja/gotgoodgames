@@ -108,14 +108,25 @@ module.exports = React.createClass({
           </div>
       );
     }
+
     var form = this;
+    var checkedValue = form.props.review.score;
     var scoreChoices = [1, 2, 3, 4, 5].map ( function (value, idx) {
-      return (<li key={idx}>
-        <label>{value}</label>
-        <input type="radio" value={value} className="review-score" name="score"
-        onChange={form.updateScore}/>
-      </li>);
-      });
+// Need to fix defaulting checked option
+      if (checkedValue === value) {
+        return (<li key={idx}>
+          <label>{value}</label>
+          <input type="radio" value={value} className="review-score" name="score"
+          onChange={form.updateScore}/>
+        </li>);
+      } else {
+        return (<li key={idx}>
+          <label>{value}</label>
+          <input type="radio" value={value} className="review-score" name="score"
+          onChange={form.updateScore}/>
+        </li>);
+      }
+    });
 
     return(
       <div>

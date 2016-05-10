@@ -60,7 +60,7 @@ user10 = User.create!(username: "Superman",
 
 Game.destroy_all
 game1 = Game.create!(title: "CHECK ME!",
-        description: "Hey there! Welcome to gotgoodgames. On this site, you can rate and review games and see how other users feel about certain games. What you're looking at right now is the description page of a game (well this page is currently the intro page, but you know what I mean) This page will contain the game's details and user reviews and ratings, which can be seen in the box below! You can navigate to your reviews and ratings via the navigation bar at the top through 'My Stats'. There, it will contain all the reviews and ratings you have created and you can go ahead and edit or delete them. Stick around and enjoy rating other games with the video game user community!... but first! Let's make your first review! Click the 'Add your own review!' button. After filling it out, you'll see it pop up as the most recent review! Keep doing that and let everyone know how you feel about games!",
+        description: "Hey there! Welcome to gotgoodgames. On this site, you can rate and review games and see how other users have reviewed games. Each game page will contain game details as well as user reviews (if there are any). You can navigate to your reviews and ratings via the navigation bar at the top through 'My Stats'. There, it will contain all the reviews and ratings you have created and allow you to edit or delete them.",
         release_date: "25-04-1987",
         console: "WELCOME",
         image_url: "https://pixabay.com/static/uploads/photo/2015/10/08/16/14/click-978023_960_720.png")
@@ -185,18 +185,26 @@ review10 = Review.create!(user_id: user2.id,
         body: Faker::Hacker.say_something_smart)
 
 # Creates data to help new users to the site
-review10 = Review.create!(user_id: user2.id,
+review11 = Review.create!(user_id: user2.id,
   game_id: game1.id, score: 1,
   title: "Check out what I've reviewed!",
   body: "To the left of this review box, you can see my user image. If you click it, it will bring you to my user page and you can view all of my reviews and ratings")
-review10 = Review.create!(user_id: user3.id,
+review12 = Review.create!(user_id: user3.id,
   game_id: game1.id, score: 2,
-  title: "Want to see all the users?",
-  body: "You definitely can, if you click the 'Community' button at the top, you can see who is currently a member of ggg")
-review10 = Review.create!(user_id: user4.id,
+  title: "Can I see all the users or games?",
+  body: "You definitely can. Click the 'Browse' button to check out all the games and click 'Community' button to see all current members of ggg")
+review13 = Review.create!(user_id: user4.id,
   game_id: game1.id, score: 3,
   title: "Search Bar",
   body: "In the navigation bar, there is a search bar that will allow you to search our database for users or games that contain your query. Try typing 'sup' and see what pops up!")
+review14 = Review.create!(user_id: user5.id,
+  game_id: game1.id, score: 4,
+  title: "Add your own review to a game!",
+  body: "Let's make your first review! Click the 'Add your own review!' button. After filling it out, you'll see it pop up as the most recent review! Keep doing that and let everyone know how you feel about games!")
+review15 = Review.create!(user_id: user6.id,
+  game_id: game1.id, score: 5,
+  title: "Who made this...?",
+  body: "If you're interested in who created this website, take a look at the creator navigation at the bottom of any game page. Thanks for stopping by!")
 
 # Creates other reviews
         User.all.slice(1..-1).each do |user|

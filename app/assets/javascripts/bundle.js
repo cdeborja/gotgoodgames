@@ -21810,6 +21810,42 @@
 	        'div',
 	        null,
 	        this.props.children
+	      ),
+	      React.createElement(
+	        'ul',
+	        { className: 'author-navigation' },
+	        React.createElement(
+	          'h3',
+	          null,
+	          'Created by Christopher De Borja'
+	        ),
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(
+	            'a',
+	            { href: 'http://www.christopherdeborja.com' },
+	            'Portfolio'
+	          )
+	        ),
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(
+	            'a',
+	            { href: 'http://www.linkedin.com/in/christopherdeborja' },
+	            'LinkedIn'
+	          )
+	        ),
+	        React.createElement(
+	          'li',
+	          null,
+	          React.createElement(
+	            'a',
+	            { href: 'http://www.github.com/cdeborja' },
+	            'Github'
+	          )
+	        )
 	      )
 	    );
 	  }
@@ -36669,7 +36705,7 @@
 	      { className: 'content-container group' },
 	      React.createElement(
 	        'div',
-	        { className: 'game-information-box' },
+	        { className: 'game-information-box group' },
 	        React.createElement(
 	          'div',
 	          { className: 'game-details-left' },
@@ -37541,19 +37577,36 @@
 	        )
 	      );
 	    }
+	
 	    var form = this;
+	    var checkedValue = form.props.review.score;
 	    var scoreChoices = [1, 2, 3, 4, 5].map(function (value, idx) {
-	      return React.createElement(
-	        'li',
-	        { key: idx },
-	        React.createElement(
-	          'label',
-	          null,
-	          value
-	        ),
-	        React.createElement('input', { type: 'radio', value: value, className: 'review-score', name: 'score',
-	          onChange: form.updateScore })
-	      );
+	      // Need to fix defaulting checked option
+	      if (checkedValue === value) {
+	        return React.createElement(
+	          'li',
+	          { key: idx },
+	          React.createElement(
+	            'label',
+	            null,
+	            value
+	          ),
+	          React.createElement('input', { type: 'radio', value: value, className: 'review-score', name: 'score',
+	            onChange: form.updateScore })
+	        );
+	      } else {
+	        return React.createElement(
+	          'li',
+	          { key: idx },
+	          React.createElement(
+	            'label',
+	            null,
+	            value
+	          ),
+	          React.createElement('input', { type: 'radio', value: value, className: 'review-score', name: 'score',
+	            onChange: form.updateScore })
+	        );
+	      }
 	    });
 	
 	    return React.createElement(
@@ -38063,10 +38116,6 @@
 	  }
 	
 	});
-	
-	// <button>
-	// USER PAGE!!!!
-	// </button>
 
 /***/ },
 /* 315 */
@@ -38216,7 +38265,7 @@
 	    ApiUtil.fetchUserReviews({ review: { user_id: SessionStore.currentUser().id } });
 	    this.goToCurrentUserHomePage();
 	  },
-	  //ASK ABOUT MOUNT UNMOUNT LEEN
+	
 	  goToCurrentUserHomePage: function () {
 	    this.context.router.push("/homepage");
 	  },
@@ -38228,8 +38277,7 @@
 	  updateReview: function (e) {
 	    this.setState({ body: e.currentTarget.value });
 	  },
-	  /*need to figure out how to create  branching path for creating a new review and
-	  editing a post if the review has already been enter */
+	
 	  render: function () {
 	    if (!this.state.review) {
 	      return React.createElement(

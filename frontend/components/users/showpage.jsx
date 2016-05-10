@@ -77,7 +77,3 @@ module.exports = React.createClass({
   }
 
 });
-
-// <button>
-// USER PAGE!!!!
-// </button>

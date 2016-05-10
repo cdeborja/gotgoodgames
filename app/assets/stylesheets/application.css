@@ -593,3 +593,39 @@ border: solid blue 2px;
 .error {
   color: #d23f0f;
 }
+
+/* BOTTOM NAVIGATION */
+
+.author-navigation {
+  display: table;
+  margin: 20px auto;
+  width: 50%;
+  min-width: 200px;
+  border: 4px solid #fff;
+  border-radius: 5px;
+  background: #222;
+  color: #FFFFFF;
+}
+
+.author-navigation:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+.author-navigation > h3 {
+  display: block;
+  margin: 10px;
+}
+
+.author-navigation > li {
+  display: table-cell;
+  text-align: center;
+  transition: background-color 500ms, transform 500ms, color 500ms;
+}
+
+.author-navigation > li:hover {
+  cursor: pointer;
+  background: #fff;
+  color: #000;
+}

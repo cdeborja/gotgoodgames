@@ -63,7 +63,7 @@ module.exports = React.createClass({
     }
     return(
       <div className="content-container group">
-        <div className="game-information-box">
+        <div className="game-information-box group">
           <div className="game-details-left">
             <img src={game.image_url} />
             <div>

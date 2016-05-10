@@ -114,6 +114,12 @@ module.exports = React.createClass({
         <div>
           {this.props.children}
         </div>
+        <ul className="author-navigation">
+          <h3>Created by Christopher De Borja</h3>
+          <li><a href="http://www.christopherdeborja.com">Portfolio</a></li>
+          <li><a href="http://www.linkedin.com/in/christopherdeborja">LinkedIn</a></li>
+          <li><a href="http://www.github.com/cdeborja">Github</a></li>
+        </ul>
       </div>
     );
   }

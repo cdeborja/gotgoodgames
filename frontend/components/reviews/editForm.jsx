@@ -50,7 +50,7 @@ var ReviewForm = React.createClass({
     ApiUtil.fetchUserReviews({review: {user_id: SessionStore.currentUser().id}});
     this.goToCurrentUserHomePage();
   },
-  //ASK ABOUT MOUNT UNMOUNT LEEN
+
   goToCurrentUserHomePage: function () {
     this.context.router.push("/homepage");
   },
@@ -62,8 +62,7 @@ var ReviewForm = React.createClass({
   updateReview: function (e) {
     this.setState({ body: e.currentTarget.value});
   },
-  /*need to figure out how to create  branching path for creating a new review and
-  editing a post if the review has already been enter */
+
   render: function(){
     if (!this.state.review) {
       return (<div>LOADING</div>);
