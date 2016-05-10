@@ -204,7 +204,7 @@ review14 = Review.create!(user_id: user5.id,
 review15 = Review.create!(user_id: user6.id,
   game_id: game1.id, score: 5,
   title: "Who made this...?",
-  body: "If you're interested in who created this website, take a look at the creator navigation at the bottom of any game page. Thanks for stopping by!")
+  body: "If you're interested in who created this website, take a look at the creator navigation at the bottom of any page. Thanks for stopping by!")
 
 # Creates other reviews
         User.all.slice(1..-1).each do |user|
