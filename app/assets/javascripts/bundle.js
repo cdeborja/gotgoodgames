@@ -21991,6 +21991,12 @@
 	      success: function (currentUser) {
 	        SessionActions.currentUserReceived(currentUser);
 	        callback && callback();
+	      },
+	      error: function (request, status, error) {
+	        $(".login-error").removeClass("hidden");
+	        setTimeout(function () {
+	          $(".login-error").addClass("hidden");
+	        }, 3000);
 	      }
 	    });
 	  },
@@ -38370,7 +38376,6 @@
 	    ApiUtil.login(this.state, function () {
 	      router.push("/landingPage");
 	    });
-	    $(".error").removeClass("hidden");
 	  },
 	
 	  updateUsername: function (e) {
@@ -38428,7 +38433,7 @@
 	        { className: 'input-box' },
 	        React.createElement(
 	          'div',
-	          { className: 'error hidden' },
+	          { className: 'login-error hidden' },
 	          'Incorrect username/password combination'
 	        ),
 	        React.createElement(

@@ -20,7 +20,6 @@ var LoginForm = React.createClass({
     ApiUtil.login(this.state, function() {
       router.push("/landingPage");
     });
-    $(".error").removeClass("hidden");
   },
 
   updateUsername: function(e) {
@@ -65,7 +64,7 @@ var LoginForm = React.createClass({
         <h1>Please Sign In</h1>
 
         <form className="input-box">
-          <div className="error hidden">Incorrect username/password combination</div>
+          <div className="login-error hidden">Incorrect username/password combination</div>
           <label className="input-text" htmlFor="username">
             Username
           </label>

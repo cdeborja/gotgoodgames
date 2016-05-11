@@ -32,6 +32,12 @@ module.exports = {
       success: function(currentUser) {
         SessionActions.currentUserReceived(currentUser);
         callback && callback();
+      },
+      error: function(request, status, error) {
+        $(".login-error").removeClass("hidden");
+        setTimeout(function(){
+          $(".login-error").addClass("hidden");
+        }, 3000);
       }
     });
   },

@@ -590,7 +590,7 @@ border: solid blue 2px;
   display: none;
 }
 
-.error {
+.login-error {
   color: #d23f0f;
 }
 
