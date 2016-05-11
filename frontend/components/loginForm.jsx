@@ -78,6 +78,7 @@ var LoginForm = React.createClass({
           <button onClick={this.handleSubmit} className="sign-in-button">Sign In</button>
           {signUpButton}
           {guestButton}
+                <a href="/auth/facebook">LOG IN WITH FACEBOOK</a>
         </form>
       </div>
     );

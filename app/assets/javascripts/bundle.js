@@ -38456,7 +38456,12 @@
 	          'Sign In'
 	        ),
 	        signUpButton,
-	        guestButton
+	        guestButton,
+	        React.createElement(
+	          'a',
+	          { href: '/auth/facebook' },
+	          'LOG IN WITH FACEBOOK'
+	        )
 	      )
 	    );
 	  }

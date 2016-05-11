@@ -45,6 +45,20 @@ class User < ActiveRecord::Base
     user
   end
 
+  def self.find_or_create_by_auth_hash(auth_hash)
+    provider = auth_hash[:provider]
+    uid = auth_hash[:uid]
+    user = User.find_by(provider: provider, uid: uid)
+    return user if user
+
+    User.create(
+      provider: provider,
+      uid: uid,
+      username: auth_hash[:extra][:raw_info][:name],
+      password_digest: BCrypt::Password.create(SecureRandom.urlsafe_base64(16))
+    )
+  end
+
   ##### Might be useful later to create a count of ongoing reviews #####
   #
   # def self.num_posts

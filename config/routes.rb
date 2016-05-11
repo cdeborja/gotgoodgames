@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+  root to: "static_pages#root"
 
   resources :users, only: [:create, :new, :show, :edit, :update]
 
@@ -13,6 +13,6 @@ Rails.application.routes.draw do
     resources :searches, only: [:index]
   end
 
-  root to: "static_pages#root"
   # get "*unmatched_routes", to: "static_pages#root"
+    get "auth/facebook/callback", to: "omniauth#facebook"
 end
