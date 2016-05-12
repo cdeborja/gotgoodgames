@@ -38409,7 +38409,7 @@
 	    if (!this.state.currentUser) {
 	      signUpButton = React.createElement(
 	        'button',
-	        { className: 'sign-in-button', onClick: this.goToSignUpForm },
+	        { className: 'sign-in-button next-to', onClick: this.goToSignUpForm },
 	        'Sign Up'
 	      );
 	    }
@@ -38452,15 +38452,32 @@
 	          type: 'password', value: this.state.password }),
 	        React.createElement(
 	          'button',
-	          { onClick: this.handleSubmit, className: 'sign-in-button' },
+	          { onClick: this.handleSubmit, className: 'sign-in-button next-to' },
 	          'Sign In'
 	        ),
 	        signUpButton,
-	        guestButton,
+	        guestButton
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'oauth-box group' },
 	        React.createElement(
-	          'a',
-	          { href: '/auth/facebook' },
-	          'LOG IN WITH FACEBOOK'
+	          'ul',
+	          null,
+	          React.createElement(
+	            'li',
+	            { className: 'facebook' },
+	            React.createElement(
+	              'div',
+	              null,
+	              'f'
+	            ),
+	            React.createElement(
+	              'a',
+	              { href: '/auth/facebook' },
+	              'Login with Facebook'
+	            )
+	          )
 	        )
 	      )
 	    );

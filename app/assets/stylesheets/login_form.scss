@@ -24,16 +24,20 @@
   padding: 0 145px;
 }
 
+.oauth-box {
+  border-top: 1px solid #FFFFFF;
+  margin: 10px auto;
+  padding: 0 145px;
+}
+
 .sign-in-button,
 .create-new-user-button {
   display: block;
-  float: left;
   padding: 10px;
   width: 100px;
   text-align: center;
   border: 1px solid #ccc;
-  margin-top: 10px;
-  margin-right: 10px;
+  margin: 10px;
   border-radius: 5px;
   transition: background-color 500ms, color 500ms;
 }
@@ -44,6 +48,39 @@
 
 .sign-in-button:last-child {
   width: 125px;
+}
+
+.next-to {
+  float: left;
+}
+
+
+.facebook {
+  position: relative;
+}
+
+.facebook > a {
+  display: block;
+  margin: 10px;
+  padding: 10px 0;
+  background: #3c5a99;
+  border: 1px solid #3c5a99;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 500ms, color 500ms;
+}
+
+.facebook > div {
+  position: absolute;
+  display: block;
+  font-size: 35px;
+  margin-left: 30px;
+  padding-right: 10px;
+  border-right: 1px solid #FFFFFF;
+}
+
+.facebook > a:hover {
+  background: #4b76d0;
 }
 
 .sign-in-button:hover {
