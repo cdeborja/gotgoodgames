@@ -48,6 +48,7 @@
 
 .sign-in-button:last-child {
   width: 125px;
+  margin-bottom: 20px;
 }
 
 .next-to {
@@ -56,6 +57,7 @@
 
 
 .facebook {
+  margin-top: 20px;
   position: relative;
 }
 
@@ -75,12 +77,41 @@
   display: block;
   font-size: 35px;
   margin-left: 30px;
-  padding-right: 10px;
+  padding-right: 15px;
   border-right: 1px solid #FFFFFF;
 }
 
 .facebook > a:hover {
   background: #4b76d0;
+}
+
+.twitch {
+  margin-top: 20px;
+  position: relative;
+}
+
+.twitch > a {
+  display: block;
+  margin: 10px;
+  padding: 10px 0;
+  background: #6441a4;
+  border: 1px solid #6441a4;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 500ms, color 500ms;
+}
+
+.twitch > div {
+  position: absolute;
+  display: block;
+  font-size: 35px;
+  margin-left: 30px;
+  padding-right: 15px;
+  border-right: 1px solid #FFFFFF;
+}
+
+.twitch > a:hover {
+  background: #8d5aea;
 }
 
 .sign-in-button:hover {

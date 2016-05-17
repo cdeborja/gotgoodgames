@@ -15,4 +15,5 @@ Rails.application.routes.draw do
 
   # get "*unmatched_routes", to: "static_pages#root"
     get "auth/facebook/callback", to: "omniauth#facebook"
+    get "auth/twitch/callback", to: "omniauth#twitch"
 end

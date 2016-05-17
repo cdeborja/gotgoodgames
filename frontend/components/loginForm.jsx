@@ -83,6 +83,7 @@ var LoginForm = React.createClass({
         <div className="oauth-box group">
           <ul>
             <li className="facebook"><div>f</div><a href="/auth/facebook">Login with Facebook</a></li>
+            <li className="twitch"><div>t</div><a href="/auth/twitch">Login with Twitch</a></li>
           </ul>
         </div>
       </div>

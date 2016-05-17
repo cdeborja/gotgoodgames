@@ -38477,6 +38477,20 @@
 	              { href: '/auth/facebook' },
 	              'Login with Facebook'
 	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            { className: 'twitch' },
+	            React.createElement(
+	              'div',
+	              null,
+	              't'
+	            ),
+	            React.createElement(
+	              'a',
+	              { href: '/auth/twitch' },
+	              'Login with Twitch'
+	            )
 	          )
 	        )
 	      )
