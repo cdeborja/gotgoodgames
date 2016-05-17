@@ -14,7 +14,6 @@ class Api::SessionsController < ApplicationController
       params[:username],
       params[:password]
     )
-    debugger
     if @user && @user.valid_password?(params[:password])
       sign_in(@user)
       render :new
