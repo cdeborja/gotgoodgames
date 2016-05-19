@@ -37081,9 +37081,9 @@
 	        left: '0px',
 	        right: '0px',
 	        bottom: '0px',
-	        border: '1px solid #ccc',
+	        border: '1px solid #fff',
 	        padding: '20px',
-	        backgroundColor: '#eee',
+	        backgroundColor: '#222',
 	        height: '380px',
 	        width: '650px',
 	        zIndex: 11
@@ -37097,7 +37097,8 @@
 	        React.createElement(
 	          'label',
 	          null,
-	          value
+	          value,
+	          ' '
 	        ),
 	        React.createElement('input', { type: 'radio', value: value, className: 'review-score', name: 'score',
 	          onChange: form.updateScore })
@@ -37547,7 +37548,7 @@
 	        left: 0,
 	        right: 0,
 	        bottom: 0,
-	        backgroundColor: 'rgba(5, 5, 5, 0.75)',
+	        backgroundColor: 'rgba(0, 0, 0, 0.70)',
 	        zIndex: 10
 	      },
 	      content: {
@@ -37557,12 +37558,11 @@
 	        left: '0px',
 	        right: '0px',
 	        bottom: '0px',
-	        border: '4px solid #555',
+	        border: '1px solid #fff',
 	        padding: '20px',
-	        backgroundColor: '#ddd',
+	        backgroundColor: '#222',
 	        height: '380px',
 	        width: '650px',
-	        borderRadius: '5px',
 	        zIndex: 11
 	      }
 	    };
@@ -37601,7 +37601,8 @@
 	          React.createElement(
 	            'label',
 	            null,
-	            value
+	            value,
+	            ' '
 	          ),
 	          React.createElement('input', { type: 'radio', value: value, className: 'review-score', name: 'score',
 	            onChange: form.updateScore })
@@ -37613,7 +37614,8 @@
 	          React.createElement(
 	            'label',
 	            null,
-	            value
+	            value,
+	            ' '
 	          ),
 	          React.createElement('input', { type: 'radio', value: value, className: 'review-score', name: 'score',
 	            onChange: form.updateScore })

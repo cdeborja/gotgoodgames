@@ -102,9 +102,9 @@ var ReviewForm = React.createClass({
         left            : '0px',
         right           : '0px',
         bottom          : '0px',
-        border          : '1px solid #ccc',
+        border          : '1px solid #fff',
         padding         : '20px',
-        backgroundColor : '#eee',
+        backgroundColor : '#222',
         height          : '380px',
         width           : '650px',
         zIndex         : 11
@@ -113,7 +113,7 @@ var ReviewForm = React.createClass({
     var form = this;
     var scoreChoices = [1, 2, 3, 4, 5].map ( function (value, idx) {
       return (<li key={idx}>
-        <label>{value}</label>
+        <label>{value} </label>
         <input type="radio" value={value} className="review-score" name="score"
         onChange={form.updateScore}/>
       </li>);

@@ -292,6 +292,7 @@ img {
 /* ADDREVIEW BOX */
 
 .add-review-box {
+  color: white;
   margin: 0 auto;
   padding: 0;
 
@@ -312,16 +313,15 @@ img {
   margin-bottom: 5px;
 }
 
-/*.review-score:hover {
-  text-shadow: 0 0 0.2em black, 0 0 0.2em #ff3, 0 0 0.2em #ff3 ;
+.review-score:hover {
   cursor: pointer;
-}*/
+}
 
 .add-review-box > h2,
 .edit-review-box > h2 {
     font-size: 36px;
     font-weight: bold;
-    border-bottom: 3px solid black;
+    border-bottom: 3px solid white;
 }
 
 .add-review-textarea {
@@ -332,10 +332,11 @@ img {
   font-weight: normal;
   font-size: 14px;
   border-radius: 5px;
-  width: 100%;
+  width: 95%;
   height: 120px;
   resize: both;
   word-wrap: break-word;
+  color: #000000;
 }
 
 .add-review-title {
@@ -346,9 +347,10 @@ img {
   font-weight: normal;
   font-size: 20px;
   border-radius: 5px;
-  width: 100%;
+  width: 80%;
   height: auto;
   word-wrap: break-word;
+  color: #000000;
 }
 
 /* this will help organize the list of choices to choose as a value*/
@@ -401,13 +403,14 @@ img {
 
 .submit-button {
   border-radius: 5px;
-  border: 1px solid #555;
-  background: #f6f6ee;
+  border: 1px solid #fff;
+  background: #222222;
   padding: 12px 20px;
   font-weight: 600;
   font-family: sans-serif;
   margin-top: 20px;
-  color: #333;
+  color: #ffffff;
+  transition: background-color 500ms, transform 500ms, color 500ms;
 }
 
 .add-review-button {
@@ -440,7 +443,8 @@ img {
 
 .submit-button:hover {
   cursor: pointer;
-  background: #aaa;
+  background: #ffffff;
+  color: #000000;
 }
 
 /* --- APP CONTENT --- */
