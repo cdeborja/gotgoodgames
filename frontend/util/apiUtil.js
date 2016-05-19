@@ -14,8 +14,14 @@ module.exports = {
       url: "api/users",
       dataType: "json",
       data: credentials,
-      success: function(errors) {
-        ErrorActions.errorsReceived(errors);
+      success: function(result) {
+        //Need to come back later and figure out how to display the errors instead of having general error
+        if ('errors' in result) {
+          $(".login-error").removeClass("hidden");
+          setTimeout(function(){
+            $(".login-error").addClass("hidden");
+          }, 3000);
+        }
       },
       error: function () {
         console.log("Could not create user");

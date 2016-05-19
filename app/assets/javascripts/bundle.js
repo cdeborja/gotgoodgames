@@ -21973,8 +21973,14 @@
 	      url: "api/users",
 	      dataType: "json",
 	      data: credentials,
-	      success: function (errors) {
-	        ErrorActions.errorsReceived(errors);
+	      success: function (result) {
+	        //Need to come back later and figure out how to display the errors instead of having general error
+	        if ('errors' in result) {
+	          $(".login-error").removeClass("hidden");
+	          setTimeout(function () {
+	            $(".login-error").addClass("hidden");
+	          }, 3000);
+	        }
 	      },
 	      error: function () {
 	        console.log("Could not create user");
@@ -38533,9 +38539,7 @@
 	  handleSubmit: function (e) {
 	    e.preventDefault();
 	    var router = this.context.router;
-	    ApiUtil.signUp(this.state, function () {
-	      router.push("/signup");
-	    });
+	    ApiUtil.signUp(this.state);
 	    ApiUtil.login(this.state, function () {
 	      router.push("/landingPage");
 	    });
@@ -38575,11 +38579,16 @@
 	        'form',
 	        { className: 'input-box', onSubmit: this.handleSubmit },
 	        React.createElement(
+	          'div',
+	          { className: 'login-error hidden' },
+	          'Unacceptable username/password combination'
+	        ),
+	        React.createElement(
 	          'label',
 	          { className: 'input-text', htmlFor: 'username' },
 	          'Username'
 	        ),
-	        React.createElement('input', { placeholder: 'How would you like to be known here?',
+	        React.createElement('input', { placeholder: 'Think of something good!',
 	          className: 'input-field-login', type: 'text',
 	          valueLink: this.linkState('username') }),
 	        React.createElement(
@@ -38589,7 +38598,7 @@
 	        ),
 	        React.createElement('input', { className: 'input-field-login', onChange: this.updatePassword,
 	          type: 'password', value: this.state.password,
-	          placeholder: 'Is that secret enough???' }),
+	          placeholder: 'Minimum 6 characters password' }),
 	        React.createElement(
 	          'button',
 	          { className: 'create-new-user-button' },

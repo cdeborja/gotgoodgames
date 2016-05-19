@@ -26,9 +26,7 @@ var SignUpForm = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
     var router = this.context.router;
-    ApiUtil.signUp(this.state, function() {
-      router.push("/signup");
-    });
+    ApiUtil.signUp(this.state);
     ApiUtil.login(this.state, function() {
       router.push("/landingPage");
     });
@@ -62,17 +60,19 @@ var SignUpForm = React.createClass({
 
         <form className="input-box" onSubmit={this.handleSubmit}>
 
+          <div className="login-error hidden">Unacceptable username/password combination</div>
+
           <label className="input-text" htmlFor="username">
             Username
           </label>
-          <input placeholder="How would you like to be known here?"
+          <input placeholder="Think of something good!"
           className="input-field-login" type="text"
           valueLink={this.linkState('username')}/>
 
           <label className="input-text" htmlFor="password">Password</label>
           <input className="input-field-login" onChange={this.updatePassword}
           type="password" value={this.state.password}
-          placeholder="Is that secret enough???"/>
+          placeholder="Minimum 6 characters password"/>
 
           <button className="create-new-user-button">Create New User</button>
 
