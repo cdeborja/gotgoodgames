@@ -76,17 +76,30 @@
   line-height: 20px
 }
 
-.user-picture {
-  margin: 5px;
+.home-user-picture .text {
+  position:relative;
+  bottom: 30px;
+  left: 30px;
+  visibility:hidden;
 }
 
-.user-picture > img {
+.home-user-picture:hover .text {
+  visibility: visible;
+}
+
+.home-user-picture:hover, .home-user-picture > img:hover {
+  cursor: pointer;
+  background: #ffffff;
+}
+
+.home-user-picture, .user-picture > img {
   display: block;
   width: 160px;
   height: auto;
   border: 3px #fff solid;
   padding: 10px;
   border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 .stat-box {

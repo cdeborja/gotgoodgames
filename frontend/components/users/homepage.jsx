@@ -65,13 +65,15 @@ module.exports = React.createClass({
 
 
     // var memberSince = this.state.user.created_at.slice(0,10).split("-").join('/');
+    // <div className="cover" onMouseOver={}>
 
     return(
     <div className="content-container group">
       <div className="user-information-box group">
         <div className="user-information">
-          <div className="user-picture">
+          <div className="home-user-picture">
             <img src={this.state.user.picture}/>
+            <div className="text">Update Picture</div>
           </div>
           <ul className="stat-box">
             <h3>"Newbie"</h3>
@@ -81,6 +83,7 @@ module.exports = React.createClass({
         <div className="user-description-box">
           <h1>{this.state.user.username}</h1>
           <p>{this.state.user.description}</p>
+          <button onClick={this.goToEditProfile}>Edit Profile</button>
         </div>
       </div>
 
@@ -94,5 +97,3 @@ module.exports = React.createClass({
   }
 
 });
-// Once implemented, will go to Edit Profile page.
-// <button onClick={this.goToEditProfile}>Edit Profile</button>

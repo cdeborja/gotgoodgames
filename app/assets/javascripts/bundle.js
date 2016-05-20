@@ -37943,6 +37943,7 @@
 	    }
 	
 	    // var memberSince = this.state.user.created_at.slice(0,10).split("-").join('/');
+	    // <div className="cover" onMouseOver={}>
 	
 	    return React.createElement(
 	      'div',
@@ -37955,8 +37956,13 @@
 	          { className: 'user-information' },
 	          React.createElement(
 	            'div',
-	            { className: 'user-picture' },
-	            React.createElement('img', { src: this.state.user.picture })
+	            { className: 'home-user-picture' },
+	            React.createElement('img', { src: this.state.user.picture }),
+	            React.createElement(
+	              'div',
+	              { className: 'text' },
+	              'Update Picture'
+	            )
 	          ),
 	          React.createElement(
 	            'ul',
@@ -37986,6 +37992,11 @@
 	            'p',
 	            null,
 	            this.state.user.description
+	          ),
+	          React.createElement(
+	            'button',
+	            { onClick: this.goToEditProfile },
+	            'Edit Profile'
 	          )
 	        )
 	      ),
@@ -38003,8 +38014,6 @@
 	  }
 	
 	});
-	// Once implemented, will go to Edit Profile page.
-	// <button onClick={this.goToEditProfile}>Edit Profile</button>
 
 /***/ },
 /* 314 */
@@ -38484,20 +38493,6 @@
 	              { href: '/auth/facebook' },
 	              'Login with Facebook'
 	            )
-	          ),
-	          React.createElement(
-	            'li',
-	            { className: 'twitch' },
-	            React.createElement(
-	              'div',
-	              null,
-	              't'
-	            ),
-	            React.createElement(
-	              'a',
-	              { href: '/auth/twitch' },
-	              'Login with Twitch'
-	            )
 	          )
 	        )
 	      )
@@ -38506,6 +38501,7 @@
 	
 	});
 	
+	// <li className="twitch"><div>t</div><a href="/auth/twitch">Login with Twitch</a></li>
 	module.exports = LoginForm;
 
 /***/ },
