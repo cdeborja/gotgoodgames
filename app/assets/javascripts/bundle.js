@@ -21888,11 +21888,7 @@
 	  render: function () {
 	
 	    if (!this.state.games) {
-	      return React.createElement(
-	        'div',
-	        { className: 'loading' },
-	        ' LOADING!!! '
-	      );
+	      return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	    }
 	
 	    return React.createElement(
@@ -31313,11 +31309,7 @@
 	  },
 	
 	  render: function () {
-	    if (this.props.games.length === 0) return React.createElement(
-	      'div',
-	      null,
-	      'loading'
-	    );
+	    if (this.props.games.length === 0) return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	
 	    var settings = {
 	      dots: true,
@@ -37422,11 +37414,7 @@
 	
 	  render: function () {
 	    if (this.state.games.length === 0) {
-	      return React.createElement(
-	        'div',
-	        { className: 'loading' },
-	        ' Loading... '
-	      );
+	      return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	    }
 	    var that = this;
 	    var gamesIndex = this.state.games.map(function (game) {
@@ -37814,50 +37802,50 @@
 	    ApiUtil.updateUserInformation(this.props.location.state.user.id, formData);
 	    this.goToHomePage();
 	  },
-	
-	  // <input
-	  // type="file"
-	  // onChange={this.handleFileChange}
-	  // />
-	
 	  render: function () {
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'edit-box' },
+	      { className: 'edit-box group' },
 	      React.createElement(
-	        'form',
-	        { onSubmit: this.handleSubmit },
+	        'div',
+	        { className: 'edit-box-picture' },
 	        React.createElement(
-	          'label',
+	          'h2',
 	          null,
-	          'Description',
-	          React.createElement('textarea', {
-	            className: 'edit-box-description',
-	            defaultValue: this.props.location.state.user.description,
-	            placeholder: 'Enter a description...',
-	            onChange: this.handleDescriptionChange
-	          })
+	          'Profile Picture'
 	        ),
-	        React.createElement('br', null),
+	        React.createElement('input', {
+	          type: 'file',
+	          onChange: this.handleFileChange
+	        }),
 	        React.createElement(
-	          'label',
+	          'p',
 	          null,
-	          'Image',
-	          React.createElement('input', {
-	            type: 'file',
-	            onChange: this.handleFileChange
-	          })
+	          'Preview:'
 	        ),
-	        React.createElement('br', null),
-	        React.createElement('input', { type: 'submit', value: 'Save Changes' })
+	        React.createElement('img', { className: 'preview-image', src: this.state.pictureUrl })
 	      ),
 	      React.createElement(
-	        'p',
-	        null,
-	        'Preview:'
-	      ),
-	      React.createElement('img', { className: 'preview-image', src: this.state.pictureUrl })
+	        'div',
+	        { className: 'edit-box-information', onSubmit: this.handleSubmit },
+	        React.createElement(
+	          'h2',
+	          null,
+	          'About'
+	        ),
+	        React.createElement('textarea', {
+	          className: 'edit-box-description',
+	          defaultValue: this.props.location.state.user.description,
+	          placeholder: 'Enter a description...',
+	          onChange: this.handleDescriptionChange
+	        }),
+	        React.createElement(
+	          'button',
+	          { onClick: this.handleSubmit },
+	          'Save Changes'
+	        )
+	      )
 	    );
 	  }
 	});
@@ -37888,7 +37876,7 @@
 	  getStateFromStore: function () {
 	    var user_id = SessionStore.currentUser().id;
 	
-	    return { user: SessionStore.currentUser(),
+	    return { user: UserStore.find(user_id),
 	      reviews: ReviewStore.all()
 	    };
 	  },
@@ -37903,12 +37891,13 @@
 	
 	  componentDidMount: function () {
 	    this.reviewListener = ReviewStore.addListener(this._onChange);
-	    this.sessionListener = SessionStore.addListener(this._onChange);
-	    ApiUtil.fetchUserReviews(this.state.user.id);
+	    this.userListener = UserStore.addListener(this._onChange);
+	    ApiUtil.fetchUser(SessionStore.currentUser().id);
+	    ApiUtil.fetchUserReviews(SessionStore.currentUser().id);
 	  },
 	
 	  componentWillUnmount: function () {
-	    this.sessionListener.remove();
+	    this.userListener.remove();
 	    this.reviewListener.remove();
 	  },
 	
@@ -37921,12 +37910,8 @@
 	  },
 	
 	  render: function () {
-	    if (this.state.reviews.length === 0 && !this.state.user) {
-	      return React.createElement(
-	        'div',
-	        { className: 'loading' },
-	        ' Loading... '
-	      );
+	    if (this.state.reviews.length === 0 && !this.state.user || !this.state.user) {
+	      return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	    }
 	
 	    var userReviews;
@@ -37957,12 +37942,7 @@
 	          React.createElement(
 	            'div',
 	            { className: 'home-user-picture' },
-	            React.createElement('img', { src: this.state.user.picture }),
-	            React.createElement(
-	              'div',
-	              { className: 'text' },
-	              'Update Picture'
-	            )
+	            React.createElement('img', { src: this.state.user.picture })
 	          ),
 	          React.createElement(
 	            'ul',
@@ -38058,19 +38038,8 @@
 	  },
 	
 	  render: function () {
-	    if (this.state.user === undefined) {
-	      return React.createElement(
-	        'div',
-	        { className: 'loading' },
-	        ' Loading... '
-	      );
-	    }
-	    if (this.state.reviews.length === 0) {
-	      React.createElement(
-	        'div',
-	        { className: 'loading' },
-	        ' Loading... '
-	      );
+	    if (this.state.user === undefined || this.state.reviews.length === 0) {
+	      return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	    }
 	
 	    var userReviews = this.state.reviews.map(function (review, id) {
@@ -38303,11 +38272,7 @@
 	
 	  render: function () {
 	    if (!this.state.review) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        'LOADING'
-	      );
+	      return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	    }
 	
 	    var form = this;

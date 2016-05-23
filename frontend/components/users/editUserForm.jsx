@@ -53,38 +53,33 @@ var EditUserForm = React.createClass({
     ApiUtil.updateUserInformation(this.props.location.state.user.id, formData);
     this.goToHomePage();
   },
-
-  // <input
-  // type="file"
-  // onChange={this.handleFileChange}
-  // />
-
   render: function () {
 
       return(
 
-        <div className="edit-box">
-          <form onSubmit={this.handleSubmit}>
-            <label>Description
+        <div className="edit-box group">
+          <div className="edit-box-picture">
+            <h2>Profile Picture</h2>
+
+            <input
+            type="file"
+            onChange={this.handleFileChange}
+            />
+
+            <p>Preview:</p>
+            <img className="preview-image" src={this.state.pictureUrl} />
+          </div>
+
+          <div className="edit-box-information" onSubmit={this.handleSubmit}>
+            <h2>About</h2>
               <textarea
                 className="edit-box-description"
                 defaultValue={this.props.location.state.user.description}
                 placeholder="Enter a description..."
                 onChange={this.handleDescriptionChange}
                 />
-            </label>
-            <br/>
-            <label>Image
-              <input
-                type="file"
-                onChange={this.handleFileChange}
-                />
-            </label>
-            <br/>
-            <input type="submit" value="Save Changes"/>
-          </form>
-          <p>Preview:</p>
-          <img className="preview-image" src={this.state.pictureUrl} />
+            <button onClick={this.handleSubmit}>Save Changes</button>
+          </div>
         </div>
       );
     }

@@ -6,7 +6,6 @@
 .user-information-box,
 .user-information,
 .stat-box,
-.user-description-box,
 .recent-reviews-box,
 .user-review,
 .user-review > * {
@@ -54,58 +53,6 @@
   font-weight: bold;
   font-size: 36px;
   border-bottom: 1px solid #fff;
-}
-
-.user-information {
-  display: block;
-  float: left;
-  padding: 5px;
-}
-
-.user-description-box {
-  margin-left: 20px;
-  display: block;
-  float: right;
-  width: 100%''
-}
-
-.user-description-box {
-  float: left;
-  padding: 10px;
-}
-
-.user-description-box > button {
-  display: block;
-  text-align: center;
-  padding: 10px;
-  width: 140px;
-  border: 1px solid #fff;
-  margin: 5px 0;
-  border-radius: 5px;
-  transition: background-color 500ms, color 500ms;
-}
-
-.user-description-box > button:hover {
-  background: #eee;
-  color: #fff;
-  cursor: pointer;
-}
-
-.user-description-box > h1 {
-  font-size: 36px;
-  border-bottom: 1px solid white;
-}
-
-.user-description-box > p {
-  background: white;
-  margin: 10px 0;
-  height: auto;
-  min-height: 100px;
-  width: 660px;
-  padding: 10px;
-  color: black;
-  border-radius: 5px;
-  line-height: 20px
 }
 
 .stat-box {
@@ -217,26 +164,6 @@
   height: auto;
   width: 600px;
   border-radius: 5px;
-}
-
-.edit-menu {
-  float: left;
-  margin-top: 50px;
-}
-.edit-menu > button {
-  display: block;
-  padding: 10px;
-  width: 140px;
-  border: 1px solid #fff;
-  margin: 5px 0;
-  border-radius: 5px;
-  transition: background-color 500ms, color 500ms;
-}
-
-.edit-menu > button:hover {
-  background: #000;
-  color: #fff;
-  cursor: pointer;
 }
 
 .games-index > li {

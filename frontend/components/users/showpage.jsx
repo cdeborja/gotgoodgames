@@ -36,11 +36,8 @@ module.exports = React.createClass({
 
 
   render: function () {
-    if (this.state.user === undefined) {
-      return (<div className="loading"> Loading... </div>);
-    }
-    if (this.state.reviews.length === 0) {
-       <div className="loading"> Loading... </div>;
+    if ((this.state.user === undefined) || (this.state.reviews.length === 0)) {
+      return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);
     }
 
     var userReviews = this.state.reviews.map(function (review, id) {

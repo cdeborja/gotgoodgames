@@ -27,7 +27,7 @@ module.exports = React.createClass({
 
   render: function () {
 
-    if ( !this.state.games ) {return (<div className="loading"> LOADING!!! </div>);}
+    if ( !this.state.games ) {return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);}
 
     return(
       <div className="content-container group">

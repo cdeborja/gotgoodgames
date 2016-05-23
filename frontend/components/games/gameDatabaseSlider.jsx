@@ -11,7 +11,7 @@ var GameDatabaseSlider = React.createClass({
   },
 
   render: function () {
-    if (this.props.games.length === 0) return (<div>loading</div>);
+    if (this.props.games.length === 0) return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);
 
     var settings = {
       dots: true,

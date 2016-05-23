@@ -65,7 +65,7 @@ var ReviewForm = React.createClass({
 
   render: function(){
     if (!this.state.review) {
-      return (<div>LOADING</div>);
+      return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);
     }
 
     var form = this;

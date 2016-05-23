@@ -16,7 +16,7 @@ module.exports = React.createClass({
   getStateFromStore: function () {
     var user_id = SessionStore.currentUser().id;
 
-    return { user: SessionStore.currentUser(),
+    return { user: UserStore.find(user_id),
              reviews: ReviewStore.all()
            };
   },
@@ -31,12 +31,13 @@ module.exports = React.createClass({
 
   componentDidMount: function () {
     this.reviewListener = ReviewStore.addListener(this._onChange);
-    this.sessionListener = SessionStore.addListener(this._onChange);
-    ApiUtil.fetchUserReviews(this.state.user.id);
+    this.userListener = UserStore.addListener(this._onChange);
+    ApiUtil.fetchUser(SessionStore.currentUser().id);
+    ApiUtil.fetchUserReviews(SessionStore.currentUser().id);
   },
 
   componentWillUnmount: function () {
-    this.sessionListener.remove();
+    this.userListener.remove();
     this.reviewListener.remove();
   },
 
@@ -50,8 +51,9 @@ module.exports = React.createClass({
 
 
   render: function () {
-    if (this.state.reviews.length === 0 && !this.state.user ) {
-      return (<div className="loading"> Loading... </div>);
+    if ((this.state.reviews.length === 0 && !this.state.user ) ||
+       (!this.state.user) ){
+      return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);
     }
 
     var userReviews;
@@ -73,7 +75,6 @@ module.exports = React.createClass({
         <div className="user-information">
           <div className="home-user-picture">
             <img src={this.state.user.picture}/>
-            <div className="text">Update Picture</div>
           </div>
           <ul className="stat-box">
             <h3>"Newbie"</h3>
