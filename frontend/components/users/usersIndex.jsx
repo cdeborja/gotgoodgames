@@ -40,7 +40,7 @@ module.exports = React.createClass({
 
   render: function () {
     if (this.state.users.length === 0) {
-      return (<div className="loading"> Loading... </div>);
+      return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);
     }
     var that = this;
     var usersIndex = this.state.users.map(function (user) {
