@@ -36,13 +36,18 @@ module.exports = React.createClass({
 
 
   render: function () {
-    if ((this.state.user === undefined) || (this.state.reviews.length === 0)) {
+    if (this.state.user === undefined) {
       return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);
     }
 
-    var userReviews = this.state.reviews.map(function (review, id) {
-      return <UserReviewItem key={id} review={review} />;
-    }).reverse();
+    var userReviews;
+    if (this.state.reviews.length > 0) {
+      userReviews = this.state.reviews.map(function (review, id) {
+        return <UserReviewItem key={id} review={review} />;
+      }).reverse();
+    } else {
+      userReviews = <p>Nothing...yet</p>;
+    }
 
     var memberSince = this.state.user.created_at.slice(0,10).split("-").join('/');
 

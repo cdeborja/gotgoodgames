@@ -38038,13 +38038,22 @@
 	  },
 	
 	  render: function () {
-	    if (this.state.user === undefined || this.state.reviews.length === 0) {
+	    if (this.state.user === undefined) {
 	      return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	    }
 	
-	    var userReviews = this.state.reviews.map(function (review, id) {
-	      return React.createElement(UserReviewItem, { key: id, review: review });
-	    }).reverse();
+	    var userReviews;
+	    if (this.state.reviews.length > 0) {
+	      userReviews = this.state.reviews.map(function (review, id) {
+	        return React.createElement(UserReviewItem, { key: id, review: review });
+	      }).reverse();
+	    } else {
+	      userReviews = React.createElement(
+	        'p',
+	        null,
+	        'Nothing...yet'
+	      );
+	    }
 	
 	    var memberSince = this.state.user.created_at.slice(0, 10).split("-").join('/');
 	
@@ -38157,11 +38166,7 @@
 	
 	  render: function () {
 	    if (this.state.users.length === 0) {
-	      return React.createElement(
-	        'div',
-	        { className: 'loading' },
-	        ' Loading... '
-	      );
+	      return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	    }
 	    var that = this;
 	    var usersIndex = this.state.users.map(function (user) {
