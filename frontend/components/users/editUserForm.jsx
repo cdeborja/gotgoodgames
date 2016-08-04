@@ -36,8 +36,8 @@ var EditUserForm = React.createClass({
   handleFileChange: function (e) {
     var file = e.currentTarget.files[0];
     var reader = new FileReader();
-    //onloadend or onloaded
-    reader.onloaded = function () {
+
+    reader.onloadend = function () {
       var result = reader.result;
       this.setState({ pictureFile: file, pictureUrl: result });
     }.bind(this);
