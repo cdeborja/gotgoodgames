@@ -16,7 +16,6 @@ l_block = File.open('app/assets/images/L-Block.png')
 sonic = File.open('app/assets/images/Sonic.jpg')
 cloud = File.open('app/assets/images/Cloud.jpg')
 superman = File.open('app/assets/images/Superman.jpg')
-button = File.open('app/assets/images/button.png')
 
 User.destroy_all
 user1 = User.create!(username: "guest",
