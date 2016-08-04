@@ -7,7 +7,6 @@ var ReviewConstants = require('../constants/reviewConstants');
 var _users = {};
 
 var resetUsers = function (users) {
-  // debugger
   _users = {};
   users.forEach(function (user) {
     _users[user.id] = user;

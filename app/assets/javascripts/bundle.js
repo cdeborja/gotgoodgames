@@ -21874,7 +21874,7 @@
 	  },
 	
 	  getStateFromStore: function () {
-	    return { users: UserStore.all(),
+	    return { //users: UserStore.all(),
 	      games: GameStore.all()
 	    };
 	  },
@@ -21889,41 +21889,30 @@
 	
 	  componentDidMount: function () {
 	    this.gameListener = GameStore.addListener(this._onChange);
-	    this.userListener = UserStore.addListener(this._onChange);
+	    // this.userListener = UserStore.addListener(this._onChange);
 	    ApiUtil.fetchAllGames();
-	    ApiUtil.fetchTopFiveUsers();
+	    // ApiUtil.fetchTopFiveUsers();
 	  },
 	
 	  componentWillUnmount: function () {
 	    this.gameListener.remove();
-	    this.userListener.remove();
+	    // this.userListener.remove();
 	  },
 	
-	  goToUserShowpage: function (e) {
-	    this.context.router.push('/users/' + e.currentTarget.id);
-	  },
+	  // goToUserShowpage: function (e) {
+	  //   this.context.router.push('/users/' + e.currentTarget.id);
+	  // },
 	
 	  render: function () {
-	
-	    if (!this.state.games || !this.state.users) {
+	    //|| !this.state.users
+	    if (!this.state.games) {
 	      return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	    }
 	    var that = this;
-	    var topFive = this.state.users.map(function (user) {
-	      return React.createElement(
-	        'li',
-	        { className: 'boxed-item', key: user.id, id: user.id, onClick: that.goToUserShowpage },
-	        React.createElement('img', { src: user.picture }),
-	        React.createElement(
-	          'p',
-	          null,
-	          user.username,
-	          ' has reviewed ',
-	          user.reviews,
-	          ' times'
-	        )
-	      );
-	    });
+	    // var topFive = this.state.users.map( function (user) {
+	    //   return (<li className="top-user" key={user.id} id={user.id} onClick={that.goToUserShowpage}>
+	    //     <img src={user.picture}/><p>{user.username} has reviewed {user.reviews} times</p></li>);
+	    // });
 	    return React.createElement(
 	      'div',
 	      { className: 'content-container group' },
@@ -21932,11 +21921,7 @@
 	        { className: 'content-game-lists' },
 	        React.createElement(GameDatabaseSlider, { games: this.state.games })
 	      ),
-	      React.createElement(
-	        'ul',
-	        { className: 'top-all-time-users' },
-	        topFive
-	      )
+	      React.createElement('ul', { className: 'top-all-time-users group' })
 	    );
 	  }
 	});
@@ -36980,7 +36965,6 @@
 	var _users = {};
 	
 	var resetUsers = function (users) {
-	  // debugger
 	  _users = {};
 	  users.forEach(function (user) {
 	    _users[user.id] = user;

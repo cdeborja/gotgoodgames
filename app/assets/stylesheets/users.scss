@@ -205,3 +205,17 @@
   color: #000;
   cursor: pointer;
 }
+
+.top-all-time-users {
+  margin: 0 auto;
+  border: 1px solid white;
+  width: 200px;
+}
+
+.top-user {
+  width: auto;
+}
+
+.top-user:hover {
+  cursor: pointer;
+}

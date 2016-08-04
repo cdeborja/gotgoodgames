@@ -14,9 +14,9 @@ module.exports = React.createClass({
   },
 
   getStateFromStore: function () {
-    return { users: UserStore.all(),
+    return ({ //users: UserStore.all(),
              games: GameStore.all()
-           };
+           });
   },
 
 
@@ -30,35 +30,34 @@ module.exports = React.createClass({
 
   componentDidMount: function () {
     this.gameListener = GameStore.addListener(this._onChange);
-    this.userListener = UserStore.addListener(this._onChange);
+    // this.userListener = UserStore.addListener(this._onChange);
     ApiUtil.fetchAllGames();
-    ApiUtil.fetchTopFiveUsers();
+    // ApiUtil.fetchTopFiveUsers();
   },
 
   componentWillUnmount: function () {
     this.gameListener.remove();
-    this.userListener.remove();
+    // this.userListener.remove();
   },
 
-  goToUserShowpage: function (e) {
-    this.context.router.push('/users/' + e.currentTarget.id);
-  },
+  // goToUserShowpage: function (e) {
+  //   this.context.router.push('/users/' + e.currentTarget.id);
+  // },
 
   render: function () {
-
-    if ( !this.state.games || !this.state.users ) {return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);}
+    //|| !this.state.users
+    if ( !this.state.games ) {return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);}
     var that = this;
-    var topFive = this.state.users.map( function (user) {
-      return (<li className="boxed-item" key={user.id} id={user.id} onClick={that.goToUserShowpage}>
-        <img src={user.picture}/><p>{user.username} has reviewed {user.reviews} times</p></li>);
-    });
+    // var topFive = this.state.users.map( function (user) {
+    //   return (<li className="top-user" key={user.id} id={user.id} onClick={that.goToUserShowpage}>
+    //     <img src={user.picture}/><p>{user.username} has reviewed {user.reviews} times</p></li>);
+    // });
     return(
       <div className="content-container group">
         <div className="content-game-lists">
           <GameDatabaseSlider games={this.state.games}/>
         </div>
-        <ul className="top-all-time-users">
-          {topFive}
+        <ul className="top-all-time-users group">
         </ul>
       </div>
     );
