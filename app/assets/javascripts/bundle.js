@@ -88,7 +88,7 @@
 	  React.createElement(Route, { path: 'search', component: Search, onEnter: _requireLoggedIn })
 	);
 	
-	document.addEventListener("DOMContentLoaded", function () {
+	document.addEventListener("DOMContentLoaded", function (event) {
 	  var container = document.getElementById('root');
 	  Modal.setAppElement(container);
 	  ReactDOM.render(React.createElement(
@@ -37785,8 +37785,8 @@
 	  handleFileChange: function (e) {
 	    var file = e.currentTarget.files[0];
 	    var reader = new FileReader();
-	
-	    reader.onloadend = function () {
+	    //onloadend or onloaded
+	    reader.onloaded = function () {
 	      var result = reader.result;
 	      this.setState({ pictureFile: file, pictureUrl: result });
 	    }.bind(this);

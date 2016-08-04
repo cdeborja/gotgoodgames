@@ -16,6 +16,7 @@ l_block = File.open('app/assets/images/L-Block.png')
 sonic = File.open('app/assets/images/Sonic.jpg')
 cloud = File.open('app/assets/images/Cloud.jpg')
 superman = File.open('app/assets/images/Superman.jpg')
+button = File.open('app/assets/images/button.png')
 
 User.destroy_all
 user1 = User.create!(username: "guest",
@@ -63,7 +64,7 @@ game1 = Game.create!(title: "CHECK ME!",
         description: "Hey there! Welcome to gotgoodgames. On this site, you can rate and review games and see how other users have reviewed games. Each game page will contain game details as well as user reviews (if there are any). You can navigate to your reviews and ratings via the navigation bar at the top through 'My Stats'. There, it will contain all the reviews and ratings you have created and allow you to edit or delete them.",
         release_date: "25-04-1987",
         console: "WELCOME",
-        image_url: "https://pixabay.com/static/uploads/photo/2015/10/08/16/14/click-978023_960_720.png")
+        image_url: "http://s3.amazonaws.com/gotgoodgames-dev/games/covers/000/000/001/original/button.png?1470332135")
 game2 = Game.create!(title: "Mario is missing",
         description: "You have to find mario",
         release_date: "25-04-1987",

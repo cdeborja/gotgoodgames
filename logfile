@@ -3,3 +3,11 @@ LOG:  MultiXact member wraparound protections are now enabled
 LOG:  database system is ready to accept connections
 LOG:  autovacuum launcher started
 FATAL:  database "cdeborja" does not exist
+FATAL:  database "convertcsv.sql" does not exist
+FATAL:  database "convertcsv.sql" does not exist
+FATAL:  database "cdeborja" does not exist
+FATAL:  database "cdeborja" does not exist
+LOG:  autovacuum launcher shutting down
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down

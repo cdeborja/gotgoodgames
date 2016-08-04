@@ -44,7 +44,7 @@ var routes = (
 
 );
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function (event) {
   var container = document.getElementById('root');
   Modal.setAppElement(container);
   ReactDOM.render(
