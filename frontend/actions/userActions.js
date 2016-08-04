@@ -21,7 +21,16 @@ var UserActions = {
       actionType: UserConstants.USERS_RECEIVED,
       users: users
     });
+  },
+
+  fiveUsersReceived: function(fiveUsers) {
+    AppDispatcher.dispatch({
+      actionType: UserConstants.FIVE_USERS_RECEIVED,
+      users: fiveUsers
+    });
   }
+
+
 
 };
 

@@ -26,6 +26,21 @@ class Api::UsersController < ApplicationController
 
   def index
     @users = User.all
+
+    if params[:fiveUsers]
+      topFive = []
+      five_users = User.joins(:reviews).group("id").order("COUNT(users.id) DESC").limit(5)
+      five_users.each do |user|
+        topFive << { "id" => user.id,
+          "username" => user.username,
+         "reviews" => user.reviews.length,
+         "picture" => user.picture.url
+         }
+      end
+
+      return render json: topFive
+    end
+
     if params[:game_id]
       reviewed_users = []
       @users.each do |user|

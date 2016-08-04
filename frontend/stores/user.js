@@ -7,6 +7,7 @@ var ReviewConstants = require('../constants/reviewConstants');
 var _users = {};
 
 var resetUsers = function (users) {
+  // debugger
   _users = {};
   users.forEach(function (user) {
     _users[user.id] = user;
@@ -44,6 +45,10 @@ UserStore.__onDispatch = function (payload) {
       UserStore.__emitChange();
       break;
     case UserConstants.USER_UPDATED:
+      UserStore.__emitChange();
+      break;
+    case UserConstants.FIVE_USERS_RECEIVED:
+      resetUsers(payload.users);
       UserStore.__emitChange();
       break;
   }

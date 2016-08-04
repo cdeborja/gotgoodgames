@@ -21862,35 +21862,64 @@
 	var Slider = __webpack_require__(216);
 	
 	var GameStore = __webpack_require__(236);
+	var UserStore = __webpack_require__(301);
 	
 	var GameDatabaseSlider = __webpack_require__(237);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
 	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
 	  getInitialState: function () {
-	    return { games: GameStore.all() };
+	    return { games: GameStore.all(),
+	      users: UserStore.all() };
 	  },
 	
 	  _onChange: function () {
 	    this.setState({ games: GameStore.all() });
+	    this.setState({ users: UserStore.all() });
 	  },
 	
 	  componentDidMount: function () {
 	    this.gameListener = GameStore.addListener(this._onChange);
+	    this.userListener = UserStore.addListener(this._onChange);
 	    ApiUtil.fetchAllGames();
+	    ApiUtil.fetchTopFiveUsers();
 	  },
 	
 	  componentWillUnmount: function () {
 	    this.gameListener.remove();
+	    this.userListener.remove();
+	  },
+	
+	  goToUserShowpage: function (e) {
+	    this.context.router.push('/users/' + e.currentTarget.id);
 	  },
 	
 	  render: function () {
 	
-	    if (!this.state.games) {
+	    if (!this.state.games || !this.state.users) {
 	      return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	    }
-	
+	    var that = this;
+	    var topFive = this.state.users.map(function (user) {
+	      return React.createElement(
+	        'li',
+	        { className: 'boxed-item', key: user.id, id: user.id, onClick: that.goToUserShowpage },
+	        React.createElement('img', { src: user.picture }),
+	        React.createElement(
+	          'p',
+	          null,
+	          user.username,
+	          ' has reviewed ',
+	          user.reviews,
+	          ' times'
+	        )
+	      );
+	    });
 	    return React.createElement(
 	      'div',
 	      { className: 'content-container group' },
@@ -21898,6 +21927,11 @@
 	        'div',
 	        { className: 'content-game-lists' },
 	        React.createElement(GameDatabaseSlider, { games: this.state.games })
+	      ),
+	      React.createElement(
+	        'ul',
+	        { className: 'top-all-time-users' },
+	        topFive
 	      )
 	    );
 	  }
@@ -22038,6 +22072,21 @@
 	      },
 	      error: function () {
 	        console.log("couldnt get user");
+	      }
+	    });
+	  },
+	
+	  fetchTopFiveUsers: function () {
+	    $.ajax({
+	      type: "GET",
+	      url: "/api/users/",
+	      dataType: "json",
+	      data: { fiveUsers: 5 },
+	      success: function (fiveUsers) {
+	        UserActions.fiveUsersReceived(fiveUsers);
+	      },
+	      error: function () {
+	        console.log("Loading five users error");
 	      }
 	    });
 	  },
@@ -29164,6 +29213,13 @@
 	      actionType: UserConstants.USERS_RECEIVED,
 	      users: users
 	    });
+	  },
+	
+	  fiveUsersReceived: function (fiveUsers) {
+	    AppDispatcher.dispatch({
+	      actionType: UserConstants.FIVE_USERS_RECEIVED,
+	      users: fiveUsers
+	    });
 	  }
 	
 	};
@@ -29177,7 +29233,8 @@
 	module.exports = {
 	  USERS_RECEIVED: "USERS_RECEIVED",
 	  USER_RECEIVED: "USER_RECEIVED",
-	  REVIEWED_USERS_RECEIVED: "REVIEWED_USERS_RECEIVED"
+	  REVIEWED_USERS_RECEIVED: "REVIEWED_USERS_RECEIVED",
+	  FIVE_USERS_RECEIVED: "FIVE_USERS_RECEIVED"
 	};
 
 /***/ },
@@ -36919,6 +36976,7 @@
 	var _users = {};
 	
 	var resetUsers = function (users) {
+	  // debugger
 	  _users = {};
 	  users.forEach(function (user) {
 	    _users[user.id] = user;
@@ -36956,6 +37014,10 @@
 	      UserStore.__emitChange();
 	      break;
 	    case UserConstants.USER_UPDATED:
+	      UserStore.__emitChange();
+	      break;
+	    case UserConstants.FIVE_USERS_RECEIVED:
+	      resetUsers(payload.users);
 	      UserStore.__emitChange();
 	      break;
 	  }
@@ -38055,8 +38117,7 @@
 	      );
 	    }
 	
-	    var memberSince = this.state.user.created_at.slice(0, 10).split("-").join('/');
-	
+	    // var memberSince = this.state.user.created_at.slice(0,10).split("-").join('/');
 	    return React.createElement(
 	      'div',
 	      { className: 'content-container group' },

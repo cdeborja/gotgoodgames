@@ -87,6 +87,21 @@ module.exports = {
     });
   },
 
+  fetchTopFiveUsers: function() {
+    $.ajax({
+      type: "GET",
+      url: "/api/users/",
+      dataType: "json",
+      data: {fiveUsers : 5},
+      success: function (fiveUsers) {
+        UserActions.fiveUsersReceived(fiveUsers);
+      },
+      error: function () {
+        console.log("Loading five users error");
+      }
+    });
+  },
+
   updateUserInformation: function(user_id, formData, callback) {
     $.ajax({
       url: '/api/users/' + user_id,

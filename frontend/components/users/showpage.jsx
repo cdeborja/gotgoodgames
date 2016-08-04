@@ -49,8 +49,7 @@ module.exports = React.createClass({
       userReviews = <p>Nothing...yet</p>;
     }
 
-    var memberSince = this.state.user.created_at.slice(0,10).split("-").join('/');
-
+    // var memberSince = this.state.user.created_at.slice(0,10).split("-").join('/');
     return(
     <div className="content-container group">
       <div className="user-information-box group">
