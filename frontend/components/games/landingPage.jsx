@@ -13,15 +13,19 @@ module.exports = React.createClass({
     router: React.PropTypes.object.isRequired
   },
 
-  
+  getStateFromStore: function () {
+    return { users: UserStore.all(),
+             games: GameStore.all()
+           };
+  },
+
+
   getInitialState: function () {
-    return { games: GameStore.all(),
-             users: UserStore.all()};
+    return (this.getStateFromStore());
   },
 
   _onChange: function () {
-    this.setState({ games: GameStore.all() });
-    this.setState({ users: UserStore.all() });
+    this.setState(this.getStateFromStore());
   },
 
   componentDidMount: function () {

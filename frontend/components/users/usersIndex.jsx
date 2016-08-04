@@ -13,7 +13,7 @@ module.exports = React.createClass({
    },
 
   getStateFromStore: function () {
-    return { users: UserStore.all(),
+    return { users: UserStore.all()
            };
   },
 
