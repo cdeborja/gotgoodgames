@@ -50,11 +50,11 @@ module.exports = React.createClass({
         <div className="content-game-lists">
           <GameDatabaseSlider games={this.state.games}/>
         </div>
+          <TopList users={this.state.users}/>
       </div>
     );
   }
 });
-// <TopList users={this.state.users}/>
 
 // Implement Discussions Feed later!!!
 

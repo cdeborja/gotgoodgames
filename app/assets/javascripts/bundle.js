@@ -21913,12 +21913,12 @@
 	        'div',
 	        { className: 'content-game-lists' },
 	        React.createElement(GameDatabaseSlider, { games: this.state.games })
-	      )
+	      ),
+	      React.createElement(TopList, { users: this.state.users })
 	    );
 	  }
 	});
-	// <TopList users={this.state.users}/>
-
+	
 	// Implement Discussions Feed later!!!
 
 	// <div className="content-feed">
@@ -38883,11 +38883,13 @@
 	  },
 	
 	  render: function () {
-	    if (this.props.users.length === 0 || !this.props.users[0].reviews) return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
+	
+	    if (this.props.users.length === 0 || !this.props.users[0].reviewsCount) return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	
 	    var that = this;
 	    var topFive = this.props.users.map(function (user, id) {
-	      var times = user.reviews.toString();
+	
+	      var times = user.reviewsCount.toString();
 	      return React.createElement(
 	        'li',
 	        { className: 'top-user', key: user.id, id: user.id, onClick: that.goToUserShowpage },

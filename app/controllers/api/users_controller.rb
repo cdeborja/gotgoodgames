@@ -34,7 +34,7 @@ class Api::UsersController < ApplicationController
       five_users.each do |user|
         topFive << { "id" => user.id,
           "username" => user.username,
-         "reviews" => user.reviews.length,
+         "reviewsCount" => user.reviews.length,
          "picture" => user.picture.url
          }
       end

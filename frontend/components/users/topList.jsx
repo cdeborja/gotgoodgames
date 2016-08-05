@@ -10,11 +10,13 @@ var TopList = React.createClass({
   },
 
   render: function () {
-    if (this.props.users.length === 0 || !this.props.users[0].reviews) return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);
+
+    if (this.props.users.length === 0 || !this.props.users[0].reviewsCount) return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);
 
     var that = this;
     var topFive = this.props.users.map( function (user, id) {
-      var times = user.reviews.toString();
+
+      var times = user.reviewsCount.toString();
       return (<li className="top-user" key={user.id} id={user.id} onClick={that.goToUserShowpage}>
         <img src={user.picture}/><p> {user.username} has reviewed {times} times</p></li>);
     });
