@@ -7,6 +7,7 @@ var GameStore = require('../../stores/game');
 var UserStore = require('../../stores/user');
 
 var GameDatabaseSlider = require('./gameDatabaseSlider');
+var TopList = require('../users/topList');
 
 module.exports = React.createClass({
   contextTypes: {
@@ -14,8 +15,8 @@ module.exports = React.createClass({
   },
 
   getStateFromStore: function () {
-    return ({ //users: UserStore.all(),
-             games: GameStore.all()
+    return ({ users: UserStore.all(),
+             games: GameStore.all(),
            });
   },
 
@@ -30,35 +31,26 @@ module.exports = React.createClass({
 
   componentDidMount: function () {
     this.gameListener = GameStore.addListener(this._onChange);
-    // this.userListener = UserStore.addListener(this._onChange);
+    this.userListener = UserStore.addListener(this._onChange);
     ApiUtil.fetchAllGames();
-    // ApiUtil.fetchTopFiveUsers();
+    ApiUtil.fetchTopFiveUsers();
   },
 
   componentWillUnmount: function () {
     this.gameListener.remove();
-    // this.userListener.remove();
+    this.userListener.remove();
   },
 
-  // goToUserShowpage: function (e) {
-  //   this.context.router.push('/users/' + e.currentTarget.id);
-  // },
-
   render: function () {
-    //|| !this.state.users
-    if ( !this.state.games ) {return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);}
-    var that = this;
-    // var topFive = this.state.users.map( function (user) {
-    //   return (<li className="top-user" key={user.id} id={user.id} onClick={that.goToUserShowpage}>
-    //     <img src={user.picture}/><p>{user.username} has reviewed {user.reviews} times</p></li>);
-    // });
+
+    if ( !this.state.games || !this.state.users ) {return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);}
+
     return(
       <div className="content-container group">
         <div className="content-game-lists">
           <GameDatabaseSlider games={this.state.games}/>
         </div>
-        <ul className="top-all-time-users group">
-        </ul>
+          <TopList users={this.state.users}/>
       </div>
     );
   }

@@ -30,6 +30,7 @@ class Api::UsersController < ApplicationController
     if params[:fiveUsers]
       topFive = []
       five_users = User.joins(:reviews).group("id").order("COUNT(users.id) DESC").limit(5)
+
       five_users.each do |user|
         topFive << { "id" => user.id,
           "username" => user.username,

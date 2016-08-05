@@ -21865,6 +21865,7 @@
 	var UserStore = __webpack_require__(301);
 	
 	var GameDatabaseSlider = __webpack_require__(237);
+	var TopList = __webpack_require__(323);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -21874,7 +21875,7 @@
 	  },
 	
 	  getStateFromStore: function () {
-	    return { //users: UserStore.all(),
+	    return { users: UserStore.all(),
 	      games: GameStore.all()
 	    };
 	  },
@@ -21889,30 +21890,22 @@
 	
 	  componentDidMount: function () {
 	    this.gameListener = GameStore.addListener(this._onChange);
-	    // this.userListener = UserStore.addListener(this._onChange);
+	    this.userListener = UserStore.addListener(this._onChange);
 	    ApiUtil.fetchAllGames();
-	    // ApiUtil.fetchTopFiveUsers();
+	    ApiUtil.fetchTopFiveUsers();
 	  },
 	
 	  componentWillUnmount: function () {
 	    this.gameListener.remove();
-	    // this.userListener.remove();
+	    this.userListener.remove();
 	  },
 	
-	  // goToUserShowpage: function (e) {
-	  //   this.context.router.push('/users/' + e.currentTarget.id);
-	  // },
-	
 	  render: function () {
-	    //|| !this.state.users
-	    if (!this.state.games) {
+	
+	    if (!this.state.games || !this.state.users) {
 	      return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	    }
-	    var that = this;
-	    // var topFive = this.state.users.map( function (user) {
-	    //   return (<li className="top-user" key={user.id} id={user.id} onClick={that.goToUserShowpage}>
-	    //     <img src={user.picture}/><p>{user.username} has reviewed {user.reviews} times</p></li>);
-	    // });
+	
 	    return React.createElement(
 	      'div',
 	      { className: 'content-container group' },
@@ -21921,7 +21914,7 @@
 	        { className: 'content-game-lists' },
 	        React.createElement(GameDatabaseSlider, { games: this.state.games })
 	      ),
-	      React.createElement('ul', { className: 'top-all-time-users group' })
+	      React.createElement(TopList, { users: this.state.users })
 	    );
 	  }
 	});
@@ -38871,6 +38864,64 @@
 	};
 	
 	module.exports = ReactStateSetters;
+
+/***/ },
+/* 323 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var TopList = React.createClass({
+	  displayName: 'TopList',
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  goToUserShowpage: function (e) {
+	    this.context.router.push('/users/' + e.currentTarget.id);
+	  },
+	
+	  render: function () {
+	    if (this.props.users.length === 0 || !this.props.users[0].reviews) return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
+	
+	    var that = this;
+	    var topFive = this.props.users.map(function (user, id) {
+	      var times = user.reviews.toString();
+	      return React.createElement(
+	        'li',
+	        { className: 'top-user', key: user.id, id: user.id, onClick: that.goToUserShowpage },
+	        React.createElement('img', { src: user.picture }),
+	        React.createElement(
+	          'p',
+	          null,
+	          ' ',
+	          user.username,
+	          ' has reviewed ',
+	          times,
+	          ' times'
+	        )
+	      );
+	    });
+	
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h2',
+	        null,
+	        'Top All Time Users'
+	      ),
+	      React.createElement(
+	        'ul',
+	        { className: 'top-all-time-users' },
+	        topFive
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = TopList;
 
 /***/ }
 /******/ ]);
