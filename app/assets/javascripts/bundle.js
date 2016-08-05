@@ -21913,12 +21913,12 @@
 	        'div',
 	        { className: 'content-game-lists' },
 	        React.createElement(GameDatabaseSlider, { games: this.state.games })
-	      ),
-	      React.createElement(TopList, { users: this.state.users })
+	      )
 	    );
 	  }
 	});
-	
+	// <TopList users={this.state.users}/>
+
 	// Implement Discussions Feed later!!!
 
 	// <div className="content-feed">
