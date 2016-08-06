@@ -15,8 +15,9 @@
 }
 
 .user-information-box {
-  margin: 25px;
-  width: 940px;
+  margin: 20px;
+  max-width: 940px;
+  width: auto;
   padding: 5px;
   border: 1px solid #AAAAAA;
   border-radius: 5px;

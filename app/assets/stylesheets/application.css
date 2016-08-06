@@ -178,7 +178,7 @@ img {
   background: white;
   padding: 8px;
   border-radius: 5px;
-  border: 1px solid #000;
+  border: 1px solid #AAAAAA;
 }
 
 .search-box:focus {

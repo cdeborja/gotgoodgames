@@ -91,8 +91,9 @@
 
 .content-game-lists {
 //   float: right;
+  margin: 0 auto;
   margin-top: 15px;
-//   width: 560px;
+  max-width: 940px;
   border: 1px solid #AAAAAA;
   background: #FFFFFF;
   border-radius: 5px;
