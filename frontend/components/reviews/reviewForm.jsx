@@ -102,9 +102,9 @@ var ReviewForm = React.createClass({
         left            : '0px',
         right           : '0px',
         bottom          : '0px',
-        border          : '1px solid #fff',
+        border          : '1px solid #AAAAAA',
         padding         : '20px',
-        backgroundColor : '#222',
+        backgroundColor : '#FFFFFF',
         height          : '380px',
         width           : '650px',
         zIndex         : 11

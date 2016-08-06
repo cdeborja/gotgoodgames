@@ -51,7 +51,7 @@ module.exports = React.createClass({
     return(
     <div className="content-container group">
       <div className="game-index-box">
-        <h2>All current games</h2>
+        <h2>All Games</h2>
         <ul>
           {gamesIndex}
         </ul>

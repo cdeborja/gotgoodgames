@@ -11,6 +11,7 @@ var resetUsers = function (users) {
   users.forEach(function (user) {
     _users[user.id] = user;
   });
+
 };
 
 var resetUser = function (user) {

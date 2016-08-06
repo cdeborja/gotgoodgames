@@ -2,21 +2,34 @@
   margin: 25px auto;
   width: 940px;
   padding: 5px;
-  border: 4px solid #fff;
+  border: 1px solid #AAAAAA;
   border-radius: 5px;
-  background: #222;
+  background: #FFFFFF;
   height: 300px;
-  color: #ffffff;
 }
 
 .edit-box-description {
-  background: #ffffff;
   width: 95%;
   min-height: 170px;
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
   color: #000000;
+  border: 1px solid #AAAAAA;
+
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+  outline: none;
+
+}
+
+.edit-box-description:focus {
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(81, 203, 238, 1);
 }
 
 .preview-image {
@@ -35,7 +48,7 @@
 }
 
 .edit-box-information > button {
-  border: 1px solid white;
+  border: 1px solid #AAAAAA;
   float: right;
   padding: 10px 20px;
   border-radius: 5px;
@@ -43,14 +56,14 @@
 }
 
 .edit-box-information > button:hover {
-  background: #ffffff;
-  color: #000000;
+  background: #CCCCCC;
+  color: #FFFFFF;
   cursor: pointer;
 }
 
 .edit-box-information > h2, .edit-box-picture > h2 {
   font-size: 24px;
-  border-bottom: 1px solid #ffffff;
+  border-bottom: 1px solid #AAAAAA;
   margin-bottom: 10px;
 }
 

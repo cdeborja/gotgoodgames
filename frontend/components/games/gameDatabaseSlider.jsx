@@ -14,7 +14,7 @@ var GameDatabaseSlider = React.createClass({
     if (this.props.games.length === 0) return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);
 
     var settings = {
-      dots: true,
+      dots: false,
       infinite: true,
       speed: 500,
       slidesToShow: 5,
@@ -24,11 +24,10 @@ var GameDatabaseSlider = React.createClass({
     };
 
     games = this.props.games.map(function (game, idx) {
-      var color = idx % 2 === 0 ? " blue" : " red";
       return (
         <div key={idx}>
           <ul className="game-preview">
-            <img className={color} onClick={this.showDetail} id={game.id} src={game.image_url}/>
+            <img className="blue" onClick={this.showDetail} id={game.id} src={game.image_url}/>
             <li>{game.title }</li>
             <li>{game.console}</li>
           </ul>
@@ -38,7 +37,7 @@ var GameDatabaseSlider = React.createClass({
 
     return (
       <div className="database-slider">
-        <h2>Games in the Database</h2>
+        <h2>Browse Games Here</h2>
       <Slider {...settings}>
         {games}
       </Slider>

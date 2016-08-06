@@ -42,12 +42,13 @@ button, article, footer, small {
 
 body {
   font-family: sans-serif;
-   background-image: url('http://cdn.pcwallart.com/images/pacman-wallpaper-2.jpg');
+   /*background-image: url('http://cdn.pcwallart.com/images/pacman-wallpaper-2.jpg');
    background-size: 450px auto;
    background-position: left -10px bottom -50px;
    background-attachment: fixed;
    background-repeat: no-repeat;
-   background-color: #040404;
+   background-color: #040404;*/
+   background: #EEEEEE;
 }
 
 ul {
@@ -77,14 +78,15 @@ img {
 /* NAVIGATION BAR*/
 
 .header {
-  background: #222;
-  border-bottom: 1px solid #eee;
+  background: #888888;
+  border-bottom: 1px solid #AAAAAA;
 }
 
 .navigation-bar {
   margin: 0 auto;
   background: yellow;
-  width: 1180px;
+  max-width: 1000px;
+  width: auto;
 }
 
 .logo-box {
@@ -111,7 +113,7 @@ img {
   color: #eee;
   letter-spacing: -2px;
   font-weight: bold;
-  text-shadow: 0 0 0.2em black, 0 0 0.2em #ff3, 0 0 0.2em #ff3;
+  text-shadow: 0 0 0.2em #53b9ea, 0 0 0.2em #53b9ea, 0 0 0.2em #53b9ea;
 }
 
 .session-nav {
@@ -253,7 +255,7 @@ img {
 }
 
 .header-nav-bar:hover {
-  text-shadow: 0 0 0.2em black, 0 0 0.2em #ff3, 0 0 0.2em #ff3 ;
+  text-shadow: 0 0 0.2em #53b9ea, 0 0 0.2em #53b9ea, 0 0 0.2em #53b9ea ;
   cursor: pointer;
 }
 
@@ -277,25 +279,15 @@ img {
 }
 
 .logout-button:hover {
-  text-shadow: 0 0 0.2em black, 0 0 0.2em #ff3, 0 0 0.2em #ff3;
+  text-shadow: 0 0 0.2em #53b9ea, 0 0 0.2em #53b9ea, 0 0 0.2em #53b9ea;
   cursor: pointer;
 }
-
-/*.badge {
-  display: inline;
-  background: #000;
-  border-radius: 50%;
-  padding: 1px 6px;
-  font-size: 14px;
-}*/
 
 /* ADDREVIEW BOX */
 
 .add-review-box {
-  color: white;
   margin: 0 auto;
   padding: 0;
-
 }
 
 .edit-review-box {
@@ -321,13 +313,13 @@ img {
 .edit-review-box > h2 {
     font-size: 36px;
     font-weight: bold;
-    border-bottom: 3px solid white;
+    border-bottom: 1px solid #AAAAAA;
 }
 
 .add-review-textarea {
   display: block;
   background: #fff;
-  border: 1px solid #555;
+  border: 1px solid #AAAAAA;
   padding: 10px 4px;
   font-weight: normal;
   font-size: 14px;
@@ -337,12 +329,23 @@ img {
   resize: both;
   word-wrap: break-word;
   color: #000000;
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+  outline: none;
+}
+
+.add-review-textarea:focus {
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+  padding: 10px 4px;
+  border: 1px solid rgba(81, 203, 238, 1);
 }
 
 .add-review-title {
   display: block;
   background: #fff;
-  border: 1px solid #555;
+  border: 1px solid #AAAAAA;
   padding: 12px 7px;
   font-weight: normal;
   font-size: 20px;
@@ -350,16 +353,13 @@ img {
   width: 80%;
   height: auto;
   word-wrap: break-word;
-  color: #000000;
 }
 
-/* this will help organize the list of choices to choose as a value*/
-/*.input-box > ul:nth-child(even){
-  display: block;
-  position: relative;
-  float: left;
-  background: red;
-}*/
+.add-review-title:focus {
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+  padding: 12px 7px;
+  border: 1px solid rgba(81, 203, 238, 1);
+}
 
 .input-text {
   display: block;
@@ -372,7 +372,7 @@ img {
 .input-field-login {
   display: block;
   background: #fff;
-  border: 1px solid #555;
+  border: 1px solid #AAAAAA;
   padding: 10px 4px;
   font-weight: normal;
   font-size: 14px;
@@ -403,13 +403,13 @@ img {
 
 .submit-button {
   border-radius: 5px;
-  border: 1px solid #fff;
-  background: #222222;
+  border: 1px solid #AAAAAA;
+  background: #FFFFFF;
   padding: 12px 20px;
   font-weight: 600;
   font-family: sans-serif;
   margin-top: 20px;
-  color: #ffffff;
+  color: #000000;
   transition: background-color 500ms, transform 500ms, color 500ms;
 }
 
@@ -418,15 +418,15 @@ img {
   text-align: center;
   padding: 10px;
   width: 140px;
-  border: 1px solid #fff;
+  border: 1px solid #AAAAAA;
   margin: 10px auto;
   border-radius: 5px;
   transition: background-color 500ms, color 500ms;
 }
 
 .add-review-button:hover {
-  background: #eee;
-  color: #000;
+  background: #CCCCCC;
+  color: #FFFFFF;
   cursor: pointer;
 }
 
@@ -443,8 +443,8 @@ img {
 
 .submit-button:hover {
   cursor: pointer;
-  background: #ffffff;
-  color: #000000;
+  background: #CCCCCC;
+  color: #FFFFFF;
 }
 
 /* --- APP CONTENT --- */
@@ -546,7 +546,7 @@ img {
   margin: 10px;
   width: 200px;
   height: 200px;
-  border: 1px solid white;
+  border: 1px solid #AAAAAA;
   -webkit-transition: all 0.30s ease-in-out;
   -moz-transition: all 0.30s ease-in-out;
   -ms-transition: all 0.30s ease-in-out;
@@ -605,10 +605,10 @@ border: solid blue 2px;
   margin: 20px auto;
   width: 50%;
   min-width: 200px;
-  border: 4px solid #fff;
+  border: 1px solid #AAAAAA;
   border-radius: 5px;
-  background: #222;
-  color: #FFFFFF;
+  background: #FFFFFF;
+  color: #000000;
 }
 
 .author-navigation:after {
@@ -630,6 +630,6 @@ border: solid blue 2px;
 
 .author-navigation > li:hover {
   cursor: pointer;
-  background: #fff;
-  color: #000;
+  background: #CCCCCC;
+  color: #FFFFFF;
 }

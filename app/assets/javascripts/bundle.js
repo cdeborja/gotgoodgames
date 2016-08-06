@@ -31351,7 +31351,7 @@
 	    if (this.props.games.length === 0) return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	
 	    var settings = {
-	      dots: true,
+	      dots: false,
 	      infinite: true,
 	      speed: 500,
 	      slidesToShow: 5,
@@ -31361,14 +31361,13 @@
 	    };
 	
 	    games = this.props.games.map(function (game, idx) {
-	      var color = idx % 2 === 0 ? " blue" : " red";
 	      return React.createElement(
 	        'div',
 	        { key: idx },
 	        React.createElement(
 	          'ul',
 	          { className: 'game-preview' },
-	          React.createElement('img', { className: color, onClick: this.showDetail, id: game.id, src: game.image_url }),
+	          React.createElement('img', { className: 'blue', onClick: this.showDetail, id: game.id, src: game.image_url }),
 	          React.createElement(
 	            'li',
 	            null,
@@ -31389,7 +31388,7 @@
 	      React.createElement(
 	        'h2',
 	        null,
-	        'Games in the Database'
+	        'Browse Games Here'
 	      ),
 	      React.createElement(
 	        Slider,
@@ -37116,9 +37115,9 @@
 	        left: '0px',
 	        right: '0px',
 	        bottom: '0px',
-	        border: '1px solid #fff',
+	        border: '1px solid #AAAAAA',
 	        padding: '20px',
-	        backgroundColor: '#222',
+	        backgroundColor: '#FFFFFF',
 	        height: '380px',
 	        width: '650px',
 	        zIndex: 11
@@ -37482,7 +37481,7 @@
 	        React.createElement(
 	          'h2',
 	          null,
-	          'All current games'
+	          'All Games'
 	        ),
 	        React.createElement(
 	          'ul',
@@ -37589,9 +37588,9 @@
 	        left: '0px',
 	        right: '0px',
 	        bottom: '0px',
-	        border: '1px solid #fff',
+	        border: '1px solid #AAAAAA',
 	        padding: '20px',
-	        backgroundColor: '#222',
+	        backgroundColor: '#FFFFFF',
 	        height: '380px',
 	        width: '650px',
 	        zIndex: 11
@@ -38885,19 +38884,29 @@
 	  render: function () {
 	
 	    if (this.props.users.length === 0 || !this.props.users[0].reviewsCount) return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
-	
+	    for (var i = 0; i < this.props.users.length; i++) {
+	      if (Object.keys(this.props.users[i]).includes("reviews")) {
+	        return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
+	      }
+	    }
 	    var that = this;
-	    var topFive = this.props.users.map(function (user, id) {
+	
+	    function compare(a, b) {
+	      if (a.reviewsCount > b.reviewsCount) return -1;
+	      if (a.reviewsCount < b.reviewsCount) return 1;
+	      return 0;
+	    }
+	    var sortedByReviews = this.props.users.sort(compare);
+	    var topFive = sortedByReviews.map(function (user, id) {
 	
 	      var times = user.reviewsCount.toString();
 	      return React.createElement(
 	        'li',
-	        { className: 'top-user', key: user.id, id: user.id, onClick: that.goToUserShowpage },
+	        { className: 'top-user group', key: user.id, id: user.id, onClick: that.goToUserShowpage },
 	        React.createElement('img', { src: user.picture }),
 	        React.createElement(
-	          'p',
+	          'div',
 	          null,
-	          ' ',
 	          user.username,
 	          ' has reviewed ',
 	          times,
@@ -38908,7 +38917,7 @@
 	
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'top-all-time-users-container group' },
 	      React.createElement(
 	        'h2',
 	        null,

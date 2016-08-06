@@ -36,7 +36,7 @@
   padding: 5px;
   border: 2px solid #fff;
   border-radius: 5px;
-  background: #222;
+  background: #CCCCCC;
 }
 
 .recent-activity-item > img {
@@ -91,21 +91,24 @@
 
 .content-game-lists {
 //   float: right;
-  margin-top: 18px;
+  margin-top: 15px;
 //   width: 560px;
-  padding: 10px 10px;
+  border: 1px solid #AAAAAA;
+  background: #FFFFFF;
+  border-radius: 5px;
 }
 
 .database-slider > h2 {
   text-align: center;
-  font-weight: bold;
+  background: #CCCCCC;
+  padding: 3px 0;
   font-size: 36px;
-  color: white;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #AAAAAA;
+  color: #FFFFFF;
 }
 
 .game-preview {
-  color: #fff;
+  color: #000000;
 }
 
 .game-preview > img {
@@ -122,10 +125,6 @@
 
 .blue:hover {
   box-shadow: 0px 0px 20px 7px #53b9ea;
-}
-
-.red:hover {
-  box-shadow: 0px 0px 20px 7px #d23f0f;
 }
 
 .game-preview > li {
