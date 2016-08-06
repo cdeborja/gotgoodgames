@@ -37,7 +37,7 @@ var GameDatabaseSlider = React.createClass({
 
     return (
       <div className="database-slider">
-        <h2>Browse Games Here</h2>
+        <h2>Recently Added</h2>
       <Slider {...settings}>
         {games}
       </Slider>

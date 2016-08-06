@@ -49,10 +49,12 @@ module.exports = React.createClass({
   },
 
   goToGamesIndex: function () {
+    this.closeMenu();
     this.context.router.push("/gamesIndex");
   },
 
   goToUsersIndex: function () {
+    this.closeMenu();
     this.context.router.push("/users");
   },
 
@@ -60,6 +62,16 @@ module.exports = React.createClass({
     $(".navigation-links").addClass("hidden");
     $(".session-links").addClass("hidden");
     ApiUtil.logout();
+  },
+
+  openMenu: function () {
+    $(".dropdownUsers").removeClass("hidden");
+    $(".dropdownGames").removeClass("hidden");
+  },
+
+  closeMenu: function () {
+    $(".dropdownUsers").addClass("hidden");
+    $(".dropdownGames").addClass("hidden");
   },
 
 
@@ -71,8 +83,13 @@ module.exports = React.createClass({
       logoutButton = <li onClick={this.handleLogout}>Logout</li>;
       welcomeMessage = <h2>Welcome, {this.state.currentUser.username}</h2>;
       homepage = <li onClick={this.goToCurrentUserHomePage}>My Stats</li>;
-      browse = <li onClick={this.goToGamesIndex}>Browse</li>;
-      community = <li onClick={this.goToUsersIndex}>Community</li>;
+      browse = (<li className="browse group" onMouseLeave={this.closeMenu} onMouseEnter={this.openMenu}>
+                  Browse
+                  <ul>
+                    <li onClick={this.goToUsersIndex} className="dropdownUsers hidden">Users</li>
+                    <li onClick={this.goToGamesIndex} className="dropdownGames hidden">Games</li>
+                  </ul>
+                </li>);
       searchBar = <Search />;
     }
 
@@ -96,7 +113,6 @@ module.exports = React.createClass({
                 {home}
                 {homepage}
                 {browse}
-                {community}
                 {searchBar}
               </ul>
             </div>

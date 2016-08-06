@@ -193,17 +193,22 @@ img {
 
 .search-box-results > li > a {
   display: block;
-  background: white;
+  background: #FFFFFF;
   margin-left: -9px;
   border-radius: 5px;
   font-weight: bold;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #AAAAAA;
+  margin-top: -1px;
+}
+
+.search-box-results > li > a:first-child {
+  margin-top: 0;
 }
 
 .search-box-results > li > a:hover {
   font-weight: bold;
-  background: black;
+  background: #53b9ea;
   color: white;
   cursor: pointer;
 }
@@ -521,7 +526,7 @@ img {
 
 .game-detail-item {
   padding: 10px 20px;
-  border: 2px solid #aaa;
+  border: 2px solid #AAAAAA;
   border-radius: 5px;
   margin: 10px 20px;
 }
@@ -571,7 +576,7 @@ img {
 .boxed-item > p {
   display: block;
   position: absolute;
-  background: #00b3fe;
+  background: #53b9ea;
   color: #fff;
   padding: 5px 10px;
   letter-spacing: 3px;
@@ -580,6 +585,29 @@ img {
   left: 0;
   font-weight: bold;
   border-radius: 5px;
+}
+
+.browse > ul {
+  margin-top: 20px;
+  margin-left: -10px;
+  position: absolute;
+  display: block;
+  z-index: 10;
+}
+
+.dropdownGames, .dropdownUsers {
+  padding: 10px 10px;
+  background: #FFFFFF;
+  border: 1px solid #AAAAAA;
+  text-align: center;
+}
+
+.dropdownGames {
+  margin-top: -1px;
+}
+
+.dropdownGames:hover, .dropdownUsers:hover {
+  background: #53b9ea;
 }
 
 search {
