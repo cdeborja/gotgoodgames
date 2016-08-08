@@ -37994,6 +37994,7 @@
 	    this.goToHomePage();
 	  },
 	  render: function () {
+	    debugger;
 	
 	    return React.createElement(
 	      'div',

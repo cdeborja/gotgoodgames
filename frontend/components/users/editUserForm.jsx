@@ -54,6 +54,7 @@ var EditUserForm = React.createClass({
     this.goToHomePage();
   },
   render: function () {
+      debugger;
 
       return(
 

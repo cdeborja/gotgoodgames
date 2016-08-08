@@ -135,7 +135,7 @@
   text-align: center;
   margin-bottom: 10px;
   padding: 3px 0;
-  border-radius: 5px 5px 0 0;
+  border-radius: 4px 4px 0 0;
 }
 
 .recent-reviews-box > div {
@@ -218,7 +218,7 @@
   background: #53b9ea;
   text-align: center;
   font-size: 20px;
-  border-radius: 5px 5px 0px 0px;
+  border-radius: 4px 4px 0px 0px;
   color: #FFFFFF;
 }
 
@@ -289,6 +289,7 @@
 }
 
 .index-img {
+  border-radius: 4px;
   object-fit: cover;
   width: 200px;
   height: 200px;

@@ -33,11 +33,11 @@
 }
 
 .preview-image {
-  margin: 10px auto;
-  width: auto;
-  height: auto;
-  max-height: 200px;
-  max-width: 160px;
+  object-fit: cover;
+  border: 1px solid #AAAAAA;
+  border-radius: 5px;
+  width: 200px;
+  height: 200px;
 }
 
 .edit-box-information {
