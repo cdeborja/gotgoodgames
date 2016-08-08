@@ -46,7 +46,7 @@ var TopList = React.createClass({
         }
       } else if (recentActivity.hour > 0) {
         if (recentActivity.hour === 1) {
-          return "About an hour ago";
+          return "About a hour ago";
         } else {
           return "About " + recentActivity.hour + " hours ago";
         }

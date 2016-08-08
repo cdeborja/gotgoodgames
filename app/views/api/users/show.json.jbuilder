@@ -3,8 +3,6 @@ json.extract!(
 :id, :username, :description, :created_at, :picture
 )
 
-# json.picture_url @user.picture.url
-
 json.reviews do
   json.array!(@user.reviews) do |review|
     json.extract!(

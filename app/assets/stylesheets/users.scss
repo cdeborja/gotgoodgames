@@ -206,6 +206,7 @@
 }
 
 .top-all-time-users-container {
+  float: right;
   margin: 10px 15px;
   width: 40%;
   border: 1px solid #AAAAAA;
@@ -224,7 +225,7 @@
 
 .top-all-time-users {
   float: left;
-  width: 400px;
+  width: 100%;
   margin: 0 auto;
 }
 

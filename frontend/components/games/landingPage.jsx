@@ -43,14 +43,19 @@ module.exports = React.createClass({
 
   render: function () {
 
-    if ( !this.state.games || !this.state.users ) {return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);}
-
+    if ( (this.state.games.length < 1) || (this.state.users.length < 1) ) {return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);}
+    
     return(
       <div className="content-container group">
         <div className="content-game-lists">
           <GameDatabaseSlider games={this.state.games}/>
         </div>
+        <div className="content-container-bottom group">
+          <div className="top-all-time-games-container">
+            {this.state.games[0].averageRating}
+          </div>
           <TopList users={this.state.users}/>
+        </div>
       </div>
     );
   }

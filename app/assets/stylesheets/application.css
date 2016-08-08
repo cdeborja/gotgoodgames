@@ -666,3 +666,7 @@ img {
   color: #CCCCCC;
   font-weight: 300;
 }
+
+.content-container-bottom {
+  width: 100%;
+}

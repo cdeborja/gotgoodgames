@@ -53,8 +53,8 @@ var EditUserForm = React.createClass({
     ApiUtil.updateUserInformation(this.props.location.state.user.id, formData);
     this.goToHomePage();
   },
+
   render: function () {
-      debugger;
 
       return(
 
@@ -62,13 +62,11 @@ var EditUserForm = React.createClass({
           <div className="edit-box-picture">
             <h2>Profile Picture</h2>
 
-            <input
-            type="file"
-            onChange={this.handleFileChange}
-            />
-
             <p>Preview:</p>
             <img className="preview-image" src={this.state.pictureUrl} />
+            <div className="upload">
+              <input type="file" onChange={this.handleFileChange} />
+            </div>
           </div>
 
           <div className="edit-box-information" onSubmit={this.handleSubmit}>

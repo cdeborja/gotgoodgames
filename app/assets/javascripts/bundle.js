@@ -21922,7 +21922,7 @@
 	
 	  render: function () {
 	
-	    if (!this.state.games || !this.state.users) {
+	    if (this.state.games.length < 1 || this.state.users.length < 1) {
 	      return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	    }
 	
@@ -21934,7 +21934,16 @@
 	        { className: 'content-game-lists' },
 	        React.createElement(GameDatabaseSlider, { games: this.state.games })
 	      ),
-	      React.createElement(TopList, { users: this.state.users })
+	      React.createElement(
+	        'div',
+	        { className: 'content-container-bottom group' },
+	        React.createElement(
+	          'div',
+	          { className: 'top-all-time-games-container' },
+	          this.state.games[0].averageRating
+	        ),
+	        React.createElement(TopList, { users: this.state.users })
+	      )
 	    );
 	  }
 	});
@@ -31534,7 +31543,7 @@
 	        }
 	      } else if (recentActivity.hour > 0) {
 	        if (recentActivity.hour === 1) {
-	          return "About an hour ago";
+	          return "About a hour ago";
 	        } else {
 	          return "About " + recentActivity.hour + " hours ago";
 	        }
@@ -37993,8 +38002,8 @@
 	    ApiUtil.updateUserInformation(this.props.location.state.user.id, formData);
 	    this.goToHomePage();
 	  },
+	
 	  render: function () {
-	    debugger;
 	
 	    return React.createElement(
 	      'div',
@@ -38007,16 +38016,17 @@
 	          null,
 	          'Profile Picture'
 	        ),
-	        React.createElement('input', {
-	          type: 'file',
-	          onChange: this.handleFileChange
-	        }),
 	        React.createElement(
 	          'p',
 	          null,
 	          'Preview:'
 	        ),
-	        React.createElement('img', { className: 'preview-image', src: this.state.pictureUrl })
+	        React.createElement('img', { className: 'preview-image', src: this.state.pictureUrl }),
+	        React.createElement(
+	          'div',
+	          { className: 'upload' },
+	          React.createElement('input', { type: 'file', onChange: this.handleFileChange })
+	        )
 	      ),
 	      React.createElement(
 	        'div',

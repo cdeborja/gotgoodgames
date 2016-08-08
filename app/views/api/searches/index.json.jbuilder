@@ -13,7 +13,7 @@ json.search_results do
       json.partial!("api/users/user", user: search_result)
       # json._type "User"
     when Game
-      json.partial!("api/games/game", game: search_result, show_reviews: true)
+      json.partial!("api/games/game", game: search_result, show_reviews: false, show_ratings: false)
       # json._type "Game"
     end
     json._type search_result.class.to_s
