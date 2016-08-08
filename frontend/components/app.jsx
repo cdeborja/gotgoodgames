@@ -83,7 +83,7 @@ module.exports = React.createClass({
       logoutButton = <li onClick={this.handleLogout}>Logout</li>;
       welcomeMessage = <h2>Welcome, {this.state.currentUser.username}</h2>;
       homepage = <li onClick={this.goToCurrentUserHomePage}>My Stats</li>;
-      browse = (<li className="browse group" onMouseLeave={this.closeMenu} onMouseEnter={this.openMenu}>
+      browse = (<li className="browse" onMouseLeave={this.closeMenu} onMouseEnter={this.openMenu}>
                   Browse...
                   <ul>
                     <li onClick={this.goToUsersIndex} className="dropdownUsers hidden">Users</li>

@@ -186,6 +186,9 @@ img {
   position: absolute;
   margin-top: 10px;
   z-index: 10;
+  -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.75);
 }
 
 .search-box-results > li > a {
@@ -424,7 +427,7 @@ img {
 }
 
 .add-review-button:hover {
-  background: #CCCCCC;
+  background: #53b9ea;
   color: #FFFFFF;
   cursor: pointer;
 }
@@ -442,7 +445,7 @@ img {
 
 .submit-button:hover {
   cursor: pointer;
-  background: #CCCCCC;
+  background: #53b9ea;
   color: #FFFFFF;
 }
 
@@ -654,6 +657,6 @@ img {
 
 .author-navigation > li:hover {
   cursor: pointer;
-  background: #CCCCCC;
-  color: #FFFFFF;
+  background: #53b9ea;
+  color: #000000;
 }
