@@ -664,4 +664,5 @@ img {
 .timestamp {
   font-style: italic;
   color: #CCCCCC;
+  font-weight: 300;
 }
