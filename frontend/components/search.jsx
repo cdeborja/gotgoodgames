@@ -97,9 +97,9 @@ var Search = React.createClass({
     var meta = SearchResultsStore.meta();
 
     return (
-      <form className="search-box">
+      <form className="search-box group">
         <input type="text" id="search" onChange={ this.handleInputChange }
-          placeholder="Search here!"/>
+          placeholder="Search"/>
         <button className="go-button" onClick={ this.search }>GO</button>
         {searchList}
       </form>

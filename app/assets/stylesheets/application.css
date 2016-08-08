@@ -171,13 +171,10 @@ img {
 
 .search-box {
   float: left;
-  margin-top: 10px;
+  margin-top: 12px;
   margin-left: 5px;
   width: auto;
-  height: 20px;
   background: white;
-  padding: 8px;
-  border-radius: 5px;
   border: 1px solid #AAAAAA;
 }
 
@@ -188,28 +185,25 @@ img {
 .search-box-results {
   position: absolute;
   margin-top: 10px;
-  z-index: 20;
+  z-index: 10;
 }
 
 .search-box-results > li > a {
   display: block;
   background: #FFFFFF;
-  margin-left: -9px;
-  border-radius: 5px;
-  font-weight: bold;
+  width: 200px;
   padding: 10px;
   border: 1px solid #AAAAAA;
+  margin-left: -1px;
   margin-top: -1px;
 }
 
-.search-box-results > li > a:first-child {
-  margin-top: 0;
+.search-box-results > li:first-child {
+  margin-top: -10px;
 }
 
 .search-box-results > li > a:hover {
-  font-weight: bold;
   background: #53b9ea;
-  color: white;
   cursor: pointer;
 }
 
@@ -600,6 +594,7 @@ img {
   background: #FFFFFF;
   border: 1px solid #AAAAAA;
   text-align: center;
+  width: 66px;
 }
 
 .dropdownGames {
@@ -610,12 +605,18 @@ img {
   background: #53b9ea;
 }
 
-search {
-border: solid blue 2px;
+#search {
+  width: 200px;
+  padding: 7px;
 }
 
 .go-button {
   cursor: pointer;
+  padding: 7px;
+}
+
+.go-button:hover {
+  background: #53b9ea
 }
 
 .hidden {

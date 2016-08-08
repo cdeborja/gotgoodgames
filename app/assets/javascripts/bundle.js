@@ -21752,7 +21752,7 @@
 	      browse = React.createElement(
 	        'li',
 	        { className: 'browse group', onMouseLeave: this.closeMenu, onMouseEnter: this.openMenu },
-	        'Browse',
+	        'Browse...',
 	        React.createElement(
 	          'ul',
 	          null,
@@ -31710,9 +31710,9 @@
 	
 	    return React.createElement(
 	      "form",
-	      { className: "search-box" },
+	      { className: "search-box group" },
 	      React.createElement("input", { type: "text", id: "search", onChange: this.handleInputChange,
-	        placeholder: "Search here!" }),
+	        placeholder: "Search" }),
 	      React.createElement(
 	        "button",
 	        { className: "go-button", onClick: this.search },
