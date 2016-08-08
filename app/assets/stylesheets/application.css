@@ -660,3 +660,8 @@ img {
   background: #53b9ea;
   color: #000000;
 }
+
+.timestamp {
+  font-style: italic;
+  color: #CCCCCC;
+}

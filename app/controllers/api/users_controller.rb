@@ -1,5 +1,7 @@
 class Api::UsersController < ApplicationController
 
+  require "time_diff"
+
   def create
     user_params = {username: params[:username],
       password: params[:password]}
@@ -34,12 +36,15 @@ class Api::UsersController < ApplicationController
       five_users.each do |user|
 
         gameId = user.reviews.last.game_id
+        updated = user.reviews.last.updated_at
+        recent_activity = Time.diff(Time.parse(Time.now.to_s),Time.parse(updated.to_s))
 
         topFive << { "id" => user.id,
           "username" => user.username,
          "reviewsCount" => user.reviews.length,
          "picture" => user.picture.url,
-         "recentlyReviewedGame" => Game.find(gameId)
+         "recentlyReviewedGame" => Game.find(gameId),
+         "recentActivity" => recent_activity
          }
       end
 
