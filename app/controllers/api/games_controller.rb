@@ -19,8 +19,8 @@ class Api::GamesController < ApplicationController
 
   def index
     @games = Game.all
-    @review_count = 0
-    @score = 0
+    @review_count
+    @score
     render :index
   end
 

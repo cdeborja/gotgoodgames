@@ -44,7 +44,7 @@ module.exports = React.createClass({
   render: function () {
 
     if ( (this.state.games.length < 1) || (this.state.users.length < 1) ) {return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);}
-    
+
     return(
       <div className="content-container group">
         <div className="content-game-lists">
