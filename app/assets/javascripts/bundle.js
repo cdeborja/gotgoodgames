@@ -31495,6 +31495,10 @@
 	    router: React.PropTypes.object.isRequired
 	  },
 	
+	  goToGame: function (e) {
+	    this.context.router.push('/games/' + e.currentTarget.id);
+	  },
+	
 	  goToUserShowpage: function (e) {
 	    this.context.router.push('/users/' + e.currentTarget.id);
 	  },
@@ -31516,19 +31520,40 @@
 	    }
 	    var sortedByReviews = this.props.users.sort(compare);
 	    var topFive = sortedByReviews.map(function (user, id) {
-	
 	      var times = user.reviewsCount.toString();
 	      return React.createElement(
 	        'li',
-	        { className: 'top-user group', key: user.id, id: user.id, onClick: that.goToUserShowpage },
-	        React.createElement('img', { src: user.picture }),
+	        { className: 'top-user group', key: user.id, id: user.id },
 	        React.createElement(
 	          'div',
-	          null,
-	          user.username,
-	          ' has reviewed ',
-	          times,
-	          ' times'
+	          { className: 'image-container', onClick: that.goToUserShowpage },
+	          React.createElement('img', { className: 'cover', id: user.id, src: user.picture })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'top-user-info' },
+	          React.createElement(
+	            'div',
+	            null,
+	            React.createElement(
+	              'div',
+	              { className: 'username', id: user.id, onClick: that.goToUserShowpage },
+	              user.username
+	            ),
+	            'has reviewed ',
+	            times,
+	            ' games'
+	          ),
+	          React.createElement(
+	            'div',
+	            null,
+	            'Recently reviewed',
+	            React.createElement(
+	              'div',
+	              { id: user.recentlyReviewedGame.id, className: 'recentActivity', onClick: that.goToGame },
+	              user.recentlyReviewedGame.title
+	            )
+	          )
 	        )
 	      );
 	    });
@@ -37553,7 +37578,7 @@
 	      return React.createElement(
 	        'li',
 	        { className: 'boxed-item', key: game.id, id: game.id, onClick: that.goToGame },
-	        React.createElement('img', { src: game.image_url }),
+	        React.createElement('img', { className: 'index-img', src: game.image_url }),
 	        React.createElement(
 	          'p',
 	          null,
@@ -38304,7 +38329,7 @@
 	      return React.createElement(
 	        'li',
 	        { className: 'boxed-item', key: user.id, id: user.id, onClick: that.goToUserShowpage },
-	        React.createElement('img', { src: user.picture }),
+	        React.createElement('img', { className: 'index-img', src: user.picture }),
 	        React.createElement(
 	          'p',
 	          null,

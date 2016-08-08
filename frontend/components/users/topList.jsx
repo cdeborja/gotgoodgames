@@ -2,14 +2,16 @@ var React = require('react');
 
 var TopList = React.createClass({
   contextTypes: {
-     router: React.PropTypes.object.isRequired
-   },
+    router: React.PropTypes.object.isRequired
+  },
+
+  goToGame: function (e) {
+    this.context.router.push('/games/' + e.currentTarget.id);
+  },
 
   goToUserShowpage: function (e) {
     this.context.router.push('/users/' + e.currentTarget.id);
   },
-
-
 
   render: function () {
 
@@ -30,13 +32,25 @@ var TopList = React.createClass({
     }
     var sortedByReviews = this.props.users.sort(compare);
     var topFive = sortedByReviews.map( function (user, id) {
-
       var times = user.reviewsCount.toString();
       return (
-        <li className="top-user group" key={user.id} id={user.id} onClick={that.goToUserShowpage}>
-          <img src={user.picture}/>
-          <div>
-            {user.username} has reviewed {times} times
+        <li className="top-user group" key={user.id} id={user.id}>
+          <div className="image-container" onClick={that.goToUserShowpage}>
+            <img className="cover" id={user.id} src={user.picture}/>
+          </div>
+          <div className="top-user-info">
+            <div>
+              <div className="username" id={user.id} onClick={that.goToUserShowpage}>
+                {user.username}
+              </div>
+              has reviewed {times} games
+            </div>
+            <div>
+              Recently reviewed
+              <div id={user.recentlyReviewedGame.id} className="recentActivity" onClick={that.goToGame}>
+                {user.recentlyReviewedGame.title}
+              </div>
+            </div>
           </div>
         </li>);
     });

@@ -543,8 +543,8 @@ img {
   position: relative;
   float: left;
   margin: 10px;
-  width: 200px;
-  height: 200px;
+  /*width: 200px;
+  height: 200px;*/
   border: 1px solid #AAAAAA;
   -webkit-transition: all 0.30s ease-in-out;
   -moz-transition: all 0.30s ease-in-out;
@@ -556,15 +556,6 @@ img {
 .boxed-item:hover {
   cursor: pointer;
   box-shadow: 0px 0px 30px rgba(81, 203, 238, 1);
-}
-
-.boxed-item > img {
-  max-width: 200px;
-  max-height: 200px;
-  width: auto;
-  height: auto;
-  margin: 0 auto;
-  vertical-align: middle;
 }
 
 .boxed-item > p {

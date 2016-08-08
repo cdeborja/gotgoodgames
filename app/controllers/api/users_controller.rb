@@ -32,10 +32,14 @@ class Api::UsersController < ApplicationController
       five_users = User.joins(:reviews).group("id").order("COUNT(users.id) DESC").limit(5)
 
       five_users.each do |user|
+
+        gameId = user.reviews.last.game_id
+
         topFive << { "id" => user.id,
           "username" => user.username,
          "reviewsCount" => user.reviews.length,
-         "picture" => user.picture.url
+         "picture" => user.picture.url,
+         "recentlyReviewedGame" => Game.find(gameId)
          }
       end
 

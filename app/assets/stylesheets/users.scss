@@ -218,6 +218,7 @@
 }
 
 .top-user {
+  font-size: 14px;
   color: #000000;
   background: #FFFFFF;
   width: auto;
@@ -225,21 +226,55 @@
   padding: 5px;
 }
 
+.top-user-info {
+  margin-top: 7px;
+  position: relative;
+  float: left;
+}
+
 .top-user:last-child {
   border-radius: 0 0 5px 5px;
 }
 
-.top-user > img {
+
+.username {
   width: auto;
-  max-height: 50px;
-  float: left;
+  display: inline-block;
+  border-bottom: 1px solid transparent;
+  margin-right: 4px;
 }
 
-.top-user > div {
-  vertical-align: middle;
-  float:right;
-}
-
-.top-user:hover {
+.username:hover {
+  color: #53b9ea;
+  border-bottom: 1px solid #53b9ea;
   cursor: pointer;
+}
+
+.image-container {
+  float: left;
+  position: relative;
+  margin-right: 5px;
+}
+
+.cover {
+  object-fit: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  border: 1px solid #AAAAAA;
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+}
+
+.cover:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 4px 1px #53b9ea;
+}
+
+.index-img {
+  object-fit: cover;
+  width: 200px;
+  height: 200px;
 }
