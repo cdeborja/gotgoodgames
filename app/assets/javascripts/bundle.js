@@ -31526,8 +31526,8 @@
 	        { className: 'top-user group', key: user.id, id: user.id },
 	        React.createElement(
 	          'div',
-	          { className: 'image-container', onClick: that.goToUserShowpage },
-	          React.createElement('img', { className: 'cover', id: user.id, src: user.picture })
+	          { className: 'image-container', id: user.id, onClick: that.goToUserShowpage },
+	          React.createElement('img', { className: 'cover', src: user.picture })
 	        ),
 	        React.createElement(
 	          'div',
@@ -37031,7 +37031,7 @@
 	      React.createElement(
 	        'div',
 	        { onClick: this.goToUserPage, className: 'game-review-image group' },
-	        React.createElement('img', { src: this.props.review.user.picture }),
+	        React.createElement('img', { className: 'comment-img', src: this.props.review.user.picture }),
 	        React.createElement(
 	          'p',
 	          null,
@@ -37817,7 +37817,7 @@
 	        React.createElement(
 	          'div',
 	          { onClick: this.goToGame, className: 'game-review-image group' },
-	          React.createElement('img', { src: review.game.image_url }),
+	          React.createElement('img', { className: 'comment-img', src: review.game.image_url }),
 	          React.createElement(
 	            'p',
 	            null,

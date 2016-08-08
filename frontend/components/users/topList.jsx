@@ -35,8 +35,8 @@ var TopList = React.createClass({
       var times = user.reviewsCount.toString();
       return (
         <li className="top-user group" key={user.id} id={user.id}>
-          <div className="image-container" onClick={that.goToUserShowpage}>
-            <img className="cover" id={user.id} src={user.picture}/>
+          <div className="image-container" id={user.id} onClick={that.goToUserShowpage}>
+            <img className="cover" src={user.picture}/>
           </div>
           <div className="top-user-info">
             <div>

@@ -10,8 +10,8 @@
 }
 
 .game-information-box {
-  margin: 25px;
-  width: 914px;
+  margin: 15px 15px 10px 15px;
+  width: auto;
   padding: 20px;
   border: 1px solid #AAAAAA;
   border-radius: 5px;
@@ -81,12 +81,10 @@
 .user-review {
   border-bottom: 1px solid #AAAAAA;
   padding: 10px;
-  margin-bottom: 5px;
 }
 
 .user-review:last-child {
   border-bottom: 0px;
-  padding: 5px;
   margin-bottom: 5px;
 }
 
@@ -115,7 +113,7 @@
   padding: 5px;
   color: black;
   background: #fff;
-  min-height: 70px;
+  min-height: 60px;
   height: auto;
   width: 600px;
   border-radius: 5px;
@@ -144,10 +142,10 @@
   border-bottom: 1px solid transparent;
   display: inline-block;
   margin-left: 4px;
+  color: #53b9ea;
 }
 
 .recentActivity:hover {
-  color: #53b9ea;
   border-bottom: 1px solid #53b9ea;
   cursor: pointer;
 }

@@ -16,9 +16,8 @@
 
 .user-information-box {
   margin: 20px;
-  max-width: 940px;
   width: auto;
-  padding: 5px;
+  margin: 15px 15px 10px 15px;
   border: 1px solid #AAAAAA;
   border-radius: 5px;
   background: #FFFFFF;
@@ -117,8 +116,8 @@
 
 .recent-reviews-box {
   // float: left;
-  margin: 0 30px;
-  width: 920px;
+  margin: 0 15px;
+  width: auto;
   border: 1px solid #AAAAAA;
   border-radius: 5px;
   background: #FFFFFF;
@@ -159,12 +158,24 @@
   cursor: pointer;
 }
 
-.game-review-image > img {
-  display: block;
-  float: left;
-  width: 120px;
-  height: auto;
-  margin-bottom: 5px;
+// .game-review-image > img {
+//   display: block;
+//   float: left;
+//   width: 120px;
+//   height: auto;
+//   margin-bottom: 5px;
+// }
+
+.comment-img {
+  object-fit: cover;
+  width: 125px;
+  height: 125px;
+  border-radius: 5px;
+  border: 1px solid #AAAAAA;
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
 }
 
 .game-review-image > p {
@@ -242,10 +253,10 @@
   display: inline-block;
   border-bottom: 1px solid transparent;
   margin-right: 4px;
+  color: #53b9ea;
 }
 
 .username:hover {
-  color: #53b9ea;
   border-bottom: 1px solid #53b9ea;
   cursor: pointer;
 }
@@ -271,6 +282,11 @@
 .cover:hover {
   cursor: pointer;
   box-shadow: 0px 0px 4px 1px #53b9ea;
+}
+
+.comment-img:hover  {
+  cursor: pointer;
+  box-shadow: 0px 0px 7px 2px #53b9ea;
 }
 
 .index-img {
