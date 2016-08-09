@@ -19,12 +19,11 @@ end
 if show_ratings
   @review_count = 0
   @score = 0
-  
+
   game.reviews.each do |review|
     @review_count = @review_count + 1
     @score = @score + review.score
   end
-
   average = @score.fdiv(@review_count)
 
   json.set! :averageRating, average

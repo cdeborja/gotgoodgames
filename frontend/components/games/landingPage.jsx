@@ -8,6 +8,7 @@ var UserStore = require('../../stores/user');
 
 var GameDatabaseSlider = require('./gameDatabaseSlider');
 var TopList = require('../users/topList');
+var TopGames = require('./topGames');
 
 module.exports = React.createClass({
   contextTypes: {
@@ -51,9 +52,7 @@ module.exports = React.createClass({
           <GameDatabaseSlider games={this.state.games}/>
         </div>
         <div className="content-container-bottom group">
-          <div className="top-all-time-games-container">
-            {this.state.games[0].averageRating}
-          </div>
+          <TopGames games={this.state.games}/>
           <TopList users={this.state.users}/>
         </div>
       </div>

@@ -150,10 +150,19 @@
   cursor: pointer;
 }
 
-.top-all-time-games-container {
+.top-rated-games-container {
   margin: 10px 15px;
   width: 55%;
   border: 1px solid #AAAAAA;
   border-radius: 5px;
   float: left;
+}
+
+.top-rated-games-container > h2 {
+  padding: 3px 0;
+  background: #53b9ea;
+  text-align: center;
+  font-size: 20px;
+  border-radius: 4px 4px 0px 0px;
+  color: #FFFFFF;
 }

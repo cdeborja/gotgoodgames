@@ -21886,6 +21886,7 @@
 	
 	var GameDatabaseSlider = __webpack_require__(238);
 	var TopList = __webpack_require__(239);
+	var TopGames = __webpack_require__(324);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -21937,11 +21938,7 @@
 	      React.createElement(
 	        'div',
 	        { className: 'content-container-bottom group' },
-	        React.createElement(
-	          'div',
-	          { className: 'top-all-time-games-container' },
-	          this.state.games[0].averageRating
-	        ),
+	        React.createElement(TopGames, { games: this.state.games }),
 	        React.createElement(TopList, { users: this.state.users })
 	      )
 	    );
@@ -39023,6 +39020,87 @@
 	};
 	
 	module.exports = ReactStateSetters;
+
+/***/ },
+/* 324 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var TopList = React.createClass({
+	  displayName: 'TopList',
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  goToGame: function (e) {
+	    this.context.router.push('/games/' + e.currentTarget.id);
+	  },
+	
+	  goToUserShowpage: function (e) {
+	    this.context.router.push('/users/' + e.currentTarget.id);
+	  },
+	
+	  render: function () {
+	
+	    if (this.props.games.length === 0) return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
+	
+	    var that = this;
+	    //reorders by top user
+	    function compare(a, b) {
+	      if (a.averageRating > b.averageRating) return -1;
+	      if (a.averageRating < b.averageRating) return 1;
+	      return 0;
+	    }
+	
+	    var sortedByRating = this.props.games.sort(compare);
+	    var topFive = sortedByRating.slice(0, 5);
+	    var topFiveRender = topFive.map(function (game, id) {
+	      // var rating = game.averageRating;
+	      return React.createElement(
+	        'li',
+	        { className: 'top-user group', key: game.id, id: game.id },
+	        React.createElement(
+	          'div',
+	          { className: 'image-container', id: game.id, onClick: that.goToGame },
+	          React.createElement('img', { className: 'cover', src: game.image_url })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'top-game-info' },
+	          React.createElement(
+	            'div',
+	            null,
+	            React.createElement(
+	              'div',
+	              { className: 'username', id: game.id, onClick: that.goToGame },
+	              game.title
+	            )
+	          ),
+	          React.createElement('div', null)
+	        )
+	      );
+	    });
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'top-rated-games-container group' },
+	      React.createElement(
+	        'h2',
+	        null,
+	        'Top Rated Games'
+	      ),
+	      React.createElement(
+	        'ul',
+	        { className: 'top-rated-games' },
+	        topFiveRender
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = TopList;
 
 /***/ }
 /******/ ]);
