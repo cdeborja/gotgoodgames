@@ -30,7 +30,8 @@ var LoginForm = React.createClass({
     this.setState({ password: e.currentTarget.value });
   },
 
-  guestLogin: function() {
+  guestLogin: function(e) {
+    e.preventDefault();
     var guestParams = {
         username: "guest",
         password: "password"
@@ -39,7 +40,6 @@ var LoginForm = React.createClass({
 
     ApiUtil.login(guestParams, function() {
       router.push("/landingPage");
-
     });
   },
 

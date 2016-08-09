@@ -38569,7 +38569,8 @@
 	    this.setState({ password: e.currentTarget.value });
 	  },
 	
-	  guestLogin: function () {
+	  guestLogin: function (e) {
+	    e.preventDefault();
 	    var guestParams = {
 	      username: "guest",
 	      password: "password"
