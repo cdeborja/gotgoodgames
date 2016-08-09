@@ -209,6 +209,7 @@
   float: left;
   margin: 10px 15px 10px 15px;
   width: 35%;
+  height: 100%;
   border: 1px solid #AAAAAA;
   border-radius: 5px;
 
@@ -238,9 +239,14 @@
   padding: 5px;
 }
 
-.top-user-info {
+.top-user-info, .top-game-info {
+  width: 81%;
   position: relative;
   float: left;
+}
+
+.top-game-info {
+  width: 78%;
 }
 
 .top-user:last-child, .top-game:last-child {
