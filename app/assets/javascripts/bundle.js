@@ -31440,11 +31440,13 @@
 	    var settings = {
 	      dots: false,
 	      infinite: true,
-	      speed: 500,
+	      speed: 600,
 	      slidesToShow: 5,
 	      slidesToScroll: 5,
-	      draggable: false
-	
+	      draggable: false,
+	      lazyLoad: true,
+	      autoplay: true,
+	      pauseOnHover: true
 	    };
 	
 	    games = this.props.games.map(function (game, idx) {

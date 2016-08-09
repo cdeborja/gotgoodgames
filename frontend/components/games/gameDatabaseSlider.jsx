@@ -16,11 +16,13 @@ var GameDatabaseSlider = React.createClass({
     var settings = {
       dots: false,
       infinite: true,
-      speed: 500,
+      speed: 600,
       slidesToShow: 5,
       slidesToScroll: 5,
-      draggable: false
-
+      draggable: false,
+      lazyLoad: true,
+      autoplay: true,
+      pauseOnHover: true
     };
 
     games = this.props.games.map(function (game, idx) {
@@ -28,7 +30,7 @@ var GameDatabaseSlider = React.createClass({
         <div key={idx}>
           <ul className="game-preview">
             <img className="blue" onClick={this.showDetail} id={game.id} src={game.image_url}/>
-            <li>{game.title }</li>
+            <li>{game.title}</li>
             <li>{game.console}</li>
           </ul>
         </div>
