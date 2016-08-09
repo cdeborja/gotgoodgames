@@ -331,10 +331,10 @@ img {
   resize: both;
   word-wrap: break-word;
   color: #000000;
-  -webkit-transition: all 0.30s ease-in-out;
-  -moz-transition: all 0.30s ease-in-out;
-  -ms-transition: all 0.30s ease-in-out;
-  -o-transition: all 0.30s ease-in-out;
+  -webkit-transition: all 0.20s ease-in-out;
+  -moz-transition: all 0.20s ease-in-out;
+  -ms-transition: all 0.20s ease-in-out;
+  -o-transition: all 0.20s ease-in-out;
   outline: none;
 }
 
@@ -542,17 +542,14 @@ img {
 }
 
 .boxed-item {
-  display: block;
   position: relative;
   float: left;
-  margin: 10px;
-  /*width: 200px;
-  height: 200px;*/
+  margin: 10px 20px;
   border: 1px solid #AAAAAA;
-  -webkit-transition: all 0.30s ease-in-out;
-  -moz-transition: all 0.30s ease-in-out;
-  -ms-transition: all 0.30s ease-in-out;
-  -o-transition: all 0.30s ease-in-out;
+  -webkit-transition: all 0.20s ease-in-out;
+  -moz-transition: all 0.20s ease-in-out;
+  -ms-transition: all 0.20s ease-in-out;
+  -o-transition: all 0.20s ease-in-out;
   border-radius: 5px;
 }
 
@@ -562,7 +559,6 @@ img {
 }
 
 .boxed-item > p {
-  display: block;
   position: absolute;
   background: #53b9ea;
   color: #fff;
@@ -581,9 +577,9 @@ img {
   position: absolute;
   display: block;
   z-index: 10;
-  -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
-  box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 2px 3px 1px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 2px 3px 1px rgba(0,0,0,0.75);
+  box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.75);
 }
 
 .dropdownGames, .dropdownUsers {
