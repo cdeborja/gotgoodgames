@@ -670,4 +670,6 @@ img {
 
 .content-container-bottom {
   width: 100%;
+  display: flex;
+  justify-content: space-between;
 }

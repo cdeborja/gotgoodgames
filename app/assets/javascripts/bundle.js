@@ -31449,7 +31449,7 @@
 	      lazyLoad: true,
 	      autoplay: true,
 	      pauseOnHover: true,
-	      autoplaySpeed: 7000
+	      autoplaySpeed: 8000
 	    };
 	
 	    games = this.props.games.map(function (game, idx) {
