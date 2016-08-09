@@ -21887,6 +21887,7 @@
 	var GameDatabaseSlider = __webpack_require__(238);
 	var TopList = __webpack_require__(239);
 	var TopGames = __webpack_require__(324);
+	var MostReviewedGames = __webpack_require__(325);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -21939,11 +21940,7 @@
 	        'div',
 	        { className: 'content-container-bottom group' },
 	        React.createElement(TopGames, { games: this.state.games }),
-	        React.createElement(
-	          'div',
-	          { className: 'top-rated-games-container' },
-	          'HELLO'
-	        ),
+	        React.createElement(MostReviewedGames, { games: this.state.games }),
 	        React.createElement(TopList, { users: this.state.users })
 	      )
 	    );
@@ -39046,10 +39043,6 @@
 	    this.context.router.push('/games/' + e.currentTarget.id);
 	  },
 	
-	  goToUserShowpage: function (e) {
-	    this.context.router.push('/users/' + e.currentTarget.id);
-	  },
-	
 	  render: function () {
 	
 	    if (this.props.games.length === 0) return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
@@ -39122,6 +39115,97 @@
 	});
 	
 	module.exports = TopList;
+
+/***/ },
+/* 325 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var MostReviewedGames = React.createClass({
+	  displayName: 'MostReviewedGames',
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  goToGame: function (e) {
+	    this.context.router.push('/games/' + e.currentTarget.id);
+	  },
+	
+	  render: function () {
+	
+	    if (this.props.games.length === 0) return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
+	
+	    var that = this;
+	    //reorders by top user
+	    function compare(a, b) {
+	      if (a.reviewCount > b.reviewCount) return -1;
+	      if (a.reviewCount < b.reviewCount) return 1;
+	      return 0;
+	    }
+	
+	    //creates a duplicate so that we are not affecting the original state
+	    var games = this.props.games.slice(0);
+	    var sortedByReviewCount = games.sort(compare);
+	    var topFive = sortedByReviewCount.slice(0, 5);
+	    var topFiveRender = topFive.map(function (game, id) {
+	      var rating = game.averageRating.toFixed(2);
+	      return React.createElement(
+	        'li',
+	        { className: 'top-game group', key: game.id, id: game.id },
+	        React.createElement(
+	          'div',
+	          { className: 'image-container', id: game.id, onClick: that.goToGame },
+	          React.createElement('img', { className: 'cover', src: game.image_url })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'top-game-info' },
+	          React.createElement(
+	            'div',
+	            null,
+	            React.createElement(
+	              'div',
+	              { className: 'username', id: game.id, onClick: that.goToGame },
+	              game.title
+	            ),
+	            React.createElement(
+	              'div',
+	              null,
+	              'has been reviewed ',
+	              game.reviewCount,
+	              ' times'
+	            ),
+	            React.createElement(
+	              'div',
+	              null,
+	              'with an average score of ',
+	              rating
+	            )
+	          )
+	        )
+	      );
+	    });
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'top-rated-games-container group' },
+	      React.createElement(
+	        'h2',
+	        null,
+	        'Most Reviewed Games'
+	      ),
+	      React.createElement(
+	        'ul',
+	        { className: 'top-rated-games' },
+	        topFiveRender
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = MostReviewedGames;
 
 /***/ }
 /******/ ]);

@@ -9,6 +9,7 @@ var UserStore = require('../../stores/user');
 var GameDatabaseSlider = require('./gameDatabaseSlider');
 var TopList = require('../users/topList');
 var TopGames = require('./topGames');
+var MostReviewedGames = require('./mostReviewedGames');
 
 module.exports = React.createClass({
   contextTypes: {
@@ -53,9 +54,7 @@ module.exports = React.createClass({
         </div>
         <div className="content-container-bottom group">
           <TopGames games={this.state.games}/>
-          <div className="top-rated-games-container">
-            HELLO
-          </div>
+          <MostReviewedGames games={this.state.games}/>
           <TopList users={this.state.users}/>
         </div>
       </div>

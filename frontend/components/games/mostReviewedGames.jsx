@@ -1,6 +1,6 @@
 var React = require('react');
 
-var TopList = React.createClass({
+var MostReviewedGames = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
@@ -16,16 +16,17 @@ var TopList = React.createClass({
     var that = this;
     //reorders by top user
     function compare(a,b) {
-      if (a.averageRating > b.averageRating)
+      if (a.reviewCount > b.reviewCount)
         return -1;
-      if (a.averageRating < b.averageRating)
+      if (a.reviewCount < b.reviewCount)
         return 1;
       return 0;
     }
 
+    //creates a duplicate so that we are not affecting the original state
     var games = this.props.games.slice(0);
-    var sortedByRating = games.sort(compare);
-    var topFive = sortedByRating.slice(0,5);
+    var sortedByReviewCount = games.sort(compare);
+    var topFive = sortedByReviewCount.slice(0,5);
     var topFiveRender = topFive.map( function (game, id) {
       var rating = game.averageRating.toFixed(2);
       return (
@@ -38,11 +39,11 @@ var TopList = React.createClass({
               <div className="username" id={game.id} onClick={that.goToGame}>
                 {game.title}
               </div>
+              <div>
+                has been reviewed {game.reviewCount} times
               </div>
-                Average score of {rating}
               <div>
-              <div>
-                based on {game.reviewCount} reviews
+                with an average score of {rating}
               </div>
             </div>
           </div>
@@ -51,7 +52,7 @@ var TopList = React.createClass({
 
     return (
       <div className="top-rated-games-container group">
-        <h2>Top Rated Games</h2>
+        <h2>Most Reviewed Games</h2>
         <ul className="top-rated-games">
           {topFiveRender}
         </ul>
@@ -60,4 +61,4 @@ var TopList = React.createClass({
   }
 });
 
-module.exports = TopList;
+module.exports = MostReviewedGames;
