@@ -41,7 +41,6 @@ module.exports = React.createClass({
   render: function () {
     var game = this.state.game;
     var userReview = null;
-    var averageScore = 0;
 
     if ( !game || !game.reviews) {return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);}
     var gameReviews = game.reviews.map(function (review, id) {
@@ -53,14 +52,8 @@ module.exports = React.createClass({
         userReview = review.props.review;
       }
     });
-    var totalScore = 0;
+    var averageRating = game.averageRating.toFixed(2);
 
-    if (game.reviews.length > 0) {
-      game.reviews.forEach( function(review) {
-        totalScore += review.score;
-      });
-      averageScore = (totalScore / game.reviews.length).toFixed(2);
-    }
     return(
       <div className="content-container group">
         <div className="game-information-box group">
@@ -73,7 +66,7 @@ module.exports = React.createClass({
           <div className="game-details-right">
             <h2>{game.title}</h2>
             <ul className="game-details">
-              <li><b>Average Score:</b> {averageScore} out of 5</li>
+              <li><b>Average Score:</b> {averageRating} out of 5</li>
               <li><b>Release Date:</b> {game.release_date}</li>
               <li><b>Console:</b> {game.console}</li>
               <li><b>Game Description:</b> {game.description}</li>

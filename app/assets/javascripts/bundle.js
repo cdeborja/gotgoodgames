@@ -36941,7 +36941,6 @@
 	  render: function () {
 	    var game = this.state.game;
 	    var userReview = null;
-	    var averageScore = 0;
 	
 	    if (!game || !game.reviews) {
 	      return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
@@ -36955,14 +36954,8 @@
 	        userReview = review.props.review;
 	      }
 	    });
-	    var totalScore = 0;
+	    var averageRating = game.averageRating.toFixed(2);
 	
-	    if (game.reviews.length > 0) {
-	      game.reviews.forEach(function (review) {
-	        totalScore += review.score;
-	      });
-	      averageScore = (totalScore / game.reviews.length).toFixed(2);
-	    }
 	    return React.createElement(
 	      'div',
 	      { className: 'content-container group' },
@@ -36999,7 +36992,7 @@
 	                'Average Score:'
 	              ),
 	              ' ',
-	              averageScore,
+	              averageRating,
 	              ' out of 5'
 	            ),
 	            React.createElement(
