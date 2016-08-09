@@ -53,6 +53,9 @@ module.exports = React.createClass({
         </div>
         <div className="content-container-bottom group">
           <TopGames games={this.state.games}/>
+          <div className="top-rated-games-container">
+            HELLO
+          </div>
           <TopList users={this.state.users}/>
         </div>
       </div>

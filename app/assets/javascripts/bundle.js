@@ -21939,6 +21939,11 @@
 	        'div',
 	        { className: 'content-container-bottom group' },
 	        React.createElement(TopGames, { games: this.state.games }),
+	        React.createElement(
+	          'div',
+	          { className: 'top-rated-games-container' },
+	          'HELLO'
+	        ),
 	        React.createElement(TopList, { users: this.state.users })
 	      )
 	    );
@@ -31446,7 +31451,8 @@
 	      draggable: false,
 	      lazyLoad: true,
 	      autoplay: true,
-	      pauseOnHover: true
+	      pauseOnHover: true,
+	      autoplaySpeed: 7000
 	    };
 	
 	    games = this.props.games.map(function (game, idx) {
@@ -39060,10 +39066,10 @@
 	    var sortedByRating = games.sort(compare);
 	    var topFive = sortedByRating.slice(0, 5);
 	    var topFiveRender = topFive.map(function (game, id) {
-	      // var rating = game.averageRating;
+	      var rating = game.averageRating.toFixed(2);
 	      return React.createElement(
 	        'li',
-	        { className: 'top-user group', key: game.id, id: game.id },
+	        { className: 'top-game group', key: game.id, id: game.id },
 	        React.createElement(
 	          'div',
 	          { className: 'image-container', id: game.id, onClick: that.goToGame },
@@ -39081,7 +39087,19 @@
 	              game.title
 	            )
 	          ),
-	          React.createElement('div', null)
+	          'Average score of ',
+	          rating,
+	          React.createElement(
+	            'div',
+	            null,
+	            React.createElement(
+	              'div',
+	              null,
+	              'based on ',
+	              game.reviewCount,
+	              ' reviews'
+	            )
+	          )
 	        )
 	      );
 	    });

@@ -22,7 +22,8 @@ var GameDatabaseSlider = React.createClass({
       draggable: false,
       lazyLoad: true,
       autoplay: true,
-      pauseOnHover: true
+      pauseOnHover: true,
+      autoplaySpeed: 7000
     };
 
     games = this.props.games.map(function (game, idx) {

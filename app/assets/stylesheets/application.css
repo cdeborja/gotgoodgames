@@ -630,7 +630,8 @@ img {
 .author-navigation {
   display: table;
   margin: 20px auto;
-  width: 50%;
+  width: 100%;
+  max-width: 680px;
   min-width: 200px;
   border: 1px solid #AAAAAA;
   border-radius: 5px;

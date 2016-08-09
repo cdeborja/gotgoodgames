@@ -31,9 +31,9 @@ var TopList = React.createClass({
     var sortedByRating = games.sort(compare);
     var topFive = sortedByRating.slice(0,5);
     var topFiveRender = topFive.map( function (game, id) {
-      // var rating = game.averageRating;
+      var rating = game.averageRating.toFixed(2);
       return (
-        <li className="top-user group" key={game.id} id={game.id}>
+        <li className="top-game group" key={game.id} id={game.id}>
           <div className="image-container" id={game.id} onClick={that.goToGame}>
             <img className="cover" src={game.image_url}/>
           </div>
@@ -42,9 +42,12 @@ var TopList = React.createClass({
               <div className="username" id={game.id} onClick={that.goToGame}>
                 {game.title}
               </div>
-            </div>
-            <div>
-
+              </div>
+                Average score of {rating}
+              <div>
+              <div>
+                based on {game.reviewCount} reviews
+              </div>
             </div>
           </div>
         </li>);
