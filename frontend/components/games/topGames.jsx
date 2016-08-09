@@ -27,7 +27,8 @@ var TopList = React.createClass({
       return 0;
     }
 
-    var sortedByRating = this.props.games.sort(compare);
+    var games = this.props.games.slice(0);
+    var sortedByRating = games.sort(compare);
     var topFive = sortedByRating.slice(0,5);
     var topFiveRender = topFive.map( function (game, id) {
       // var rating = game.averageRating;
