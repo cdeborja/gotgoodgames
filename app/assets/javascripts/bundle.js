@@ -38598,7 +38598,7 @@
 	    if (!this.state.currentUser) {
 	      signUpButton = React.createElement(
 	        'button',
-	        { className: 'sign-in-button next-to', onClick: this.goToSignUpForm },
+	        { className: 'sign-in-button', onClick: this.goToSignUpForm },
 	        'Sign Up'
 	      );
 	    }
@@ -38640,12 +38640,16 @@
 	        React.createElement('input', { className: 'input-field-login', onChange: this.updatePassword,
 	          type: 'password', value: this.state.password }),
 	        React.createElement(
-	          'button',
-	          { onClick: this.handleSubmit, className: 'sign-in-button next-to' },
-	          'Sign In'
-	        ),
-	        signUpButton,
-	        guestButton
+	          'div',
+	          { className: 'button-box group' },
+	          React.createElement(
+	            'button',
+	            { onClick: this.handleSubmit, className: 'sign-in-button' },
+	            'Sign In'
+	          ),
+	          signUpButton,
+	          guestButton
+	        )
 	      ),
 	      React.createElement(
 	        'div',

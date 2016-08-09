@@ -51,7 +51,7 @@ var LoginForm = React.createClass({
   render: function() {
 
     if (!this.state.currentUser) {
-      signUpButton = <button className="sign-in-button next-to" onClick={this.goToSignUpForm}>
+      signUpButton = <button className="sign-in-button" onClick={this.goToSignUpForm}>
       Sign Up</button>;
     }
 
@@ -74,9 +74,11 @@ var LoginForm = React.createClass({
           <input className="input-field-login" onChange={this.updatePassword}
           type="password" value={this.state.password}/>
 
-          <button onClick={this.handleSubmit} className="sign-in-button next-to">Sign In</button>
-          {signUpButton}
-          {guestButton}
+          <div className="button-box group">
+            <button onClick={this.handleSubmit} className="sign-in-button">Sign In</button>
+            {signUpButton}
+            {guestButton}
+          </div>
 
         </form>
         <div className="oauth-box group">
