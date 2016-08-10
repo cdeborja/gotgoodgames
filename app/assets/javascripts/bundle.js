@@ -31892,7 +31892,7 @@
 	            React.createElement(
 	              "a",
 	              { href: gamehtml },
-	              "Game: ",
+	              "🕹 : ",
 	              result.title
 	            )
 	          );
@@ -31904,7 +31904,7 @@
 	            React.createElement(
 	              "a",
 	              { href: userhtml },
-	              "User: ",
+	              "😀 : ",
 	              result.username
 	            )
 	          );
@@ -37106,6 +37106,7 @@
 	        userReview = review.props.review;
 	      }
 	    });
+	
 	    var averageRating = game.averageRating.toFixed(2);
 	
 	    return React.createElement(

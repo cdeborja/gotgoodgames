@@ -61,7 +61,7 @@ var Search = React.createClass({
           return (
             <li key={ index }>
               <a href={ gamehtml } >
-                Game: { result.title }
+                🕹 : { result.title }
               </a>
             </li>
           );
@@ -71,7 +71,7 @@ var Search = React.createClass({
           return (
             <li key={ index }>
               <a href={ userhtml }>
-                User: { result.username }
+                😀 : { result.username }
               </a>
             </li>
           );

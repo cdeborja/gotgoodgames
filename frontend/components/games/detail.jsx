@@ -52,6 +52,7 @@ module.exports = React.createClass({
         userReview = review.props.review;
       }
     });
+
     var averageRating = game.averageRating.toFixed(2);
 
     return(
