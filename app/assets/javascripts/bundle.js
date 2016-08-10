@@ -21651,7 +21651,6 @@
 	var LandingPage = __webpack_require__(180);
 	var SessionStore = __webpack_require__(188);
 	var ApiUtil = __webpack_require__(181);
-	var ErrorStore = __webpack_require__(242);
 	var Search = __webpack_require__(243);
 	
 	module.exports = React.createClass({
@@ -21664,14 +21663,12 @@
 	
 	  getInitialState: function () {
 	    return {
-	      currentUser: null,
-	      errors: ErrorStore.all()
+	      currentUser: null
 	    };
 	  },
 	
 	  componentDidMount: function () {
 	    this.sessionStoreToken = SessionStore.addListener(this.handleChange);
-	    this.errorListener = ErrorStore.addListener(this.handleChange);
 	    this.handleChange();
 	  },
 	
@@ -21781,18 +21778,16 @@
 	          ),
 	          React.createElement(
 	            'li',
-	            null,
-	            'Edit Profile'
-	          ),
-	          React.createElement(
-	            'li',
 	            { onClick: this.handleLogout },
 	            'Logout'
 	          )
 	        )
 	      );
 	    }
-	
+	    // Implement new button later
+	    // <li>
+	    // Edit Profile
+	    // </li>
 	    return React.createElement(
 	      'div',
 	      null,

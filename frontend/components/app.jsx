@@ -2,7 +2,6 @@ var React = require('react');
 var LandingPage = require('./games/landingPage');
 var SessionStore = require('../stores/session');
 var ApiUtil = require('../util/apiUtil');
-var ErrorStore = require('../stores/error');
 var Search = require('./search');
 
 module.exports = React.createClass({
@@ -13,14 +12,12 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      currentUser: null,
-      errors: ErrorStore.all()
+      currentUser: null
     };
   },
 
   componentDidMount: function() {
     this.sessionStoreToken = SessionStore.addListener(this.handleChange);
-    this.errorListener = ErrorStore.addListener(this.handleChange);
     this.handleChange();
   },
 
@@ -106,14 +103,14 @@ module.exports = React.createClass({
                         <ul className="user-links-dropdown hidden">
                           <div className="arrow-up"></div>
                           <li onClick={this.goToCurrentUserHomePage}>My Stats</li>
-                          <li>
-                            Edit Profile
-                          </li>
                           <li onClick={this.handleLogout}>Logout</li>
                         </ul>
                       </li>;
     }
-
+    // Implement new button later
+    // <li>
+    // Edit Profile
+    // </li>
     return (
       <div>
         <header className="header group">
