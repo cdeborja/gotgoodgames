@@ -19,8 +19,8 @@
 }
 
 .input-box {
-  margin: auto;
-  padding: 0 145px;
+  margin: 0 auto;
+  width: 53%;
 }
 
 .oauth-box {
@@ -101,6 +101,7 @@
 }
 
 .button-box {
+  width: 108%;
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
