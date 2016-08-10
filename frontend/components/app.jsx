@@ -88,6 +88,7 @@ module.exports = React.createClass({
     var home, welcomeMessage, browse, userNavigation, searchBar;
 
     if (this.state.currentUser) {
+      welcome = <li>Welcome</li>;
       home = <li className="home" onClick={this.goToIndex}>Home</li>;
       browse = (<li className="browse-links" onMouseLeave={this.closeMenu} onMouseEnter={this.openMenu}>
                   Browse...
@@ -132,9 +133,7 @@ module.exports = React.createClass({
             </div>
             <div className="session-nav">
               <ul className="session-links">
-                <li>
-                  Welcome
-                </li>
+                {welcome}
                 {userNavigation}
               </ul>
             </div>
