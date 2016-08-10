@@ -45,17 +45,24 @@ module.exports = React.createClass({
   },
 
   goToCurrentUserHomePage: function () {
+    this.clearDropdowns();
     this.context.router.push("/homepage");
   },
 
   goToGamesIndex: function () {
-    this.closeMenu();
+    this.clearDropdowns();
     this.context.router.push("/gamesIndex");
   },
 
   goToUsersIndex: function () {
-    this.closeMenu();
+    this.clearDropdowns();
     this.context.router.push("/users");
+  },
+
+  clearDropdowns: function () {
+    $(".dropdownUsers").addClass("hidden");
+    $(".dropdownGames").addClass("hidden");
+    $('.user-links-dropdown').addClass("hidden");
   },
 
   handleLogout: function () {
@@ -64,25 +71,30 @@ module.exports = React.createClass({
     ApiUtil.logout();
   },
 
-  openMenu: function () {
-    $(".dropdownUsers").removeClass("hidden");
-    $(".dropdownGames").removeClass("hidden");
+  openMenu: function (e) {
+    if (e.currentTarget.className === "browse") {
+      $(".dropdownUsers").removeClass("hidden");
+      $(".dropdownGames").removeClass("hidden");
+    } else if (e.currentTarget.className === "user-links") {
+      $(".user-links-dropdown").removeClass("hidden");
+    }
   },
 
-  closeMenu: function () {
-    $(".dropdownUsers").addClass("hidden");
-    $(".dropdownGames").addClass("hidden");
+  closeMenu: function (e) {
+    if (e.currentTarget.className === "browse") {
+      $(".dropdownUsers").addClass("hidden");
+      $(".dropdownGames").addClass("hidden");
+    } else if (e.currentTarget.className === "user-links") {
+      $('.user-links-dropdown').addClass("hidden");
+    }
   },
 
 
   render: function () {
-    var home, logoutButton, welcomeMessage, homepage, signUpButton, browse, community, searchBar;
+    var home, welcomeMessage, browse, userNavigation, searchBar;
 
     if (this.state.currentUser) {
       home = <li onClick={this.goToIndex}>Home</li>;
-      logoutButton = <li onClick={this.handleLogout}>Logout</li>;
-      welcomeMessage = <h2>Welcome, {this.state.currentUser.username}</h2>;
-      homepage = <li onClick={this.goToCurrentUserHomePage}>My Stats</li>;
       browse = (<li className="browse" onMouseLeave={this.closeMenu} onMouseEnter={this.openMenu}>
                   Browse...
                   <ul>
@@ -91,11 +103,18 @@ module.exports = React.createClass({
                   </ul>
                 </li>);
       searchBar = <Search />;
+      userNavigation = <li className="user-links" onMouseLeave={this.closeMenu} onMouseEnter={this.openMenu}>
+                        {this.state.currentUser.username}
+                        <ul className="user-links-dropdown hidden">
+                          <li onClick={this.goToCurrentUserHomePage}>My Stats</li>
+                          <li>
+                            Edit Profile
+                          </li>
+                          <li onClick={this.handleLogout}>Logout</li>
+                        </ul>
+                      </li>;
     }
 
-    if (this.state.errors) {
-      errors = this.state.errors;
-    }
     return (
       <div>
         <header className="header group">
@@ -111,15 +130,16 @@ module.exports = React.createClass({
             <div className="navigation-box">
               <ul className="navigation-links">
                 {home}
-                {homepage}
                 {browse}
                 {searchBar}
               </ul>
             </div>
             <div className="session-nav">
               <ul className="session-links">
-                {welcomeMessage}
-                {logoutButton}
+                <li>
+                  Welcome
+                </li>
+                {userNavigation}
               </ul>
             </div>
           </nav>

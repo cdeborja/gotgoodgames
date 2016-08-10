@@ -118,20 +118,14 @@ img {
 .session-links > * {
   float: left;
   padding: 20px 10px;
-  color: #fff;
+  color: #FFFFFF;
 }
 
-.session-links > li {
+.session-links > li:first-child {
   float: left;
-  padding: 20px 10px;
-  color: #fff;
-  transition: background-color 400ms, transform 400ms, color 400ms;
-}
-
-.session-links > li:hover {
-  cursor: pointer;
-  background: #fff;
-  color: #000;
+  padding: 20px 0;
+  margin-right: 5px;
+  color: #FFFFFF;
 }
 
 .content {
@@ -153,13 +147,13 @@ img {
 .navigation-links > li {
   float: left;
   padding: 20px 10px;
-  color: #fff;
+  color: #FFFFFF;
   transition: background-color 400ms, transform 400ms, color 400ms;
 }
 
 .navigation-links > li:hover {
   cursor: pointer;
-  background: #fff;
+  background: #FFFFFF;
   color: #000;
 }
 
@@ -314,7 +308,7 @@ img {
 
 .add-review-textarea {
   display: block;
-  background: #fff;
+  background: #FFFFFF;
   border: 1px solid #AAAAAA;
   padding: 10px 4px;
   font-weight: normal;
@@ -340,7 +334,7 @@ img {
 
 .add-review-title {
   display: block;
-  background: #fff;
+  background: #FFFFFF;
   border: 1px solid #AAAAAA;
   padding: 12px 7px;
   font-weight: normal;
@@ -367,7 +361,7 @@ img {
 
 .input-field-login {
   display: block;
-  background: #fff;
+  background: #FFFFFF;
   border: 1px solid #AAAAAA;
   padding: 10px 4px;
   font-weight: normal;
@@ -382,7 +376,7 @@ img {
 }
 
 .input-field-box {
-  background: #fff;
+  background: #FFFFFF;
   border: 1px solid #555;
   padding: 10px 4px;
   font-weight: normal;
@@ -392,7 +386,7 @@ img {
   height: 120px;
   resize: both;
   word-wrap: break-word;
-  color: #fff;
+  color: #FFFFFF;
 }
 
 /* buttons */
@@ -450,7 +444,7 @@ img {
   border-radius: 5px;
   padding: 20px 20px 10px 20px;
   margin-top: 40px;
-  background: #fff;
+  background: #FFFFFF;
 }
 
 .game-index-pane > h2 {
@@ -480,7 +474,7 @@ img {
   border-radius: 5px;
   padding: 20px 20px 10px 20px;
   margin-top: 40px;
-  background: #fff;
+  background: #FFFFFF;
 }
 
 .game-detail-pane > h2 {
@@ -551,7 +545,7 @@ img {
 .boxed-item > p {
   position: absolute;
   background: #53b9ea;
-  color: #fff;
+  color: #FFFFFF;
   padding: 5px 10px;
   letter-spacing: 3px;
   font-size: 12px;
@@ -586,6 +580,41 @@ img {
 }
 
 .dropdownGames:hover, .dropdownUsers:hover {
+  background: #53b9ea;
+}
+
+.user-links {
+  padding: 20px 5px;
+  transition: background-color 400ms, transform 400ms, color 400ms;
+}
+
+.user-links:hover {
+  cursor: pointer;
+  background: #FFFFFF;
+  color: #000;
+}
+
+.user-links-dropdown {
+  margin-top: 20px;
+  margin-left: -10px;
+  position: absolute;
+  display: block;
+  z-index: 10;
+  -webkit-box-shadow: 0px 2px 3px 1px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 2px 3px 1px rgba(0,0,0,0.75);
+  box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.75);
+}
+
+.user-links-dropdown > li {
+  padding: 10px 10px;
+  background: #FFFFFF;
+  border: 1px solid #AAAAAA;
+  text-align: center;
+  width: 66px;
+  margin-left: -1px;
+}
+
+.user-links-dropdown > li:hover {
   background: #53b9ea;
 }
 

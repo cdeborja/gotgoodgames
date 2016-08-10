@@ -21695,17 +21695,24 @@
 	  },
 	
 	  goToCurrentUserHomePage: function () {
+	    this.clearDropdowns();
 	    this.context.router.push("/homepage");
 	  },
 	
 	  goToGamesIndex: function () {
-	    this.closeMenu();
+	    this.clearDropdowns();
 	    this.context.router.push("/gamesIndex");
 	  },
 	
 	  goToUsersIndex: function () {
-	    this.closeMenu();
+	    this.clearDropdowns();
 	    this.context.router.push("/users");
+	  },
+	
+	  clearDropdowns: function () {
+	    $(".dropdownUsers").addClass("hidden");
+	    $(".dropdownGames").addClass("hidden");
+	    $('.user-links-dropdown').addClass("hidden");
 	  },
 	
 	  handleLogout: function () {
@@ -21714,40 +21721,32 @@
 	    ApiUtil.logout();
 	  },
 	
-	  openMenu: function () {
-	    $(".dropdownUsers").removeClass("hidden");
-	    $(".dropdownGames").removeClass("hidden");
+	  openMenu: function (e) {
+	    if (e.currentTarget.className === "browse") {
+	      $(".dropdownUsers").removeClass("hidden");
+	      $(".dropdownGames").removeClass("hidden");
+	    } else if (e.currentTarget.className === "user-links") {
+	      $(".user-links-dropdown").removeClass("hidden");
+	    }
 	  },
 	
-	  closeMenu: function () {
-	    $(".dropdownUsers").addClass("hidden");
-	    $(".dropdownGames").addClass("hidden");
+	  closeMenu: function (e) {
+	    if (e.currentTarget.className === "browse") {
+	      $(".dropdownUsers").addClass("hidden");
+	      $(".dropdownGames").addClass("hidden");
+	    } else if (e.currentTarget.className === "user-links") {
+	      $('.user-links-dropdown').addClass("hidden");
+	    }
 	  },
 	
 	  render: function () {
-	    var home, logoutButton, welcomeMessage, homepage, signUpButton, browse, community, searchBar;
+	    var home, welcomeMessage, browse, userNavigation, searchBar;
 	
 	    if (this.state.currentUser) {
 	      home = React.createElement(
 	        'li',
 	        { onClick: this.goToIndex },
 	        'Home'
-	      );
-	      logoutButton = React.createElement(
-	        'li',
-	        { onClick: this.handleLogout },
-	        'Logout'
-	      );
-	      welcomeMessage = React.createElement(
-	        'h2',
-	        null,
-	        'Welcome, ',
-	        this.state.currentUser.username
-	      );
-	      homepage = React.createElement(
-	        'li',
-	        { onClick: this.goToCurrentUserHomePage },
-	        'My Stats'
 	      );
 	      browse = React.createElement(
 	        'li',
@@ -21769,11 +21768,32 @@
 	        )
 	      );
 	      searchBar = React.createElement(Search, null);
+	      userNavigation = React.createElement(
+	        'li',
+	        { className: 'user-links', onMouseLeave: this.closeMenu, onMouseEnter: this.openMenu },
+	        this.state.currentUser.username,
+	        React.createElement(
+	          'ul',
+	          { className: 'user-links-dropdown hidden' },
+	          React.createElement(
+	            'li',
+	            { onClick: this.goToCurrentUserHomePage },
+	            'My Stats'
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            'Edit Profile'
+	          ),
+	          React.createElement(
+	            'li',
+	            { onClick: this.handleLogout },
+	            'Logout'
+	          )
+	        )
+	      );
 	    }
 	
-	    if (this.state.errors) {
-	      errors = this.state.errors;
-	    }
 	    return React.createElement(
 	      'div',
 	      null,
@@ -21804,7 +21824,6 @@
 	              'ul',
 	              { className: 'navigation-links' },
 	              home,
-	              homepage,
 	              browse,
 	              searchBar
 	            )
@@ -21815,8 +21834,12 @@
 	            React.createElement(
 	              'ul',
 	              { className: 'session-links' },
-	              welcomeMessage,
-	              logoutButton
+	              React.createElement(
+	                'li',
+	                null,
+	                'Welcome'
+	              ),
+	              userNavigation
 	            )
 	          )
 	        )
