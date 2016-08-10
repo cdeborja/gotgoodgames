@@ -21742,7 +21742,7 @@
 	    if (this.state.currentUser) {
 	      home = React.createElement(
 	        'li',
-	        { onClick: this.goToIndex },
+	        { className: 'home', onClick: this.goToIndex },
 	        'Home'
 	      );
 	      browse = React.createElement(
@@ -21752,6 +21752,7 @@
 	        React.createElement(
 	          'ul',
 	          { className: 'browse-links-dropdown hidden' },
+	          React.createElement('div', { className: 'arrow-up' }),
 	          React.createElement(
 	            'li',
 	            { onClick: this.goToUsersIndex },
@@ -21772,6 +21773,7 @@
 	        React.createElement(
 	          'ul',
 	          { className: 'user-links-dropdown hidden' },
+	          React.createElement('div', { className: 'arrow-up' }),
 	          React.createElement(
 	            'li',
 	            { onClick: this.goToCurrentUserHomePage },
