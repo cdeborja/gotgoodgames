@@ -60,8 +60,7 @@ module.exports = React.createClass({
   },
 
   clearDropdowns: function () {
-    $(".dropdownUsers").addClass("hidden");
-    $(".dropdownGames").addClass("hidden");
+    $(".browse-links-dropdown").addClass("hidden");
     $('.user-links-dropdown').addClass("hidden");
   },
 
@@ -72,18 +71,16 @@ module.exports = React.createClass({
   },
 
   openMenu: function (e) {
-    if (e.currentTarget.className === "browse") {
-      $(".dropdownUsers").removeClass("hidden");
-      $(".dropdownGames").removeClass("hidden");
+    if (e.currentTarget.className === "browse-links") {
+      $(".browse-links-dropdown").removeClass("hidden");
     } else if (e.currentTarget.className === "user-links") {
       $(".user-links-dropdown").removeClass("hidden");
     }
   },
 
   closeMenu: function (e) {
-    if (e.currentTarget.className === "browse") {
-      $(".dropdownUsers").addClass("hidden");
-      $(".dropdownGames").addClass("hidden");
+    if (e.currentTarget.className === "browse-links") {
+      $(".browse-links-dropdown").addClass("hidden");
     } else if (e.currentTarget.className === "user-links") {
       $('.user-links-dropdown').addClass("hidden");
     }
@@ -95,11 +92,11 @@ module.exports = React.createClass({
 
     if (this.state.currentUser) {
       home = <li onClick={this.goToIndex}>Home</li>;
-      browse = (<li className="browse" onMouseLeave={this.closeMenu} onMouseEnter={this.openMenu}>
+      browse = (<li className="browse-links" onMouseLeave={this.closeMenu} onMouseEnter={this.openMenu}>
                   Browse...
-                  <ul>
-                    <li onClick={this.goToUsersIndex} className="dropdownUsers hidden">Users</li>
-                    <li onClick={this.goToGamesIndex} className="dropdownGames hidden">Games</li>
+                  <ul className="browse-links-dropdown hidden">
+                    <li onClick={this.goToUsersIndex}>Users</li>
+                    <li onClick={this.goToGamesIndex}>Games</li>
                   </ul>
                 </li>);
       searchBar = <Search />;

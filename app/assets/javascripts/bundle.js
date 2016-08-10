@@ -21710,8 +21710,7 @@
 	  },
 	
 	  clearDropdowns: function () {
-	    $(".dropdownUsers").addClass("hidden");
-	    $(".dropdownGames").addClass("hidden");
+	    $(".browse-links-dropdown").addClass("hidden");
 	    $('.user-links-dropdown').addClass("hidden");
 	  },
 	
@@ -21722,18 +21721,16 @@
 	  },
 	
 	  openMenu: function (e) {
-	    if (e.currentTarget.className === "browse") {
-	      $(".dropdownUsers").removeClass("hidden");
-	      $(".dropdownGames").removeClass("hidden");
+	    if (e.currentTarget.className === "browse-links") {
+	      $(".browse-links-dropdown").removeClass("hidden");
 	    } else if (e.currentTarget.className === "user-links") {
 	      $(".user-links-dropdown").removeClass("hidden");
 	    }
 	  },
 	
 	  closeMenu: function (e) {
-	    if (e.currentTarget.className === "browse") {
-	      $(".dropdownUsers").addClass("hidden");
-	      $(".dropdownGames").addClass("hidden");
+	    if (e.currentTarget.className === "browse-links") {
+	      $(".browse-links-dropdown").addClass("hidden");
 	    } else if (e.currentTarget.className === "user-links") {
 	      $('.user-links-dropdown').addClass("hidden");
 	    }
@@ -21750,19 +21747,19 @@
 	      );
 	      browse = React.createElement(
 	        'li',
-	        { className: 'browse', onMouseLeave: this.closeMenu, onMouseEnter: this.openMenu },
+	        { className: 'browse-links', onMouseLeave: this.closeMenu, onMouseEnter: this.openMenu },
 	        'Browse...',
 	        React.createElement(
 	          'ul',
-	          null,
+	          { className: 'browse-links-dropdown hidden' },
 	          React.createElement(
 	            'li',
-	            { onClick: this.goToUsersIndex, className: 'dropdownUsers hidden' },
+	            { onClick: this.goToUsersIndex },
 	            'Users'
 	          ),
 	          React.createElement(
 	            'li',
-	            { onClick: this.goToGamesIndex, className: 'dropdownGames hidden' },
+	            { onClick: this.goToGamesIndex },
 	            'Games'
 	          )
 	        )
