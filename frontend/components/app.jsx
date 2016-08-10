@@ -85,7 +85,7 @@ module.exports = React.createClass({
 
 
   render: function () {
-    var home, welcomeMessage, browse, userNavigation, searchBar;
+    var home, welcome, browse, userNavigation, searchBar;
 
     if (this.state.currentUser) {
       welcome = <li>Welcome</li>;
