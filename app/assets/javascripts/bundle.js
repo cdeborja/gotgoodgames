@@ -21749,7 +21749,7 @@
 	      );
 	      browse = React.createElement(
 	        'li',
-	        { className: 'browse-links', onMouseLeave: this.closeMenu, onMouseEnter: this.openMenu },
+	        { className: 'browse-links', onMouseOut: this.closeMenu, onMouseOver: this.openMenu },
 	        'Browse...',
 	        React.createElement(
 	          'ul',

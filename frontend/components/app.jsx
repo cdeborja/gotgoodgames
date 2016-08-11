@@ -90,7 +90,7 @@ module.exports = React.createClass({
     if (this.state.currentUser) {
       welcome = <li>Welcome</li>;
       home = <li className="home" onClick={this.goToIndex}>Home</li>;
-      browse = (<li className="browse-links" onMouseLeave={this.closeMenu} onMouseEnter={this.openMenu}>
+      browse = (<li className="browse-links" onMouseOut={this.closeMenu} onMouseOver={this.openMenu}>
                   Browse...
                   <ul className="browse-links-dropdown hidden">
                     <div className="arrow-up"></div>
