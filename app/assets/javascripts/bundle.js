@@ -21749,7 +21749,7 @@
 	      );
 	      browse = React.createElement(
 	        'li',
-	        { className: 'browse-links', onMouseOut: this.closeMenu, onMouseOver: this.openMenu },
+	        { className: 'browse-links', onMouseLeave: this.closeMenu, onMouseEnter: this.openMenu },
 	        'Browse...',
 	        React.createElement(
 	          'ul',
@@ -31454,6 +31454,24 @@
 	    this.context.router.push('/games/' + e.target.id);
 	  },
 	
+	  // showRating: function (e) {
+	  //   id = parseInt(e.currentTarget.id) - 1
+	  //   $(".rating").removeClass( function(index) {
+	  //     if (index === id) {
+	  //       return "hidden"
+	  //     }
+	  //   });
+	  // },
+	  //
+	  // hideRating: function (e) {
+	  //   id = parseInt(e.currentTarget.id) - 1
+	  //   $(".rating").addClass( function(index) {
+	  //     if (index === id) {
+	  //       return "hidden"
+	  //     }
+	  //   });
+	  // },
+	
 	  render: function () {
 	    if (this.props.games.length === 0) return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	
@@ -31464,20 +31482,32 @@
 	      slidesToShow: 5,
 	      slidesToScroll: 5,
 	      draggable: false,
-	      lazyLoad: true,
-	      autoplay: true,
-	      pauseOnHover: true,
-	      autoplaySpeed: 8000
+	      lazyLoad: true
+	      // autoplay: true,
+	      // pauseOnHover: true,
+	      // autoplaySpeed: 8000
 	    };
 	
 	    games = this.props.games.map(function (game, idx) {
+	      var rating = game.averageRating.toFixed(2);
+	      // debugger;
+	      // onMouseEnter={this.showRating} onMouseLeave={this.hideRating}
 	      return React.createElement(
 	        'div',
 	        { key: idx },
 	        React.createElement(
 	          'ul',
 	          { className: 'game-preview' },
-	          React.createElement('img', { className: 'blue slide-cover', onClick: this.showDetail, id: game.id, src: game.image_url }),
+	          React.createElement(
+	            'li',
+	            { className: 'test' },
+	            React.createElement(
+	              'div',
+	              { className: 'rating' },
+	              rating
+	            ),
+	            React.createElement('img', { className: 'slide-cover', onClick: this.showDetail, id: game.id, src: game.image_url })
+	          ),
 	          React.createElement(
 	            'li',
 	            null,

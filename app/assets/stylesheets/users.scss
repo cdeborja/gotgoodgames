@@ -303,10 +303,13 @@
 
 .slide-cover {
   object-fit: cover;
+  margin: auto;
   width: 150px;
   height: 150px;
   border-radius: 50%;
   border: 1px solid #AAAAAA;
+  opacity: 1.0;
+  filter: alpha(opacity=100);
   -webkit-transition: all 0.20s ease-in-out;
   -moz-transition: all 0.20s ease-in-out;
   -ms-transition: all 0.20s ease-in-out;
@@ -314,6 +317,8 @@
 }
 
 .slide-cover:hover {
+  opacity: 0.3;
+  filter: alpha(opacity=30);
   cursor: pointer;
   border-radius: 5px;
   box-shadow: 0px 0px 18px 3px #53b9ea;

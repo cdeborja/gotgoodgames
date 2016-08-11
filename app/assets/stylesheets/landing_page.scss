@@ -108,30 +108,46 @@
 .game-preview {
   position: relative;
   color: #000000;
-  // border: 1px solid yellow;
-  // display: block;
 }
 
-.game-preview > img {
-  margin: 10px 0;
-  margin-left: 20px;
-  cursor: pointer;
-  -webkit-transition: all 0.20s ease-in-out;
-  -moz-transition: all 0.20s ease-in-out;
-  -ms-transition: all 0.20s ease-in-out;
-  -o-transition: all 0.20s ease-in-out;
-  border-radius: 50%;
-}
+// .game-preview > img {
+//   margin: 10px 0;
+//   margin-left: 20px;
+//   cursor: pointer;
+//   -webkit-transition: all 0.20s ease-in-out;
+//   -moz-transition: all 0.20s ease-in-out;
+//   -ms-transition: all 0.20s ease-in-out;
+//   -o-transition: all 0.20s ease-in-out;
+//   border-radius: 50%;
+// }
 
 .game-preview > li {
   text-align: center;
 }
 
-// need to implement on hover display of information
-.game-preview > div {
-  display: none;
-  width: 200px;
-  height: 200px;
+.test {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 10px auto;
+  font-size: 40px;
+  position: relative;
+}
+
+.test > div {
+  opacity: 1.0;
+  filter: alpha(opacity=100);
   position: absolute;
-  // border: 1px solid pink;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  display: none;
+}
+
+.rating {
+  display: none;
+}
+
+.test:hover .rating {
+  display: block;
 }
