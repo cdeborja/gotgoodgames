@@ -9,25 +9,7 @@ var GameDatabaseSlider = React.createClass({
   showDetail: function (e) {
     this.context.router.push('/games/' + e.target.id);
   },
-
-  // showRating: function (e) {
-  //   id = parseInt(e.currentTarget.id) - 1
-  //   $(".rating").removeClass( function(index) {
-  //     if (index === id) {
-  //       return "hidden"
-  //     }
-  //   });
-  // },
-  //
-  // hideRating: function (e) {
-  //   id = parseInt(e.currentTarget.id) - 1
-  //   $(".rating").addClass( function(index) {
-  //     if (index === id) {
-  //       return "hidden"
-  //     }
-  //   });
-  // },
-
+  
   render: function () {
     if (this.props.games.length === 0) return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);
 
@@ -46,8 +28,7 @@ var GameDatabaseSlider = React.createClass({
 
     games = this.props.games.map(function (game, idx) {
       var rating = game.averageRating.toFixed(2);
-      // debugger;
-      // onMouseEnter={this.showRating} onMouseLeave={this.hideRating}
+
       return (
         <div key={idx}>
           <ul className="game-preview">
