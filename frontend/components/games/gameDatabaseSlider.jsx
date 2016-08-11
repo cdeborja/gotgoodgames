@@ -30,7 +30,7 @@ var GameDatabaseSlider = React.createClass({
       return (
         <div key={idx}>
           <ul className="game-preview">
-            <img className="blue" onClick={this.showDetail} id={game.id} src={game.image_url}/>
+            <img className="blue slide-cover" onClick={this.showDetail} id={game.id} src={game.image_url}/>
             <li>{game.title}</li>
             <li>{game.console}</li>
           </ul>

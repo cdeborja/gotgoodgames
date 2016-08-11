@@ -31477,7 +31477,7 @@
 	        React.createElement(
 	          'ul',
 	          { className: 'game-preview' },
-	          React.createElement('img', { className: 'blue', onClick: this.showDetail, id: game.id, src: game.image_url }),
+	          React.createElement('img', { className: 'blue slide-cover', onClick: this.showDetail, id: game.id, src: game.image_url }),
 	          React.createElement(
 	            'li',
 	            null,

@@ -121,7 +121,7 @@
   -moz-transition: all 0.20s ease-in-out;
   -ms-transition: all 0.20s ease-in-out;
   -o-transition: all 0.20s ease-in-out;
-  border-radius: 5px;
+  border-radius: 50%;
 }
 
 .game-preview > li {
@@ -135,9 +135,4 @@
   height: 200px;
   position: absolute;
   // border: 1px solid pink;
-}
-
-
-.blue:hover {
-  box-shadow: 0px 0px 18px 3px #53b9ea;
 }
