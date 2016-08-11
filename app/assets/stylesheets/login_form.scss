@@ -29,16 +29,6 @@
   padding: 0 145px;
 }
 
-.create-new-user-button {
-  display: flex;
-  font-size: 14px;
-  padding: 5px 10px;
-  text-align: center;
-  border: 1px solid #AAAAAA;
-  margin: 10px 0;
-  border-radius: 5px;
-  transition: background-color 400ms, color 400ms;
-}
 
 .facebook {
   color: #FFFFFF;
@@ -111,14 +101,24 @@
   font-size: 14px;
 }
 
-.sign-in-button {
+.sign-in-button, .create-new-user-button {
   display: block;
   padding: 5px 10px;
   width: 100px;
   text-align: center;
-  border: 1px solid #AAAAAA;
+  background: #53b9ea;
+  border-radius: 5px;
+  color: #FFFFFF;
+  transition: background-color 400ms, color 400ms;
+}
+
+.create-new-user-button {
+  text-align: center;
+  font-size: 14px;
+  margin: 10px 0;
   border-radius: 5px;
   transition: background-color 400ms, color 400ms;
+  width: 150px;
 }
 
 .sign-in-button:hover, .create-new-user-button:hover {
