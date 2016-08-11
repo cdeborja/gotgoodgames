@@ -84,6 +84,7 @@ img {
 }
 
 .logo-box {
+  font-family: sans-serif;
   float: left;
   padding: 10px 10px 10px 0;
 }
@@ -654,7 +655,7 @@ img {
   width: 100%;
   max-width: 680px;
   min-width: 200px;
-  border: 1px solid #AAAAAA;
+  /*border: 1px solid #AAAAAA;*/
   border-radius: 5px;
   background: #FFFFFF;
   color: #000000;
@@ -681,6 +682,10 @@ img {
   cursor: pointer;
   background: #53b9ea;
   color: #000000;
+}
+
+.author-navigation > li:last-child:hover {
+  border-radius: 0 5px 5px 0;
 }
 
 .timestamp {

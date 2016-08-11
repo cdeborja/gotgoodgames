@@ -238,6 +238,10 @@
   padding: 5px;
 }
 
+.top-user:first-child, .top-game:first-child {
+  border-top: none;
+}
+
 .top-user-info, .top-game-info {
   width: 81%;
   position: relative;
