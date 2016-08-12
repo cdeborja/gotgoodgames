@@ -2,7 +2,7 @@ var React = require('react');
 var ErrorStore = require('../stores/error');
 var ApiUtil = require('../util/apiUtil');
 
-var LoginForm = React.createClass({
+var SignInForm = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
@@ -60,7 +60,7 @@ var LoginForm = React.createClass({
 
     return (
       <div className="sign-in-box group">
-        <h1>Please Sign In</h1>
+        <h1>Sign In</h1>
         <div className="login-error hidden">Incorrect username/password combination</div>
 
         <form className="input-box">
@@ -82,9 +82,10 @@ var LoginForm = React.createClass({
 
         </form>
         <div className="oauth-box group">
-          <ul>
-            <li className="facebook"><div>f</div><a href="/auth/facebook">Login with Facebook</a></li>
-            <li className="twitch"><div>t</div><a href="/auth/twitch">Login with Twitch</a></li>
+          <h2> Sign in with </h2>
+          <ul className="oauth-box-buttons">
+            <li><a href="/auth/facebook"><i className="fa fa-facebook-square fa-3x facebook" aria-hidden="true"></i></a></li>
+            <li><a href="/auth/twitch"><i className="fa fa-twitch fa-3x twitch" aria-hidden="true"></i></a></li>
           </ul>
         </div>
       </div>
@@ -93,4 +94,4 @@ var LoginForm = React.createClass({
 
 });
 
-module.exports = LoginForm;
+module.exports = SignInForm;

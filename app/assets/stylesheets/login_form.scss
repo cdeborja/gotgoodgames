@@ -32,65 +32,38 @@
   padding: 0 145px;
 }
 
+.oauth-box > h2 {
+  margin-top: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.oauth-box-buttons {
+  width: 100px;
+  margin: 10px auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.oauth-box-buttons > li {
+  float: left;
+}
 
 .facebook {
-  color: #FFFFFF;
-  margin-top: 20px;
-  position: relative;
+  color: #CCCCCC;
 }
 
-.facebook > a {
-  display: block;
-  margin: 10px;
-  padding: 10px 0;
-  background: #3c5a99;
-  border: 1px solid #AAAAAA;
-  border-radius: 5px;
-  text-align: center;
-  transition: background-color 500ms, color 500ms;
-}
-
-.facebook > div {
-  position: absolute;
-  display: block;
-  font-size: 35px;
-  margin-left: 30px;
-  padding-right: 15px;
-  border-right: 1px solid #FFFFFF;
-}
-
-.facebook > a:hover {
-  background: #4b76d0;
+.facebook:hover {
+  color: #3c5a99;
 }
 
 .twitch {
-  margin-top: 20px;
-  position: relative;
-  color: #FFFFFF;
+  color: #CCCCCC;
 }
 
-.twitch > a {
-  display: block;
-  margin: 10px;
-  padding: 10px 0;
-  background: #6441a4;
-  border: 1px solid #AAAAAA;
-  border-radius: 5px;
-  text-align: center;
-  transition: background-color 500ms, color 500ms;
-}
-
-.twitch > div {
-  position: absolute;
-  display: block;
-  font-size: 35px;
-  margin-left: 30px;
-  padding-right: 15px;
-  border-right: 1px solid #FFFFFF;
-}
-
-.twitch > a:hover {
-  background: #8d5aea;
+.twitch:hover {
+  color: #6441a4;
 }
 
 .button-box {

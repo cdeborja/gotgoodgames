@@ -63,7 +63,7 @@
 	var UserShowPage = __webpack_require__(316);
 	var UsersIndex = __webpack_require__(317);
 	var EditForm = __webpack_require__(318);
-	var LoginForm = __webpack_require__(319);
+	var SignInForm = __webpack_require__(326);
 	var SignUpForm = __webpack_require__(321);
 	var Search = __webpack_require__(242);
 	var EditUserForm = __webpack_require__(314);
@@ -83,7 +83,7 @@
 	  React.createElement(Route, { path: 'reviews/:reviewId', component: EditForm, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'users', component: UsersIndex, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'users/:userId', component: UserShowPage, onEnter: _requireLoggedIn }),
-	  React.createElement(Route, { path: 'login', component: LoginForm }),
+	  React.createElement(Route, { path: 'login', component: SignInForm }),
 	  React.createElement(Route, { path: 'signup', component: SignUpForm }),
 	  React.createElement(Route, { path: 'search', component: Search, onEnter: _requireLoggedIn })
 	);
@@ -38696,163 +38696,7 @@
 	module.exports = ReviewForm;
 
 /***/ },
-/* 319 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var ErrorStore = __webpack_require__(320);
-	var ApiUtil = __webpack_require__(181);
-	
-	var LoginForm = React.createClass({
-	  displayName: 'LoginForm',
-	
-	  contextTypes: {
-	    router: React.PropTypes.object.isRequired
-	  },
-	
-	  getInitialState: function () {
-	    return {
-	      username: "",
-	      password: ""
-	    };
-	  },
-	
-	  handleSubmit: function (e) {
-	    e.preventDefault();
-	    var router = this.context.router;
-	    ApiUtil.login(this.state, function () {
-	      router.push("/landingPage");
-	    });
-	  },
-	
-	  updateUsername: function (e) {
-	    this.setState({ username: e.currentTarget.value });
-	  },
-	
-	  updatePassword: function (e) {
-	    this.setState({ password: e.currentTarget.value });
-	  },
-	
-	  guestLogin: function (e) {
-	    e.preventDefault();
-	    var guestParams = {
-	      username: "guest",
-	      password: "password"
-	    };
-	    var router = this.context.router;
-	
-	    ApiUtil.login(guestParams, function () {
-	      router.push("/landingPage");
-	    });
-	  },
-	
-	  goToSignUpForm: function (e) {
-	    e.preventDefault();
-	    this.context.router.push("/signup");
-	  },
-	
-	  render: function () {
-	
-	    if (!this.state.currentUser) {
-	      signUpButton = React.createElement(
-	        'button',
-	        { className: 'sign-in-button', onClick: this.goToSignUpForm },
-	        'Sign Up'
-	      );
-	    }
-	
-	    var guestButton = React.createElement(
-	      'button',
-	      { className: 'sign-in-button', onClick: this.guestLogin },
-	      'Guest Login'
-	    );
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'sign-in-box group' },
-	      React.createElement(
-	        'h1',
-	        null,
-	        'Please Sign In'
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'login-error hidden' },
-	        'Incorrect username/password combination'
-	      ),
-	      React.createElement(
-	        'form',
-	        { className: 'input-box' },
-	        React.createElement('input', { className: 'input-field-login', onChange: this.updateUsername,
-	          type: 'text', value: this.state.username }),
-	        React.createElement(
-	          'label',
-	          { className: 'input-text', htmlFor: 'username' },
-	          'Username'
-	        ),
-	        React.createElement('input', { className: 'input-field-login', onChange: this.updatePassword,
-	          type: 'password', value: this.state.password }),
-	        React.createElement(
-	          'label',
-	          { className: 'input-text', htmlFor: 'password' },
-	          'Password'
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'button-box group' },
-	          React.createElement(
-	            'button',
-	            { onClick: this.handleSubmit, className: 'sign-in-button' },
-	            'Sign In'
-	          ),
-	          signUpButton,
-	          guestButton
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'oauth-box group' },
-	        React.createElement(
-	          'ul',
-	          null,
-	          React.createElement(
-	            'li',
-	            { className: 'facebook' },
-	            React.createElement(
-	              'div',
-	              null,
-	              'f'
-	            ),
-	            React.createElement(
-	              'a',
-	              { href: '/auth/facebook' },
-	              'Login with Facebook'
-	            )
-	          ),
-	          React.createElement(
-	            'li',
-	            { className: 'twitch' },
-	            React.createElement(
-	              'div',
-	              null,
-	              't'
-	            ),
-	            React.createElement(
-	              'a',
-	              { href: '/auth/twitch' },
-	              'Login with Twitch'
-	            )
-	          )
-	        )
-	      )
-	    );
-	  }
-	
-	});
-	
-	module.exports = LoginForm;
-
-/***/ },
+/* 319 */,
 /* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -39248,6 +39092,158 @@
 	};
 	
 	module.exports = ReactStateSetters;
+
+/***/ },
+/* 326 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ErrorStore = __webpack_require__(320);
+	var ApiUtil = __webpack_require__(181);
+	
+	var SignInForm = React.createClass({
+	  displayName: 'SignInForm',
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  getInitialState: function () {
+	    return {
+	      username: "",
+	      password: ""
+	    };
+	  },
+	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	    var router = this.context.router;
+	    ApiUtil.login(this.state, function () {
+	      router.push("/landingPage");
+	    });
+	  },
+	
+	  updateUsername: function (e) {
+	    this.setState({ username: e.currentTarget.value });
+	  },
+	
+	  updatePassword: function (e) {
+	    this.setState({ password: e.currentTarget.value });
+	  },
+	
+	  guestLogin: function (e) {
+	    e.preventDefault();
+	    var guestParams = {
+	      username: "guest",
+	      password: "password"
+	    };
+	    var router = this.context.router;
+	
+	    ApiUtil.login(guestParams, function () {
+	      router.push("/landingPage");
+	    });
+	  },
+	
+	  goToSignUpForm: function (e) {
+	    e.preventDefault();
+	    this.context.router.push("/signup");
+	  },
+	
+	  render: function () {
+	
+	    if (!this.state.currentUser) {
+	      signUpButton = React.createElement(
+	        'button',
+	        { className: 'sign-in-button', onClick: this.goToSignUpForm },
+	        'Sign Up'
+	      );
+	    }
+	
+	    var guestButton = React.createElement(
+	      'button',
+	      { className: 'sign-in-button', onClick: this.guestLogin },
+	      'Guest Login'
+	    );
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'sign-in-box group' },
+	      React.createElement(
+	        'h1',
+	        null,
+	        'Sign In'
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'login-error hidden' },
+	        'Incorrect username/password combination'
+	      ),
+	      React.createElement(
+	        'form',
+	        { className: 'input-box' },
+	        React.createElement('input', { className: 'input-field-login', onChange: this.updateUsername,
+	          type: 'text', value: this.state.username }),
+	        React.createElement(
+	          'label',
+	          { className: 'input-text', htmlFor: 'username' },
+	          'Username'
+	        ),
+	        React.createElement('input', { className: 'input-field-login', onChange: this.updatePassword,
+	          type: 'password', value: this.state.password }),
+	        React.createElement(
+	          'label',
+	          { className: 'input-text', htmlFor: 'password' },
+	          'Password'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'button-box group' },
+	          React.createElement(
+	            'button',
+	            { onClick: this.handleSubmit, className: 'sign-in-button' },
+	            'Sign In'
+	          ),
+	          signUpButton,
+	          guestButton
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'oauth-box group' },
+	        React.createElement(
+	          'h2',
+	          null,
+	          ' Sign in with '
+	        ),
+	        React.createElement(
+	          'ul',
+	          { className: 'oauth-box-buttons' },
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'a',
+	              { href: '/auth/facebook' },
+	              React.createElement('i', { className: 'fa fa-facebook-square fa-3x facebook', 'aria-hidden': 'true' })
+	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'a',
+	              { href: '/auth/twitch' },
+	              React.createElement('i', { className: 'fa fa-twitch fa-3x twitch', 'aria-hidden': 'true' })
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = SignInForm;
 
 /***/ }
 /******/ ]);

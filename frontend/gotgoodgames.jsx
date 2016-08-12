@@ -17,7 +17,7 @@ var UserHomePage = require('./components/users/homepage');
 var UserShowPage = require('./components/users/showpage');
 var UsersIndex = require('./components/users/usersIndex');
 var EditForm = require('./components/reviews/editForm');
-var LoginForm = require('./components/loginForm');
+var SignInForm = require('./components/signInForm');
 var SignUpForm = require('./components/signUpForm');
 var Search = require("./components/search");
 var EditUserForm = require('./components/users/editUserForm');
@@ -36,7 +36,7 @@ var routes = (
     <Route path="reviews/:reviewId" component={EditForm} onEnter={_requireLoggedIn} />
     <Route path="users" component={UsersIndex} onEnter={_requireLoggedIn} />
     <Route path="users/:userId" component={UserShowPage} onEnter={_requireLoggedIn} />
-    <Route path="login" component={LoginForm} />
+    <Route path="login" component={SignInForm} />
     <Route path="signup" component={SignUpForm} />
     <Route path="search" component={Search} onEnter={_requireLoggedIn}/>
   </Route>
