@@ -31464,10 +31464,10 @@
 	      slidesToShow: 5,
 	      slidesToScroll: 5,
 	      draggable: false,
-	      lazyLoad: true
-	      // autoplay: true,
-	      // pauseOnHover: true,
-	      // autoplaySpeed: 8000
+	      lazyLoad: true,
+	      autoplay: true,
+	      pauseOnHover: true,
+	      autoplaySpeed: 6000
 	    };
 	
 	    games = this.props.games.map(function (game, idx) {
