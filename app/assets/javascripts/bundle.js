@@ -31724,15 +31724,15 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'top-rated-games-container group' },
+	      { className: 'top-scored-games-container group' },
 	      React.createElement(
 	        'h2',
 	        null,
-	        'Top Rated Games'
+	        'Top Scored Games'
 	      ),
 	      React.createElement(
 	        'ul',
-	        { className: 'top-rated-games' },
+	        { className: 'top-scored-games' },
 	        topFiveRender
 	      )
 	    );
@@ -31815,7 +31815,7 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'top-rated-games-container group' },
+	      { className: 'top-scored-games-container group' },
 	      React.createElement(
 	        'h2',
 	        null,
@@ -31823,7 +31823,7 @@
 	      ),
 	      React.createElement(
 	        'ul',
-	        { className: 'top-rated-games' },
+	        { className: 'top-scored-games' },
 	        topFiveRender
 	      )
 	    );

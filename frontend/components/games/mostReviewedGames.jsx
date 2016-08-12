@@ -51,9 +51,9 @@ var MostReviewedGames = React.createClass({
     });
 
     return (
-      <div className="top-rated-games-container group">
+      <div className="top-scored-games-container group">
         <h2>Most Reviewed Games</h2>
-        <ul className="top-rated-games">
+        <ul className="top-scored-games">
           {topFiveRender}
         </ul>
       </div>

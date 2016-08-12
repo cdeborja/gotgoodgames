@@ -50,9 +50,9 @@ var TopList = React.createClass({
     });
 
     return (
-      <div className="top-rated-games-container group">
-        <h2>Top Rated Games</h2>
-        <ul className="top-rated-games">
+      <div className="top-scored-games-container group">
+        <h2>Top Scored Games</h2>
+        <ul className="top-scored-games">
           {topFiveRender}
         </ul>
       </div>

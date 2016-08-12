@@ -73,7 +73,6 @@ img {
 
 .header {
   background: #115D82;
-  border-bottom: 1px solid #AAAAAA;
 }
 
 .navigation-bar {
@@ -160,8 +159,7 @@ img {
   margin-top: 12px;
   margin-left: 5px;
   width: auto;
-  background: white;
-  border: 1px solid #AAAAAA;
+  background: #FFFFFF;
 }
 
 .search-box:focus {
@@ -182,8 +180,7 @@ img {
   background: #FFFFFF;
   width: 200px;
   padding: 10px;
-  border: 1px solid #AAAAAA;
-  margin-left: -1px;
+  border-top: 1px solid #AAAAAA;
   margin-top: -1px;
 }
 
@@ -579,7 +576,7 @@ img {
 .browse-links-dropdown > li {
   padding: 10px 10px;
   background: #FFFFFF;
-  border: 1px solid #AAAAAA;
+  border-top: 1px solid #AAAAAA;
   text-align: center;
   width: 80px;
   margin-left: -1px;
@@ -618,7 +615,7 @@ img {
 .user-links-dropdown > li {
   padding: 10px 10px;
   background: #FFFFFF;
-  border: 1px solid #AAAAAA;
+  border-top: 1px solid #AAAAAA;
   text-align: center;
 }
 
