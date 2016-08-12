@@ -82,7 +82,7 @@ module.exports = {
         UserActions.usersReceived(users);
       },
       error: function () {
-        console.log("couldnt get user");
+        console.log("Couldn't get all users");
       }
     });
   },

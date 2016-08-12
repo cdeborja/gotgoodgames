@@ -22096,7 +22096,7 @@
 	        UserActions.usersReceived(users);
 	      },
 	      error: function () {
-	        console.log("couldnt get user");
+	        console.log("Couldn't get all users");
 	      }
 	    });
 	  },
@@ -38530,6 +38530,7 @@
 	    if (this.state.users.length === 0) {
 	      return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	    }
+	
 	    var that = this;
 	    var usersIndex = this.state.users.map(function (user) {
 	      return React.createElement(
@@ -38540,6 +38541,13 @@
 	          'p',
 	          null,
 	          user.username
+	        ),
+	        React.createElement(
+	          'p',
+	          null,
+	          'Rated ',
+	          user.reviewsCount,
+	          ' games'
 	        )
 	      );
 	    });

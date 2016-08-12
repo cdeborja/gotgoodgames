@@ -42,10 +42,14 @@ module.exports = React.createClass({
     if (this.state.users.length === 0) {
       return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);
     }
+
     var that = this;
     var usersIndex = this.state.users.map(function (user) {
       return (<li className="boxed-item" key={user.id} id={user.id} onClick={that.goToUserShowpage}>
-        <img className="index-img" src={user.picture}/><p>{user.username}</p></li>);
+                <img className="index-img" src={user.picture}/>
+                <p>{user.username}</p>
+                <p>Rated {user.reviewsCount} games</p>
+              </li>);
     });
 
     return(

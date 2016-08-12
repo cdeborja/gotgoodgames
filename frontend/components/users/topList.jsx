@@ -59,7 +59,7 @@ var TopList = React.createClass({
 
     var sortedByReviews = this.props.users.sort(compare);
     var topFive = sortedByReviews.map( function (user, id) {
-
+      
       var times = user.reviewsCount.toString();
       var recentTime = timeParse(user.recentActivity);
       return (

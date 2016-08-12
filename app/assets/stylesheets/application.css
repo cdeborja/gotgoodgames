@@ -525,30 +525,37 @@ img {
   position: relative;
   float: left;
   margin: 10px 20px;
-  border: 1px solid #AAAAAA;
   -webkit-transition: all 0.20s ease-in-out;
   -moz-transition: all 0.20s ease-in-out;
   -ms-transition: all 0.20s ease-in-out;
   -o-transition: all 0.20s ease-in-out;
-  border-radius: 5px;
+  border-radius: 50%;
 }
 
 .boxed-item:hover {
   cursor: pointer;
-  box-shadow: 0px 0px 30px rgba(81, 203, 238, 1);
 }
 
 .boxed-item > p {
+  text-align: center;
   position: absolute;
   background: #53b9ea;
   color: #FFFFFF;
   padding: 5px 10px;
-  letter-spacing: 3px;
-  font-size: 12px;
   top: 0;
   left: 0;
   font-weight: bold;
-  border-radius:  4px 0 5px 0;
+  top: 35%;
+  left: 50%;
+  font-size: 24px;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.boxed-item > p:last-child {
+  top: auto;
+  bottom: 30%;
+  font-size: 14px;
+  width: 150px;
 }
 
 .browse-links {
