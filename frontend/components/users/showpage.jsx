@@ -54,9 +54,7 @@ module.exports = React.createClass({
     <div className="content-container group">
       <div className="user-information-box group">
         <div className="user-information">
-          <div className="user-picture">
-            <img src={this.state.user.picture} />
-          </div>
+          <img className="user-showpage-img" src={this.state.user.picture} />
           <ul className="stat-box">
             <h3>"Newbie"</h3>
             <li>Reviews: {this.state.reviews.length}</li>

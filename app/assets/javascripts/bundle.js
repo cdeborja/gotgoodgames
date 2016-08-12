@@ -38455,11 +38455,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'user-information' },
-	          React.createElement(
-	            'div',
-	            { className: 'user-picture' },
-	            React.createElement('img', { src: this.state.user.picture })
-	          ),
+	          React.createElement('img', { className: 'user-showpage-img', src: this.state.user.picture }),
 	          React.createElement(
 	            'ul',
 	            { className: 'stat-box' },

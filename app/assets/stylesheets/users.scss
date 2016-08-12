@@ -15,25 +15,29 @@
 }
 
 .user-information-box {
-  margin: 20px;
-  width: auto;
+  width: 100%;
+  height: auto;
   margin: 15px 15px 10px 15px;
-  border: 1px solid #AAAAAA;
-  border-radius: 5px;
-  background: #FFFFFF;
+  background: transparent;
 }
 
 .user-information {
   display: block;
   float: left;
-  padding: 5px;
+  padding: 10px;
+  background: #FFFFFF;
+  border-radius: 5px;
 }
 
 .user-description-box {
-  margin-left: 20px;
+  margin-left: 10px;
+  position: relative;
+  width: 74%;
+  height: 294px;
   display: block;
   float: left;
-  padding: 10px;
+  background: #FFFFFF;
+  border-radius: 5px;
 }
 
 .user-description-box > button {
@@ -53,20 +57,20 @@
 }
 
 .user-description-box > h1 {
+  border-radius: 4px 4px 0 0;
+  color: #FFFFFF;
+  text-align: center;
   font-size: 36px;
-  border-bottom: 1px solid #AAAAAA;
+  background: #53b9ea
 }
 
 .user-description-box > p {
   background: white;
-  margin: 10px 0;
-  height: auto;
-  min-height: 100px;
-  width: 660px;
+  margin: 10px;
+  min-height: 210px;
   padding: 10px;
-  color: black;
   border-radius: 5px;
-  line-height: 20px;
+  font-size: 24px;
   border: 1px solid #AAAAAA;
 }
 
@@ -100,9 +104,8 @@
 }
 
 .stat-box {
-  margin-left: 0px;
+  margin: 10px 0;
   padding: 5px 10px;
-  border: 1px #AAAAAA solid;
   border-radius: 5px;
   text-align: center;
 }
@@ -114,10 +117,8 @@
 }
 
 .recent-reviews-box {
-  // float: left;
   margin: 0 15px;
   width: auto;
-  border: 1px solid #AAAAAA;
   border-radius: 5px;
   background: #FFFFFF;
 }
@@ -157,20 +158,11 @@
   cursor: pointer;
 }
 
-// .game-review-image > img {
-//   display: block;
-//   float: left;
-//   width: 120px;
-//   height: auto;
-//   margin-bottom: 5px;
-// }
-
 .comment-img {
   object-fit: cover;
   width: 125px;
   height: 125px;
   border-radius: 5px;
-  border: 1px solid #AAAAAA;
   -webkit-transition: all 0.20s ease-in-out;
   -moz-transition: all 0.20s ease-in-out;
   -ms-transition: all 0.20s ease-in-out;
@@ -298,7 +290,7 @@
   box-shadow: 0px 0px 7px 2px #53b9ea;
 }
 
-.slide-cover, .index-img {
+.slide-cover, .index-img, .user-showpage-img {
   object-fit: cover;
   margin: auto;
   width: 150px;
@@ -312,9 +304,13 @@
   -o-transition: all 0.20s ease-in-out;
 }
 
-.index-img {
+.index-img, .user-showpage-img {
   width: 200px;
   height: 200px;
+}
+
+.user-showpage-img {
+  border-radius: 5px;
 }
 
 .slide-cover:hover, .index-img:hover {
