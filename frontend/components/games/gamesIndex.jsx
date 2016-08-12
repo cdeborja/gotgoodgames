@@ -44,8 +44,13 @@ module.exports = React.createClass({
     }
     var that = this;
     var gamesIndex = this.state.games.map(function (game) {
+      var rating = game.averageRating.toFixed(2);
       return (<li className="boxed-item" key={game.id} id={game.id} onClick={that.goToGame}>
-      <img className="index-img" src={game.image_url}/><p>{game.title}</p></li>);
+                <img className="index-img" src={game.image_url}/>
+                  <p className="index-name">{game.title}</p>
+                  <p className="console-name">{game.console}</p>
+                  <p className="index-score"> average score: {rating}</p>
+                </li>);
     });
 
     return(

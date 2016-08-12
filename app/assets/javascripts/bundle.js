@@ -31478,7 +31478,7 @@
 	            React.createElement(
 	              'div',
 	              { className: 'rating-text' },
-	              'average rating'
+	              'average score'
 	            ),
 	            React.createElement('img', { className: 'slide-cover', onClick: this.showDetail, id: game.id, src: game.image_url })
 	          ),
@@ -37794,14 +37794,26 @@
 	    }
 	    var that = this;
 	    var gamesIndex = this.state.games.map(function (game) {
+	      var rating = game.averageRating.toFixed(2);
 	      return React.createElement(
 	        'li',
 	        { className: 'boxed-item', key: game.id, id: game.id, onClick: that.goToGame },
 	        React.createElement('img', { className: 'index-img', src: game.image_url }),
 	        React.createElement(
 	          'p',
-	          null,
+	          { className: 'index-name' },
 	          game.title
+	        ),
+	        React.createElement(
+	          'p',
+	          { className: 'console-name' },
+	          game.console
+	        ),
+	        React.createElement(
+	          'p',
+	          { className: 'index-score' },
+	          ' average score: ',
+	          rating
 	        )
 	      );
 	    });

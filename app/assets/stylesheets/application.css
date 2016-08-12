@@ -538,7 +538,7 @@ img {
   cursor: pointer;
 }
 
-.index-name, .review-count {
+.index-name, .review-count, .console-name, .index-score {
   display: none;
   text-align: center;
   position: absolute;
@@ -558,15 +558,21 @@ img {
   -o-transition: all 0.20s ease-in-out;
 }
 
-.review-count {
+.review-count, .console-name, .index-score {
   top: auto;
   bottom: 30%;
   font-size: 14px;
   width: 150px;
 }
 
+.index-score {
+  bottom: 24%;
+}
+
 .boxed-item:hover .index-name,
-.boxed-item:hover .review-count {
+.boxed-item:hover .review-count,
+.boxed-item:hover .console-name,
+.boxed-item:hover .index-score {
   display: block;
   z-index: -1;
 }
