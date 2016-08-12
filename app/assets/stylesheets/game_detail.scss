@@ -90,13 +90,15 @@
 }
 
 .game-review-comment {
+  position: relative;
+  font-size: 16px;
   float: left;
+  width: 84%;
 }
 
 .game-review-comment > h3 {
   color: #000000;
   display: block;
-  margin-top: 5px;
   margin-left: 10px;
   font-size: 20px;
   text-decoration: underline;
@@ -112,11 +114,10 @@
   display: block;
   margin: 10px;
   padding: 5px;
-  color: black;
-  background: #fff;
+  background: #FFFFFF;
   min-height: 60px;
   height: auto;
-  width: 600px;
+  width: 100%;
   border-radius: 5px;
   border: 1px solid #AAAAAA;
 }

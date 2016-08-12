@@ -127,6 +127,8 @@ module.exports = React.createClass({
       }
     });
 
+    var score = review.score + "/5"
+
     return(
       <div>
 
@@ -167,7 +169,7 @@ module.exports = React.createClass({
           </div>
           <div className="game-review-comment group">
             <h3>{review.title}</h3>
-            <p>{review.score}/5</p>
+            <p>{score}</p>
             <span>{review.body}</span>
           </div>
           {buttons}

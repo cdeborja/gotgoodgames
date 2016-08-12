@@ -49,7 +49,6 @@ module.exports = React.createClass({
     });
   },
 
-
   render: function () {
     if ((this.state.reviews.length === 0 && !this.state.user ) ||
        (!this.state.user) ){
@@ -73,9 +72,7 @@ module.exports = React.createClass({
     <div className="content-container group">
       <div className="user-information-box group">
         <div className="user-information">
-          <div className="home-user-picture">
-            <img src={this.state.user.picture}/>
-          </div>
+          <img className="user-showpage-img" src={this.state.user.picture} />
           <ul className="stat-box">
             <h3>"Newbie"</h3>
             <li>Reviews: {this.state.reviews.length}</li>
@@ -83,8 +80,10 @@ module.exports = React.createClass({
         </div>
         <div className="user-description-box">
           <h1>{this.state.user.username}</h1>
-          <p>{this.state.user.description}</p>
-          <button onClick={this.goToEditProfile}>Edit Profile</button>
+          <div>
+            <p className="user-p">{this.state.user.description}</p>
+            <button className="edit-profile hidden" onClick={this.goToEditProfile}>Edit Profile</button>
+          </div>
         </div>
       </div>
 

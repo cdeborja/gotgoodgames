@@ -40,20 +40,24 @@
   border-radius: 5px;
 }
 
-.user-description-box > button {
-  display: block;
+.edit-profile {
+  display: none;
+  background: #53b9ea;
+  position: absolute;
   text-align: center;
   padding: 10px;
+  color: #FFFFFF;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
   width: 140px;
-  border: 1px solid #AAAAAA;
-  margin: 5px 0;
   border-radius: 5px;
-  transition: background-color 500ms, color 500ms;
+  transition: background-color 400ms, color 400ms;
 }
 
-.user-description-box > button:hover {
-  background: #53b9ea;
+.edit-profile:hover {
   cursor: pointer;
+  background: #0079b3;
 }
 
 .user-description-box > h1 {
@@ -64,7 +68,7 @@
   background: #53b9ea
 }
 
-.user-description-box > p {
+.user-description-box > div > p {
   background: white;
   margin: 10px;
   min-height: 210px;
@@ -72,6 +76,14 @@
   border-radius: 5px;
   font-size: 24px;
   border: 1px solid #AAAAAA;
+}
+
+.user-description-box > div:hover .user-p {
+  background-color: rgba(200, 200, 200, 0.7);
+}
+
+.user-description-box > div:hover  .edit-profile {
+  display: block;
 }
 
 .home-user-picture .text {
@@ -187,7 +199,7 @@
   border: 1px solid #AAAAAA;
   margin: 5px 0;
   border-radius: 5px;
-  transition: background-color 500ms, color 500ms;
+  transition: background-color 400ms, color 400ms;
 }
 
 .edit-menu > button:hover {

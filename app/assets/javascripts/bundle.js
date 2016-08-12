@@ -37999,6 +37999,8 @@
 	      }
 	    });
 	
+	    var score = review.score + "/5";
+	
 	    return React.createElement(
 	      'div',
 	      null,
@@ -38066,8 +38068,7 @@
 	          React.createElement(
 	            'p',
 	            null,
-	            review.score,
-	            '/5'
+	            score
 	          ),
 	          React.createElement(
 	            'span',
@@ -38329,11 +38330,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'user-information' },
-	          React.createElement(
-	            'div',
-	            { className: 'home-user-picture' },
-	            React.createElement('img', { src: this.state.user.picture })
-	          ),
+	          React.createElement('img', { className: 'user-showpage-img', src: this.state.user.picture }),
 	          React.createElement(
 	            'ul',
 	            { className: 'stat-box' },
@@ -38359,14 +38356,18 @@
 	            this.state.user.username
 	          ),
 	          React.createElement(
-	            'p',
+	            'div',
 	            null,
-	            this.state.user.description
-	          ),
-	          React.createElement(
-	            'button',
-	            { onClick: this.goToEditProfile },
-	            'Edit Profile'
+	            React.createElement(
+	              'p',
+	              { className: 'user-p' },
+	              this.state.user.description
+	            ),
+	            React.createElement(
+	              'button',
+	              { className: 'edit-profile hidden', onClick: this.goToEditProfile },
+	              'Edit Profile'
+	            )
 	          )
 	        )
 	      ),
@@ -38481,9 +38482,13 @@
 	            this.state.user.username
 	          ),
 	          React.createElement(
-	            'p',
+	            'div',
 	            null,
-	            this.state.user.description
+	            React.createElement(
+	              'p',
+	              null,
+	              this.state.user.description
+	            )
 	          )
 	        )
 	      ),

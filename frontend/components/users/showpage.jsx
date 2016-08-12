@@ -62,7 +62,9 @@ module.exports = React.createClass({
         </div>
         <div className="user-description-box">
           <h1>{this.state.user.username}</h1>
-          <p>{this.state.user.description}</p>
+          <div>
+            <p>{this.state.user.description}</p>
+          </div>
         </div>
       </div>
 
