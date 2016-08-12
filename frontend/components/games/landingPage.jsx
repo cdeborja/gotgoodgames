@@ -4,7 +4,6 @@ var AppDispatcher = require('../../dispatcher/dispatcher');
 var Slider = require('react-slick');
 
 var GameStore = require('../../stores/game');
-var UserStore = require('../../stores/user');
 
 var GameDatabaseSlider = require('./gameDatabaseSlider');
 var TopList = require('../users/topList');
@@ -17,11 +16,9 @@ module.exports = React.createClass({
   },
 
   getStateFromStore: function () {
-    return ({ users: UserStore.all(),
-             games: GameStore.all(),
+    return ({ games: GameStore.all()
            });
   },
-
 
   getInitialState: function () {
     return (this.getStateFromStore());
@@ -33,19 +30,16 @@ module.exports = React.createClass({
 
   componentDidMount: function () {
     this.gameListener = GameStore.addListener(this._onChange);
-    this.userListener = UserStore.addListener(this._onChange);
     ApiUtil.fetchAllGames();
-    ApiUtil.fetchTopFiveUsers();
   },
 
   componentWillUnmount: function () {
     this.gameListener.remove();
-    this.userListener.remove();
   },
 
   render: function () {
 
-    if ( (this.state.games.length < 1) || (this.state.users.length < 1) ) {return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);}
+    if ( (this.state.games.length < 1) ) {return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);}
 
     return(
       <div className="content-container group">
@@ -55,7 +49,7 @@ module.exports = React.createClass({
         <div className="content-container-bottom group">
           <TopGames games={this.state.games}/>
           <MostReviewedGames games={this.state.games}/>
-          <TopList users={this.state.users}/>
+          <TopList/>
         </div>
       </div>
     );

@@ -20,7 +20,6 @@ var GameDatabaseSlider = React.createClass({
       slidesToShow: 5,
       slidesToScroll: 5,
       draggable: false,
-      lazyLoad: true,
       autoplay: true,
       pauseOnHover: true,
       autoplaySpeed: 6000

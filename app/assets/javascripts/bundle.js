@@ -21897,7 +21897,6 @@
 	var Slider = __webpack_require__(216);
 	
 	var GameStore = __webpack_require__(236);
-	var UserStore = __webpack_require__(237);
 	
 	var GameDatabaseSlider = __webpack_require__(238);
 	var TopList = __webpack_require__(239);
@@ -21912,8 +21911,7 @@
 	  },
 	
 	  getStateFromStore: function () {
-	    return { users: UserStore.all(),
-	      games: GameStore.all()
+	    return { games: GameStore.all()
 	    };
 	  },
 	
@@ -21927,19 +21925,16 @@
 	
 	  componentDidMount: function () {
 	    this.gameListener = GameStore.addListener(this._onChange);
-	    this.userListener = UserStore.addListener(this._onChange);
 	    ApiUtil.fetchAllGames();
-	    ApiUtil.fetchTopFiveUsers();
 	  },
 	
 	  componentWillUnmount: function () {
 	    this.gameListener.remove();
-	    this.userListener.remove();
 	  },
 	
 	  render: function () {
 	
-	    if (this.state.games.length < 1 || this.state.users.length < 1) {
+	    if (this.state.games.length < 1) {
 	      return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	    }
 	
@@ -21956,7 +21951,7 @@
 	        { className: 'content-container-bottom group' },
 	        React.createElement(TopGames, { games: this.state.games }),
 	        React.createElement(MostReviewedGames, { games: this.state.games }),
-	        React.createElement(TopList, { users: this.state.users })
+	        React.createElement(TopList, null)
 	      )
 	    );
 	  }
@@ -31461,7 +31456,6 @@
 	      slidesToShow: 5,
 	      slidesToScroll: 5,
 	      draggable: false,
-	      lazyLoad: true,
 	      autoplay: true,
 	      pauseOnHover: true,
 	      autoplaySpeed: 6000
@@ -31529,12 +31523,36 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
+	var ApiUtil = __webpack_require__(181);
+	var UserStore = __webpack_require__(237);
 	
 	var TopList = React.createClass({
 	  displayName: 'TopList',
 	
 	  contextTypes: {
 	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  getStateFromStore: function () {
+	    return { users: UserStore.all()
+	    };
+	  },
+	
+	  getInitialState: function () {
+	    return this.getStateFromStore();
+	  },
+	
+	  _onChange: function () {
+	    this.setState(this.getStateFromStore());
+	  },
+	
+	  componentDidMount: function () {
+	    this.userListener = UserStore.addListener(this._onChange);
+	    ApiUtil.fetchTopFiveUsers();
+	  },
+	
+	  componentWillUnmount: function () {
+	    this.userListener.remove();
 	  },
 	
 	  goToGame: function (e) {
@@ -31547,9 +31565,9 @@
 	
 	  render: function () {
 	
-	    if (this.props.users.length === 0 || !this.props.users[0].reviewsCount) return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
-	    for (var i = 0; i < this.props.users.length; i++) {
-	      if (Object.keys(this.props.users[i]).includes("reviews")) {
+	    if (this.state.users.length === 0 || !this.state.users[0].recentActivity) return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
+	    for (var i = 0; i < this.state.users.length; i++) {
+	      if (Object.keys(this.state.users[i]).includes("reviews")) {
 	        return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	      }
 	    }
@@ -31587,7 +31605,7 @@
 	      }
 	    }
 	
-	    var sortedByReviews = this.props.users.sort(compare);
+	    var sortedByReviews = this.state.users.sort(compare);
 	    var topFive = sortedByReviews.map(function (user, id) {
 	
 	      var times = user.reviewsCount.toString();

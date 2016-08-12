@@ -1,8 +1,32 @@
 var React = require('react');
+var ApiUtil = require('../../util/apiUtil');
+var UserStore = require('../../stores/user');
 
 var TopList = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
+  },
+
+  getStateFromStore: function () {
+    return ({ users: UserStore.all()
+           });
+  },
+
+  getInitialState: function () {
+    return (this.getStateFromStore());
+  },
+
+  _onChange: function () {
+    this.setState(this.getStateFromStore());
+  },
+
+  componentDidMount: function () {
+    this.userListener = UserStore.addListener(this._onChange);
+    ApiUtil.fetchTopFiveUsers();
+  },
+
+  componentWillUnmount: function () {
+    this.userListener.remove();
   },
 
   goToGame: function (e) {
@@ -15,9 +39,9 @@ var TopList = React.createClass({
 
   render: function () {
 
-    if (this.props.users.length === 0 || !this.props.users[0].reviewsCount) return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);
-    for (var i = 0; i < this.props.users.length; i++) {
-      if (Object.keys(this.props.users[i]).includes("reviews")) {
+    if (this.state.users.length === 0 || !this.state.users[0].recentActivity) return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);
+    for (var i = 0; i < this.state.users.length; i++) {
+      if (Object.keys(this.state.users[i]).includes("reviews")) {
         return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);
       }
     }
@@ -57,9 +81,9 @@ var TopList = React.createClass({
       }
     }
 
-    var sortedByReviews = this.props.users.sort(compare);
+    var sortedByReviews = this.state.users.sort(compare);
     var topFive = sortedByReviews.map( function (user, id) {
-      
+
       var times = user.reviewsCount.toString();
       var recentTime = timeParse(user.recentActivity);
       return (
