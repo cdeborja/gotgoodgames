@@ -12,23 +12,16 @@
 .game-information-box {
   margin: 15px 15px 10px 15px;
   width: auto;
-  padding: 20px;
-  border: 1px solid #AAAAAA;
   border-radius: 5px;
-  background: #FFFFFF;
+  background: transparent;
 }
 
 .game-details-left {
+  border-radius: 5px;
+  background: #FFFFFF;
   float: left;
   width: 35%;
-}
-
-.game-details-left > img {
-  float: left;
-  // width: 350px;
-  height: auto;
-  margin-right: 10px;
-  margin-bottom: 20px;
+  padding: 10px;
 }
 
 .game-details {
@@ -45,17 +38,23 @@
 }
 
 .game-details-right {
-  margin-left: 5px;
+  margin-left: 10px;
+  background: #FFFFFF;
   float: left;
   display: block;
-  width: 60%;
+  width: 61%;
+  border-radius: 5px;
+  min-height: 400px;
 }
 
 .game-details-right > h2 {
-  display: inline;
+  color: #FFFFFF;
+  text-align: center;
   font-weight: bold;
   font-size: 36px;
-  border-bottom: 1px solid #AAAAAA;
+  background: #53b9ea;
+  padding: 5px 0;
+  border-radius: 5px 5px 0 0;
 }
 
 .game-index-box {
@@ -68,7 +67,7 @@
 
 .game-index-box > h2 {
   font-size: 36px;
-  padding: 3px;
+  padding: 5px 0;
   text-align: center;
   background: #53b9ea;
   border-radius: 4px 4px 0 0;

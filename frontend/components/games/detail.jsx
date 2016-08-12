@@ -59,7 +59,7 @@ module.exports = React.createClass({
       <div className="content-container group">
         <div className="game-information-box group">
           <div className="game-details-left">
-            <img src={game.image_url} />
+            <img className="game-showpage-img" src={game.image_url} />
             <div>
               <ReviewForm game={this.state.game} reviews={gameReviews} userReview={userReview}/>
             </div>

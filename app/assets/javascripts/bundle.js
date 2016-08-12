@@ -37162,7 +37162,7 @@
 	        React.createElement(
 	          'div',
 	          { className: 'game-details-left' },
-	          React.createElement('img', { src: game.image_url }),
+	          React.createElement('img', { className: 'game-showpage-img', src: game.image_url }),
 	          React.createElement(
 	            'div',
 	            null,
