@@ -61,9 +61,9 @@ var LoginForm = React.createClass({
     return (
       <div className="sign-in-box group">
         <h1>Please Sign In</h1>
+        <div className="login-error hidden">Incorrect username/password combination</div>
 
         <form className="input-box">
-          <div className="login-error hidden">Incorrect username/password combination</div>
           <input className="input-field-login" onChange={this.updateUsername}
           type="text" value={this.state.username}/>
           <label className="input-text" htmlFor="username">

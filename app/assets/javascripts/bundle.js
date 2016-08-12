@@ -38776,13 +38776,13 @@
 	        'Please Sign In'
 	      ),
 	      React.createElement(
+	        'div',
+	        { className: 'login-error hidden' },
+	        'Incorrect username/password combination'
+	      ),
+	      React.createElement(
 	        'form',
 	        { className: 'input-box' },
-	        React.createElement(
-	          'div',
-	          { className: 'login-error hidden' },
-	          'Incorrect username/password combination'
-	        ),
 	        React.createElement('input', { className: 'input-field-login', onChange: this.updateUsername,
 	          type: 'text', value: this.state.username }),
 	        React.createElement(
@@ -38929,13 +38929,18 @@
 	    return this.getStateFromStore();
 	  },
 	
-	  handleSubmit: function (e) {
+	  signUp: function (e) {
 	    e.preventDefault();
 	    var router = this.context.router;
 	    ApiUtil.signUp(this.state);
 	    ApiUtil.login(this.state, function () {
 	      router.push("/landingPage");
 	    });
+	  },
+	
+	  goBack: function (e) {
+	    e.preventDefault();
+	    this.context.router.push("/login");
 	  },
 	
 	  updateUsername: function (e) {
@@ -38969,33 +38974,42 @@
 	        'Sign Up'
 	      ),
 	      React.createElement(
+	        'div',
+	        { className: 'login-error hidden' },
+	        'Unacceptable username/password combination'
+	      ),
+	      React.createElement(
 	        'form',
-	        { className: 'input-box', onSubmit: this.handleSubmit },
-	        React.createElement(
-	          'div',
-	          { className: 'login-error hidden' },
-	          'Unacceptable username/password combination'
-	        ),
-	        React.createElement(
-	          'label',
-	          { className: 'input-text', htmlFor: 'username' },
-	          'Username'
-	        ),
+	        { className: 'input-box' },
 	        React.createElement('input', { placeholder: 'Think of something good!',
 	          className: 'input-field-login', type: 'text',
 	          valueLink: this.linkState('username') }),
 	        React.createElement(
 	          'label',
-	          { className: 'input-text', htmlFor: 'password' },
-	          'Password'
+	          { className: 'input-text', htmlFor: 'username' },
+	          'Username'
 	        ),
 	        React.createElement('input', { className: 'input-field-login', onChange: this.updatePassword,
 	          type: 'password', value: this.state.password,
 	          placeholder: 'Minimum 6 characters password' }),
 	        React.createElement(
-	          'button',
-	          { className: 'create-new-user-button' },
-	          'Create New User'
+	          'label',
+	          { className: 'input-text', htmlFor: 'password' },
+	          'Password'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'button-box group' },
+	          React.createElement(
+	            'button',
+	            { onClick: this.goBack, className: 'create-new-user-button' },
+	            'Go Back'
+	          ),
+	          React.createElement(
+	            'button',
+	            { onClick: this.signUp, className: 'create-new-user-button' },
+	            'Create New User'
+	          )
 	        )
 	      )
 	    );

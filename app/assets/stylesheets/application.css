@@ -649,8 +649,10 @@ img {
   position: absolute;
   text-align: center;
   color: #d23f0f;
-  right: 0;
-  top: -15%;
+  width: 70%;
+  top: 95px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* BOTTOM NAVIGATION */
