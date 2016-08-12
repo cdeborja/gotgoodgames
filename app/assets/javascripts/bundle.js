@@ -63,14 +63,14 @@
 	var UserShowPage = __webpack_require__(316);
 	var UsersIndex = __webpack_require__(317);
 	var EditForm = __webpack_require__(318);
-	var SignInForm = __webpack_require__(326);
+	var SignInForm = __webpack_require__(319);
 	var SignUpForm = __webpack_require__(321);
 	var Search = __webpack_require__(242);
 	var EditUserForm = __webpack_require__(314);
 	
 	var GameStore = __webpack_require__(236);
 	var SessionStore = __webpack_require__(188);
-	var UserStore = __webpack_require__(237);
+	var UserStore = __webpack_require__(239);
 	
 	var routes = React.createElement(
 	  Route,
@@ -21682,6 +21682,7 @@
 	      this.setState({ currentUser: SessionStore.currentUser() });
 	      $(".navigation-links").removeClass("hidden");
 	      $(".session-links").removeClass("hidden");
+	      $(".search-box").removeClass("hidden");
 	    } else {
 	      this.context.router.push("/login");
 	    }
@@ -21723,6 +21724,7 @@
 	  handleLogout: function () {
 	    $(".navigation-links").addClass("hidden");
 	    $(".session-links").addClass("hidden");
+	    $(".search-box").addClass("hidden");
 	    ApiUtil.logout();
 	  },
 	
@@ -21912,8 +21914,8 @@
 	
 	var GameStore = __webpack_require__(236);
 	
-	var GameDatabaseSlider = __webpack_require__(238);
-	var TopList = __webpack_require__(239);
+	var GameDatabaseSlider = __webpack_require__(237);
+	var TopList = __webpack_require__(238);
 	var TopGames = __webpack_require__(240);
 	var MostReviewedGames = __webpack_require__(241);
 	
@@ -31385,67 +31387,6 @@
 /* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Store = __webpack_require__(189).Store;
-	var AppDispatcher = __webpack_require__(182);
-	var UserConstants = __webpack_require__(211);
-	var UserStore = new Store(AppDispatcher);
-	var ReviewConstants = __webpack_require__(209);
-	
-	var _users = {};
-	
-	var resetUsers = function (users) {
-	  _users = {};
-	  users.forEach(function (user) {
-	    _users[user.id] = user;
-	  });
-	};
-	
-	var resetUser = function (user) {
-	  _users[user.id] = user;
-	};
-	
-	UserStore.find = function (id) {
-	  return _users[id];
-	};
-	
-	UserStore.all = function () {
-	  var users = [];
-	  for (var id in _users) {
-	    users.push(_users[id]);
-	  }
-	  return users;
-	};
-	
-	UserStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case UserConstants.USERS_RECEIVED:
-	      resetUsers(payload.users);
-	      UserStore.__emitChange();
-	      break;
-	    case UserConstants.USER_RECEIVED:
-	      resetUser(payload.user);
-	      UserStore.__emitChange();
-	      break;
-	    case UserConstants.REVIEWED_USERS_RECEIVED:
-	      resetUsers(payload.users);
-	      UserStore.__emitChange();
-	      break;
-	    case UserConstants.USER_UPDATED:
-	      UserStore.__emitChange();
-	      break;
-	    case UserConstants.FIVE_USERS_RECEIVED:
-	      resetUsers(payload.users);
-	      UserStore.__emitChange();
-	      break;
-	  }
-	};
-	
-	module.exports = UserStore;
-
-/***/ },
-/* 238 */
-/***/ function(module, exports, __webpack_require__) {
-
 	var React = __webpack_require__(1);
 	var Slider = __webpack_require__(216);
 	
@@ -31530,12 +31471,12 @@
 	module.exports = GameDatabaseSlider;
 
 /***/ },
-/* 239 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(181);
-	var UserStore = __webpack_require__(237);
+	var UserStore = __webpack_require__(239);
 	
 	var TopList = React.createClass({
 	  displayName: 'TopList',
@@ -31681,6 +31622,67 @@
 	});
 	
 	module.exports = TopList;
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(189).Store;
+	var AppDispatcher = __webpack_require__(182);
+	var UserConstants = __webpack_require__(211);
+	var UserStore = new Store(AppDispatcher);
+	var ReviewConstants = __webpack_require__(209);
+	
+	var _users = {};
+	
+	var resetUsers = function (users) {
+	  _users = {};
+	  users.forEach(function (user) {
+	    _users[user.id] = user;
+	  });
+	};
+	
+	var resetUser = function (user) {
+	  _users[user.id] = user;
+	};
+	
+	UserStore.find = function (id) {
+	  return _users[id];
+	};
+	
+	UserStore.all = function () {
+	  var users = [];
+	  for (var id in _users) {
+	    users.push(_users[id]);
+	  }
+	  return users;
+	};
+	
+	UserStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case UserConstants.USERS_RECEIVED:
+	      resetUsers(payload.users);
+	      UserStore.__emitChange();
+	      break;
+	    case UserConstants.USER_RECEIVED:
+	      resetUser(payload.user);
+	      UserStore.__emitChange();
+	      break;
+	    case UserConstants.REVIEWED_USERS_RECEIVED:
+	      resetUsers(payload.users);
+	      UserStore.__emitChange();
+	      break;
+	    case UserConstants.USER_UPDATED:
+	      UserStore.__emitChange();
+	      break;
+	    case UserConstants.FIVE_USERS_RECEIVED:
+	      resetUsers(payload.users);
+	      UserStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = UserStore;
 
 /***/ },
 /* 240 */
@@ -37096,7 +37098,7 @@
 	var ReviewsIndexItem = __webpack_require__(302);
 	var ReviewStore = __webpack_require__(303);
 	var SessionStore = __webpack_require__(188);
-	var UserStore = __webpack_require__(237);
+	var UserStore = __webpack_require__(239);
 	var ReviewForm = __webpack_require__(304);
 	
 	module.exports = React.createClass({
@@ -37764,7 +37766,7 @@
 	var ApiUtil = __webpack_require__(181);
 	var AppDispatcher = __webpack_require__(182);
 	var SessionStore = __webpack_require__(188);
-	var UserStore = __webpack_require__(237);
+	var UserStore = __webpack_require__(239);
 	var GameStore = __webpack_require__(236);
 	var UserReviewItem = __webpack_require__(312);
 	var EditUserForm = __webpack_require__(314);
@@ -38265,7 +38267,7 @@
 	var ApiUtil = __webpack_require__(181);
 	var AppDispatcher = __webpack_require__(182);
 	var SessionStore = __webpack_require__(188);
-	var UserStore = __webpack_require__(237);
+	var UserStore = __webpack_require__(239);
 	var ReviewStore = __webpack_require__(303);
 	var GameStore = __webpack_require__(236);
 	var UserReviewItem = __webpack_require__(312);
@@ -38408,7 +38410,7 @@
 	var ApiUtil = __webpack_require__(181);
 	var AppDispatcher = __webpack_require__(182);
 	var SessionStore = __webpack_require__(188);
-	var UserStore = __webpack_require__(237);
+	var UserStore = __webpack_require__(239);
 	var ReviewStore = __webpack_require__(303);
 	var GameStore = __webpack_require__(236);
 	var UserReviewItem = __webpack_require__(312);
@@ -38530,7 +38532,7 @@
 	var ApiUtil = __webpack_require__(181);
 	var AppDispatcher = __webpack_require__(182);
 	var SessionStore = __webpack_require__(188);
-	var UserStore = __webpack_require__(237);
+	var UserStore = __webpack_require__(239);
 	var GameStore = __webpack_require__(236);
 	var UserReviewItem = __webpack_require__(312);
 	var EditUserForm = __webpack_require__(314);
@@ -38748,7 +38750,158 @@
 	module.exports = ReviewForm;
 
 /***/ },
-/* 319 */,
+/* 319 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ErrorStore = __webpack_require__(320);
+	var ApiUtil = __webpack_require__(181);
+	
+	var SignInForm = React.createClass({
+	  displayName: 'SignInForm',
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
+	
+	  getInitialState: function () {
+	    return {
+	      username: "",
+	      password: ""
+	    };
+	  },
+	
+	  handleSubmit: function (e) {
+	    e.preventDefault();
+	    var router = this.context.router;
+	    ApiUtil.login(this.state, function () {
+	      router.push("/landingPage");
+	    });
+	  },
+	
+	  updateUsername: function (e) {
+	    this.setState({ username: e.currentTarget.value });
+	  },
+	
+	  updatePassword: function (e) {
+	    this.setState({ password: e.currentTarget.value });
+	  },
+	
+	  guestLogin: function (e) {
+	    e.preventDefault();
+	    var guestParams = {
+	      username: "guest",
+	      password: "password"
+	    };
+	    var router = this.context.router;
+	
+	    ApiUtil.login(guestParams, function () {
+	      router.push("/landingPage");
+	    });
+	  },
+	
+	  goToSignUpForm: function (e) {
+	    e.preventDefault();
+	    this.context.router.push("/signup");
+	  },
+	
+	  render: function () {
+	
+	    if (!this.state.currentUser) {
+	      signUpButton = React.createElement(
+	        'button',
+	        { className: 'sign-in-button', onClick: this.goToSignUpForm },
+	        'Sign Up'
+	      );
+	    }
+	
+	    var guestButton = React.createElement(
+	      'button',
+	      { className: 'sign-in-button', onClick: this.guestLogin },
+	      'Guest Login'
+	    );
+	
+	    return React.createElement(
+	      'div',
+	      { className: 'sign-in-box group' },
+	      React.createElement(
+	        'h1',
+	        null,
+	        'Sign In'
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'login-error hidden' },
+	        'Incorrect username/password combination'
+	      ),
+	      React.createElement(
+	        'form',
+	        { className: 'input-box' },
+	        React.createElement('input', { className: 'input-field-login', onChange: this.updateUsername,
+	          type: 'text', value: this.state.username }),
+	        React.createElement(
+	          'label',
+	          { className: 'input-text', htmlFor: 'username' },
+	          'Username'
+	        ),
+	        React.createElement('input', { className: 'input-field-login', onChange: this.updatePassword,
+	          type: 'password', value: this.state.password }),
+	        React.createElement(
+	          'label',
+	          { className: 'input-text', htmlFor: 'password' },
+	          'Password'
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'button-box group' },
+	          React.createElement(
+	            'button',
+	            { onClick: this.handleSubmit, className: 'sign-in-button' },
+	            'Sign In'
+	          ),
+	          signUpButton,
+	          guestButton
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'oauth-box group' },
+	        React.createElement(
+	          'h2',
+	          null,
+	          ' Sign in with '
+	        ),
+	        React.createElement(
+	          'ul',
+	          { className: 'oauth-box-buttons' },
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'a',
+	              { href: '/auth/facebook' },
+	              React.createElement('i', { className: 'fa fa-facebook-square fa-3x facebook', 'aria-hidden': 'true' })
+	            )
+	          ),
+	          React.createElement(
+	            'li',
+	            null,
+	            React.createElement(
+	              'a',
+	              { href: '/auth/twitch' },
+	              React.createElement('i', { className: 'fa fa-twitch fa-3x twitch', 'aria-hidden': 'true' })
+	            )
+	          )
+	        )
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = SignInForm;
+
+/***/ },
 /* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -39144,158 +39297,6 @@
 	};
 	
 	module.exports = ReactStateSetters;
-
-/***/ },
-/* 326 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var ErrorStore = __webpack_require__(320);
-	var ApiUtil = __webpack_require__(181);
-	
-	var SignInForm = React.createClass({
-	  displayName: 'SignInForm',
-	
-	  contextTypes: {
-	    router: React.PropTypes.object.isRequired
-	  },
-	
-	  getInitialState: function () {
-	    return {
-	      username: "",
-	      password: ""
-	    };
-	  },
-	
-	  handleSubmit: function (e) {
-	    e.preventDefault();
-	    var router = this.context.router;
-	    ApiUtil.login(this.state, function () {
-	      router.push("/landingPage");
-	    });
-	  },
-	
-	  updateUsername: function (e) {
-	    this.setState({ username: e.currentTarget.value });
-	  },
-	
-	  updatePassword: function (e) {
-	    this.setState({ password: e.currentTarget.value });
-	  },
-	
-	  guestLogin: function (e) {
-	    e.preventDefault();
-	    var guestParams = {
-	      username: "guest",
-	      password: "password"
-	    };
-	    var router = this.context.router;
-	
-	    ApiUtil.login(guestParams, function () {
-	      router.push("/landingPage");
-	    });
-	  },
-	
-	  goToSignUpForm: function (e) {
-	    e.preventDefault();
-	    this.context.router.push("/signup");
-	  },
-	
-	  render: function () {
-	
-	    if (!this.state.currentUser) {
-	      signUpButton = React.createElement(
-	        'button',
-	        { className: 'sign-in-button', onClick: this.goToSignUpForm },
-	        'Sign Up'
-	      );
-	    }
-	
-	    var guestButton = React.createElement(
-	      'button',
-	      { className: 'sign-in-button', onClick: this.guestLogin },
-	      'Guest Login'
-	    );
-	
-	    return React.createElement(
-	      'div',
-	      { className: 'sign-in-box group' },
-	      React.createElement(
-	        'h1',
-	        null,
-	        'Sign In'
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'login-error hidden' },
-	        'Incorrect username/password combination'
-	      ),
-	      React.createElement(
-	        'form',
-	        { className: 'input-box' },
-	        React.createElement('input', { className: 'input-field-login', onChange: this.updateUsername,
-	          type: 'text', value: this.state.username }),
-	        React.createElement(
-	          'label',
-	          { className: 'input-text', htmlFor: 'username' },
-	          'Username'
-	        ),
-	        React.createElement('input', { className: 'input-field-login', onChange: this.updatePassword,
-	          type: 'password', value: this.state.password }),
-	        React.createElement(
-	          'label',
-	          { className: 'input-text', htmlFor: 'password' },
-	          'Password'
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'button-box group' },
-	          React.createElement(
-	            'button',
-	            { onClick: this.handleSubmit, className: 'sign-in-button' },
-	            'Sign In'
-	          ),
-	          signUpButton,
-	          guestButton
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'oauth-box group' },
-	        React.createElement(
-	          'h2',
-	          null,
-	          ' Sign in with '
-	        ),
-	        React.createElement(
-	          'ul',
-	          { className: 'oauth-box-buttons' },
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              'a',
-	              { href: '/auth/facebook' },
-	              React.createElement('i', { className: 'fa fa-facebook-square fa-3x facebook', 'aria-hidden': 'true' })
-	            )
-	          ),
-	          React.createElement(
-	            'li',
-	            null,
-	            React.createElement(
-	              'a',
-	              { href: '/auth/twitch' },
-	              React.createElement('i', { className: 'fa fa-twitch fa-3x twitch', 'aria-hidden': 'true' })
-	            )
-	          )
-	        )
-	      )
-	    );
-	  }
-	
-	});
-	
-	module.exports = SignInForm;
 
 /***/ }
 /******/ ]);

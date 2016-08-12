@@ -694,6 +694,7 @@ img {
   content: '';
   display: inline-block;
   width: 100%;
+  border-radius: 5px;
 }
 
 .author-navigation > h3 {
@@ -705,6 +706,10 @@ img {
   display: table-cell;
   text-align: center;
   transition: background-color 400ms, transform 400ms, color 400ms;
+}
+
+.author-navigation > li:last-child {
+  border-radius: 0 5px 5px 0;
 }
 
 .author-navigation > li:hover {
