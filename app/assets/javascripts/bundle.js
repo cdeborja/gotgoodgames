@@ -21706,6 +21706,15 @@
 	    this.context.router.push("/users");
 	  },
 	
+	  goToEditProfile: function (e) {
+	    this.clearDropdowns();
+	    this.context.router.push({
+	      pathname: '/edit_user',
+	      query: {},
+	      state: { user: this.state.currentUser }
+	    });
+	  },
+	
 	  clearDropdowns: function () {
 	    $(".browse-links-dropdown").addClass("hidden");
 	    $('.user-links-dropdown').addClass("hidden");
@@ -21780,6 +21789,11 @@
 	            'li',
 	            { onClick: this.goToCurrentUserHomePage },
 	            'My Stats'
+	          ),
+	          React.createElement(
+	            'li',
+	            { onClick: this.goToEditProfile },
+	            'Edit Profile'
 	          ),
 	          React.createElement(
 	            'li',

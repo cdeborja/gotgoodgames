@@ -56,6 +56,15 @@ module.exports = React.createClass({
     this.context.router.push("/users");
   },
 
+  goToEditProfile: function (e) {
+    this.clearDropdowns();
+    this.context.router.push({
+      pathname: '/edit_user',
+      query: {},
+      state: { user: this.state.currentUser }
+    });
+  },
+
   clearDropdowns: function () {
     $(".browse-links-dropdown").addClass("hidden");
     $('.user-links-dropdown').addClass("hidden");
@@ -104,6 +113,7 @@ module.exports = React.createClass({
                         <ul className="user-links-dropdown hidden">
                           <div className="arrow-up"></div>
                           <li onClick={this.goToCurrentUserHomePage}>My Stats</li>
+                          <li onClick={this.goToEditProfile}>Edit Profile</li>
                           <li onClick={this.handleLogout}>Logout</li>
                         </ul>
                       </li>;
