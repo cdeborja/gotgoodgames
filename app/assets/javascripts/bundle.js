@@ -31455,10 +31455,7 @@
 	      speed: 600,
 	      slidesToShow: 5,
 	      slidesToScroll: 5,
-	      draggable: false,
-	      autoplay: true,
-	      pauseOnHover: true,
-	      autoplaySpeed: 6000
+	      draggable: false
 	    };
 	
 	    games = this.props.games.map(function (game, idx) {
