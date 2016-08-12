@@ -31481,11 +31481,16 @@
 	          { className: 'game-preview' },
 	          React.createElement(
 	            'li',
-	            { className: 'test' },
+	            { className: 'rating-overlay' },
 	            React.createElement(
 	              'div',
 	              { className: 'rating' },
 	              rating
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'rating-text' },
+	              'average rating'
 	            ),
 	            React.createElement('img', { className: 'slide-cover', onClick: this.showDetail, id: game.id, src: game.image_url })
 	          ),

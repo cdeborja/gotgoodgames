@@ -9,7 +9,7 @@ var GameDatabaseSlider = React.createClass({
   showDetail: function (e) {
     this.context.router.push('/games/' + e.target.id);
   },
-  
+
   render: function () {
     if (this.props.games.length === 0) return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);
 
@@ -32,8 +32,9 @@ var GameDatabaseSlider = React.createClass({
       return (
         <div key={idx}>
           <ul className="game-preview">
-            <li className="test">
+            <li className="rating-overlay">
               <div className="rating">{rating}</div>
+              <div className="rating-text">average rating</div>
               <img className="slide-cover" onClick={this.showDetail} id={game.id} src={game.image_url}/>
             </li>
             <li>{game.title}</li>

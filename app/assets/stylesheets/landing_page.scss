@@ -129,7 +129,7 @@
   text-align: center;
 }
 
-.test {
+.rating-overlay {
   width: 150px;
   height: 150px;
   border-radius: 50%;
@@ -138,7 +138,7 @@
   position: relative;
 }
 
-.test > div {
+.rating-overlay > div {
   opacity: 1.0;
   filter: alpha(opacity=100);
   position: absolute;
@@ -150,8 +150,24 @@
 
 .rating {
   display: none;
+  -webkit-transition: all 0.20s ease-in-out;
+  -moz-transition: all 0.20s ease-in-out;
+  -ms-transition: all 0.20s ease-in-out;
+  -o-transition: all 0.20s ease-in-out;
 }
 
-.test:hover .rating {
+.rating-text {
+  text-align: center;
+  margin-top: 30px;
+  display: none;
+  font-size: 14px;
+  -webkit-transition: all 0.20s ease-in-out;
+  -moz-transition: all 0.20s ease-in-out;
+  -ms-transition: all 0.20s ease-in-out;
+  -o-transition: all 0.20s ease-in-out;
+}
+
+.rating-overlay:hover .rating,
+.rating-overlay:hover .rating-text {
   display: block;
 }
