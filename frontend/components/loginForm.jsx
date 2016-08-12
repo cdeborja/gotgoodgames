@@ -64,15 +64,15 @@ var LoginForm = React.createClass({
 
         <form className="input-box">
           <div className="login-error hidden">Incorrect username/password combination</div>
-          <label className="input-text" htmlFor="username">
-            Username
-          </label>
           <input className="input-field-login" onChange={this.updateUsername}
           type="text" value={this.state.username}/>
+          <label className="input-text" htmlFor="username">
+          Username
+          </label>
 
-          <label className="input-text" htmlFor="password">Password</label>
           <input className="input-field-login" onChange={this.updatePassword}
           type="password" value={this.state.password}/>
+          <label className="input-text" htmlFor="password">Password</label>
 
           <div className="button-box group">
             <button onClick={this.handleSubmit} className="sign-in-button">Sign In</button>

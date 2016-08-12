@@ -38783,20 +38783,20 @@
 	          { className: 'login-error hidden' },
 	          'Incorrect username/password combination'
 	        ),
+	        React.createElement('input', { className: 'input-field-login', onChange: this.updateUsername,
+	          type: 'text', value: this.state.username }),
 	        React.createElement(
 	          'label',
 	          { className: 'input-text', htmlFor: 'username' },
 	          'Username'
 	        ),
-	        React.createElement('input', { className: 'input-field-login', onChange: this.updateUsername,
-	          type: 'text', value: this.state.username }),
+	        React.createElement('input', { className: 'input-field-login', onChange: this.updatePassword,
+	          type: 'password', value: this.state.password }),
 	        React.createElement(
 	          'label',
 	          { className: 'input-text', htmlFor: 'password' },
 	          'Password'
 	        ),
-	        React.createElement('input', { className: 'input-field-login', onChange: this.updatePassword,
-	          type: 'password', value: this.state.password }),
 	        React.createElement(
 	          'div',
 	          { className: 'button-box group' },

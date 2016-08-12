@@ -72,7 +72,7 @@ img {
 /* NAVIGATION BAR*/
 
 .header {
-  background: #888888;
+  background: #115D82;
   border-bottom: 1px solid #AAAAAA;
 }
 
@@ -350,27 +350,29 @@ img {
 }
 
 .input-text {
+  text-align: center;
   display: block;
   font-weight: bold;
-  margin: 0 auto;
-  font-size: 12px;
-  margin: 10px 0 5px 0;
+  font-size: 14px;
+  margin: 5px 0;
+  width: 100%;
+  padding: 0 4px;
 }
 
 .input-field-login {
   display: block;
   background: #FFFFFF;
-  border: 1px solid #AAAAAA;
-  padding: 10px 4px;
-  font-weight: normal;
-  font-size: 14px;
-  border-radius: 5px;
+  border-bottom: 1px solid #AAAAAA;
+  padding: 2px 4px;
+  text-align: center;
+  font-size: 20px;
   width: 100%;
   color: #000;
 }
 
 .input-field-login:focus {
-  box-shadow: 0px 0px 4px 3px #53b9ea;
+  text-align: center;
+  box-shadow: 0px 8px 6px -6px #53b9ea;
 }
 
 .input-field-box {
@@ -644,7 +646,11 @@ img {
 }
 
 .login-error {
+  position: absolute;
+  text-align: center;
   color: #d23f0f;
+  right: 0;
+  top: -15%;
 }
 
 /* BOTTOM NAVIGATION */
