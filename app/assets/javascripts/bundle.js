@@ -21789,10 +21789,7 @@
 	        )
 	      );
 	    }
-	    // Implement new button later
-	    // <li>
-	    // Edit Profile
-	    // </li>
+	
 	    return React.createElement(
 	      'div',
 	      null,
@@ -21823,8 +21820,7 @@
 	              'ul',
 	              { className: 'navigation-links' },
 	              home,
-	              browse,
-	              searchBar
+	              browse
 	            )
 	          ),
 	          React.createElement(
@@ -21836,7 +21832,8 @@
 	              welcome,
 	              userNavigation
 	            )
-	          )
+	          ),
+	          searchBar
 	        )
 	      ),
 	      React.createElement(

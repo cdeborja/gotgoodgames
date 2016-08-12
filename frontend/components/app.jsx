@@ -108,10 +108,7 @@ module.exports = React.createClass({
                         </ul>
                       </li>;
     }
-    // Implement new button later
-    // <li>
-    // Edit Profile
-    // </li>
+
     return (
       <div>
         <header className="header group">
@@ -128,7 +125,6 @@ module.exports = React.createClass({
               <ul className="navigation-links">
                 {home}
                 {browse}
-                {searchBar}
               </ul>
             </div>
             <div className="session-nav">
@@ -137,6 +133,7 @@ module.exports = React.createClass({
                 {userNavigation}
               </ul>
             </div>
+            {searchBar}
           </nav>
         </header>
         <body>
