@@ -47,8 +47,8 @@ module.exports = React.createClass({
     var usersIndex = this.state.users.map(function (user) {
       return (<li className="boxed-item" key={user.id} id={user.id} onClick={that.goToUserShowpage}>
                 <img className="index-img" src={user.picture}/>
-                <p>{user.username}</p>
-                <p>Rated {user.reviewsCount} games</p>
+                <p className="index-name">{user.username}</p>
+                <p className="review-count">Rated {user.reviewsCount} games</p>
               </li>);
     });
 

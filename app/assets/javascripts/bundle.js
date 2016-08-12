@@ -38554,12 +38554,12 @@
 	        React.createElement('img', { className: 'index-img', src: user.picture }),
 	        React.createElement(
 	          'p',
-	          null,
+	          { className: 'index-name' },
 	          user.username
 	        ),
 	        React.createElement(
 	          'p',
-	          null,
+	          { className: 'review-count' },
 	          'Rated ',
 	          user.reviewsCount,
 	          ' games'
