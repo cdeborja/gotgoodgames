@@ -21994,7 +21994,6 @@
 	      dataType: "json",
 	      data: credentials,
 	      success: function (result) {
-	        //Need to come back later and figure out how to display the errors instead of having general error
 	        if ('errors' in result) {
 	          $(".login-error").removeClass("hidden");
 	          setTimeout(function () {
@@ -37362,19 +37361,35 @@
 	
 	  handleSubmit: function (e) {
 	    e.preventDefault();
-	
-	    var user_id = SessionStore.currentUser().id;
-	    var reviewParams = {
-	      review: {
-	        user_id: user_id,
-	        game_id: this.props.game.id,
-	        score: this.state.score,
-	        body: this.state.body,
-	        title: this.state.title
-	      }
-	    };
-	    ApiUtil.createReview(reviewParams);
-	    this.closeModal();
+	    if (this.state.title === "") {
+	      $(".review-error-title").removeClass("hidden");
+	      setTimeout(function () {
+	        $(".review-error-title").addClass("hidden");
+	      }, 2000);
+	    } else if (this.state.score === null) {
+	      $(".review-error-score").removeClass("hidden");
+	      setTimeout(function () {
+	        $(".review-error-score").addClass("hidden");
+	      }, 2000);
+	    } else if (this.state.body === "") {
+	      $(".review-error-body").removeClass("hidden");
+	      setTimeout(function () {
+	        $(".review-error-body").addClass("hidden");
+	      }, 2000);
+	    } else {
+	      var user_id = SessionStore.currentUser().id;
+	      var reviewParams = {
+	        review: {
+	          user_id: user_id,
+	          game_id: this.props.game.id,
+	          score: this.state.score,
+	          body: this.state.body,
+	          title: this.state.title
+	        }
+	      };
+	      ApiUtil.createReview(reviewParams);
+	      this.closeModal();
+	    }
 	  },
 	
 	  updateScore: function (e) {
@@ -37415,33 +37430,19 @@
 	      content: {
 	        position: 'absolute',
 	        margin: '0 auto',
-	        top: '150px',
+	        top: '50%',
+	        transform: 'translateY(-50%)',
 	        left: '0px',
 	        right: '0px',
 	        bottom: '0px',
-	        border: '1px solid #AAAAAA',
-	        padding: '20px',
+	        padding: '0px',
 	        backgroundColor: '#FFFFFF',
-	        height: '380px',
-	        width: '650px',
+	        height: '55%',
+	        width: '65%',
 	        zIndex: 11
 	      }
 	    };
 	    var form = this;
-	    var scoreChoices = [1, 2, 3, 4, 5].map(function (value, idx) {
-	      return React.createElement(
-	        'li',
-	        { key: idx },
-	        React.createElement(
-	          'label',
-	          null,
-	          value,
-	          ' '
-	        ),
-	        React.createElement('input', { type: 'radio', value: value, className: 'review-score', name: 'score',
-	          onChange: form.updateScore })
-	      );
-	    });
 	
 	    return React.createElement(
 	      'div',
@@ -37468,27 +37469,60 @@
 	            'Create your review!'
 	          ),
 	          React.createElement(
-	            'label',
-	            { className: 'input-text' },
-	            'Title'
-	          ),
-	          React.createElement('input', { placeholder: 'Sum it up!', value: this.state.title, className: 'add-review-title', onChange: this.updateTitle, type: 'text' }),
-	          React.createElement(
-	            'label',
-	            { className: 'input-text', htmlFor: 'score' },
-	            'Score'
-	          ),
-	          React.createElement(
-	            'ul',
-	            { className: 'score-choices' },
-	            scoreChoices
-	          ),
-	          React.createElement('textarea', { className: 'add-review-textarea', placeholder: 'Now explain it here!',
-	            onChange: this.updateReview, value: this.state.review }),
-	          React.createElement(
-	            'button',
-	            { onClick: this.handleSubmit, className: 'submit-button' },
-	            'Submit your review'
+	            'div',
+	            null,
+	            React.createElement(
+	              'label',
+	              { className: 'review-text' },
+	              'Title'
+	            ),
+	            React.createElement('input', { placeholder: 'Sum it up!', value: this.state.title, className: 'add-review-title', onChange: this.updateTitle, type: 'text' }),
+	            React.createElement(
+	              'label',
+	              { className: 'review-text', htmlFor: 'score' },
+	              'Score'
+	            ),
+	            React.createElement(
+	              'span',
+	              { className: 'game-rating' },
+	              React.createElement('input', { type: 'radio', className: 'rating-input',
+	                id: 'rating-input-1-5', name: 'rating-input-1', value: '5', onChange: form.updateScore }),
+	              React.createElement('label', { htmlFor: 'rating-input-1-5', className: 'rating-star' }),
+	              React.createElement('input', { type: 'radio', className: 'rating-input',
+	                id: 'rating-input-1-4', name: 'rating-input-1', value: '4', onChange: form.updateScore }),
+	              React.createElement('label', { htmlFor: 'rating-input-1-4', className: 'rating-star' }),
+	              React.createElement('input', { type: 'radio', className: 'rating-input',
+	                id: 'rating-input-1-3', name: 'rating-input-1', value: '3', onChange: form.updateScore }),
+	              React.createElement('label', { htmlFor: 'rating-input-1-3', className: 'rating-star' }),
+	              React.createElement('input', { type: 'radio', className: 'rating-input',
+	                id: 'rating-input-1-2', name: 'rating-input-1', value: '2', onChange: form.updateScore }),
+	              React.createElement('label', { htmlFor: 'rating-input-1-2', className: 'rating-star' }),
+	              React.createElement('input', { type: 'radio', className: 'rating-input',
+	                id: 'rating-input-1-1', name: 'rating-input-1', value: '1', onChange: form.updateScore }),
+	              React.createElement('label', { htmlFor: 'rating-input-1-1', className: 'rating-star' })
+	            ),
+	            React.createElement('textarea', { className: 'add-review-textarea', placeholder: 'Now explain it here!',
+	              onChange: this.updateReview, value: this.state.review }),
+	            React.createElement(
+	              'button',
+	              { onClick: this.handleSubmit, className: 'submit-button' },
+	              'Submit your review'
+	            ),
+	            React.createElement(
+	              'span',
+	              { className: 'review-error-title hidden' },
+	              'Title can\'t be blank'
+	            ),
+	            React.createElement(
+	              'span',
+	              { className: 'review-error-score hidden' },
+	              'Score can\'t be blank'
+	            ),
+	            React.createElement(
+	              'span',
+	              { className: 'review-error-body hidden' },
+	              'Body can\'t be blank'
+	            )
 	          )
 	        )
 	      )

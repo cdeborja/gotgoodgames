@@ -269,35 +269,20 @@ img {
 
 /* ADDREVIEW BOX */
 
-.add-review-box {
-  margin: 0 auto;
-  padding: 0;
-}
-
-.edit-review-box {
-  margin: 0 auto;
-  background: #eee;
-  width: 650px;
-  padding: 20px;
-  border-radius: 5px;
-}
-
-.score-choices > li {
-  display: block;
-  float: left;
-  margin-right: 10px;
-  margin-bottom: 5px;
-}
-
-.review-score:hover {
-  cursor: pointer;
-}
-
 .add-review-box > h2,
 .edit-review-box > h2 {
+    border-radius: 5px 5px 0 0;
+    text-align: center;
+    background: #53b9ea;
     font-size: 36px;
     font-weight: bold;
+    color: #FFFFFF;
     border-bottom: 1px solid #AAAAAA;
+}
+
+.add-review-box > div,
+.edit-review-box > div {
+  padding: 20px;
 }
 
 .add-review-textarea {
@@ -320,6 +305,15 @@ img {
   outline: none;
 }
 
+.review-text {
+  float: left;
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  margin: 3px 0;
+  width: 100%;
+}
+
 .add-review-textarea:focus {
   box-shadow: 0 0 5px rgba(81, 203, 238, 1);
   padding: 10px 4px;
@@ -337,6 +331,7 @@ img {
   width: 80%;
   height: auto;
   word-wrap: break-word;
+  margin-bottom: 10px;
 }
 
 .add-review-title:focus {
@@ -389,12 +384,11 @@ img {
 
 .submit-button {
   border-radius: 5px;
-  border: 1px solid #AAAAAA;
-  background: #FFFFFF;
+  background: #53b9ea;
   padding: 12px 20px;
   font-weight: 600;
   margin-top: 20px;
-  color: #000000;
+  color: #FFFFFF;
   transition: background-color 400ms, transform 400ms, color 400ms;
 }
 
@@ -417,8 +411,7 @@ img {
 
 .submit-button:hover {
   cursor: pointer;
-  background: #53b9ea;
-  color: #FFFFFF;
+  background: #0079b3;
 }
 
 /* --- APP CONTENT --- */

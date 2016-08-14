@@ -45,19 +45,36 @@ var ReviewForm = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
+    if (this.state.title === "") {
+      $(".review-error-title").removeClass("hidden");
+      setTimeout(function() {
+        $(".review-error-title").addClass("hidden");
+      }, 2000);
+    } else if (this.state.score === null) {
+      $(".review-error-score").removeClass("hidden");
+      setTimeout(function() {
+        $(".review-error-score").addClass("hidden");
+      }, 2000);
+    } else if (this.state.body === "") {
+      $(".review-error-body").removeClass("hidden");
+      setTimeout(function() {
+        $(".review-error-body").addClass("hidden");
+      }, 2000);
 
-    var user_id = SessionStore.currentUser().id;
-    var reviewParams = {
-      review: {
-        user_id: user_id,
-        game_id: this.props.game.id,
-        score: this.state.score,
-        body: this.state.body,
-        title: this.state.title
-      }
-    };
-    ApiUtil.createReview(reviewParams);
-    this.closeModal();
+    } else {
+      var user_id = SessionStore.currentUser().id;
+      var reviewParams = {
+        review: {
+          user_id: user_id,
+          game_id: this.props.game.id,
+          score: this.state.score,
+          body: this.state.body,
+          title: this.state.title
+        }
+      };
+      ApiUtil.createReview(reviewParams);
+      this.closeModal();
+    }
   },
 
   updateScore: function (e) {
@@ -98,26 +115,19 @@ var ReviewForm = React.createClass({
       content : {
         position        : 'absolute',
         margin          : '0 auto',
-        top             : '150px',
+        top             : '50%',
+        transform       : 'translateY(-50%)',
         left            : '0px',
         right           : '0px',
         bottom          : '0px',
-        border          : '1px solid #AAAAAA',
-        padding         : '20px',
+        padding         : '0px',
         backgroundColor : '#FFFFFF',
-        height          : '380px',
-        width           : '650px',
-        zIndex         : 11
+        height          : '55%',
+        width           : '65%',
+        zIndex          : 11
       }
     };
     var form = this;
-    var scoreChoices = [1, 2, 3, 4, 5].map ( function (value, idx) {
-      return (<li key={idx}>
-        <label>{value} </label>
-        <input type="radio" value={value} className="review-score" name="score"
-        onChange={form.updateScore}/>
-      </li>);
-      });
 
     return(
       <div>
@@ -133,24 +143,47 @@ var ReviewForm = React.createClass({
 
         <form className="add-review-box">
           <h2>Create your review!</h2>
-          <label className="input-text">
-            Title
-          </label>
+          <div>
+            <label className="review-text">
+              Title
+            </label>
 
-          <input placeholder="Sum it up!" value={this.state.title} className="add-review-title" onChange={this.updateTitle} type="text">
-          </input>
-          <label className="input-text" htmlFor="score">
-            Score
-          </label>
+            <input placeholder="Sum it up!" value={this.state.title} className="add-review-title" onChange={this.updateTitle} type="text">
+            </input>
+            <label className="review-text" htmlFor="score">
+              Score
+            </label>
 
-          <ul className="score-choices">
-            {scoreChoices}
-          </ul>
-          <textarea className="add-review-textarea" placeholder="Now explain it here!"
-          onChange={this.updateReview} value={this.state.review}/>
+            <span className="game-rating">
+              <input type="radio" className="rating-input"
+                id="rating-input-1-5" name="rating-input-1" value="5" onChange={form.updateScore}/>
+              <label htmlFor="rating-input-1-5" className="rating-star"></label>
 
-          <button onClick={this.handleSubmit} className="submit-button">Submit your review</button>
+              <input type="radio" className="rating-input"
+                id="rating-input-1-4" name="rating-input-1" value="4" onChange={form.updateScore}/>
+              <label htmlFor="rating-input-1-4" className="rating-star"></label>
 
+              <input type="radio" className="rating-input"
+                id="rating-input-1-3" name="rating-input-1" value="3" onChange={form.updateScore}/>
+              <label htmlFor="rating-input-1-3" className="rating-star"></label>
+
+              <input type="radio" className="rating-input"
+                id="rating-input-1-2" name="rating-input-1" value="2" onChange={form.updateScore}/>
+              <label htmlFor="rating-input-1-2" className="rating-star"></label>
+
+              <input type="radio" className="rating-input"
+                id="rating-input-1-1" name="rating-input-1" value="1" onChange={form.updateScore}/>
+              <label htmlFor="rating-input-1-1" className="rating-star"></label>
+            </span>
+
+            <textarea className="add-review-textarea" placeholder="Now explain it here!"
+            onChange={this.updateReview} value={this.state.review}/>
+
+            <button onClick={this.handleSubmit} className="submit-button">Submit your review</button>
+            <span className="review-error-title hidden">Title can't be blank</span>
+            <span className="review-error-score hidden">Score can't be blank</span>
+            <span className="review-error-body hidden">Body can't be blank</span>
+          </div>
         </form>
 
       </Modal>

@@ -15,7 +15,6 @@ module.exports = {
       dataType: "json",
       data: credentials,
       success: function(result) {
-        //Need to come back later and figure out how to display the errors instead of having general error
         if ('errors' in result) {
           $(".login-error").removeClass("hidden");
           setTimeout(function(){
