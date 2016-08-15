@@ -16,23 +16,33 @@ var ReviewForm = React.createClass({
            });
   },
 
-  _alert: function(){
+  _alert: function () {
       this.setState({alert: true});
   },
 
-  checkIfCanReview: function () {
-    var reviewedUsers = [];
-    var currentUser = SessionStore.currentUser().id;
-
-    this.props.reviews.forEach( function (review) {
-      reviewedUsers.push(review.props.review.user_id);
-    });
-
-    if (reviewedUsers.includes(currentUser)) {
-      this._alert();
+  handleButtonClick: function () {
+    if (this.props.userReview) {
+      this.setState({title: this.props.userReview.title,
+                     score: null,
+                     body:  this.props.userReview.body});
+      this.openModal();
     } else {
       this.openModal();
     }
+  },
+
+  changeText: function () {
+    if (this.props.userReview) {
+      this.addEditReviewText();
+    }
+  },
+
+  addEditReviewText: function () {
+    $('.add-review-button').html("Update previous review")
+  },
+
+  removeEditReviewText: function () {
+    $('.add-review-button').html("Add your own review")
   },
 
   closeModal: function(){
@@ -45,6 +55,7 @@ var ReviewForm = React.createClass({
 
   handleSubmit: function(e) {
     e.preventDefault();
+
     if (this.state.title === "") {
       $(".review-error-title").removeClass("hidden");
       setTimeout(function() {
@@ -62,18 +73,36 @@ var ReviewForm = React.createClass({
       }, 2000);
 
     } else {
-      var user_id = SessionStore.currentUser().id;
-      var reviewParams = {
-        review: {
-          user_id: user_id,
-          game_id: this.props.game.id,
-          score: this.state.score,
-          body: this.state.body,
-          title: this.state.title
+      if (this.props.userReview) {
+        var updateParams = {
+          review: {
+            id: this.props.userReview.id,
+            user_id: this.props.userReview.user_id,
+            game_id: this.props.userReview.game_id,
+            score: this.state.score,
+            body: this.state.body,
+            title: this.state.title,
+            game_page: true
+          }
         }
-      };
+
+      ApiUtil.updatePageReview(updateParams);
+      this.closeModal();
+
+      } else {
+        var user_id = SessionStore.currentUser().id;
+        var reviewParams = {
+          review: {
+            user_id: user_id,
+            game_id: this.props.game.id,
+            score: this.state.score,
+            body: this.state.body,
+            title: this.state.title
+          }
+        };
       ApiUtil.createReview(reviewParams);
       this.closeModal();
+      }
     }
   },
 
@@ -122,27 +151,34 @@ var ReviewForm = React.createClass({
         bottom          : '0px',
         padding         : '0px',
         backgroundColor : '#FFFFFF',
-        height          : '55%',
+        height          : '58.5%',
         width           : '65%',
         zIndex          : 11
       }
     };
     var form = this;
+    var reviewHeaderText;
+
+    if (this.props.userReview) {
+      reviewHeaderText = <h2>Edit your review</h2>;
+    } else {
+      reviewHeaderText = <h2>Create your review</h2>;
+    }
 
     return(
       <div>
-      <button className="add-review-button" onClick={this.checkIfCanReview}>
-        Add your own review!</button>
+      <button className="add-review-button" onMouseEnter={this.changeText} onMouseLeave={this.removeEditReviewText} onClick={this.handleButtonClick}>
+        Add your own review</button>
         <ReactSimpleAlert options={rsaOptions} />
 
       <Modal
         isOpen={this.state.modalOpen}
-        shouldCloseOnOverlayClick={false}
+        shouldCloseOnOverlayClick={true}
         onRequestClose={this.closeModal}
         style={reviewFormStyle}>
 
         <form className="add-review-box">
-          <h2>Create your review!</h2>
+          {reviewHeaderText}
           <div>
             <label className="review-text">
               Title
@@ -175,9 +211,11 @@ var ReviewForm = React.createClass({
                 id="rating-input-1-1" name="rating-input-1" value="1" onChange={form.updateScore}/>
               <label htmlFor="rating-input-1-1" className="rating-star"></label>
             </span>
-
+            <label className="review-text">
+              Review
+            </label>
             <textarea className="add-review-textarea" placeholder="Now explain it here!"
-            onChange={this.updateReview} value={this.state.review}/>
+            onChange={this.updateReview} value={this.state.body}/>
 
             <button onClick={this.handleSubmit} className="submit-button">Submit your review</button>
             <span className="review-error-title hidden">Title can't be blank</span>

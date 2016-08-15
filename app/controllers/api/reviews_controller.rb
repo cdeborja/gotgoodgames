@@ -38,8 +38,13 @@ class Api::ReviewsController < ApplicationController
   def update
     review = Review.find(params[:id])
     if review.update(review_params)
-      @reviews = User.find(review.user_id).reviews
-      render :index
+      if params["review"]["game_page"]
+        game = Game.find(review_params["game_id"])
+        redirect_to "/api/games/#{game.id}"
+      else
+        @reviews = User.find(review.user_id).reviews
+        render :index
+      end
     end
   end
 

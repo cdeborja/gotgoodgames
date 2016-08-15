@@ -22124,6 +22124,22 @@
 	    });
 	  },
 	
+	  updatePageReview: function (params) {
+	    $.ajax({
+	      type: "PATCH",
+	      url: "/api/reviews/" + params.review.id,
+	      dataType: "json",
+	      data: params,
+	      success: function (game) {
+	        GameActions.receiveSingleGame(game);
+	      },
+	      error: function () {
+	        console.log("could not update review");
+	      }
+	
+	    });
+	  },
+	
 	  fetchAllReviewedUsers: function (game_id) {
 	    $.ajax({
 	      type: "GET",
@@ -37336,19 +37352,29 @@
 	    this.setState({ alert: true });
 	  },
 	
-	  checkIfCanReview: function () {
-	    var reviewedUsers = [];
-	    var currentUser = SessionStore.currentUser().id;
-	
-	    this.props.reviews.forEach(function (review) {
-	      reviewedUsers.push(review.props.review.user_id);
-	    });
-	
-	    if (reviewedUsers.includes(currentUser)) {
-	      this._alert();
+	  handleButtonClick: function () {
+	    if (this.props.userReview) {
+	      this.setState({ title: this.props.userReview.title,
+	        score: null,
+	        body: this.props.userReview.body });
+	      this.openModal();
 	    } else {
 	      this.openModal();
 	    }
+	  },
+	
+	  changeText: function () {
+	    if (this.props.userReview) {
+	      this.addEditReviewText();
+	    }
+	  },
+	
+	  addEditReviewText: function () {
+	    $('.add-review-button').html("Update previous review");
+	  },
+	
+	  removeEditReviewText: function () {
+	    $('.add-review-button').html("Add your own review");
 	  },
 	
 	  closeModal: function () {
@@ -37361,6 +37387,7 @@
 	
 	  handleSubmit: function (e) {
 	    e.preventDefault();
+	
 	    if (this.state.title === "") {
 	      $(".review-error-title").removeClass("hidden");
 	      setTimeout(function () {
@@ -37377,18 +37404,35 @@
 	        $(".review-error-body").addClass("hidden");
 	      }, 2000);
 	    } else {
-	      var user_id = SessionStore.currentUser().id;
-	      var reviewParams = {
-	        review: {
-	          user_id: user_id,
-	          game_id: this.props.game.id,
-	          score: this.state.score,
-	          body: this.state.body,
-	          title: this.state.title
-	        }
-	      };
-	      ApiUtil.createReview(reviewParams);
-	      this.closeModal();
+	      if (this.props.userReview) {
+	        var updateParams = {
+	          review: {
+	            id: this.props.userReview.id,
+	            user_id: this.props.userReview.user_id,
+	            game_id: this.props.userReview.game_id,
+	            score: this.state.score,
+	            body: this.state.body,
+	            title: this.state.title,
+	            game_page: true
+	          }
+	        };
+	
+	        ApiUtil.updatePageReview(updateParams);
+	        this.closeModal();
+	      } else {
+	        var user_id = SessionStore.currentUser().id;
+	        var reviewParams = {
+	          review: {
+	            user_id: user_id,
+	            game_id: this.props.game.id,
+	            score: this.state.score,
+	            body: this.state.body,
+	            title: this.state.title
+	          }
+	        };
+	        ApiUtil.createReview(reviewParams);
+	        this.closeModal();
+	      }
 	    }
 	  },
 	
@@ -37437,37 +37481,48 @@
 	        bottom: '0px',
 	        padding: '0px',
 	        backgroundColor: '#FFFFFF',
-	        height: '55%',
+	        height: '58.5%',
 	        width: '65%',
 	        zIndex: 11
 	      }
 	    };
 	    var form = this;
+	    var reviewHeaderText;
+	
+	    if (this.props.userReview) {
+	      reviewHeaderText = React.createElement(
+	        'h2',
+	        null,
+	        'Edit your review'
+	      );
+	    } else {
+	      reviewHeaderText = React.createElement(
+	        'h2',
+	        null,
+	        'Create your review'
+	      );
+	    }
 	
 	    return React.createElement(
 	      'div',
 	      null,
 	      React.createElement(
 	        'button',
-	        { className: 'add-review-button', onClick: this.checkIfCanReview },
-	        'Add your own review!'
+	        { className: 'add-review-button', onMouseEnter: this.changeText, onMouseLeave: this.removeEditReviewText, onClick: this.handleButtonClick },
+	        'Add your own review'
 	      ),
 	      React.createElement(ReactSimpleAlert, { options: rsaOptions }),
 	      React.createElement(
 	        Modal,
 	        {
 	          isOpen: this.state.modalOpen,
-	          shouldCloseOnOverlayClick: false,
+	          shouldCloseOnOverlayClick: true,
 	          onRequestClose: this.closeModal,
 	          style: reviewFormStyle },
 	        React.createElement(
 	          'form',
 	          { className: 'add-review-box' },
-	          React.createElement(
-	            'h2',
-	            null,
-	            'Create your review!'
-	          ),
+	          reviewHeaderText,
 	          React.createElement(
 	            'div',
 	            null,
@@ -37501,8 +37556,13 @@
 	                id: 'rating-input-1-1', name: 'rating-input-1', value: '1', onChange: form.updateScore }),
 	              React.createElement('label', { htmlFor: 'rating-input-1-1', className: 'rating-star' })
 	            ),
+	            React.createElement(
+	              'label',
+	              { className: 'review-text' },
+	              'Review'
+	            ),
 	            React.createElement('textarea', { className: 'add-review-textarea', placeholder: 'Now explain it here!',
-	              onChange: this.updateReview, value: this.state.review }),
+	              onChange: this.updateReview, value: this.state.body }),
 	            React.createElement(
 	              'button',
 	              { onClick: this.handleSubmit, className: 'submit-button' },

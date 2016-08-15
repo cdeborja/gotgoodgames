@@ -145,6 +145,22 @@ module.exports = {
     });
   },
 
+  updatePageReview: function (params) {
+    $.ajax({
+      type: "PATCH",
+      url: "/api/reviews/" + params.review.id ,
+      dataType: "json",
+      data: params,
+      success: function (game) {
+        GameActions.receiveSingleGame(game)
+      },
+      error: function() {
+        console.log("could not update review");
+      }
+
+    });
+  },
+
   fetchAllReviewedUsers: function(game_id) {
     $.ajax({
       type: "GET",
