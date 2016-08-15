@@ -35,6 +35,9 @@ class User < ActiveRecord::Base
     foreign_key: :user_id
   )
 
+  has_many :likes
+  has_many :liked_reviews, :through => :likes, :source => :review
+
   attr_reader :password
 
   after_initialize :ensure_session_token

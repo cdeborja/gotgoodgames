@@ -15,5 +15,8 @@ class Review < ActiveRecord::Base
     primary_key: :id,
     foreign_key: :user_id
   )
-  
+
+  has_many :likes
+  has_many :liking_users, :through => :likes, :source => :user
+
 end

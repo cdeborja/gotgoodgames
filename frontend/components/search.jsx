@@ -23,6 +23,10 @@ var Search = React.createClass({
    this.setState({ query: "" });
   },
 
+  clearSearchBox: function () {
+    $("#search")[0].value = "";
+  },
+
   contextTypes: {
      router: React.PropTypes.object.isRequired
    },
@@ -48,10 +52,10 @@ var Search = React.createClass({
     ApiUtil.search(this.state.query, 1);
   },
 
-  nextPage: function () {
-    var meta = SearchResultsStore.meta();
-    ApiUtil.search(meta.query, meta.page + 1);
-  },
+  // nextPage: function () {
+  //   var meta = SearchResultsStore.meta();
+  //   ApiUtil.search(meta.query, meta.page + 1);
+  // },
 
   resultList: function () {
     if (this.state.query.length > 2) {
@@ -61,7 +65,7 @@ var Search = React.createClass({
           return (
             <li key={ index }>
               <a href={ gamehtml } >
-                🕹 : { result.title }
+                🕹  { result.title }
               </a>
             </li>
           );
@@ -71,7 +75,7 @@ var Search = React.createClass({
           return (
             <li key={ index }>
               <a href={ userhtml }>
-                😀 : { result.username }
+                😀  { result.username }
               </a>
             </li>
           );
@@ -89,18 +93,18 @@ var Search = React.createClass({
   render: function () {
     var searchList;
     if (this.state.query) {
-      searchList = (<ul className="search-box-results group">
+      searchList = (<ul onClick={this.clearSearchBox} className="search-box-results group">
                 { this.resultList() }
               </ul>
             );
     }
     var meta = SearchResultsStore.meta();
 
+    // <button className="go-button" onClick={ this.search }>GO</button>
     return (
       <form className="search-box group">
         <input type="text" id="search" onChange={ this.handleInputChange }
           placeholder="Search"/>
-        <button className="go-button" onClick={ this.search }>GO</button>
         {searchList}
       </form>
     );

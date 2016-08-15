@@ -31879,6 +31879,10 @@
 	    this.setState({ query: "" });
 	  },
 	
+	  clearSearchBox: function () {
+	    $("#search")[0].value = "";
+	  },
+	
 	  contextTypes: {
 	    router: React.PropTypes.object.isRequired
 	  },
@@ -31904,10 +31908,10 @@
 	    ApiUtil.search(this.state.query, 1);
 	  },
 	
-	  nextPage: function () {
-	    var meta = SearchResultsStore.meta();
-	    ApiUtil.search(meta.query, meta.page + 1);
-	  },
+	  // nextPage: function () {
+	  //   var meta = SearchResultsStore.meta();
+	  //   ApiUtil.search(meta.query, meta.page + 1);
+	  // },
 	
 	  resultList: function () {
 	    if (this.state.query.length > 2) {
@@ -31920,7 +31924,7 @@
 	            React.createElement(
 	              "a",
 	              { href: gamehtml },
-	              "🕹 : ",
+	              "🕹  ",
 	              result.title
 	            )
 	          );
@@ -31932,7 +31936,7 @@
 	            React.createElement(
 	              "a",
 	              { href: userhtml },
-	              "😀 : ",
+	              "😀  ",
 	              result.username
 	            )
 	          );
@@ -31952,22 +31956,18 @@
 	    if (this.state.query) {
 	      searchList = React.createElement(
 	        "ul",
-	        { className: "search-box-results group" },
+	        { onClick: this.clearSearchBox, className: "search-box-results group" },
 	        this.resultList()
 	      );
 	    }
 	    var meta = SearchResultsStore.meta();
 	
+	    // <button className="go-button" onClick={ this.search }>GO</button>
 	    return React.createElement(
 	      "form",
 	      { className: "search-box group" },
 	      React.createElement("input", { type: "text", id: "search", onChange: this.handleInputChange,
 	        placeholder: "Search" }),
-	      React.createElement(
-	        "button",
-	        { className: "go-button", onClick: this.search },
-	        "GO"
-	      ),
 	      searchList
 	    );
 	  }
