@@ -10,8 +10,7 @@ var ReviewForm = React.createClass({
              title: "",
              body: "",
              score: null,
-             userReview: this.props.userReview,
-             alert: false
+             userReview: this.props.userReview
            });
   },
 

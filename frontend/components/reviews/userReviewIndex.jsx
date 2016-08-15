@@ -11,34 +11,63 @@ module.exports = React.createClass({
    },
 
   getInitialState: function () {
-    return {
-      modalOpen: false,
-      score: null,
-      body: "",
-      title: ""
-    };
+
+    if (this.props.userReview) {
+      return ({ modalOpen: false,
+             title: this.props.userReview.title,
+             body: this.props.userReview.body,
+             score: this.props.userReview.score,
+             userReview: this.props.userReview
+           });
+    } else {
+      return ({modalOpen:false,
+             title: "",
+             body: "",
+             score: null,
+             userReview: this.props.userReview})
+    }
   },
 
-  deleteReview: function () {
+  deleteReview: function (e) {
+    e.preventDefault();
+
     ApiUtil.deleteReview({
-      review: this.props.review,
+      review: this.props.userReview,
       });
   },
 
   handleSubmit: function(e) {
-    var user_id = SessionStore.currentUser().id;
     e.preventDefault();
-    var reviewParams = {
-      review: {
-        id: this.props.review.id,
-        user_id: user_id,
-        score: this.state.score,
-        body: this.state.body,
-        title: this.state.title
-      }
-    };
-    ApiUtil.updateReview(reviewParams);
-    this.closeModal();
+    var user_id = this.state.userReview.user_id;
+
+    if (this.state.title === "") {
+      $(".review-error-title").removeClass("hidden");
+      setTimeout(function() {
+        $(".review-error-title").addClass("hidden");
+      }, 2000);
+    } else if (this.state.score === null) {
+      $(".review-error-score").removeClass("hidden");
+      setTimeout(function() {
+        $(".review-error-score").addClass("hidden");
+      }, 2000);
+    } else if (this.state.body === "") {
+      $(".review-error-body").removeClass("hidden");
+      setTimeout(function() {
+        $(".review-error-body").addClass("hidden");
+      }, 2000);
+    } else {
+      var reviewParams = {
+        review: {
+          id: this.props.userReview.id,
+          user_id: user_id,
+          score: this.state.score,
+          body: this.state.body,
+          title: this.state.title
+        }
+      };
+      ApiUtil.updateReview(reviewParams);
+      this.closeModal();
+    }
   },
 
   closeModal: function(){
@@ -62,11 +91,11 @@ module.exports = React.createClass({
   },
 
   goToGame: function () {
-    this.context.router.push('/games/' + this.props.review.game.id);
+    this.context.router.push('/games/' + this.props.userReview.game.id);
   },
 
   render: function () {
-    var review = this.props.review;
+    var review = this.props.userReview;
 
     var reviewFormStyle = {
       overlay : {
@@ -81,16 +110,16 @@ module.exports = React.createClass({
       content : {
         position        : 'absolute',
         margin          : '0 auto',
-        top             : '150px',
+        top             : '50%',
+        transform       : 'translateY(-50%)',
         left            : '0px',
         right           : '0px',
         bottom          : '0px',
-        border          : '1px solid #AAAAAA',
-        padding         : '20px',
+        padding         : '0px',
         backgroundColor : '#FFFFFF',
-        height          : '380px',
-        width           : '650px',
-        zIndex         : 11
+        height          : '58.5%',
+        width           : '65%',
+        zIndex          : 11
       }
     };
 
@@ -98,36 +127,18 @@ module.exports = React.createClass({
 
     var buttons;
 
-    if (SessionStore.currentUser().id === this.props.review.user_id) {
+    if (SessionStore.currentUser().id === this.props.userReview.user_id) {
       buttons = (
           <div className="edit-menu group">
-            <button onClick={this.openModal}>EDIT</button>
-            <button onClick={this.deleteReview}>DELETE</button>
+            <button className="hidden" onClick={this.openModal}>Edit</button>
+            <button className="hidden" onClick={this.deleteReview}>Delete</button>
           </div>
       );
     }
 
     var form = this;
-    var checkedValue = form.props.review.score;
-    var scoreChoices = [1, 2, 3, 4, 5].map ( function (value, idx) {
-// Need to fix defaulting checked option
-      if (checkedValue === value) {
-        return (<li key={idx}>
-          <label>{value} </label>
-          <input type="radio" value={value} className="review-score" name="score"
-          onChange={form.updateScore}/>
-        </li>);
-      } else {
-        return (<li key={idx}>
-          <label>{value} </label>
-          <input type="radio" value={value} className="review-score" name="score"
-          onChange={form.updateScore}/>
-        </li>);
-      }
-    });
 
     var score = review.score + "/5"
-
     return(
       <div>
 
@@ -138,25 +149,51 @@ module.exports = React.createClass({
         style={reviewFormStyle}>
 
         <form className="add-review-box">
-          <h2>Edit your review!</h2>
-          <label className="input-text">
+          <h2>Edit your review</h2>
+          <div>
+          <label className="review-text">
             Title
           </label>
 
-          <input className="add-review-title" defaultValue={this.props.review.title} onChange={this.updateTitle} type="text">
+          <input placeholder="Sum it up!" value={this.state.title} className="add-review-title" onChange={this.updateTitle} type="text">
           </input>
-          <label className="input-text" htmlFor="score">
+          <label className="review-text" htmlFor="score">
             Score
           </label>
 
-          <ul className="score-choices">
-            {scoreChoices}
-          </ul>
+          <span className="game-rating">
+            <input type="radio" className="rating-input"
+              id="rating-input-1-5" name="rating-input-1" value="5" onChange={form.updateScore}/>
+            <label htmlFor="rating-input-1-5" className="rating-star"></label>
+
+            <input type="radio" className="rating-input"
+              id="rating-input-1-4" name="rating-input-1" value="4" onChange={form.updateScore}/>
+            <label htmlFor="rating-input-1-4" className="rating-star"></label>
+
+            <input type="radio" className="rating-input"
+              id="rating-input-1-3" name="rating-input-1" value="3" onChange={form.updateScore}/>
+            <label htmlFor="rating-input-1-3" className="rating-star"></label>
+
+            <input type="radio" className="rating-input"
+              id="rating-input-1-2" name="rating-input-1" value="2" onChange={form.updateScore}/>
+            <label htmlFor="rating-input-1-2" className="rating-star"></label>
+
+            <input type="radio" className="rating-input"
+              id="rating-input-1-1" name="rating-input-1" value="1" onChange={form.updateScore}/>
+            <label htmlFor="rating-input-1-1" className="rating-star"></label>
+          </span>
+          <label className="review-text">
+            Review
+          </label>
           <textarea className="add-review-textarea" placeholder="Enter your awesome review here!"
-          onChange={this.updateReview} defaultValue={this.props.review.body}/>
+          onChange={this.updateReview} defaultValue={this.props.userReview.body}/>
 
           <button onClick={this.handleSubmit} className="submit-button">Submit your updated review</button>
-
+          <span className="review-error-title hidden">Title can't be blank</span>
+          <span className="review-error-score hidden">Score can't be blank</span>
+          <span className="review-error-body hidden">Body can't be blank</span>
+          <button onClick={this.deleteReview} className="delete-button">Delete review</button>
+          </div>
         </form>
 
       </Modal>
@@ -167,11 +204,11 @@ module.exports = React.createClass({
             <p>{review.game.title}</p>
           </div>
           <div className="game-review-comment group">
+            {buttons}
             <h3>{review.title}</h3>
             <p>{score}</p>
             <span>{review.body}</span>
           </div>
-          {buttons}
         </ul>
 
       </div>

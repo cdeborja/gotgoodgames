@@ -45,7 +45,7 @@ module.exports = React.createClass({
     var userReviews;
     if (this.state.reviews.length > 0) {
       userReviews = this.state.reviews.map(function (review, id) {
-        return <UserReviewItem key={id} review={review} />;
+        return <UserReviewItem key={id} userReview={review} />;
       }).reverse();
     } else {
       userReviews = <p>Nothing...yet</p>;

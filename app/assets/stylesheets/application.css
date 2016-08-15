@@ -393,13 +393,19 @@ img {
 }
 
 .delete-button {
+  float: right;
   border-radius: 5px;
-  background: #53b9ea;
+  background: #d23f0f;
   padding: 12px 20px;
   font-weight: 600;
   margin-top: 20px;
   color: #FFFFFF;
   transition: background-color 400ms, transform 400ms, color 400ms;
+}
+
+.delete-button:hover {
+  cursor: pointer;
+  background: #ff3f00;
 }
 
 .add-review-button {

@@ -88,26 +88,7 @@
   display: block;
 }
 
-.home-user-picture .text {
-  position:relative;
-  bottom: 30px;
-  left: 30px;
-  visibility:hidden;
-}
-
-// .home-user-picture:hover .text {
-//   visibility: visible;
-// }
-//
-// .home-user-picture:hover, .home-user-picture > img:hover {
-//   cursor: pointer;
-//   background: #ffffff;
-// }
-
-// This goes below the div you want to do for a hover over
-//             <div className="text">Update Picture</div>
-
-.home-user-picture, .user-picture > img {
+.user-picture > img {
   display: block;
   width: 160px;
   height: auto;
@@ -188,23 +169,40 @@
 }
 
 .edit-menu {
-  float: left;
-  margin-top: 50px;
-  color: #000000;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  position: absolute;
+  width: 50%;
+  justify-content: space-around;
 }
+
 .edit-menu > button {
-  display: block;
+  text-align: center;
+  position: relative;
+  margin-left: 20px;
   padding: 10px;
   width: 140px;
-  border: 1px solid #AAAAAA;
-  margin: 5px 0;
+  color: #FFFFFF;
   border-radius: 5px;
   transition: background-color 400ms, color 400ms;
 }
 
-.edit-menu > button:hover {
+.edit-menu > button:first-child {
   background: #53b9ea;
-  color: #FFFFFF;
+}
+
+.edit-menu > button:first-child:hover {
+  background: #0079b3;
+  cursor: pointer;
+}
+
+.edit-menu > button:last-child {
+  background: #d23f0f;
+}
+
+.edit-menu > button:last-child:hover {
+  background: #ff3f00;
   cursor: pointer;
 }
 
@@ -213,7 +211,6 @@
   margin: 10px 15px 10px 15px;
   width: 35%;
   height: 100%;
-  // border: 1px solid #AAAAAA;
   border-radius: 5px;
 
 }

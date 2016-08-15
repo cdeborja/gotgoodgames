@@ -1,12 +1,10 @@
 var React = require('react');
 var ApiUtil = require('../../util/apiUtil');
-var AppDispatcher = require('../../dispatcher/dispatcher');
 var SessionStore = require('../../stores/session');
 var UserStore = require('../../stores/user');
 var ReviewStore = require('../../stores/review');
 var GameStore = require('../../stores/game');
 var UserReviewItem = require('../reviews/userReviewIndex');
-var EditUserForm = require('./editUserForm');
 
 module.exports = React.createClass({
   contextTypes: {
@@ -58,15 +56,13 @@ module.exports = React.createClass({
     var userReviews;
     if (this.state.reviews.length > 0) {
       userReviews = this.state.reviews.map(function (review, id) {
-        return <UserReviewItem key={id} review={review} />;
+        return <UserReviewItem key={id} userReview={review} />;
       }).reverse();
     } else {
       userReviews = <p>Nothing...yet</p>;
     }
 
-
     // var memberSince = this.state.user.created_at.slice(0,10).split("-").join('/');
-    // <div className="cover" onMouseOver={}>
 
     return(
     <div className="content-container group">

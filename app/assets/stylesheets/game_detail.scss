@@ -89,10 +89,13 @@
 }
 
 .game-review-comment {
+  border-radius: 5px;
   position: relative;
   font-size: 16px;
   float: left;
-  width: 84%;
+  width: 85%;
+  margin-left: 10px;
+  transition: background-color 400ms;
 }
 
 .game-review-comment > h3 {
@@ -116,9 +119,19 @@
   background: #FFFFFF;
   min-height: 60px;
   height: auto;
-  width: 100%;
+  width: 95%;
   border-radius: 5px;
   border: 1px solid #AAAAAA;
+  transition: background-color 400ms;
+}
+
+// .game-review-comment:hover,
+// .game-review-comment:hover > span {
+//   background-color: rgba(200, 200, 200, 0.7);
+// }
+
+.game-review-comment:hover .edit-menu > button {
+  display: inline-block;
 }
 
 .games-index > li {
