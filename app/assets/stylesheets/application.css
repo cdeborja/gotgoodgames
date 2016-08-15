@@ -392,6 +392,16 @@ img {
   transition: background-color 400ms, transform 400ms, color 400ms;
 }
 
+.delete-button {
+  border-radius: 5px;
+  background: #53b9ea;
+  padding: 12px 20px;
+  font-weight: 600;
+  margin-top: 20px;
+  color: #FFFFFF;
+  transition: background-color 400ms, transform 400ms, color 400ms;
+}
+
 .add-review-button {
   background: #53b9ea;
   color: #FFFFFF;

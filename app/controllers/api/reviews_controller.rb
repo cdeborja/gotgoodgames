@@ -51,8 +51,13 @@ class Api::ReviewsController < ApplicationController
   def destroy
     review = Review.find(params[:id])
     review.destroy
-    @reviews = User.find(review.user_id).reviews
-    render :index
+    if params["game_page"]
+      game = Game.find(review_params["game_id"])
+      redirect_to "/api/games/#{game.id}"
+    else
+      @reviews = User.find(review.user_id).reviews
+      render :index
+    end
   end
 
   private

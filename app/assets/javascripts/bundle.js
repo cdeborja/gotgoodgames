@@ -22198,6 +22198,21 @@
 	    });
 	  },
 	
+	  deletePageReview: function (params) {
+	    $.ajax({
+	      type: "DELETE",
+	      url: "/api/reviews/" + params.review.id,
+	      dataType: "json",
+	      data: params,
+	      success: function (game) {
+	        GameActions.receiveSingleGame(game);
+	      },
+	      error: function () {
+	        console.log("could not delete review");
+	      }
+	    });
+	  },
+	
 	  deleteReview: function (params) {
 	    $.ajax({
 	      type: "DELETE",
@@ -22616,8 +22631,8 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var Store = __webpack_require__(189).Store;
-	var SessionConstants = __webpack_require__(206);
 	var AppDispatcher = __webpack_require__(182);
+	var SessionConstants = __webpack_require__(206);
 	var SessionStore = new Store(AppDispatcher);
 	
 	var _currentUser;
@@ -37333,7 +37348,6 @@
 	var SessionStore = __webpack_require__(188);
 	var ApiUtil = __webpack_require__(181);
 	var ReviewStore = __webpack_require__(303);
-	var ReactSimpleAlert = __webpack_require__(305);
 	
 	var ReviewForm = React.createClass({
 	  displayName: 'ReviewForm',
@@ -37346,10 +37360,6 @@
 	      userReview: this.props.userReview,
 	      alert: false
 	    };
-	  },
-	
-	  _alert: function () {
-	    this.setState({ alert: true });
 	  },
 	
 	  handleButtonClick: function () {
@@ -37383,6 +37393,18 @@
 	
 	  openModal: function () {
 	    this.setState({ modalOpen: true });
+	  },
+	
+	  deleteReview: function (e) {
+	    e.preventDefault();
+	    ApiUtil.deletePageReview({
+	      review: this.props.userReview,
+	      game_page: true
+	    });
+	    this.setState({ title: "",
+	      score: null,
+	      body: "" });
+	    this.closeModal();
 	  },
 	
 	  handleSubmit: function (e) {
@@ -37450,16 +37472,6 @@
 	  /*need to figure out how to create  branching path for creating a new review and
 	  editing a post if the review has already been enter */
 	  render: function () {
-	    var rsaOptions = {
-	      title: "Uh-oh!",
-	      message: "It looks like you're trying to create a new review, but you have already reviewed this game. If you would like to edit your review, please go to My Stats",
-	      alert: this.state.alert
-	      // confirmButton: {
-	      //     text: "Edit Review",
-	      //     action: function(review){
-	      //     }
-	      // }
-	    };
 	
 	    var reviewFormStyle = {
 	      overlay: {
@@ -37495,12 +37507,18 @@
 	        null,
 	        'Edit your review'
 	      );
+	      deleteButton = React.createElement(
+	        'button',
+	        { onClick: this.deleteReview, className: 'delete-button' },
+	        'Delete review'
+	      );
 	    } else {
 	      reviewHeaderText = React.createElement(
 	        'h2',
 	        null,
 	        'Create your review'
 	      );
+	      deleteButton = React.createElement('p', null);
 	    }
 	
 	    return React.createElement(
@@ -37511,7 +37529,6 @@
 	        { className: 'add-review-button', onMouseEnter: this.changeText, onMouseLeave: this.removeEditReviewText, onClick: this.handleButtonClick },
 	        'Add your own review'
 	      ),
-	      React.createElement(ReactSimpleAlert, { options: rsaOptions }),
 	      React.createElement(
 	        Modal,
 	        {
@@ -37582,7 +37599,8 @@
 	              'span',
 	              { className: 'review-error-body hidden' },
 	              'Body can\'t be blank'
-	            )
+	            ),
+	            deleteButton
 	          )
 	        )
 	      )
@@ -37593,220 +37611,12 @@
 	module.exports = ReviewForm;
 
 /***/ },
-/* 305 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(306);
-
-/***/ },
-/* 306 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var Header = __webpack_require__(307);
-	var Body = __webpack_require__(309);
-	var Footer = __webpack_require__(310);
-	var style = __webpack_require__(308);
-	
-	var ReactSimpleAlert = React.createClass({displayName: "ReactSimpleAlert",
-	
-	  propTypes: {
-	    options: React.PropTypes.object.isRequired
-	  },
-	  
-		getInitialState: function() {
-			return {
-				alert: false
-			};
-		},
-	
-		componentWillReceiveProps: function(nextProps) {
-			this.setState({alert: nextProps.options.alert});
-		},
-	
-		render: function() {
-			var alert = null;
-			var bgStyle = style.hide;
-			var options = this.props.options;
-			if(this.state.alert) {
-				alert = (
-					React.createElement("div", {className: "rsa-alert", style: style.alert}, 
-						React.createElement(Header, {title: options.title, close: this._close}), 
-						React.createElement(Body, {message: options.message}), 
-						React.createElement(Footer, {confirmButton: options.confirmButton, close: this._close})
-					)
-				);
-				bgStyle = style.bg;
-			}
-			return (
-				React.createElement("div", {className: "rsa rsa-bg", style: bgStyle}, 
-					alert
-				)
-			);
-		},
-	
-		_close: function(){
-			this.setState({alert: false});
-		}
-	
-	});
-	
-	module.exports = ReactSimpleAlert;
-	
-
-
-/***/ },
-/* 307 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var style = __webpack_require__(308);
-	
-	var Header = React.createClass({displayName: "Header",
-	
-		render: function() {
-			return (
-				React.createElement("div", {className: "rsa-header", style: style.header}, 
-					React.createElement("span", {className: "rsa-title", style: style.title}, this.props.title || "Alert"), 
-					React.createElement("div", {className: "rsa-close close", style: style.close, onClick: this.props.close}, React.createElement("span", null, "×"))
-				)
-			);
-		}
-	
-	});
-	
-	module.exports = Header;
-
-/***/ },
-/* 308 */
-/***/ function(module, exports) {
-
-	module.exports = {
-		hide: {
-			width: "0",
-			height: "0",
-			display: "none"
-		},
-		bg: {
-			position: "fixed",
-			width: "100%",
-			height: "100%",
-			top: "0",
-			left: "0",
-			backgroundColor: "rgba(0, 0, 0, 0.5)",
-			zIndex: "99999999"
-		},
-		alert: {
-			position: "relative",
-			width: "450px",
-			margin: "30px auto",
-			borderRadius: "5px",
-			border: "1px solid #666",
-			backgroundColor: "#fff",
-			fontSize: "14px",
-			color: "#333",
-			fontFamily: "Arial"
-		},
-		header: {
-		  minHeight: "16px",
-		  padding: "15px",
-		  borderBottom: "1px solid #eee"		
-		},
-		body: {
-			padding: "15px"
-		},
-		footer: {
-			padding: "15px",
-			overflow: "hidden"
-		},
-		title: {
-			fontSize: "16px"
-		},
-		close: {
-			cursor: "pointer",
-			float: "right",
-			fontSize: "21px",
-		  fontWeight: "700",
-		  lineHeight: "1"
-		},
-		message: {
-	
-		},
-		btnClose: {
-			cursor: "pointer",
-			float: "right"
-		},
-		confirm: {
-			cursor: "pointer",
-			float: "right"
-		},
-		cancel: {
-			cursor: "pointer",
-			float: "right",
-			marginRight: "10px"
-		}
-	};
-
-/***/ },
-/* 309 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var style = __webpack_require__(308);
-	
-	var Body = React.createClass({displayName: "Body",
-	
-		render: function() {
-			return (
-				React.createElement("div", {className: "rsa-body", style: style.body}, this.props.message)
-			);
-		}
-	
-	});
-	
-	module.exports = Body;
-
-/***/ },
-/* 310 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1);
-	var style = __webpack_require__(308);
-	
-	var Footer = React.createClass({displayName: "Footer",
-	
-		render: function() {
-			var buttons = null;
-			var cfm = this.props.confirmButton;
-	
-			if(!cfm) {
-				buttons = (React.createElement("div", {className: "rsa-ok btn btn-default", onClick: this.props.close, style: style.btnClose}, "Close"));
-			} else {
-				buttons = (
-					React.createElement("div", null, 
-						React.createElement("div", {className: "rsa-confirm btn btn-primary", onClick: this._onConfirm, style: style.confirm}, cfm.text || "OK"), 
-						React.createElement("div", {className: "rsa-cancel btn btn-default", onClick: this.props.close, style: style.cancel}, "Cancel")
-					)
-				);
-			}
-	
-			return (
-				React.createElement("div", {className: "rsa-footer", style: style.footer}, 
-					buttons
-				)
-			);
-		},
-	
-		_onConfirm: function() {
-			this.props.confirmButton.action();
-			this.props.close();
-		}
-	
-	});
-	
-	module.exports = Footer;
-
-/***/ },
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */,
+/* 310 */,
 /* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -37934,7 +37744,6 @@
 	  deleteReview: function () {
 	    ApiUtil.deleteReview({
 	      review: this.props.review
-	
 	    });
 	  },
 	
@@ -38456,7 +38265,6 @@
 
 	var React = __webpack_require__(1);
 	var ApiUtil = __webpack_require__(181);
-	var AppDispatcher = __webpack_require__(182);
 	var SessionStore = __webpack_require__(188);
 	var UserStore = __webpack_require__(239);
 	var ReviewStore = __webpack_require__(303);
@@ -38465,6 +38273,10 @@
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
+	
+	  contextTypes: {
+	    router: React.PropTypes.object.isRequired
+	  },
 	
 	  getStateFromStore: function () {
 	    return { user: UserStore.find(this.props.params.userId),

@@ -1,6 +1,5 @@
 var React = require('react');
 var ApiUtil = require('../../util/apiUtil');
-var AppDispatcher = require('../../dispatcher/dispatcher');
 var SessionStore = require('../../stores/session');
 var UserStore = require('../../stores/user');
 var ReviewStore = require('../../stores/review');
@@ -8,6 +7,10 @@ var GameStore = require('../../stores/game');
 var UserReviewItem = require('../reviews/userReviewIndex');
 
 module.exports = React.createClass({
+  contextTypes: {
+     router: React.PropTypes.object.isRequired
+   },
+
   getStateFromStore: function () {
     return { user: UserStore.find(this.props.params.userId),
              reviews: ReviewStore.all(),
@@ -33,7 +36,6 @@ module.exports = React.createClass({
     this.userListener.remove();
     this.reviewListener.remove();
   },
-
 
   render: function () {
     if (this.state.user === undefined) {

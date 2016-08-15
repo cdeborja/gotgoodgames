@@ -219,6 +219,21 @@ module.exports = {
     });
   },
 
+  deletePageReview: function(params) {
+    $.ajax({
+      type: "DELETE",
+      url: "/api/reviews/" + params.review.id,
+      dataType: "json",
+      data: params,
+      success: function (game) {
+        GameActions.receiveSingleGame(game);
+      },
+      error: function () {
+        console.log("could not delete review");
+      }
+    });
+  },
+
   deleteReview: function(params) {
     $.ajax({
       type: "DELETE",

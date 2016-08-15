@@ -3,7 +3,6 @@ var Modal = require('react-modal');
 var SessionStore = require('../../stores/session');
 var ApiUtil = require('../../util/apiUtil');
 var ReviewStore = require('../../stores/review');
-var ReactSimpleAlert = require('react-simple-alert');
 
 var ReviewForm = React.createClass({
   getInitialState: function(){
@@ -14,10 +13,6 @@ var ReviewForm = React.createClass({
              userReview: this.props.userReview,
              alert: false
            });
-  },
-
-  _alert: function () {
-      this.setState({alert: true});
   },
 
   handleButtonClick: function () {
@@ -51,6 +46,18 @@ var ReviewForm = React.createClass({
 
   openModal: function(){
     this.setState({ modalOpen: true });
+  },
+
+  deleteReview: function (e) {
+    e.preventDefault();
+    ApiUtil.deletePageReview({
+      review: this.props.userReview,
+      game_page: true
+    });
+    this.setState({title: "",
+                   score: null,
+                   body:  ""});
+    this.closeModal();
   },
 
   handleSubmit: function(e) {
@@ -120,16 +127,6 @@ var ReviewForm = React.createClass({
   /*need to figure out how to create  branching path for creating a new review and
   editing a post if the review has already been enter */
   render: function(){
-    var rsaOptions = {
-        title: "Uh-oh!",
-        message: "It looks like you're trying to create a new review, but you have already reviewed this game. If you would like to edit your review, please go to My Stats",
-        alert: this.state.alert
-        // confirmButton: {
-        //     text: "Edit Review",
-        //     action: function(review){
-        //     }
-        // }
-    };
 
     var reviewFormStyle = {
       overlay : {
@@ -161,15 +158,16 @@ var ReviewForm = React.createClass({
 
     if (this.props.userReview) {
       reviewHeaderText = <h2>Edit your review</h2>;
+      deleteButton = <button onClick={this.deleteReview} className="delete-button">Delete review</button>;
     } else {
       reviewHeaderText = <h2>Create your review</h2>;
+      deleteButton = <p></p>;
     }
 
     return(
       <div>
       <button className="add-review-button" onMouseEnter={this.changeText} onMouseLeave={this.removeEditReviewText} onClick={this.handleButtonClick}>
         Add your own review</button>
-        <ReactSimpleAlert options={rsaOptions} />
 
       <Modal
         isOpen={this.state.modalOpen}
@@ -221,6 +219,7 @@ var ReviewForm = React.createClass({
             <span className="review-error-title hidden">Title can't be blank</span>
             <span className="review-error-score hidden">Score can't be blank</span>
             <span className="review-error-body hidden">Body can't be blank</span>
+            {deleteButton}
           </div>
         </form>
 

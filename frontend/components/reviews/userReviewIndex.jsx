@@ -22,7 +22,6 @@ module.exports = React.createClass({
   deleteReview: function () {
     ApiUtil.deleteReview({
       review: this.props.review,
-
       });
   },
 
