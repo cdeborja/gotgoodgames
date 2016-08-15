@@ -1,6 +1,7 @@
 var React = require('react');
 var SessionStore = require('../../stores/session');
 var GameStore = require('../../stores/game');
+ReviewStore = require('../../stores/review');
 var EditReviewLink = require('./editReviewLink');
 var Modal = require('react-modal');
 var ApiUtil = require('../../util/apiUtil');
@@ -12,20 +13,11 @@ module.exports = React.createClass({
 
   getInitialState: function () {
 
-    if (this.props.userReview) {
-      return ({ modalOpen: false,
-             title: this.props.userReview.title,
-             body: this.props.userReview.body,
-             score: this.props.userReview.score,
-             userReview: this.props.userReview
-           });
-    } else {
-      return ({modalOpen:false,
-             title: "",
-             body: "",
-             score: null,
-             userReview: this.props.userReview})
-    }
+    return ({ modalOpen: false,
+           title: "",
+           body: "",
+           score: null
+    });
   },
 
   deleteReview: function (e) {
@@ -33,12 +25,21 @@ module.exports = React.createClass({
 
     ApiUtil.deleteReview({
       review: this.props.userReview,
-      });
+    });
+  },
+
+  defaultValues: function (e) {
+    e.preventDefault();
+    var oldTitle = $('.add-review-title')[0].value;
+    var oldBody = $('.add-review-textarea')[0].value;
+    this.setState({ title: oldTitle,
+                        body: oldBody});
   },
 
   handleSubmit: function(e) {
     e.preventDefault();
-    var user_id = this.state.userReview.user_id;
+
+    var user_id = this.props.userReview.user_id;
 
     if (this.state.title === "") {
       $(".review-error-title").removeClass("hidden");
@@ -57,6 +58,7 @@ module.exports = React.createClass({
       }, 2000);
     } else {
       var reviewParams = {
+
         review: {
           id: this.props.userReview.id,
           user_id: user_id,
@@ -148,14 +150,14 @@ module.exports = React.createClass({
         onRequestClose={this.closeModal}
         style={reviewFormStyle}>
 
-        <form className="add-review-box">
+        <form onMouseEnter={form.defaultValues} className="add-review-box">
           <h2>Edit your review</h2>
           <div>
           <label className="review-text">
             Title
           </label>
 
-          <input placeholder="Sum it up!" value={this.state.title} className="add-review-title" onChange={this.updateTitle} type="text">
+          <input placeholder="Sum it up!" defaultValue={this.props.userReview.title} className="add-review-title" onChange={this.updateTitle} type="text">
           </input>
           <label className="review-text" htmlFor="score">
             Score

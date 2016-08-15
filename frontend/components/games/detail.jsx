@@ -54,7 +54,7 @@ module.exports = React.createClass({
     });
 
     var averageRating = game.averageRating.toFixed(2);
-    
+
     return(
       <div className="content-container group">
         <div className="game-information-box group">

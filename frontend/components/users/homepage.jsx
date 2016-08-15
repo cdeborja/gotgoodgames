@@ -83,7 +83,6 @@ module.exports = React.createClass({
         </div>
       </div>
 
-
       <div className="recent-reviews-box">
         <h2>Your Recent Activity!</h2>
         {userReviews}

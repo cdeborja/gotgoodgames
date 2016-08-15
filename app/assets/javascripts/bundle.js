@@ -58,15 +58,15 @@
 	//Current Routes that need pages
 	var LandingPage = __webpack_require__(180);
 	var GameDetail = __webpack_require__(301);
-	var GamesIndex = __webpack_require__(311);
-	var UserHomePage = __webpack_require__(315);
-	var UserShowPage = __webpack_require__(316);
-	var UsersIndex = __webpack_require__(317);
-	var EditForm = __webpack_require__(318);
-	var SignInForm = __webpack_require__(319);
-	var SignUpForm = __webpack_require__(321);
+	var GamesIndex = __webpack_require__(305);
+	var UserHomePage = __webpack_require__(309);
+	var UserShowPage = __webpack_require__(310);
+	var UsersIndex = __webpack_require__(311);
+	var EditForm = __webpack_require__(312);
+	var SignInForm = __webpack_require__(313);
+	var SignUpForm = __webpack_require__(315);
 	var Search = __webpack_require__(242);
-	var EditUserForm = __webpack_require__(314);
+	var EditUserForm = __webpack_require__(308);
 	
 	var GameStore = __webpack_require__(236);
 	var SessionStore = __webpack_require__(188);
@@ -37610,13 +37610,7 @@
 	module.exports = ReviewForm;
 
 /***/ },
-/* 305 */,
-/* 306 */,
-/* 307 */,
-/* 308 */,
-/* 309 */,
-/* 310 */,
-/* 311 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -37625,8 +37619,8 @@
 	var SessionStore = __webpack_require__(188);
 	var UserStore = __webpack_require__(239);
 	var GameStore = __webpack_require__(236);
-	var UserReviewItem = __webpack_require__(312);
-	var EditUserForm = __webpack_require__(314);
+	var UserReviewItem = __webpack_require__(306);
+	var EditUserForm = __webpack_require__(308);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -37714,13 +37708,14 @@
 	});
 
 /***/ },
-/* 312 */
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var SessionStore = __webpack_require__(188);
 	var GameStore = __webpack_require__(236);
-	var EditReviewLink = __webpack_require__(313);
+	ReviewStore = __webpack_require__(303);
+	var EditReviewLink = __webpack_require__(307);
 	var Modal = __webpack_require__(159);
 	var ApiUtil = __webpack_require__(181);
 	
@@ -37733,20 +37728,11 @@
 	
 	  getInitialState: function () {
 	
-	    if (this.props.userReview) {
-	      return { modalOpen: false,
-	        title: this.props.userReview.title,
-	        body: this.props.userReview.body,
-	        score: this.props.userReview.score,
-	        userReview: this.props.userReview
-	      };
-	    } else {
-	      return { modalOpen: false,
-	        title: "",
-	        body: "",
-	        score: null,
-	        userReview: this.props.userReview };
-	    }
+	    return { modalOpen: false,
+	      title: "",
+	      body: "",
+	      score: null
+	    };
 	  },
 	
 	  deleteReview: function (e) {
@@ -37757,9 +37743,18 @@
 	    });
 	  },
 	
+	  defaultValues: function (e) {
+	    e.preventDefault();
+	    var oldTitle = $('.add-review-title')[0].value;
+	    var oldBody = $('.add-review-textarea')[0].value;
+	    this.setState({ title: oldTitle,
+	      body: oldBody });
+	  },
+	
 	  handleSubmit: function (e) {
 	    e.preventDefault();
-	    var user_id = this.state.userReview.user_id;
+	
+	    var user_id = this.props.userReview.user_id;
 	
 	    if (this.state.title === "") {
 	      $(".review-error-title").removeClass("hidden");
@@ -37778,6 +37773,7 @@
 	      }, 2000);
 	    } else {
 	      var reviewParams = {
+	
 	        review: {
 	          id: this.props.userReview.id,
 	          user_id: user_id,
@@ -37882,7 +37878,7 @@
 	          style: reviewFormStyle },
 	        React.createElement(
 	          'form',
-	          { className: 'add-review-box' },
+	          { onMouseEnter: form.defaultValues, className: 'add-review-box' },
 	          React.createElement(
 	            'h2',
 	            null,
@@ -37896,7 +37892,7 @@
 	              { className: 'review-text' },
 	              'Title'
 	            ),
-	            React.createElement('input', { placeholder: 'Sum it up!', value: this.state.title, className: 'add-review-title', onChange: this.updateTitle, type: 'text' }),
+	            React.createElement('input', { placeholder: 'Sum it up!', defaultValue: this.props.userReview.title, className: 'add-review-title', onChange: this.updateTitle, type: 'text' }),
 	            React.createElement(
 	              'label',
 	              { className: 'review-text', htmlFor: 'score' },
@@ -37996,7 +37992,7 @@
 	});
 
 /***/ },
-/* 313 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -38044,7 +38040,7 @@
 	module.exports = EditReview;
 
 /***/ },
-/* 314 */
+/* 308 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -38156,7 +38152,7 @@
 	module.exports = EditUserForm;
 
 /***/ },
-/* 315 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -38165,7 +38161,7 @@
 	var UserStore = __webpack_require__(239);
 	var ReviewStore = __webpack_require__(303);
 	var GameStore = __webpack_require__(236);
-	var UserReviewItem = __webpack_require__(312);
+	var UserReviewItem = __webpack_require__(306);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -38296,7 +38292,7 @@
 	});
 
 /***/ },
-/* 316 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -38305,7 +38301,7 @@
 	var UserStore = __webpack_require__(239);
 	var ReviewStore = __webpack_require__(303);
 	var GameStore = __webpack_require__(236);
-	var UserReviewItem = __webpack_require__(312);
+	var UserReviewItem = __webpack_require__(306);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -38421,7 +38417,7 @@
 	});
 
 /***/ },
-/* 317 */
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -38430,8 +38426,8 @@
 	var SessionStore = __webpack_require__(188);
 	var UserStore = __webpack_require__(239);
 	var GameStore = __webpack_require__(236);
-	var UserReviewItem = __webpack_require__(312);
-	var EditUserForm = __webpack_require__(314);
+	var UserReviewItem = __webpack_require__(306);
+	var EditUserForm = __webpack_require__(308);
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -38515,7 +38511,7 @@
 	});
 
 /***/ },
-/* 318 */
+/* 312 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -38646,11 +38642,11 @@
 	module.exports = ReviewForm;
 
 /***/ },
-/* 319 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var ErrorStore = __webpack_require__(320);
+	var ErrorStore = __webpack_require__(314);
 	var ApiUtil = __webpack_require__(181);
 	
 	var SignInForm = React.createClass({
@@ -38798,7 +38794,7 @@
 	module.exports = SignInForm;
 
 /***/ },
-/* 320 */
+/* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Store = __webpack_require__(189).Store;
@@ -38845,12 +38841,12 @@
 	module.exports = ErrorStore;
 
 /***/ },
-/* 321 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var LinkedStateMixin = __webpack_require__(322);
-	var ErrorStore = __webpack_require__(320);
+	var LinkedStateMixin = __webpack_require__(316);
+	var ErrorStore = __webpack_require__(314);
 	var ApiUtil = __webpack_require__(181);
 	
 	var SignUpForm = React.createClass({
@@ -38965,13 +38961,13 @@
 	module.exports = SignUpForm;
 
 /***/ },
-/* 322 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(323);
+	module.exports = __webpack_require__(317);
 
 /***/ },
-/* 323 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -38988,8 +38984,8 @@
 	
 	'use strict';
 	
-	var ReactLink = __webpack_require__(324);
-	var ReactStateSetters = __webpack_require__(325);
+	var ReactLink = __webpack_require__(318);
+	var ReactStateSetters = __webpack_require__(319);
 	
 	/**
 	 * A simple mixin around ReactLink.forState().
@@ -39012,7 +39008,7 @@
 	module.exports = LinkedStateMixin;
 
 /***/ },
-/* 324 */
+/* 318 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -39086,7 +39082,7 @@
 	module.exports = ReactLink;
 
 /***/ },
-/* 325 */
+/* 319 */
 /***/ function(module, exports) {
 
 	/**
