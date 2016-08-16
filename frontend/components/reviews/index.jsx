@@ -22,10 +22,8 @@ var IndexItem = React.createClass({
     }
 
     if (likedUsersArr.indexOf(this.props.currentUserId) > -1 ) {
-      console.log("go to delete like");
       this.deleteLike();
     } else {
-      console.log("create like");
       this.addLike();
     }
   },
@@ -55,7 +53,23 @@ var IndexItem = React.createClass({
     var likedUsersArr = [];
 
     for (var i = 0; i < this.props.review.liked_users.length; i++) {
-      likedUsersArr.push(this.props.review.liked_users[i].username);
+      likedUsersArr.push(this.props.review.liked_users[i].id);
+    }
+
+    var likeButton;
+
+    if (likedUsersArr.indexOf(this.props.currentUserId) > -1 ) {
+      likeButton = <i className="fa fa-thumbs-up fa-lg thumbs" aria-hidden="true"></i>;
+    } else {
+      likeButton = <i className="fa fa-thumbs-o-up fa-lg thumbs" aria-hidden="true"></i>;
+    }
+
+    if (this.props.review.liked_users.length > 1) {
+      likedUsers = <div onMouseOver={this.displayLikedUsers}>{this.props.review.liked_users.length} people liked this review</div>;
+    } else if (this.props.review.liked_users.length === 1) {
+      likedUsers = <div onMouseOver={this.displayLikedUsers}>{this.props.review.liked_users.length} person liked this review</div>;
+    } else {
+      likedUsers = <div onMouseOver={this.displayLikedUsers}></div>;
     }
 
     return(
@@ -70,12 +84,9 @@ var IndexItem = React.createClass({
           <span>{this.props.review.body}</span>
         </div>
         <div onClick={this.handleLike}>
-          LIKE BUTTON
+          {likeButton}
         </div>
-        <div onMouseOver={this.displayLikedUsers}>
-        This many people liked it
-          {this.props.review.liked_users.length}
-        </div>
+        {likedUsers}
       </ul>
     );
   }

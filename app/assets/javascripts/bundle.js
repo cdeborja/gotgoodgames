@@ -64,7 +64,7 @@
 	var UsersIndex = __webpack_require__(311);
 	var EditForm = __webpack_require__(312);
 	var SignInForm = __webpack_require__(313);
-	var SignUpForm = __webpack_require__(315);
+	var SignUpForm = __webpack_require__(314);
 	var Search = __webpack_require__(242);
 	var EditUserForm = __webpack_require__(308);
 	
@@ -37284,10 +37284,8 @@
 	    }
 	
 	    if (likedUsersArr.indexOf(this.props.currentUserId) > -1) {
-	      console.log("go to delete like");
 	      this.deleteLike();
 	    } else {
-	      console.log("create like");
 	      this.addLike();
 	    }
 	  },
@@ -37319,7 +37317,33 @@
 	    var likedUsersArr = [];
 	
 	    for (var i = 0; i < this.props.review.liked_users.length; i++) {
-	      likedUsersArr.push(this.props.review.liked_users[i].username);
+	      likedUsersArr.push(this.props.review.liked_users[i].id);
+	    }
+	
+	    var likeButton;
+	
+	    if (likedUsersArr.indexOf(this.props.currentUserId) > -1) {
+	      likeButton = React.createElement('i', { className: 'fa fa-thumbs-up fa-lg thumbs', 'aria-hidden': 'true' });
+	    } else {
+	      likeButton = React.createElement('i', { className: 'fa fa-thumbs-o-up fa-lg thumbs', 'aria-hidden': 'true' });
+	    }
+	
+	    if (this.props.review.liked_users.length > 1) {
+	      likedUsers = React.createElement(
+	        'div',
+	        { onMouseOver: this.displayLikedUsers },
+	        this.props.review.liked_users.length,
+	        ' people liked this review'
+	      );
+	    } else if (this.props.review.liked_users.length === 1) {
+	      likedUsers = React.createElement(
+	        'div',
+	        { onMouseOver: this.displayLikedUsers },
+	        this.props.review.liked_users.length,
+	        ' person liked this review'
+	      );
+	    } else {
+	      likedUsers = React.createElement('div', { onMouseOver: this.displayLikedUsers });
 	    }
 	
 	    return React.createElement(
@@ -37358,14 +37382,9 @@
 	      React.createElement(
 	        'div',
 	        { onClick: this.handleLike },
-	        'LIKE BUTTON'
+	        likeButton
 	      ),
-	      React.createElement(
-	        'div',
-	        { onMouseOver: this.displayLikedUsers },
-	        'This many people liked it',
-	        this.props.review.liked_users.length
-	      )
+	      likedUsers
 	    );
 	  }
 	
@@ -38887,56 +38906,9 @@
 /* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Store = __webpack_require__(189).Store;
-	var AppDispatcher = __webpack_require__(182);
-	var ErrorConstants = __webpack_require__(215);
-	var ErrorStore = new Store(AppDispatcher);
-	
-	var _errors = {};
-	
-	var resetErrors = function (errors) {
-	  if (errors.errors !== undefined) {
-	    _errors = {};
-	    errors.errors.map(function (error, idx) {
-	      _errors[idx] = error;
-	    });
-	  }
-	};
-	
-	// var resetError = function (error) {
-	//   _errors[error.id] = error;
-	// };
-	//
-	// ErrorStore.find = function (id) {
-	//   return _errors[id];
-	// };
-	//
-	ErrorStore.all = function () {
-	  var errors = [];
-	  for (var id in _errors) {
-	    errors.push(_errors[id]);
-	  }
-	  return errors;
-	};
-	
-	ErrorStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case ErrorConstants.ERRORS_RECEIVED:
-	      resetErrors(payload.errors);
-	      ErrorStore.__emitChange();
-	      break;
-	  }
-	};
-	
-	module.exports = ErrorStore;
-
-/***/ },
-/* 315 */
-/***/ function(module, exports, __webpack_require__) {
-
 	var React = __webpack_require__(1);
-	var LinkedStateMixin = __webpack_require__(316);
-	var ErrorStore = __webpack_require__(314);
+	var LinkedStateMixin = __webpack_require__(315);
+	var ErrorStore = __webpack_require__(319);
 	var ApiUtil = __webpack_require__(181);
 	
 	var SignUpForm = React.createClass({
@@ -39051,13 +39023,13 @@
 	module.exports = SignUpForm;
 
 /***/ },
-/* 316 */
+/* 315 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(317);
+	module.exports = __webpack_require__(316);
 
 /***/ },
-/* 317 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -39074,8 +39046,8 @@
 	
 	'use strict';
 	
-	var ReactLink = __webpack_require__(318);
-	var ReactStateSetters = __webpack_require__(319);
+	var ReactLink = __webpack_require__(317);
+	var ReactStateSetters = __webpack_require__(318);
 	
 	/**
 	 * A simple mixin around ReactLink.forState().
@@ -39098,7 +39070,7 @@
 	module.exports = LinkedStateMixin;
 
 /***/ },
-/* 318 */
+/* 317 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -39172,7 +39144,7 @@
 	module.exports = ReactLink;
 
 /***/ },
-/* 319 */
+/* 318 */
 /***/ function(module, exports) {
 
 	/**
@@ -39279,6 +39251,53 @@
 	};
 	
 	module.exports = ReactStateSetters;
+
+/***/ },
+/* 319 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Store = __webpack_require__(189).Store;
+	var AppDispatcher = __webpack_require__(182);
+	var ErrorConstants = __webpack_require__(215);
+	var ErrorStore = new Store(AppDispatcher);
+	
+	var _errors = {};
+	
+	var resetErrors = function (errors) {
+	  if (errors.errors !== undefined) {
+	    _errors = {};
+	    errors.errors.map(function (error, idx) {
+	      _errors[idx] = error;
+	    });
+	  }
+	};
+	
+	// var resetError = function (error) {
+	//   _errors[error.id] = error;
+	// };
+	//
+	// ErrorStore.find = function (id) {
+	//   return _errors[id];
+	// };
+	//
+	ErrorStore.all = function () {
+	  var errors = [];
+	  for (var id in _errors) {
+	    errors.push(_errors[id]);
+	  }
+	  return errors;
+	};
+	
+	ErrorStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case ErrorConstants.ERRORS_RECEIVED:
+	      resetErrors(payload.errors);
+	      ErrorStore.__emitChange();
+	      break;
+	  }
+	};
+	
+	module.exports = ErrorStore;
 
 /***/ }
 /******/ ]);
