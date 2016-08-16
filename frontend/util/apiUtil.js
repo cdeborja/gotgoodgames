@@ -279,6 +279,36 @@ module.exports = {
     });
   },
 
+  //like
+  createLike: function(likeparams) {
+    $.ajax({
+      type: "POST",
+      url: "/api/likes",
+      dataType: "json",
+      data: likeparams,
+      success: function (game) {
+        GameActions.receiveSingleGame(game);
+      },
+      error: function () {
+        console.log("Could not create like");
+      }
+    });
+  },
+
+  deleteLike: function(params) {
+    $.ajax({
+      type: "DELETE",
+      url: "/api/likes/" + params.like.id,
+      dataType: "json",
+      data: params,
+      success: function (game) {
+        GameActions.receiveSingleGame(game);
+      },
+      error: function () {
+        console.log("could not delete like");
+      }
+    });
+  },
   //search
 
   search: function (query, page) {

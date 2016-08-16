@@ -21673,7 +21673,6 @@
 	  },
 	
 	  componentWillUnmount: function () {
-	    this.errorListener.remove();
 	    this.sessionStoreToken.remove();
 	  },
 	
@@ -22258,6 +22257,36 @@
 	    });
 	  },
 	
+	  //like
+	  createLike: function (likeparams) {
+	    $.ajax({
+	      type: "POST",
+	      url: "/api/likes",
+	      dataType: "json",
+	      data: likeparams,
+	      success: function (game) {
+	        GameActions.receiveSingleGame(game);
+	      },
+	      error: function () {
+	        console.log("Could not create like");
+	      }
+	    });
+	  },
+	
+	  deleteLike: function (params) {
+	    $.ajax({
+	      type: "DELETE",
+	      url: "/api/likes/" + params.like.id,
+	      dataType: "json",
+	      data: params,
+	      success: function (game) {
+	        GameActions.receiveSingleGame(game);
+	      },
+	      error: function () {
+	        console.log("could not delete like");
+	      }
+	    });
+	  },
 	  //search
 	
 	  search: function (query, page) {
@@ -37125,12 +37154,15 @@
 	    if (!game || !game.reviews) {
 	      return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	    }
+	
+	    var currentUserId = SessionStore.currentUser().id;
+	
 	    var gameReviews = game.reviews.map(function (review, id) {
-	      return React.createElement(ReviewsIndexItem, { key: id, review: review });
+	      return React.createElement(ReviewsIndexItem, { ApiUtil: ApiUtil, currentUserId: currentUserId, key: id, review: review });
 	    }).reverse();
 	
 	    gameReviews.forEach(function (review) {
-	      if (review.props.review.user_id === SessionStore.currentUser().id) {
+	      if (review.props.review.user_id === currentUserId) {
 	        userReview = review.props.review;
 	      }
 	    });
@@ -37228,8 +37260,8 @@
 
 	var React = __webpack_require__(1);
 	
-	module.exports = React.createClass({
-	  displayName: 'exports',
+	var IndexItem = React.createClass({
+	  displayName: 'IndexItem',
 	
 	
 	  contextTypes: {
@@ -37240,10 +37272,56 @@
 	    this.context.router.push('/users/' + this.props.review.user.id);
 	  },
 	
+	  displayLikedUsers: function (e) {
+	    console.log(this.props.review.liked_users);
+	  },
+	
+	  handleLike: function () {
+	    var likedUsersArr = [];
+	
+	    for (var i = 0; i < this.props.review.liked_users.length; i++) {
+	      likedUsersArr.push(this.props.review.liked_users[i].id);
+	    }
+	
+	    if (likedUsersArr.indexOf(this.props.currentUserId) > -1) {
+	      console.log("go to delete like");
+	      this.deleteLike();
+	    } else {
+	      console.log("create like");
+	      this.addLike();
+	    }
+	  },
+	
+	  addLike: function (e) {
+	    this.props.ApiUtil.createLike({
+	      like: {
+	        user_id: this.props.currentUserId,
+	        review_id: this.props.review.id,
+	        game_id: this.props.review.game_id
+	      }
+	    });
+	  },
+	
+	  deleteLike: function (e) {
+	    this.props.ApiUtil.deleteLike({
+	      like: {
+	        id: this.props.review.current_user_like_id,
+	        game_id: this.props.review.game_id
+	      }
+	    });
+	  },
+	
 	  render: function () {
 	    if (this.props.review === []) {
 	      return React.createElement('div', null);
 	    }
+	
+	    var likedUsersArr = [];
+	
+	    for (var i = 0; i < this.props.review.liked_users.length; i++) {
+	      likedUsersArr.push(this.props.review.liked_users[i].username);
+	    }
+	
 	    return React.createElement(
 	      'ul',
 	      { className: 'user-review group' },
@@ -37276,11 +37354,24 @@
 	          null,
 	          this.props.review.body
 	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { onClick: this.handleLike },
+	        'LIKE BUTTON'
+	      ),
+	      React.createElement(
+	        'div',
+	        { onMouseOver: this.displayLikedUsers },
+	        'This many people liked it',
+	        this.props.review.liked_users.length
 	      )
 	    );
 	  }
 	
 	});
+	
+	module.exports = IndexItem;
 
 /***/ },
 /* 303 */
@@ -38646,7 +38737,6 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
-	var ErrorStore = __webpack_require__(314);
 	var ApiUtil = __webpack_require__(181);
 	
 	var SignInForm = React.createClass({

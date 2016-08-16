@@ -32,11 +32,11 @@ var ReviewForm = React.createClass({
   },
 
   addEditReviewText: function () {
-    $('.add-review-button').html("Update previous review")
+    $('.add-review-button').html("Update previous review");
   },
 
   removeEditReviewText: function () {
-    $('.add-review-button').html("Add your own review")
+    $('.add-review-button').html("Add your own review");
   },
 
   closeModal: function(){
@@ -90,7 +90,7 @@ var ReviewForm = React.createClass({
             title: this.state.title,
             game_page: true
           }
-        }
+        };
 
       ApiUtil.updatePageReview(updateParams);
       this.closeModal();

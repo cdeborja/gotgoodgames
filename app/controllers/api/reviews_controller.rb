@@ -1,7 +1,7 @@
 class Api::ReviewsController < ApplicationController
 
   def new
-    @revew = Review.new
+    @review = Review.new
   end
 
   def create

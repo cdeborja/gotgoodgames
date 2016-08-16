@@ -1,5 +1,4 @@
 var React = require('react');
-var ErrorStore = require('../stores/error');
 var ApiUtil = require('../util/apiUtil');
 
 var SignInForm = React.createClass({

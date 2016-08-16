@@ -43,12 +43,15 @@ module.exports = React.createClass({
     var userReview = null;
 
     if ( !game || !game.reviews) {return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);}
+
+    var currentUserId = SessionStore.currentUser().id;
+
     var gameReviews = game.reviews.map(function (review, id) {
-      return <ReviewsIndexItem key={id} review={review}/>;
+      return <ReviewsIndexItem ApiUtil={ApiUtil} currentUserId={currentUserId} key={id} review={review}/>;
     }).reverse();
 
     gameReviews.forEach (function (review) {
-      if (review.props.review.user_id === SessionStore.currentUser().id) {
+      if (review.props.review.user_id === currentUserId) {
         userReview = review.props.review;
       }
     });

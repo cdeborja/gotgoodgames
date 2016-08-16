@@ -22,7 +22,6 @@ module.exports = React.createClass({
   },
 
   componentWillUnmount: function() {
-    this.errorListener.remove();
     this.sessionStoreToken.remove();
   },
 
@@ -32,7 +31,7 @@ module.exports = React.createClass({
       this.setState({ currentUser: SessionStore.currentUser() });
       $(".navigation-links").removeClass("hidden");
       $(".session-links").removeClass("hidden");
-      $(".search-box").removeClass("hidden")
+      $(".search-box").removeClass("hidden");
 
     } else {
       this.context.router.push("/login");
@@ -75,7 +74,7 @@ module.exports = React.createClass({
   handleLogout: function () {
     $(".navigation-links").addClass("hidden");
     $(".session-links").addClass("hidden");
-    $(".search-box").addClass("hidden")
+    $(".search-box").addClass("hidden");
     ApiUtil.logout();
   },
 
