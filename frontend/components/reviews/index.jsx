@@ -10,18 +10,23 @@ var IndexItem = React.createClass({
     this.context.router.push('/users/' + this.props.review.user.id );
   },
 
+  //implement on hover of liked users, opens up new div showing users names
   displayLikedUsers:function (e) {
-    console.log(this.props.review.liked_users);
+    likedUsersArr = [];
+    for (var i = 0; i < this.props.review.liked_users.length; i++) {
+      likedUsersArr.push(this.props.review.liked_users[i].username);
+    }
+    console.log(likedUsersArr);
   },
 
   handleLike: function () {
-    var likedUsersArr = [];
+    var likedUsersIdArr = [];
 
     for (var i = 0; i < this.props.review.liked_users.length; i++) {
-      likedUsersArr.push(this.props.review.liked_users[i].id);
+      likedUsersIdArr.push(this.props.review.liked_users[i].id);
     }
 
-    if (likedUsersArr.indexOf(this.props.currentUserId) > -1 ) {
+    if (likedUsersIdArr.indexOf(this.props.currentUserId) > -1 ) {
       this.deleteLike();
     } else {
       this.addLike();
@@ -50,18 +55,22 @@ var IndexItem = React.createClass({
   render: function () {
     if (this.props.review === []) { return (<div></div>); }
 
-    var likedUsersArr = [];
+    // update this to a key-value object, id ==> username
+    var likedUsersIdArr = [];
+    // var likedUsersArr = [];
+
 
     for (var i = 0; i < this.props.review.liked_users.length; i++) {
-      likedUsersArr.push(this.props.review.liked_users[i].id);
+      likedUsersIdArr.push(this.props.review.liked_users[i].id);
+      // likedUsersArr.push(this.props.review.liked_users[i].username);
     }
 
     var likeButton;
 
-    if (likedUsersArr.indexOf(this.props.currentUserId) > -1 ) {
-      likeButton = <i className="fa fa-thumbs-up fa-lg thumbs" aria-hidden="true"></i>;
+    if (likedUsersIdArr.indexOf(this.props.currentUserId) > -1 ) {
+      likeButton = <i className="fa fa-thumbs-up fa-lg thumbs" aria-hidden="true"> <div className="like-font">Unlike</div></i>;
     } else {
-      likeButton = <i className="fa fa-thumbs-o-up fa-lg thumbs" aria-hidden="true"></i>;
+      likeButton = <i className="fa fa-thumbs-o-up fa-lg thumbs" aria-hidden="true"> <div className="like-font">Like</div> </i>;
     }
 
     if (this.props.review.liked_users.length > 1) {
@@ -83,10 +92,12 @@ var IndexItem = React.createClass({
           <p>{this.props.review.score}/5</p>
           <span>{this.props.review.body}</span>
         </div>
-        <div onClick={this.handleLike}>
-          {likeButton}
+        <div className="like-container">
+          <div onClick={this.handleLike}>
+            {likeButton}
+          </div>
+          {likedUsers}
         </div>
-        {likedUsers}
       </ul>
     );
   }
