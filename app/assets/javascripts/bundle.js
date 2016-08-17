@@ -31434,7 +31434,7 @@
 	        { key: idx },
 	        React.createElement(
 	          'ul',
-	          { className: 'game-preview' },
+	          { className: 'slider-game-preview' },
 	          React.createElement(
 	            'li',
 	            { className: 'rating-overlay' },
@@ -31466,7 +31466,7 @@
 	
 	    return React.createElement(
 	      'div',
-	      { className: 'database-slider' },
+	      { className: 'game-slider' },
 	      React.createElement(
 	        'h2',
 	        null,

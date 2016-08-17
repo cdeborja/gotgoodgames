@@ -1,3 +1,114 @@
+.add-review-box > h2,
+.edit-review-box > h2 {
+    border-radius: 5px 5px 0 0;
+    text-align: center;
+    background: #53b9ea;
+    font-size: 36px;
+    font-weight: bold;
+    color: #FFFFFF;
+    border-bottom: 1px solid #AAAAAA;
+}
+
+.add-review-box > div,
+.edit-review-box > div {
+  padding: 20px;
+}
+
+.add-review-textarea {
+  display: block;
+  background: #FFFFFF;
+  border: 1px solid #AAAAAA;
+  padding: 10px 4px;
+  font-weight: normal;
+  font-size: 14px;
+  border-radius: 5px;
+  width: 95%;
+  height: 120px;
+  resize: both;
+  word-wrap: break-word;
+  color: #000000;
+  -webkit-transition: all 0.20s ease-in-out;
+  -moz-transition: all 0.20s ease-in-out;
+  -ms-transition: all 0.20s ease-in-out;
+  -o-transition: all 0.20s ease-in-out;
+  outline: none;
+}
+
+.review-text {
+  float: left;
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  margin: 3px 0;
+  width: 100%;
+}
+
+.add-review-textarea:focus {
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+  padding: 10px 4px;
+  border: 1px solid rgba(81, 203, 238, 1);
+}
+
+.add-review-title {
+  display: block;
+  background: #FFFFFF;
+  border: 1px solid #AAAAAA;
+  padding: 12px 7px;
+  font-weight: normal;
+  font-size: 20px;
+  border-radius: 5px;
+  width: 80%;
+  height: auto;
+  word-wrap: break-word;
+  margin-bottom: 10px;
+}
+
+.add-review-title:focus {
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+  padding: 12px 7px;
+  border: 1px solid rgba(81, 203, 238, 1);
+}
+
+.input-text {
+  text-align: center;
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  margin: 5px 0;
+  width: 100%;
+  padding: 0 4px;
+}
+
+.input-field-login {
+  display: block;
+  background: #FFFFFF;
+  border-bottom: 1px solid #AAAAAA;
+  padding: 2px 4px;
+  text-align: center;
+  font-size: 20px;
+  width: 100%;
+  color: #000000;
+}
+
+.input-field-login:focus {
+  text-align: center;
+  box-shadow: 0px 8px 6px -6px #53b9ea;
+}
+
+.input-field-box {
+  background: #FFFFFF;
+  border: 1px solid #555;
+  padding: 10px 4px;
+  font-weight: normal;
+  font-size: 14px;
+  border-radius: 5px;
+  width: 300px;
+  height: 120px;
+  resize: both;
+  word-wrap: break-word;
+  color: #FFFFFF;
+}
+
 .review-error-title,
 .review-error-score,
 .review-error-body {

@@ -27,7 +27,7 @@ var GameDatabaseSlider = React.createClass({
 
       return (
         <div key={idx}>
-          <ul className="game-preview">
+          <ul className="slider-game-preview">
             <li className="rating-overlay">
               <div className="rating">{rating}</div>
               <div className="rating-text">average score</div>
@@ -41,7 +41,7 @@ var GameDatabaseSlider = React.createClass({
     }.bind(this));
 
     return (
-      <div className="database-slider">
+      <div className="game-slider">
         <h2>Recently Added</h2>
       <Slider {...settings}>
         {games}
