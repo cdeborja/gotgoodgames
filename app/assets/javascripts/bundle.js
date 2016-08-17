@@ -31994,7 +31994,7 @@
 	    // <button className="go-button" onClick={ this.search }>GO</button>
 	    return React.createElement(
 	      "form",
-	      { className: "search-box group" },
+	      { autocomplete: "off", className: "search-box group" },
 	      React.createElement("input", { type: "text", id: "search", onChange: this.handleInputChange,
 	        placeholder: "Search" }),
 	      searchList
