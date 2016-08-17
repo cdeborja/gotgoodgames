@@ -1,7 +1,7 @@
 var React = require('react');
 var SessionStore = require('../../stores/session');
 var GameStore = require('../../stores/game');
-ReviewStore = require('../../stores/review');
+var ReviewStore = require('../../stores/review');
 var EditReviewLink = require('./editReviewLink');
 var Modal = require('react-modal');
 var ApiUtil = require('../../util/apiUtil');
@@ -127,7 +127,7 @@ module.exports = React.createClass({
 
     if (review === []) { return (<div></div>); }
 
-    var buttons;
+    var buttons, userDiv;
 
     if (SessionStore.currentUser().id === this.props.userReview.user_id) {
       buttons = (
@@ -139,8 +139,8 @@ module.exports = React.createClass({
     }
 
     var form = this;
+    var score = review.score + "/5";
 
-    var score = review.score + "/5"
     return(
       <div>
 

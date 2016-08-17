@@ -125,12 +125,12 @@
   transition: background-color 400ms;
 }
 
-// .game-review-comment:hover,
-// .game-review-comment:hover > span {
-//   background-color: rgba(200, 200, 200, 0.7);
-// }
+.game-review-comment:hover > .edit-menu {
+  background-color: rgba(200, 200, 200, 0.7);
+}
 
-.game-review-comment:hover .edit-menu > button {
+
+.game-review-comment:hover .hidden {
   display: inline-block;
 }
 

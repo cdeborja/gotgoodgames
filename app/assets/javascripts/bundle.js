@@ -37864,7 +37864,7 @@
 	var React = __webpack_require__(1);
 	var SessionStore = __webpack_require__(188);
 	var GameStore = __webpack_require__(236);
-	ReviewStore = __webpack_require__(303);
+	var ReviewStore = __webpack_require__(303);
 	var EditReviewLink = __webpack_require__(307);
 	var Modal = __webpack_require__(159);
 	var ApiUtil = __webpack_require__(181);
@@ -37994,7 +37994,7 @@
 	      return React.createElement('div', null);
 	    }
 	
-	    var buttons;
+	    var buttons, userDiv;
 	
 	    if (SessionStore.currentUser().id === this.props.userReview.user_id) {
 	      buttons = React.createElement(
@@ -38014,8 +38014,8 @@
 	    }
 	
 	    var form = this;
-	
 	    var score = review.score + "/5";
+	
 	    return React.createElement(
 	      'div',
 	      null,

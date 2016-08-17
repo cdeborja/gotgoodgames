@@ -77,7 +77,6 @@
   border-radius: 5px;
   font-size: 24px;
   border: 1px solid #AAAAAA;
-  transition: background-color 400ms;
 }
 
 .user-description-box > div:hover .user-p {
@@ -169,17 +168,19 @@
 }
 
 .edit-menu {
+  border-radius: 5px;
   top: 50%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
   position: absolute;
-  width: 50%;
-  justify-content: space-around;
+  width: 42.5%;
+  height: 60px;
+  background-color: transparent;
 }
 
 .edit-menu > button {
   text-align: center;
-  position: relative;
+  margin-top: 10px;
   margin-left: 20px;
   padding: 10px;
   width: 140px;
