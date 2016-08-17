@@ -37332,26 +37332,34 @@
 	
 	    if (likedUsersIdArr.indexOf(this.props.currentUserId) > -1) {
 	      likeButton = React.createElement(
-	        'i',
-	        { className: 'fa fa-thumbs-up fa-lg thumbs', 'aria-hidden': 'true' },
-	        ' ',
+	        'div',
+	        { onClick: this.handleLike },
 	        React.createElement(
-	          'div',
-	          { className: 'like-font' },
-	          'Unlike'
+	          'i',
+	          { className: 'fa fa-thumbs-up fa-lg thumbs', 'aria-hidden': 'true' },
+	          ' ',
+	          React.createElement(
+	            'div',
+	            { className: 'like-font' },
+	            'Unlike'
+	          )
 	        )
 	      );
 	    } else {
 	      likeButton = React.createElement(
-	        'i',
-	        { className: 'fa fa-thumbs-o-up fa-lg thumbs', 'aria-hidden': 'true' },
-	        ' ',
+	        'div',
+	        { onClick: this.handleLike },
 	        React.createElement(
-	          'div',
-	          { className: 'like-font' },
-	          'Like'
-	        ),
-	        ' '
+	          'i',
+	          { className: 'fa fa-thumbs-o-up fa-lg thumbs', 'aria-hidden': 'true' },
+	          ' ',
+	          React.createElement(
+	            'div',
+	            { className: 'like-font' },
+	            'Like'
+	          ),
+	          ' '
+	        )
 	      );
 	    }
 	
@@ -37404,17 +37412,13 @@
 	          'span',
 	          null,
 	          this.props.review.body
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'like-container' },
+	        ),
 	        React.createElement(
 	          'div',
-	          { onClick: this.handleLike },
-	          likeButton
-	        ),
-	        likedUsers
+	          { className: 'like-container' },
+	          likeButton,
+	          likedUsers
+	        )
 	      )
 	    );
 	  }

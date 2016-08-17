@@ -68,9 +68,9 @@ var IndexItem = React.createClass({
     var likeButton;
 
     if (likedUsersIdArr.indexOf(this.props.currentUserId) > -1 ) {
-      likeButton = <i className="fa fa-thumbs-up fa-lg thumbs" aria-hidden="true"> <div className="like-font">Unlike</div></i>;
+      likeButton = <div onClick={this.handleLike}><i className="fa fa-thumbs-up fa-lg thumbs" aria-hidden="true"> <div className="like-font">Unlike</div></i></div>;
     } else {
-      likeButton = <i className="fa fa-thumbs-o-up fa-lg thumbs" aria-hidden="true"> <div className="like-font">Like</div> </i>;
+      likeButton = <div onClick={this.handleLike}><i className="fa fa-thumbs-o-up fa-lg thumbs" aria-hidden="true"> <div className="like-font">Like</div> </i></div>;
     }
 
     if (this.props.review.liked_users.length > 1) {
@@ -91,12 +91,10 @@ var IndexItem = React.createClass({
           <h3>{this.props.review.title}</h3>
           <p>{this.props.review.score}/5</p>
           <span>{this.props.review.body}</span>
-        </div>
-        <div className="like-container">
-          <div onClick={this.handleLike}>
+          <div className="like-container">
             {likeButton}
+            {likedUsers}
           </div>
-          {likedUsers}
         </div>
       </ul>
     );
