@@ -10,15 +10,6 @@ var IndexItem = React.createClass({
     this.context.router.push('/users/' + this.props.review.user.id );
   },
 
-  //implement on hover of liked users, opens up new div showing users names
-  displayLikedUsers:function (e) {
-    likedUsersArr = [];
-    for (var i = 0; i < this.props.review.liked_users.length; i++) {
-      likedUsersArr.push(this.props.review.liked_users[i].username);
-    }
-    console.log(likedUsersArr);
-  },
-
   handleLike: function () {
     var likedUsersIdArr = [];
 
@@ -55,14 +46,13 @@ var IndexItem = React.createClass({
   render: function () {
     if (this.props.review === []) { return (<div></div>); }
 
-    // update this to a key-value object, id ==> username
     var likedUsersIdArr = [];
-    // var likedUsersArr = [];
-
+    var likedUsersArr = [];
 
     for (var i = 0; i < this.props.review.liked_users.length; i++) {
       likedUsersIdArr.push(this.props.review.liked_users[i].id);
-      // likedUsersArr.push(this.props.review.liked_users[i].username);
+      var username = this.props.review.liked_users[i].username;
+      likedUsersArr.push(<li key={i}>{username}</li>);
     }
 
     var likeButton;
@@ -74,11 +64,11 @@ var IndexItem = React.createClass({
     }
 
     if (this.props.review.liked_users.length > 1) {
-      likedUsers = <div onMouseOver={this.displayLikedUsers}>{this.props.review.liked_users.length} people liked this review</div>;
+      likedUsers = <span>{this.props.review.liked_users.length} people liked this review</span>;
     } else if (this.props.review.liked_users.length === 1) {
-      likedUsers = <div onMouseOver={this.displayLikedUsers}>{this.props.review.liked_users.length} person liked this review</div>;
+      likedUsers = <span>{this.props.review.liked_users.length} person liked this review</span>;
     } else {
-      likedUsers = <div onMouseOver={this.displayLikedUsers}></div>;
+      likedUsers = <span></span>;
     }
 
     return(
@@ -93,7 +83,13 @@ var IndexItem = React.createClass({
           <span>{this.props.review.body}</span>
           <div className="like-container">
             {likeButton}
-            {likedUsers}
+            <div className="liked-users">
+              {likedUsers}
+              <ul className="liked-users-pop-up ">
+                <div className="arrow-down"></div>
+                {likedUsersArr}
+              </ul>
+            </div>
           </div>
         </div>
       </ul>

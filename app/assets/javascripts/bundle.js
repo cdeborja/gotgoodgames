@@ -37272,15 +37272,6 @@
 	    this.context.router.push('/users/' + this.props.review.user.id);
 	  },
 	
-	  //implement on hover of liked users, opens up new div showing users names
-	  displayLikedUsers: function (e) {
-	    likedUsersArr = [];
-	    for (var i = 0; i < this.props.review.liked_users.length; i++) {
-	      likedUsersArr.push(this.props.review.liked_users[i].username);
-	    }
-	    console.log(likedUsersArr);
-	  },
-	
 	  handleLike: function () {
 	    var likedUsersIdArr = [];
 	
@@ -37319,13 +37310,17 @@
 	      return React.createElement('div', null);
 	    }
 	
-	    // update this to a key-value object, id ==> username
 	    var likedUsersIdArr = [];
-	    // var likedUsersArr = [];
+	    var likedUsersArr = [];
 	
 	    for (var i = 0; i < this.props.review.liked_users.length; i++) {
 	      likedUsersIdArr.push(this.props.review.liked_users[i].id);
-	      // likedUsersArr.push(this.props.review.liked_users[i].username);
+	      var username = this.props.review.liked_users[i].username;
+	      likedUsersArr.push(React.createElement(
+	        'li',
+	        { key: i },
+	        username
+	      ));
 	    }
 	
 	    var likeButton;
@@ -37365,20 +37360,20 @@
 	
 	    if (this.props.review.liked_users.length > 1) {
 	      likedUsers = React.createElement(
-	        'div',
-	        { onMouseOver: this.displayLikedUsers },
+	        'span',
+	        null,
 	        this.props.review.liked_users.length,
 	        ' people liked this review'
 	      );
 	    } else if (this.props.review.liked_users.length === 1) {
 	      likedUsers = React.createElement(
-	        'div',
-	        { onMouseOver: this.displayLikedUsers },
+	        'span',
+	        null,
 	        this.props.review.liked_users.length,
 	        ' person liked this review'
 	      );
 	    } else {
-	      likedUsers = React.createElement('div', { onMouseOver: this.displayLikedUsers });
+	      likedUsers = React.createElement('span', null);
 	    }
 	
 	    return React.createElement(
@@ -37417,7 +37412,17 @@
 	          'div',
 	          { className: 'like-container' },
 	          likeButton,
-	          likedUsers
+	          React.createElement(
+	            'div',
+	            { className: 'liked-users' },
+	            likedUsers,
+	            React.createElement(
+	              'ul',
+	              { className: 'liked-users-pop-up ' },
+	              React.createElement('div', { className: 'arrow-down' }),
+	              likedUsersArr
+	            )
+	          )
 	        )
 	      )
 	    );

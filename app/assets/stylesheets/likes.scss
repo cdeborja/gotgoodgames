@@ -12,14 +12,63 @@
   display: inline-flex;
   float: left;
   margin-left: 11px;
-}
-
-.like-container > div:last-child {
-  margin: 3px 0 0 4px;
+  position: relative;
 }
 
 .like-font {
   font-size: 16px;
   font-family: 'Roboto';
   display: inline;
+}
+
+.liked-users {
+  position: relative;
+  display: block;
+  margin: 3px 0 0 4px;
+  z-index: 300;
+}
+
+.liked-users:hover {
+  cursor: default;
+}
+
+.liked-users:hover .liked-users-pop-up {
+  display: block;
+}
+
+.liked-users:hover .arrow-down {
+  display: block;
+}
+
+.arrow-down {
+  display: none;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #53b9ea;
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translatex(-50%);
+
+}
+
+.liked-users-pop-up {
+  display: none;
+  position: absolute;
+  border-radius: 5px;
+  padding: 5px;
+  bottom: 150%;
+  left: 50%;
+  color: #FFFFFF;
+  background: #53b9ea;
+  transform: translateX(-50%);
+  z-index: 300;
+}
+
+.liked-users-pop-up > li {
+  width: auto;
+  display: block;
+  padding: 2px;
 }
