@@ -102,7 +102,7 @@ var Search = React.createClass({
 
     // <button className="go-button" onClick={ this.search }>GO</button>
     return (
-      <form autocomplete="off" className="search-box group">
+      <form autoComplete="off" className="search-box group">
         <input type="text" id="search" onChange={ this.handleInputChange }
           placeholder="Search"/>
         {searchList}
