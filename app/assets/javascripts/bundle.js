@@ -21761,10 +21761,10 @@
 	        'li',
 	        { className: 'browse-links', onMouseLeave: this.closeMenu, onMouseEnter: this.openMenu },
 	        'Browse...',
+	        React.createElement('div', { className: 'arrow-up' }),
 	        React.createElement(
 	          'ul',
 	          { className: 'browse-links-dropdown hidden' },
-	          React.createElement('div', { className: 'arrow-up' }),
 	          React.createElement(
 	            'li',
 	            { onClick: this.goToUsersIndex },
@@ -21782,10 +21782,10 @@
 	        'li',
 	        { className: 'user-links', onMouseLeave: this.closeMenu, onMouseEnter: this.openMenu },
 	        this.state.currentUser.username,
+	        React.createElement('div', { className: 'arrow-up' }),
 	        React.createElement(
 	          'ul',
 	          { className: 'user-links-dropdown hidden' },
-	          React.createElement('div', { className: 'arrow-up' }),
 	          React.createElement(
 	            'li',
 	            { onClick: this.goToCurrentUserHomePage },

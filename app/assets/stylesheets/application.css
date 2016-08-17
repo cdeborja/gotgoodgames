@@ -586,6 +586,16 @@ img {
   color: #000;
 }
 
+.browse-links:hover .arrow-up {
+  transform: translateX(50%) rotate(180deg);
+  border-bottom: 7px solid #000000;
+}
+
+.user-links:hover .arrow-up {
+  transform: translateX(50%) rotate(180deg);
+  border-bottom: 7px solid #000000;
+}
+
 .browse-links-dropdown {
   margin-top: 20px;
   transform: translateX(50%);
@@ -734,7 +744,7 @@ img {
 }
 
 .arrow-up {
-  margin-top: -7px;
+  bottom: 5px;
   position: absolute;
   transform: translateX(50%);
   right: 50%;
@@ -742,5 +752,6 @@ img {
   height: 0;
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
-  border-bottom: 7px solid #000000;
+  border-bottom: 7px solid #FFFFFF;
+  transition: transform 400ms, border-bottom 400ms;
 }
