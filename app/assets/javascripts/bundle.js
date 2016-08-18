@@ -38486,8 +38486,9 @@
 	
 	    var userReviews;
 	    if (this.state.reviews.length > 0) {
+	      var currentUserId = SessionStore.currentUser().id;
 	      userReviews = this.state.reviews.map(function (review, id) {
-	        return React.createElement(UserReviewItem, { key: id, userReview: review });
+	        return React.createElement(UserReviewItem, { currentUserId: currentUserId, key: id, userReview: review, ApiUtil: ApiUtil });
 	      }).reverse();
 	    } else {
 	      userReviews = React.createElement(

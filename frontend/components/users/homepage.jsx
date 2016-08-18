@@ -55,8 +55,9 @@ module.exports = React.createClass({
 
     var userReviews;
     if (this.state.reviews.length > 0) {
+      var currentUserId = SessionStore.currentUser().id;
       userReviews = this.state.reviews.map(function (review, id) {
-        return <UserReviewItem key={id} userReview={review} />;
+        return <UserReviewItem currentUserId={currentUserId} key={id} userReview={review} ApiUtil={ApiUtil} />;
       }).reverse();
     } else {
       userReviews = <p>Nothing...yet</p>;

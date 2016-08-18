@@ -187,7 +187,7 @@ module.exports = React.createClass({
       }
 
     var buttons, userDiv;
-    
+
     if (SessionStore.currentUser().id === this.props.userReview.user_id) {
       buttons = (
           <div className="edit-menu group">
