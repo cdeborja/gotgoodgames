@@ -22,5 +22,3 @@
 ## JSON API
 
 ### Games
-
-### Gameshelves
