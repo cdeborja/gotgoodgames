@@ -34,7 +34,9 @@ It is built with a Ruby on Rails backend and a React.js frontend.
 * Search bar enabled to search for Users or Games
 
 ###Future Features
-* Use kaminari gem for pagination
+* Use kaminari gem for pagination to reduce client side time
+* Create a 'favorite gameshelf' that will allow users favorite gameshelf
+  and allow to drag and drop for reorganization
 
 [welcome]: ./docs/images/welcome.png
 [landingPage]: ./docs/images/landing_page.png
