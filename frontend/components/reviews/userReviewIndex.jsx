@@ -20,6 +20,39 @@ module.exports = React.createClass({
     });
   },
 
+  handleLike: function () {
+    var likedUsersIdArr = [];
+
+    for (var i = 0; i < this.props.userReview.liked_users.length; i++) {
+      likedUsersIdArr.push(this.props.userReview.liked_users[i].id);
+    }
+
+    if (likedUsersIdArr.indexOf(this.props.currentUserId) > -1 ) {
+      this.deleteLike();
+    } else {
+      this.addLike();
+    }
+  },
+
+  addLike: function (e) {
+    this.props.ApiUtil.createLike({
+      like: {
+        user_id: this.props.currentUserId,
+        review_id: this.props.userReview.id,
+        current_user_page_id: this.props.userReview.user_id
+      }
+    });
+  },
+
+  deleteLike: function (e) {
+    this.props.ApiUtil.deleteLike({
+      like: {
+        id: this.props.userReview.current_user_like_id,
+        current_user_page_id: this.props.userReview.user_id
+      }
+    });
+  },
+
   deleteReview: function (e) {
     e.preventDefault();
 
@@ -127,8 +160,34 @@ module.exports = React.createClass({
 
     if (review === []) { return (<div></div>); }
 
-    var buttons, userDiv;
 
+      var likedUsersIdArr = [];
+      var likedUsersArr = [];
+
+      for (var i = 0; i < this.props.userReview.liked_users.length; i++) {
+        likedUsersIdArr.push(this.props.userReview.liked_users[i].id);
+        var username = this.props.userReview.liked_users[i].username;
+        likedUsersArr.push(<li key={i}>{username}</li>);
+      }
+
+      var likeButton;
+
+      if (likedUsersIdArr.indexOf(this.props.currentUserId) > -1 ) {
+        likeButton = <div onClick={this.handleLike}><i className="fa fa-thumbs-up fa-lg thumbs" aria-hidden="true"> <div className="like-font">Unlike</div></i></div>;
+      } else {
+        likeButton = <div onClick={this.handleLike}><i className="fa fa-thumbs-o-up fa-lg thumbs" aria-hidden="true"> <div className="like-font">Like</div> </i></div>;
+      }
+
+      if (this.props.userReview.liked_users.length > 1) {
+        likedUsers = <span>{this.props.userReview.liked_users.length} people liked this review</span>;
+      } else if (this.props.userReview.liked_users.length === 1) {
+        likedUsers = <span>{this.props.userReview.liked_users.length} person liked this review</span>;
+      } else {
+        likedUsers = <span></span>;
+      }
+
+    var buttons, userDiv;
+    
     if (SessionStore.currentUser().id === this.props.userReview.user_id) {
       buttons = (
           <div className="edit-menu group">
@@ -210,6 +269,16 @@ module.exports = React.createClass({
             <h3>{review.title}</h3>
             <p>{score}</p>
             <span>{review.body}</span>
+            <div className="like-container">
+              {likeButton}
+              <div className="liked-users">
+                {likedUsers}
+                <ul className="liked-users-pop-up ">
+                  <div className="arrow-down"></div>
+                  {likedUsersArr}
+                </ul>
+              </div>
+            </div>
           </div>
         </ul>
 

@@ -65,4 +65,7 @@ class Api::UsersController < ApplicationController
 
   end
 
+  def destroy
+  end
+
 end

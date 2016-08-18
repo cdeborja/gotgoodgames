@@ -2,9 +2,14 @@ class Api::LikesController < ApplicationController
 
   def create
     like = Like.new(like_params)
-    game = Game.find(params["like"]["game_id"])
     if like.save!
-      redirect_to "/api/games/#{game.id}"
+      if params[:like][:game_id]
+        game = Game.find(params[:like][:game_id])
+        redirect_to "/api/games/#{game.id}"
+      else
+        user_id = params[:like][:current_user_page_id]
+        redirect_to "/api/users/#{user_id}/reviews"
+      end
     end
   end
 
@@ -13,10 +18,15 @@ class Api::LikesController < ApplicationController
   end
 
   def destroy
-    like = Like.find(params[:id])
+    like = Like.find(params[:like][:id])
     like.destroy
-    game = Game.find(params[:like][:game_id])
-    redirect_to "/api/games/#{game.id}"
+    if params[:like][:game_id]
+      game = Game.find(params[:like][:game_id])
+      redirect_to "/api/games/#{game.id}"
+    else
+      user_id = params[:like][:current_user_page_id]
+      redirect_to "/api/users/#{user_id}"
+    end
   end
 
   private

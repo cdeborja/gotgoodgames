@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :likes, only: [:create, :index, :destroy]
     resources :games, only: [:index, :show, :update, :destroy]
     resources :reviews
-    resources :users, only: [:create, :new, :update, :show, :index] do
+    resources :users, only: [:create, :new, :update, :show, :index, :destroy] do
       resources :reviews, only: [:index]
     end
     resources :searches, only: [:index]

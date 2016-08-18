@@ -286,8 +286,12 @@ module.exports = {
       url: "/api/likes",
       dataType: "json",
       data: likeparams,
-      success: function (game) {
-        GameActions.receiveSingleGame(game);
+      success: function (resp) {
+        if (!resp.length) {
+          GameActions.receiveSingleGame(resp);
+        } else {
+          ReviewActions.receiveUserReviews(resp);
+        }
       },
       error: function () {
         console.log("Could not create like");
@@ -301,8 +305,12 @@ module.exports = {
       url: "/api/likes/" + params.like.id,
       dataType: "json",
       data: params,
-      success: function (game) {
-        GameActions.receiveSingleGame(game);
+      success: function (resp) {
+        if (!resp.length) {
+          GameActions.receiveSingleGame(resp);
+        } else {
+          ReviewActions.receiveUserReviews(resp);
+        }
       },
       error: function () {
         console.log("could not delete like");

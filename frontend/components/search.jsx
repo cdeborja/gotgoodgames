@@ -80,7 +80,7 @@ var Search = React.createClass({
             </li>
           );
         }
-      });
+      }.bind(this));
     }
   },
   // FOR SHOWING PAGES

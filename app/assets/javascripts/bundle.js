@@ -22264,8 +22264,12 @@
 	      url: "/api/likes",
 	      dataType: "json",
 	      data: likeparams,
-	      success: function (game) {
-	        GameActions.receiveSingleGame(game);
+	      success: function (resp) {
+	        if (!resp.length) {
+	          GameActions.receiveSingleGame(resp);
+	        } else {
+	          ReviewActions.receiveUserReviews(resp);
+	        }
 	      },
 	      error: function () {
 	        console.log("Could not create like");
@@ -22279,8 +22283,12 @@
 	      url: "/api/likes/" + params.like.id,
 	      dataType: "json",
 	      data: params,
-	      success: function (game) {
-	        GameActions.receiveSingleGame(game);
+	      success: function (resp) {
+	        if (!resp.length) {
+	          GameActions.receiveSingleGame(resp);
+	        } else {
+	          ReviewActions.receiveUserReviews(resp);
+	        }
 	      },
 	      error: function () {
 	        console.log("could not delete like");
@@ -31970,7 +31978,7 @@
 	            )
 	          );
 	        }
-	      });
+	      }.bind(this));
 	    }
 	  },
 	  // FOR SHOWING PAGES
@@ -37885,6 +37893,39 @@
 	    };
 	  },
 	
+	  handleLike: function () {
+	    var likedUsersIdArr = [];
+	
+	    for (var i = 0; i < this.props.userReview.liked_users.length; i++) {
+	      likedUsersIdArr.push(this.props.userReview.liked_users[i].id);
+	    }
+	
+	    if (likedUsersIdArr.indexOf(this.props.currentUserId) > -1) {
+	      this.deleteLike();
+	    } else {
+	      this.addLike();
+	    }
+	  },
+	
+	  addLike: function (e) {
+	    this.props.ApiUtil.createLike({
+	      like: {
+	        user_id: this.props.currentUserId,
+	        review_id: this.props.userReview.id,
+	        current_user_page_id: this.props.userReview.user_id
+	      }
+	    });
+	  },
+	
+	  deleteLike: function (e) {
+	    this.props.ApiUtil.deleteLike({
+	      like: {
+	        id: this.props.userReview.current_user_like_id,
+	        current_user_page_id: this.props.userReview.user_id
+	      }
+	    });
+	  },
+	
 	  deleteReview: function (e) {
 	    e.preventDefault();
 	
@@ -37992,6 +38033,72 @@
 	
 	    if (review === []) {
 	      return React.createElement('div', null);
+	    }
+	
+	    var likedUsersIdArr = [];
+	    var likedUsersArr = [];
+	
+	    for (var i = 0; i < this.props.userReview.liked_users.length; i++) {
+	      likedUsersIdArr.push(this.props.userReview.liked_users[i].id);
+	      var username = this.props.userReview.liked_users[i].username;
+	      likedUsersArr.push(React.createElement(
+	        'li',
+	        { key: i },
+	        username
+	      ));
+	    }
+	
+	    var likeButton;
+	
+	    if (likedUsersIdArr.indexOf(this.props.currentUserId) > -1) {
+	      likeButton = React.createElement(
+	        'div',
+	        { onClick: this.handleLike },
+	        React.createElement(
+	          'i',
+	          { className: 'fa fa-thumbs-up fa-lg thumbs', 'aria-hidden': 'true' },
+	          ' ',
+	          React.createElement(
+	            'div',
+	            { className: 'like-font' },
+	            'Unlike'
+	          )
+	        )
+	      );
+	    } else {
+	      likeButton = React.createElement(
+	        'div',
+	        { onClick: this.handleLike },
+	        React.createElement(
+	          'i',
+	          { className: 'fa fa-thumbs-o-up fa-lg thumbs', 'aria-hidden': 'true' },
+	          ' ',
+	          React.createElement(
+	            'div',
+	            { className: 'like-font' },
+	            'Like'
+	          ),
+	          ' '
+	        )
+	      );
+	    }
+	
+	    if (this.props.userReview.liked_users.length > 1) {
+	      likedUsers = React.createElement(
+	        'span',
+	        null,
+	        this.props.userReview.liked_users.length,
+	        ' people liked this review'
+	      );
+	    } else if (this.props.userReview.liked_users.length === 1) {
+	      likedUsers = React.createElement(
+	        'span',
+	        null,
+	        this.props.userReview.liked_users.length,
+	        ' person liked this review'
+	      );
+	    } else {
+	      likedUsers = React.createElement('span', null);
 	    }
 	
 	    var buttons, userDiv;
@@ -38133,6 +38240,22 @@
 	            'span',
 	            null,
 	            review.body
+	          ),
+	          React.createElement(
+	            'div',
+	            { className: 'like-container' },
+	            likeButton,
+	            React.createElement(
+	              'div',
+	              { className: 'liked-users' },
+	              likedUsers,
+	              React.createElement(
+	                'ul',
+	                { className: 'liked-users-pop-up ' },
+	                React.createElement('div', { className: 'arrow-down' }),
+	                likedUsersArr
+	              )
+	            )
 	          )
 	        )
 	      )
@@ -38493,8 +38616,9 @@
 	
 	    var userReviews;
 	    if (this.state.reviews.length > 0) {
+	      var currentUserId = SessionStore.currentUser().id;
 	      userReviews = this.state.reviews.map(function (review, id) {
-	        return React.createElement(UserReviewItem, { key: id, userReview: review });
+	        return React.createElement(UserReviewItem, { ApiUtil: ApiUtil, key: id, currentUserId: currentUserId, userReview: review });
 	      }).reverse();
 	    } else {
 	      userReviews = React.createElement(
