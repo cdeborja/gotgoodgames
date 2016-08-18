@@ -1,13 +1,12 @@
-#GotGoodGames
+#gotgoodgames
 
 Are you a gamer? Do you consider yourself a **connoisseur** of video games?
 
 Do you [gotgoodgames](http://www.gotgoodgames.xyz/)?
 
 This is a github repository outlining the creation and implementation of
-'gotgoodgames', a website akin to the currently running www.goodreads.com,
-but instead will be more focused on video games instead of books. It is built
-using Ruby on Rails and React js.
+'gotgoodgames', a website that is focused on reviewing and rating video games.
+It is built with a Ruby on Rails backend and a React.js frontend.
 
 ##Design Docs
 * [View Wireframes][views]
