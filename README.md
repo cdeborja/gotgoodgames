@@ -36,7 +36,8 @@ It is built with a Ruby on Rails backend and a React.js frontend.
 
 ###Future Features
 * Create a 'favorite gameshelf' that will allow users favorite gameshelf
-  and allow to drag and drop for reorganization
+  and allow to drag and drop for reorganization of games in their own user page
+* Utilize 3rd party API for game data instead of using seeds
 
 [welcome]: ./docs/images/welcome.png
 [landingPage]: ./docs/images/landing_page.png
