@@ -23,7 +23,11 @@ class Api::ReviewsController < ApplicationController
   end
 
   def index
-    @reviews = Review.where("user_id = ?", params[:user_id])
+
+    page = params[:page].to_i
+
+    @reviews = Review.where("user_id = ?", params[:user_id]).page(1).per(10 * page)
+    
     if @reviews
       render :index
     else

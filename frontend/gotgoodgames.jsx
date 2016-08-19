@@ -34,7 +34,7 @@ var routes = (
     <Route path="gamesIndex" component={GamesIndex} onEnter={_requireLoggedIn} />
     <Route path="games/:gameId" component={GameDetail} onEnter={_requireLoggedIn} />
     <Route path="reviews/:reviewId" component={EditForm} onEnter={_requireLoggedIn} />
-    <Route path="users" component={UsersIndex} onEnter={_requireLoggedIn} />
+    <Route path="usersIndex" component={UsersIndex} onEnter={_requireLoggedIn} />
     <Route path="users/:userId" component={UserShowPage} onEnter={_requireLoggedIn} />
     <Route path="login" component={SignInForm} />
     <Route path="signup" component={SignUpForm} />

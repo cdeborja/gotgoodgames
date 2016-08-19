@@ -81,7 +81,7 @@
 	  React.createElement(Route, { path: 'gamesIndex', component: GamesIndex, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'games/:gameId', component: GameDetail, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'reviews/:reviewId', component: EditForm, onEnter: _requireLoggedIn }),
-	  React.createElement(Route, { path: 'users', component: UsersIndex, onEnter: _requireLoggedIn }),
+	  React.createElement(Route, { path: 'usersIndex', component: UsersIndex, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'users/:userId', component: UserShowPage, onEnter: _requireLoggedIn }),
 	  React.createElement(Route, { path: 'login', component: SignInForm }),
 	  React.createElement(Route, { path: 'signup', component: SignUpForm }),
@@ -21655,6 +21655,7 @@
 	
 	// for infinite scrolling
 	var gamePage = 1;
+	var reviewsPage = 1;
 	
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -21707,7 +21708,7 @@
 	
 	  goToUsersIndex: function () {
 	    this.clearDropdowns();
-	    this.context.router.push("/users");
+	    this.context.router.push("/usersIndex");
 	  },
 	
 	  goToEditProfile: function (e) {
@@ -21748,11 +21749,26 @@
 	  },
 	
 	  //this will handle infinte scrolling for certain pages that require it
+	  // the "else if" statements allow for resetting of page when changing pages
 	  isBottom: function () {
 	    $(window).scroll(function () {
 	      if ($(window).scrollTop() + $(window).height() == $(document).height() && this.location.hash.includes("/gamesIndex")) {
 	        ApiUtil.fetchAllGames(gamePage + 1);
 	        gamePage++;
+	      } else if ($(window).scrollTop() + $(window).height() == $(document).height() && this.location.hash.includes("/users/")) {
+	        var start = this.location.hash.indexOf("s/") + 2;
+	        var end = this.location.hash.indexOf("?");
+	        var userId = this.location.hash.slice(start, end);
+	        ApiUtil.fetchUserReviews(userId, reviewsPage + 1);
+	        reviewsPage++;
+	      }
+	
+	      if (!this.location.hash.includes("/gamesIndex")) {
+	        gamePage = 1;
+	      }
+	
+	      if (!this.location.hash.includes("/users/")) {
+	        reviewsPage = 1;
 	      }
 	    });
 	  },
@@ -22168,12 +22184,12 @@
 	    });
 	  },
 	
-	  fetchUserReviews: function (user_id) {
+	  fetchUserReviews: function (user_id, page) {
 	    $.ajax({
 	      type: "GET",
 	      url: "/api/users/" + user_id + "/reviews",
 	      dataType: "json",
-	      data: user_id,
+	      data: (user_id, { page: page }),
 	      success: function (reviews) {
 	        ReviewActions.receiveUserReviews(reviews);
 	      },
@@ -38594,6 +38610,8 @@
 	var GameStore = __webpack_require__(236);
 	var UserReviewItem = __webpack_require__(306);
 	
+	var page = 1;
+	
 	module.exports = React.createClass({
 	  displayName: 'exports',
 	
@@ -38619,7 +38637,7 @@
 	    this.userListener = UserStore.addListener(this._onChange);
 	    this.reviewListener = ReviewStore.addListener(this._onChange);
 	    ApiUtil.fetchUser(this.props.params.userId);
-	    ApiUtil.fetchUserReviews(this.props.params.userId);
+	    ApiUtil.fetchUserReviews(this.props.params.userId, page);
 	  },
 	
 	  componentWillUnmount: function () {
@@ -38628,7 +38646,7 @@
 	  },
 	
 	  render: function () {
-	    if (this.state.user === undefined) {
+	    if (this.state.user === undefined || !this.state.user.reviews) {
 	      return React.createElement('img', { className: 'loading-image', src: 'https://www.criminalwatchdog.com/images/assets/loading.gif' });
 	    }
 	
@@ -38669,7 +38687,7 @@
 	              'li',
 	              null,
 	              'Reviews: ',
-	              this.state.reviews.length
+	              this.state.user.reviews.length
 	            )
 	          )
 	        ),

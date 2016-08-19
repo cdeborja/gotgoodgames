@@ -4,7 +4,7 @@ json.extract!(
 )
 
 json.reviews do
-  json.array!(@user.reviews) do |review|
+  json.array!(@user.reviews.order("updated_at")) do |review|
     json.extract!(
     review,
     :id, :title, :body, :score, :user_id

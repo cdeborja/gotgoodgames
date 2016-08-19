@@ -176,12 +176,12 @@ module.exports = {
     });
   },
 
-  fetchUserReviews: function(user_id) {
+  fetchUserReviews: function(user_id, page) {
     $.ajax({
       type: "GET",
       url: "/api/users/"+ user_id + "/reviews",
       dataType: "json",
-      data: user_id,
+      data: (user_id, {page: page}),
       success: function (reviews) {
         ReviewActions.receiveUserReviews(reviews);
       },

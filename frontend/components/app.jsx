@@ -6,6 +6,7 @@ var Search = require('./search');
 
 // for infinite scrolling
 var gamePage = 1;
+var reviewsPage = 1;
 
 module.exports = React.createClass({
 
@@ -58,7 +59,7 @@ module.exports = React.createClass({
 
   goToUsersIndex: function () {
     this.clearDropdowns();
-    this.context.router.push("/users");
+    this.context.router.push("/usersIndex");
   },
 
   goToEditProfile: function (e) {
@@ -99,11 +100,26 @@ module.exports = React.createClass({
   },
 
   //this will handle infinte scrolling for certain pages that require it
-  isBottom: function(){
-    $(window).scroll(function() {
+  // the "else if" statements allow for resetting of page when changing pages
+  isBottom: function () {
+    $(window).scroll(function () {
       if($(window).scrollTop() + $(window).height() == $(document).height() && this.location.hash.includes("/gamesIndex")) {
         ApiUtil.fetchAllGames(gamePage + 1);
         gamePage ++;
+      } else if ($(window).scrollTop() + $(window).height() == $(document).height() && this.location.hash.includes("/users/")) {
+        var start = this.location.hash.indexOf("s/") + 2;
+        var end = this.location.hash.indexOf("?");
+        var userId = this.location.hash.slice(start,end);
+        ApiUtil.fetchUserReviews(userId, reviewsPage + 1);
+        reviewsPage ++;
+      }
+
+      if (!this.location.hash.includes("/gamesIndex")) {
+        gamePage = 1;
+      }
+
+      if (!this.location.hash.includes("/users/")) {
+        reviewsPage = 1;
       }
     });
   },

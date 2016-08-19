@@ -6,6 +6,8 @@ var ReviewStore = require('../../stores/review');
 var GameStore = require('../../stores/game');
 var UserReviewItem = require('../reviews/userReviewIndex');
 
+var page = 1;
+
 module.exports = React.createClass({
   contextTypes: {
      router: React.PropTypes.object.isRequired
@@ -29,7 +31,7 @@ module.exports = React.createClass({
     this.userListener = UserStore.addListener(this._onChange);
     this.reviewListener = ReviewStore.addListener(this._onChange);
     ApiUtil.fetchUser(this.props.params.userId);
-    ApiUtil.fetchUserReviews(this.props.params.userId);
+    ApiUtil.fetchUserReviews(this.props.params.userId, page);
   },
 
   componentWillUnmount: function () {
@@ -38,7 +40,7 @@ module.exports = React.createClass({
   },
 
   render: function () {
-    if (this.state.user === undefined) {
+    if (this.state.user === undefined || !this.state.user.reviews) {
       return (<img className="loading-image" src="https://www.criminalwatchdog.com/images/assets/loading.gif"/>);
     }
 
@@ -60,7 +62,7 @@ module.exports = React.createClass({
           <img className="user-showpage-img" src={this.state.user.picture} />
           <ul className="stat-box">
             <h3>"Newbie"</h3>
-            <li>Reviews: {this.state.reviews.length}</li>
+            <li>Reviews: {this.state.user.reviews.length}</li>
           </ul>
         </div>
         <div className="user-description-box">
