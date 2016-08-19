@@ -34,24 +34,10 @@ module.exports = React.createClass({
   componentDidMount: function () {
     this.gameListener = GameStore.addListener(this._onChange);
     ApiUtil.fetchAllGames(page);
-    this.isBottom();
   },
 
   componentWillUnmount: function () {
     this.gameListener.remove();
-  },
-
-  isBottom: function(){
-
-    if ( SessionStore.currentUser().id !== undefined ){
-      $(window).scroll(function() {
-        if($(window).scrollTop() + $(window).height() == $(document).height()) {
-          ApiUtil.fetchAllGames(page + 1);
-          page ++;
-        }
-      });
-    }
-
   },
 
   render: function () {

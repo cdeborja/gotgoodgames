@@ -21653,6 +21653,9 @@
 	var ApiUtil = __webpack_require__(181);
 	var Search = __webpack_require__(242);
 	
+	// for infinite scrolling
+	var gamePage = 1;
+	
 	module.exports = React.createClass({
 	  displayName: 'exports',
 	
@@ -21670,6 +21673,7 @@
 	  componentDidMount: function () {
 	    this.sessionStoreToken = SessionStore.addListener(this.handleChange);
 	    this.handleChange();
+	    this.isBottom();
 	  },
 	
 	  componentWillUnmount: function () {
@@ -21741,6 +21745,16 @@
 	    } else if (e.currentTarget.className === "user-links") {
 	      $('.user-links-dropdown').addClass("hidden");
 	    }
+	  },
+	
+	  //this will handle infinte scrolling for certain pages that require it
+	  isBottom: function () {
+	    $(window).scroll(function () {
+	      if ($(window).scrollTop() + $(window).height() == $(document).height() && this.location.hash.includes("/gamesIndex")) {
+	        ApiUtil.fetchAllGames(gamePage + 1);
+	        gamePage++;
+	      }
+	    });
 	  },
 	
 	  render: function () {
@@ -37810,23 +37824,10 @@
 	  componentDidMount: function () {
 	    this.gameListener = GameStore.addListener(this._onChange);
 	    ApiUtil.fetchAllGames(page);
-	    this.isBottom();
 	  },
 	
 	  componentWillUnmount: function () {
 	    this.gameListener.remove();
-	  },
-	
-	  isBottom: function () {
-	
-	    if (SessionStore.currentUser().id !== undefined) {
-	      $(window).scroll(function () {
-	        if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-	          ApiUtil.fetchAllGames(page + 1);
-	          page++;
-	        }
-	      });
-	    }
 	  },
 	
 	  render: function () {

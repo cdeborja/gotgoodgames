@@ -20,7 +20,7 @@ class Api::GamesController < ApplicationController
   def index
 
     page = params[:page].to_i
-    
+
     @games = Game.all.page(1).per(16 * page)
     @review_count
     @score
