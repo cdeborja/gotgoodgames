@@ -152,7 +152,7 @@ module.exports = {
       dataType: "json",
       data: params,
       success: function (game) {
-        GameActions.receiveSingleGame(game)
+        GameActions.receiveSingleGame(game);
       },
       error: function() {
         console.log("could not update review");
@@ -250,9 +250,11 @@ module.exports = {
   },
 
   //GAME RELATED
-  fetchAllGames: function() {
+  fetchAllGames: function(page) {
     $.ajax({
+      type: "GET",
       url: "/api/games",
+      data: {page: page},
       success: function (games) {
         GameActions.receiveAllGames(games);
       },

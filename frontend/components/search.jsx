@@ -88,7 +88,6 @@ var Search = React.createClass({
   // Displaying page { meta.page } of { meta.total_pages }
   // <button onClick={ this.nextPage }>NEXT PAGE</button>
   // </nav>
-  // onBlur={this.blurSearchField} onFocus={this.focusSearchField}
 
   render: function () {
     var searchList;

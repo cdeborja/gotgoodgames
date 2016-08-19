@@ -18,9 +18,13 @@ class Api::GamesController < ApplicationController
   end
 
   def index
-    @games = Game.all
+
+    page = params[:page].to_i
+    
+    @games = Game.all.page(1).per(16 * page)
     @review_count
     @score
+
     render :index
   end
 

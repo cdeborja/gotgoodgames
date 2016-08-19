@@ -32,9 +32,9 @@ It is built with a Ruby on Rails backend and a React.js frontend.
 * Users can modify or delete previous reviews and score
 * Users can like other user reviews
 * Search bar enabled to search for Users or Games
+* Implemented infinite scrolling for games index in order to prevent client side lagging issues with a larger game database, more games are fetched when user scrolls down to the bottom
 
 ###Future Features
-* Use kaminari gem for pagination to reduce client side time
 * Create a 'favorite gameshelf' that will allow users favorite gameshelf
   and allow to drag and drop for reorganization
 

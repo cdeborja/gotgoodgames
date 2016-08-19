@@ -22228,9 +22228,11 @@
 	  },
 	
 	  //GAME RELATED
-	  fetchAllGames: function () {
+	  fetchAllGames: function (page) {
 	    $.ajax({
+	      type: "GET",
 	      url: "/api/games",
+	      data: { page: page },
 	      success: function (games) {
 	        GameActions.receiveAllGames(games);
 	      },
@@ -31986,7 +31988,6 @@
 	  // Displaying page { meta.page } of { meta.total_pages }
 	  // <button onClick={ this.nextPage }>NEXT PAGE</button>
 	  // </nav>
-	  // onBlur={this.blurSearchField} onFocus={this.focusSearchField}
 	
 	  render: function () {
 	    var searchList;
@@ -37780,6 +37781,8 @@
 	var UserReviewItem = __webpack_require__(306);
 	var EditUserForm = __webpack_require__(308);
 	
+	var page = 1;
+	
 	module.exports = React.createClass({
 	  displayName: 'exports',
 	
@@ -37806,11 +37809,24 @@
 	
 	  componentDidMount: function () {
 	    this.gameListener = GameStore.addListener(this._onChange);
-	    ApiUtil.fetchAllGames();
+	    ApiUtil.fetchAllGames(page);
+	    this.isBottom();
 	  },
 	
 	  componentWillUnmount: function () {
 	    this.gameListener.remove();
+	  },
+	
+	  isBottom: function () {
+	
+	    if (SessionStore.currentUser().id !== undefined) {
+	      $(window).scroll(function () {
+	        if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+	          ApiUtil.fetchAllGames(page + 1);
+	          page++;
+	        }
+	      });
+	    }
 	  },
 	
 	  render: function () {
