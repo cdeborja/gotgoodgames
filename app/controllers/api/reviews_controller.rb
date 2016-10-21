@@ -26,7 +26,7 @@ class Api::ReviewsController < ApplicationController
 
     page = params[:page].to_i
 
-    @reviews = Review.where("user_id = ?", params[:user_id]).page(1).per(10 * page)
+    @reviews = Review.where("user_id = ?", params[:user_id]).order(updated_at: :desc).page(1).per(10 * page)
     
     if @reviews
       render :index
