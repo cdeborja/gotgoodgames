@@ -14,11 +14,7 @@
 /node_modules
 
 /.byebug_history
-
-
-
-
-
+/.DS_Store
 
 DO NOT DELETE EVER
 # Ignore application configuration
