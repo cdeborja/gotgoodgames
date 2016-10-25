@@ -1,20 +1,19 @@
 ## Component Hierarchy
 
 * `App`
+  * `SignInForm`
+  * `SignUpForm`
   * `Navigation`
     * `SearchBar`
-      * `SearchResults`
     * `UserSettings`
-    * `UserPage`
-      * `Gameshelves`
-        * `GameshelfComments`
-        * `Games`
-      * `UserCommentsForm`
-    * `GamePage`
-      * `GameReviewForm`
-  * `MainPage`
-    * `UsersActivity`
+      * `UserPage`
+  * `Homepage`
+    * `GamesIndex`
+      * `GameDetail`
+    * `UsersIndex`
+      * `UserShowPage`
     * `PopularGames`
     * `TopRatedGames`
     * `NewReleaseGames`
-    **Each list will contain games that after you click will be redirected to that games page**
+  * `NewReviewForm`
+  * `EditReviewForm`

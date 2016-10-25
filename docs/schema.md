@@ -1,30 +1,36 @@
 # Schema Information
 
-## comments
-column name  | data type  | details
--------------|------------|-----------------------
-id           | integer    | not null, primary key
-body         | text       | not null
-gameshelf_id | integer    | not null, foreign key
-commenter_id | integer    | not null, foreign key
-timestamps   | timestamps | not null
-
 ## games
-column name  | data type  | details
--------------|------------|-----------------------
-id           | integer    | not null, primary key
-title        | string     | not null
-description  | text       | not null
-release_date | date       | not null
-timestamps   | timestamps | not null
+column name       | data type  | details
+------------------|------------|-----------------------
+id                | integer    | not null, primary key
+title             | string     | not null
+description       | text       | not null
+release_date      | date       | not null
+timestamps        | timestamps | not null
+console           | string     |
+cover_file_name   | string     |
+cover_content_type| string     |
+cover_file_size   | integer    |
+image_url         | string     |
 
-## gameshelves
-column name | data type  | details
-------------|------------|-----------------------
-id          | integer    | not null, primary key
-owner_id    | integer    | not null, foreign key
-title       | string     | not null
-timestamps  | timestamps | not null
+## likes
+column name  | data type  | details
+-------------|------------|----------
+id           | integer    | not null
+user_id      | integer    | not null
+review_id    | integer    | not null
+
+add_index "likes", ["user_id", "review_id"]
+
+## pg_search_documents
+column name       | data type  
+------------------|------------
+id                | integer    
+content           | text       
+searchable_id     | integer    
+searchable_type   | string     
+
 
 ## reviews
 column name | data type  | details
@@ -34,44 +40,21 @@ user_id     | integer    | not null, foreign key
 game_id     | integer    | not null, foreign key
 score       | integer    | not null
 body        | text       |
-timestamps  | timestamps | not null
-
-## shelves
-column name  | data type  | details
--------------|------------|-----------------------
-id           | integer    | not null, primary key
-gameshelf_id | integer    | not null, foreign key
-game_id      | integer    | not null, foreign key
-timestamps   | timestamps | not null
+title       | string     |
 
 ## users
-column name     | data type  | details
-----------------|------------|-----------------------
-id              | integer    | not null, primary key
-username        | string     | not null, indexed, unique
-password_digest | string     | not null
-session_token   | string     | not null, indexed, unique
-timestamps      | timestamps | not null
+column name           | data type  | details
+----------------------|------------|-----------------------
+id                    | integer    | not null, primary key
+username              | string     | not null, indexed, unique
+password_digest       | string     | not null
+session_token         | string     | not null, indexed, unique
+picture_file_name     | string     |
+picture_content_type  | string     |
+picture_file_size     | integer    |
+title                 | string     |
+description           | text       |
+uid                   | string     |
+provider              | string     |
 
-
-## wishlist
-column name  | data type  | details
--------------|------------|-----------------------
-id           | integer    | not null, primary key
-title        | string     | not null
-user_id      | integer    | not null, foreign key
-timestamps   | timestamps | not null
-
-## wishlist_items
-column name  | data type  | details
--------------|------------|-----------------------
-id           | integer    | not null, primary key
-wishlist_id  | integer    | not null, foreign key
-game_id      | integer    | not null, foreign key
-
-
-Database To-Dos:
-- [ ] Implement constraint that a user can only review a game once
-- [ ] Users cannot add multiples of the same game to a single gameshelf
-  - But they are allowed to add the same game to different gameshelves
-- [ ] Need to check for polymorphic associations!!!
+add_index "users", ["username"]

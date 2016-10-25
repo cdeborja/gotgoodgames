@@ -10,13 +10,9 @@ It is built with a Ruby on Rails backend and a React.js frontend.
 
 ##Design Docs
 * [React Components][components]
-* [Flux Stores][stores]
-* [API endpoints][api-endpoints]
 * [DB schema][schema]
 
 [components]: ./docs/components.md
-[stores]: ./docs/stores.md
-[api-endpoints]: ./docs/api-endpoints.md
 [schema]: ./docs/schema.md
 
 ###Welcome View
