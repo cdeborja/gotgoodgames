@@ -4,8 +4,7 @@ Are you a gamer? Do you consider yourself a **connoisseur** of video games?
 
 Do you [gotgoodgames](http://www.gotgoodgames.xyz/)?
 
-This is a github repository outlining the creation and implementation of
-'gotgoodgames', a website that is focused on reviewing and rating video games.
+Outline of the creation and implementation of 'gotgoodgames', a website that is focused on reviewing and rating video games.
 It is built with a Ruby on Rails backend and a React.js frontend.
 
 ##Design Docs
@@ -21,6 +20,39 @@ It is built with a Ruby on Rails backend and a React.js frontend.
 ###Landing Page
 ![landingPage]
 
+
+### Pagination and Infinite Scrolling
+In main app page, the variables are instantiated:
+```javascript
+var gamePage = 1;
+var reviewsPage = 1;
+```
+
+The function `isBottom` is used to detect when the user has scrolled to the bottom of the page, which also indicates that all visible reviews and games are seen. Therefore when invoked, the function retrieves additional data if there is any.
+```javascript
+isBottom: function () {
+  $(window).scroll(function () {
+    if($(window).scrollTop() + $(window).height() == $(document).height() && this.location.hash.includes("/gamesIndex")) {
+      ApiUtil.fetchAllGames(gamePage + 1);
+      gamePage ++;
+    } else if ($(window).scrollTop() + $(window).height() == $(document).height() && this.location.hash.includes("/users/")) {
+      var start = this.location.hash.indexOf("s/") + 2;
+      var end = this.location.hash.indexOf("?");
+      var userId = this.location.hash.slice(start,end);
+      ApiUtil.fetchUserReviews(userId, reviewsPage + 1);
+      reviewsPage ++;
+    }
+
+    if (!this.location.hash.includes("/gamesIndex")) {
+      gamePage = 1;
+    }
+
+    if (!this.location.hash.includes("/users/")) {
+      reviewsPage = 1;
+    }
+  });
+},
+```
 ###Current Features
 * Can create users with personalized username
 * Can sign up and sign in using either Facebook or Twitch account
