@@ -37,7 +37,7 @@ gem 'omniauth-twitch', git: 'git://github.com/WebTheoryLLC/omniauth-twitch.git'
 # gem 'capistrano-rails', group: :development
 
 ################ FILE UPLOAD GEMS #####################
-gem "paperclip", '5.1.0'
+gem "paperclip", '5.2.0'
 gem 'figaro'
 gem 'aws-sdk', '>= 2.0'
 #######################################################
