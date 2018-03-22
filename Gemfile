@@ -1,8 +1,10 @@
 source 'https://rubygems.org'
 
+gem "nokogiri"
+
 gem 'time_diff', '~> 0.3.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.5.1'
+gem 'rails', '4.2.7.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.15'
 # Use SCSS for stylesheets
@@ -35,7 +37,7 @@ gem 'omniauth-twitch', git: 'git://github.com/WebTheoryLLC/omniauth-twitch.git'
 # gem 'capistrano-rails', group: :development
 
 ################ FILE UPLOAD GEMS #####################
-gem "paperclip", '5.0.0.beta1'
+gem "paperclip", '5.2.0'
 gem 'figaro'
 gem 'aws-sdk', '>= 2.0'
 #######################################################
